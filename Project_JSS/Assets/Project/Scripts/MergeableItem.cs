@@ -5,10 +5,11 @@ using UnityEngine.UI;
 public class MergeableItem : MonoBehaviour
 {
     [Header("Item Settings")]
-    [SerializeField] protected int level = 1;
-    [SerializeField] protected string itemId;
-    [SerializeField] protected Image image;
-    [SerializeField] protected Sprite[] levelSprites; // 레벨별 스프라이트
+    [SerializeField] protected int lv = 1;
+    //[SerializeField] protected string itemId;
+    [SerializeField] protected Image itemImage;
+    public ItemData itemData;
+
 
     [Header("Effects")]
     [SerializeField] protected ParticleSystem mergeEffect;
@@ -22,21 +23,21 @@ public class MergeableItem : MonoBehaviour
     protected Vector2Int gridPosition;
     protected bool isInitialized = false;
 
-    public int Level => level;
-    public string ItemId => itemId;
+    public int Lv => lv;
     public Vector2Int GridPosition => gridPosition;
-
+    public Image ItemImage => itemImage;
+    
     private void Awake()
     {
-        if (image == null)
+        if (itemImage == null)
         {
-            image = GetComponent<Image>();
+            itemImage = GetComponent<Image>();
         }
     }
 
-    public virtual void Initialize(int newLevel)
+    public void Initialize(int newLevel)
     {
-        level = Mathf.Clamp(newLevel, 1, levelSprites.Length);
+        lv = Mathf.Clamp(newLevel, 1, itemData.items.Length);
         UpdateVisuals();
         isInitialized = true;
 
@@ -48,34 +49,34 @@ public class MergeableItem : MonoBehaviour
         onSpawned?.Invoke();
     }
 
-    public virtual void Initialize(SaveData.ItemData saveData)
+    public void Initialize(SaveData.ItemData saveData)
     {
-        itemId = saveData.itemId;
-        level = saveData.level;
+        //itemId = saveData.itemId;
+        lv = saveData.level;
         gridPosition = saveData.position;
         UpdateVisuals();
         isInitialized = true;
     }
 
-    protected virtual void UpdateVisuals()
+    protected void UpdateVisuals()
     {
-        if (image != null && levelSprites != null && levelSprites.Length > 0)
+        if (itemImage != null  && itemData.items.Length > 0)
         {
-            int spriteIndex = Mathf.Clamp(level - 1, 0, levelSprites.Length - 1);
-            image.sprite = levelSprites[spriteIndex];
+            int levelIndex = Mathf.Clamp(lv - 1, 0, itemData.items.Length - 1);
+            itemImage.sprite = itemData.items[levelIndex].itemSprite;
         }
     }
 
-    public virtual bool CanMergeWith(MergeableItem other)
+    public bool CanMergeWith(MergeableItem other)
     {
         return other != null &&
                other != this &&
-               other.itemId == itemId &&
-               other.level == level &&
-               level < levelSprites.Length; // 최대 레벨 체크
+               other.itemData.id == itemData.id &&
+               other.lv == lv &&
+               lv < itemData.items.Length; // 최대 레벨 체크
     }
 
-    public virtual void OnMerged()
+    public void OnMerged()
     {
         if (mergeEffect != null)
         {
@@ -94,13 +95,13 @@ public class MergeableItem : MonoBehaviour
         gridPosition = pos;
     }
 
-    public virtual void LevelUp()
+    public void LevelUp()
     {
-        if (level < levelSprites.Length)
+        if (lv < itemData.items.Length)
         {
-            level++;
+            lv++;
             UpdateVisuals();
-            onLevelChanged?.Invoke(level);
+            onLevelChanged?.Invoke(lv);
         }
     }
 
@@ -139,23 +140,23 @@ public class MergeableItem : MonoBehaviour
     }
 
     // 드래그 관련 메서드
-    public virtual void OnBeginDrag()
+    public void OnBeginDrag()
     {
         //image.sortingOrder = 10; // 드래그 중인 아이템을 최상위로
     }
 
-    public virtual void OnEndDrag()
+    public void OnEndDrag()
     {
         //image.sortingOrder = 0; // 원래 정렬 순서로 복구
     }
 
     // 저장/로드를 위한 데이터 직렬화
-    public virtual SaveData.ItemData GetSaveData()
+    public SaveData.ItemData GetSaveData()
     {
         return new SaveData.ItemData
         {
-            itemId = itemId,
-            level = level,
+            //itemId = itemId,
+            level = lv,
             position = gridPosition
         };
     }

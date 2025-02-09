@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1405c0f2a704dd8459ab0fe640011092, type: 3}
+  m_Name: Item_orb_data
+  m_EditorClassIdentifier: 
+  id: gen_orb
+  items:
+  - itemSprite: {fileID: -5544356739158091449, guid: 39672312264065045b6fd062ee0d5ac1, type: 3}
+    level: 1
+    itemName: 
+  - itemSprite: {fileID: 5997266068644209487, guid: 6f142627a3a84dd4c802b50e99d0e6d4, type: 3}
+    level: 1
+    itemName: 
+  - itemSprite: {fileID: -4234527493180290089, guid: 84d69edcb56440940ab4d1d6be6ded6f, type: 3}
+    level: 1
+    itemName: 

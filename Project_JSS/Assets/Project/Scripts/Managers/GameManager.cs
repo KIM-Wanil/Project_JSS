@@ -1,75 +1,81 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using static SaveData;
+using System.Linq;
 
 public class GameManager : BaseManager
 {
-    public static GameManager Instance { get; private set; }
+    //public static GameManager Instance { get; private set; }
 
     public const int GRID_WIDTH = 7;
-    public const int GRID_HEIGHT = 9;
+    public const int GRID_HEIGHT = 8;
 
     [Header("Energy Settings")]
     [SerializeField] private int maxEnergy = 100;
+    public int MaxEnergy => maxEnergy;
     [SerializeField] private float energyRegenRate = 1f;
     [SerializeField] private int energyRegenAmount = 1;
+    private float currentEnergy;
+    public float CurrentEnergy => currentEnergy;
+    [Header("Gold Settings")]
+    [SerializeField] private int currentGold = 0;
+    public int CurrentGold => currentGold;
 
     [Header("Prefab References")]
-    [SerializeField] private GameObject[] itemPrefabs;
-    [SerializeField] private GameObject[] generatorPrefabs;
+    [SerializeField] private GameObject itemPrefab;
+    //[SerializeField] private GameObject generatorPrefab;
+
+    [Header("SO References")]
+    [SerializeField] private ItemData[] itemDatas;
+    [SerializeField] private GeneratorData[] genDatas;
+
+    [Header("Guest Referemces")]
+    private GameObject guestBoard;
+    [SerializeField] private GameObject guestPrefab;
+    [SerializeField] private Sprite[] guestSprites;
 
     [Header("Game Events")]
     public UnityEvent<int> onEnergyChanged;
+    public UnityEvent<int> onGoldChanged;
     public UnityEvent<int> onScoreChanged;
     public UnityEvent<MergeableItem> onItemMerged;
     public UnityEvent<MergeableItem> onItemSpawned;
 
-    private float currentEnergy;
+    
     private int currentScore;
-    private Dictionary<string, GameObject> prefabDictionary = new Dictionary<string, GameObject>();
-    private ObjectPool<GameObject> itemPool;
+    private Dictionary<string, ItemData> itemDataDic = new Dictionary<string, ItemData>();
+    private Dictionary<string, GeneratorData> genDataDic = new Dictionary<string, GeneratorData>();
+    [SerializeField] private ObjectPool<GameObject> itemPool;
     private bool isGamePaused;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            InitializeGame();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
-
+    public override void Init()
+    {
+        base.Init();
+        InitializeGame();
+    }
     private void InitializeGame()
     {
         // 프리팹 딕셔너리 초기화
-        foreach (var prefab in itemPrefabs)
+        foreach (var itemData in itemDatas)
         {
-            MergeableItem item = prefab.GetComponent<MergeableItem>();
-            if (item != null)
-            {
-                prefabDictionary[item.ItemId] = prefab;
-            }
+            itemDataDic[itemData.id] = itemData;
         }
 
-        foreach (var prefab in generatorPrefabs)
+        foreach (var genData in genDatas)
         {
-            Generator generator = prefab.GetComponent<Generator>();
-            if (generator != null)
-            {
-                prefabDictionary[generator.ItemId] = prefab;
-            }
+            genDataDic[genData.genId] = genData;
         }
 
         // 오브젝트 풀 초기화
         itemPool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 50, 100);
 
+        guestBoard = GameObject.Find("GuestBoard");
 
-
-        LoadGame();
+        //LoadGame();
     }
 
     private void Start()
@@ -77,7 +83,13 @@ public class GameManager : BaseManager
         currentEnergy = maxEnergy;
         InvokeRepeating(nameof(RegenerateEnergy), energyRegenRate, energyRegenRate);
     }
-
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CreateGuest();
+        }
+    }
     #region Energy Management
 
     private void RegenerateEnergy()
@@ -107,6 +119,15 @@ public class GameManager : BaseManager
 
     #endregion
 
+    #region Gold Management
+    public void AddGold(int amount)
+    {
+        currentGold += amount;
+        onGoldChanged?.Invoke(currentGold);
+    }
+
+    #endregion
+
     #region Score Management
 
     public void AddScore(int amount)
@@ -118,52 +139,64 @@ public class GameManager : BaseManager
     #endregion
 
     #region Item Management
-
-    public MergeableItem SpawnItem(string prefabId, int level, Vector2Int position)
+    public ItemData GetItemData(string itemId)
     {
-        if (!prefabDictionary.ContainsKey(prefabId))
-        {
-            Debug.LogError($"Prefab with ID {prefabId} not found!");
-            return null;
-        }
-
+        return itemDataDic[itemId];
+    }
+    public MergeableItem SpawnItem(string itemId, int level, Vector2Int position)
+    {
         GameObject itemObj = itemPool.Get();
-        itemObj.transform.position = Managers.Grid.GetWorldPosition(position);
+        //itemObj.transform.position = Managers.Grid.GetWorldPosition(position);
 
         MergeableItem item = itemObj.GetComponent<MergeableItem>();
         if (item != null)
         {
+            item.itemData = itemDataDic[itemId];
             item.Initialize(level);
             Managers.Grid.PlaceItem(item, position);
-            onItemSpawned?.Invoke(item);
+            //onItemSpawned?.Invoke(item);
         }
 
+        Managers.Grid.CheckGuestsOrder();
         return item;
     }
-
-    public bool TryMergeItems(MergeableItem item1, MergeableItem item2)
+    public Generator SpawnGenerator(string itemId, int level, Vector2Int position)
     {
-        if (!item1.CanMergeWith(item2))
+        MergeableItem item = SpawnItem(itemId, level, position);
+        Generator generator = item.gameObject.AddComponent<Generator>();
+        generator.genData = genDataDic[itemId];
+        return generator;
+    }
+
+    public bool TryMergeItems(MergeableItem item1, MergeableItem neighbor)
+    {
+        if (!item1.CanMergeWith(neighbor))
+        {
             return false;
+        }
 
-        Vector2Int mergePosition = Managers.Grid.GetGridPosition(item1.transform.position);
-
+        //Vector2Int mergePosition = Managers.Grid.GetGridPosition(item1.transform.position);
+        Vector2Int mergePosition = neighbor.GridPosition;
         // 다음 레벨 아이템 생성
-        MergeableItem mergedItem = SpawnItem(item1.ItemId, item1.Level + 1, mergePosition);
-
+        MergeableItem mergedItem = SpawnItem(item1.itemData.id, item1.Lv + 1, mergePosition);
         if (mergedItem != null)
         {
             // 기존 아이템 제거
-            Managers.Grid.RemoveItem(Managers.Grid.GetGridPosition(item1.transform.position));
-            Managers.Grid.RemoveItem(Managers.Grid.GetGridPosition(item2.transform.position));
+            //Managers.Grid.RemoveItem(Managers.Grid.GetGridPosition(item1.transform.position));
+            //Managers.Grid.RemoveItem(Managers.Grid.GetGridPosition(item2.transform.position));
+            AddScore(CalculateMergeScore(mergedItem.Lv));
+
+            Managers.Grid.RemoveItem(item1.GridPosition);
+            //Managers.Grid.RemoveItem(neighbor.GridPosition);
 
             ReturnItemToPool(item1.gameObject);
-            ReturnItemToPool(item2.gameObject);
+            ReturnItemToPool(neighbor.gameObject);
 
+            //Managers.Grid.PlaceItem(mergedItem, mergePosition);
             // 점수 추가
-            AddScore(CalculateMergeScore(item1.Level));
 
-            onItemMerged?.Invoke(mergedItem);
+            //onItemMerged?.Invoke(mergedItem);
+
             return true;
         }
 
@@ -175,14 +208,55 @@ public class GameManager : BaseManager
         // 레벨이 높아질수록 더 많은 점수를 얻도록 설정
         return Mathf.RoundToInt(Mathf.Pow(2, level) * 10);
     }
+    // 현재 보유 중인 제너레이터들의 제너레이터 데이터를 확인하여 만들 수 있는 아이템 ID를 반환하는 메서드
+    public List<string> GetAvailableItemIds()
+    {
+        HashSet<string> availableItemIds = new HashSet<string>();
 
+
+        // 현재 보유 중인 제너레이터들을 확인
+        foreach (var generator in Managers.Grid.FindAllGenerators())
+        {
+            GeneratorData generatorData = generator.genData;
+
+            // 제너레이터의 레벨에 따른 생성 가능한 아이템 ID를 추가
+            foreach (var levelData in generatorData.generatorLevelDatas)
+            {
+                foreach (var item in levelData.generatableItems)
+                {
+                    availableItemIds.Add(item.itemInfo.id);
+                }
+            }
+        }
+
+        return availableItemIds.ToList();
+    }
+
+    #endregion
+
+    #region Guest Management
+    public void CreateGuest()
+    {
+        Guest guest = Instantiate(guestPrefab, guestBoard.transform).GetComponent<Guest>();
+
+        int count = Random.Range(1, 3);
+        Item[] tempItems = new Item[count];
+        List<string> availableItems = GetAvailableItemIds();
+        for (int i = 0; i < count; i++)
+        {
+            tempItems[i].id = availableItems[Random.Range(0, availableItems.Count)];
+            tempItems[i].lv = Random.Range(3, 5);
+        }
+        int goldAmount = Random.Range(30, 61);
+        guest.Init(guestSprites[Random.Range(0, guestSprites.Length)], tempItems, goldAmount*10);
+    }
     #endregion
 
     #region Object Pooling
 
     private GameObject CreatePooledItem()
     {
-        GameObject obj = Instantiate(itemPrefabs[0]); // 기본 아이템 프리팹
+        GameObject obj = Instantiate(itemPrefab); // 기본 아이템 프리팹
         obj.SetActive(false);
         return obj;
     }
@@ -229,8 +303,8 @@ public class GameManager : BaseManager
                 {
                     saveData.items.Add(new SaveData.ItemData
                     {
-                        itemId = item.ItemId,
-                        level = item.Level,
+                        itemId = item.itemData.id,
+                        level = item.Lv,
                         position = new Vector2Int(x, y)
                     });
                 }
