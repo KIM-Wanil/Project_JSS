@@ -5,6 +5,7 @@ using System.Collections;
 public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
     private Vector2 dragOffset;
+    private Vector2Int initialGridPos;
     private RectTransform rectTransform;
     private Canvas canvas;
     private MergeableItem mergeableItem;
@@ -17,10 +18,12 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         rectTransform = GetComponent<RectTransform>();
         mergeableItem = GetComponent<MergeableItem>();
         canvas = GetComponentInParent<Canvas>();
+        initialGridPos = mergeableItem.GridPosition;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        initialGridPos = mergeableItem.GridPosition;
         Managers.Grid.RemoveItem(mergeableItem.GridPosition);
         transform.SetParent(Managers.Grid.MergeBoard.transform);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(Managers.Grid.MergeBoardRectT, eventData.position, eventData.pressEventCamera, out dragOffset);
@@ -46,13 +49,17 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         
 
-        Vector2Int gridPosition = Managers.Grid.GetGridPosition(rectTransform.anchoredPosition);
+        Vector2Int? gridPosition = Managers.Grid.GetGridPosition(rectTransform.anchoredPosition);
+        if(gridPosition == null)
+        {
+            Managers.Grid.PlaceItem(mergeableItem, initialGridPos);
+            return;
+        }
 
-        // 가장 가까운 빈 위치 찾기
-        Vector2Int nearestEmpty = Managers.Grid.GetNearestEmptyPosition(rectTransform.anchoredPosition);
+        Vector2Int nearestEmpty = Managers.Grid.GetNearestEmptyPosition((Vector2Int)gridPosition);
 
         // 머지 가능한 이웃 찾기
-        MergeableItem neighbor = Managers.Grid.FindMergeableNeighbor(gridPosition, mergeableItem);
+        MergeableItem neighbor = Managers.Grid.FindMergeableNeighbor((Vector2Int)gridPosition, mergeableItem);
 
         if (neighbor != null)
         {
@@ -65,6 +72,10 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             // 빈 위치에 배치
             Managers.Grid.PlaceItem(mergeableItem, nearestEmpty);
         }
+
+        // 가장 가까운 빈 위치 찾기
+
+
     }
 
     private IEnumerator EnableClickAfterCooldown()

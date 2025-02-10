@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: gen_anvil
   items:
-  - itemSprite: {fileID: 1188624856940883580, guid: d05e431cde2d9e142a046d2b17e44b2b, type: 3}
+  - itemSprite: {fileID: 21300000, guid: d05e431cde2d9e142a046d2b17e44b2b, type: 3}
     level: 1
     itemName: 
-  - itemSprite: {fileID: 102006370260604113, guid: 902c603bc83141a48b39d113c256e107, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 902c603bc83141a48b39d113c256e107, type: 3}
     level: 2
     itemName: 
-  - itemSprite: {fileID: 3502293692358816120, guid: 8c8a1d50430caaa42919023ee4490685, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 8c8a1d50430caaa42919023ee4490685, type: 3}
     level: 3
     itemName: 

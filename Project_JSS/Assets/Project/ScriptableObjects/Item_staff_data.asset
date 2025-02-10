@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: item_staff
   items:
-  - itemSprite: {fileID: -9108238431665520813, guid: 6fa3666e0adfcd34895643fd537c82f1, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 6fa3666e0adfcd34895643fd537c82f1, type: 3}
     level: 1
     itemName: 
-  - itemSprite: {fileID: 3402429408859060370, guid: b366e78b5ac43444d9d1063a70032d0e, type: 3}
+  - itemSprite: {fileID: 21300000, guid: b366e78b5ac43444d9d1063a70032d0e, type: 3}
     level: 2
     itemName: 
-  - itemSprite: {fileID: -5656714886416150670, guid: 3e3a7600999c8f6429337e1330589006, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 3e3a7600999c8f6429337e1330589006, type: 3}
     level: 3
     itemName: 
-  - itemSprite: {fileID: -1541234081470694792, guid: 368e872fdc513fc4b86202810908c4ae, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 368e872fdc513fc4b86202810908c4ae, type: 3}
     level: 4
     itemName: 
-  - itemSprite: {fileID: 2878205364604055108, guid: 5475d04a112e6964b9d59b7c252ffe52, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 5475d04a112e6964b9d59b7c252ffe52, type: 3}
     level: 5
     itemName: 

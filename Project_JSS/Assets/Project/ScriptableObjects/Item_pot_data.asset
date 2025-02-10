@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: gen_pot
   items:
-  - itemSprite: {fileID: 2009447396374302888, guid: d9bd0544e48d5df4b97a357fceeab571, type: 3}
+  - itemSprite: {fileID: 21300000, guid: d9bd0544e48d5df4b97a357fceeab571, type: 3}
     level: 1
     itemName: 
-  - itemSprite: {fileID: 3586180960019486089, guid: 7305cf6db1de1f545bb7b95d58d3fca3, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 7305cf6db1de1f545bb7b95d58d3fca3, type: 3}
     level: 2
     itemName: 
-  - itemSprite: {fileID: -8561381265717595977, guid: 9a6efe8e93761c3448ace5e84e15a253, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 9a6efe8e93761c3448ace5e84e15a253, type: 3}
     level: 3
     itemName: 

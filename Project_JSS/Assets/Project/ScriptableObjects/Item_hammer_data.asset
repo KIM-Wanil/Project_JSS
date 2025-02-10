@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: item_hammer
   items:
-  - itemSprite: {fileID: -7041415705326316859, guid: 6a6a0fa4c9071994f8b2ce40f876f21f, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 6a6a0fa4c9071994f8b2ce40f876f21f, type: 3}
     level: 1
     itemName: 
-  - itemSprite: {fileID: -5547392289987426869, guid: 97417f0ede8451b41bb2ed8a7c45c501, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 97417f0ede8451b41bb2ed8a7c45c501, type: 3}
     level: 2
     itemName: 
-  - itemSprite: {fileID: -2314353080233584016, guid: 9772aae979355ad449ce7bdf52bfa300, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 9772aae979355ad449ce7bdf52bfa300, type: 3}
     level: 3
     itemName: 
-  - itemSprite: {fileID: 5989574788154497727, guid: f33e9bd4f9dc86344899475fa83ff5f4, type: 3}
+  - itemSprite: {fileID: 21300000, guid: f33e9bd4f9dc86344899475fa83ff5f4, type: 3}
     level: 4
     itemName: 
-  - itemSprite: {fileID: 7337464085415879602, guid: 6a6fadcbd2bd4b24eb46a5986d5b1cfc, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 6a6fadcbd2bd4b24eb46a5986d5b1cfc, type: 3}
     level: 5
     itemName: 

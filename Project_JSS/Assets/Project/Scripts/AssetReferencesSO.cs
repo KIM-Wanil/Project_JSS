@@ -12,14 +12,14 @@ public class AssetReferencesSO : ScriptableObject
         public UnityEngine.AddressableAssets.AssetReference assetReference;
     }
 
-    public List<AssetReference2> backgroundImages;
+    public List<AssetReference2> guestSprites;
     public List<AssetReference2> BGMSounds;
     public List<AssetReference2> UISounds;
     public List<AssetReference2> effectSounds;
 
     public UnityEngine.AddressableAssets.AssetReference GetBackgroundAssetReference(string key)
     {
-        return backgroundImages.Find(img => img.key == key)?.assetReference;
+        return guestSprites.Find(img => img.key == key)?.assetReference;
     }
     public UnityEngine.AddressableAssets.AssetReference GetSoundAssetReference(string key, SoundType type)
     {

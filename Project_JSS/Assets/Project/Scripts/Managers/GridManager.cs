@@ -111,6 +111,16 @@ public class GridManager : BaseManager
 
                 tiles[i, j] = tileObject;
                 tilePositions[i, j] = tileObject.transform.position;
+
+                //타일 체크무늬로 보이게 띄엄띄엄 표시
+                if((i+j) %2 ==0)
+                {
+                    tileObject.transform.GetChild(0).gameObject.SetActive(true);
+                }
+                else
+                {
+                   tileObject.transform.GetChild(0).gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -246,13 +256,23 @@ public class GridManager : BaseManager
 
 
     // 월드 좌표를 그리드 위치로 변환
-    public Vector2Int GetGridPosition(Vector3 worldPosition)
+    public Vector2Int? GetGridPosition(Vector3 worldPosition)
     {
         Vector2 localPosition = (Vector2)worldPosition - gridStartPosition;
-        return new Vector2Int(
+
+        Vector2Int gridPos = new Vector2Int(
             Mathf.RoundToInt(localPosition.x / (tileSize + spacing)),
             Mathf.RoundToInt(-localPosition.y / (tileSize + spacing)) // y 좌표를 반대로 계산
         );
+
+        if(IsValidPosition(gridPos))
+        {
+            return gridPos;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     // 해당 그리드 위치가 유효한지 확인
@@ -282,6 +302,8 @@ public class GridManager : BaseManager
 
         // 아이템의 위치 설정
         item.transform.localPosition = Vector3.zero;
+
+        item.GetComponent<RectTransform>().localScale = Vector3.one;
 
         // 아이템의 Sibling Index를 타일보다 앞에 배치
         item.transform.SetSiblingIndex(tiles[position.x, position.y].transform.GetSiblingIndex() + 1);
@@ -461,21 +483,20 @@ public class GridManager : BaseManager
         }
     }
 
-    public Vector2Int GetNearestEmptyPosition(Vector3 worldPosition)
+    public Vector2Int GetNearestEmptyPosition(Vector2Int targetGridPos)
     {
-        Vector2Int startGridPosition = GetGridPosition(worldPosition);
 
         // 시작 위치가 빈 위치라면 바로 반환
-        if (IsEmptyPosition(startGridPosition))
+        if (IsEmptyPosition(targetGridPos))
         {
-            return startGridPosition;
+            return targetGridPos;
         }
 
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
 
-        queue.Enqueue(startGridPosition);
-        visited.Add(startGridPosition);
+        queue.Enqueue(targetGridPos);
+        visited.Add(targetGridPos);
 
         Vector2Int[] directions = new Vector2Int[]
         {
@@ -505,7 +526,7 @@ public class GridManager : BaseManager
         }
 
         // 빈 위치를 찾지 못한 경우, 기본값 반환 (이 경우는 거의 발생하지 않음)
-        return startGridPosition;
+        return targetGridPos;
     }
     private void OnDrawGizmos()
     {

@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: gen_orb
   items:
-  - itemSprite: {fileID: -5544356739158091449, guid: 39672312264065045b6fd062ee0d5ac1, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 39672312264065045b6fd062ee0d5ac1, type: 3}
     level: 1
     itemName: 
-  - itemSprite: {fileID: 5997266068644209487, guid: 6f142627a3a84dd4c802b50e99d0e6d4, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 6f142627a3a84dd4c802b50e99d0e6d4, type: 3}
     level: 1
     itemName: 
-  - itemSprite: {fileID: -4234527493180290089, guid: 84d69edcb56440940ab4d1d6be6ded6f, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 84d69edcb56440940ab4d1d6be6ded6f, type: 3}
     level: 1
     itemName: 

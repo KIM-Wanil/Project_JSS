@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: item_bluePotion
   items:
-  - itemSprite: {fileID: -751770390569821604, guid: aa209f8cb1d6a9a4296daa5ef03e464a, type: 3}
+  - itemSprite: {fileID: 21300000, guid: aa209f8cb1d6a9a4296daa5ef03e464a, type: 3}
     level: 1
     itemName: 
-  - itemSprite: {fileID: 5666280696032965079, guid: 5c39e6a49bf955a49a98618a4c7a0262, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 5c39e6a49bf955a49a98618a4c7a0262, type: 3}
     level: 2
     itemName: 
-  - itemSprite: {fileID: 2039745488573540597, guid: d47f6c79dc319bf4cae71ecd568ac1d0, type: 3}
+  - itemSprite: {fileID: 21300000, guid: d47f6c79dc319bf4cae71ecd568ac1d0, type: 3}
     level: 3
     itemName: 
-  - itemSprite: {fileID: -799699344962951163, guid: 60df7a87219b8a245abf903f57d4606a, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 60df7a87219b8a245abf903f57d4606a, type: 3}
     level: 4
     itemName: 
-  - itemSprite: {fileID: -5163969544450203159, guid: 317b2f9577247814095aae58af1b2453, type: 3}
+  - itemSprite: {fileID: 21300000, guid: 317b2f9577247814095aae58af1b2453, type: 3}
     level: 5
     itemName: 

@@ -22,6 +22,7 @@ public class Guest : MonoBehaviour
         {
             itemsOrdered[i] = Instantiate(itemOrderedPrefab, orderBox.transform).GetComponent<ItemOrdered>();
             itemsOrdered[i].Init(itemInfo[i]);
+            itemsOrdered[i].transform.GetChild(0).gameObject.SetActive(true);
         }
         goldText.text = goldAmount.ToString();
         completeButton.onClick.AddListener(OnCompleteButtonClicked);
