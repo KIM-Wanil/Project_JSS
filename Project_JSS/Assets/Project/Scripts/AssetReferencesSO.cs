@@ -19,6 +19,7 @@ public class AssetReferencesSO : ScriptableObject
 
     public UnityEngine.AddressableAssets.AssetReference GetBackgroundAssetReference(string key)
     {
+        
         return guestSprites.Find(img => img.key == key)?.assetReference;
     }
     public UnityEngine.AddressableAssets.AssetReference GetSoundAssetReference(string key, SoundType type)
