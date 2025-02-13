@@ -9,9 +9,14 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private RectTransform rectTransform;
     private Canvas canvas;
     private MergeableItem mergeableItem;
+    public Generator generator;
     private bool isDragging; // 드래그 상태를 추적하는 변수
     [SerializeField]private bool canClick = true; // 클릭 가능 여부를 추적하는 변수
     private float clickCooldown = 0.1f; // 클릭을 무시할 시간 (초)
+
+    // 현재 선택된 아이템을 추적하는 정적 변수
+    private static DraggableItem currentlySelectedItem;
+    private bool isSelected => currentlySelectedItem == this;
 
     private void Start()
     {
@@ -24,10 +29,12 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnPointerDown(PointerEventData eventData)
     {
         initialGridPos = mergeableItem.GridPosition;
-        Managers.Grid.RemoveItem(mergeableItem.GridPosition);
+        Managers.Grid.DetatchItemFromGrid(mergeableItem.GridPosition);
         transform.SetParent(Managers.Grid.MergeBoard.transform);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(Managers.Grid.MergeBoardRectT, eventData.position, eventData.pressEventCamera, out dragOffset);
         dragOffset = rectTransform.anchoredPosition - dragOffset;
+
+        mergeableItem.OnDeSelected();
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -47,7 +54,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        
+
 
         Vector2Int? gridPosition = Managers.Grid.GetGridPosition(rectTransform.anchoredPosition);
         if(gridPosition == null)
@@ -61,21 +68,36 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         // 머지 가능한 이웃 찾기
         MergeableItem neighbor = Managers.Grid.FindMergeableNeighbor((Vector2Int)gridPosition, mergeableItem);
 
-        if (neighbor != null)
+        if (neighbor != null && Managers.Game.TryMergeItems(mergeableItem, neighbor))
         {
             // 머지 수행
-            Managers.Game.TryMergeItems(mergeableItem, neighbor);
+            //Managers.Game.TryMergeItems(mergeableItem, neighbor);
+            Debug.Log("머지 실행");
         }
+
         else
         {
             //Debug.Log("neighbor is null");
             // 빈 위치에 배치
+            
             Managers.Grid.PlaceItem(mergeableItem, nearestEmpty);
+
+            if (mergeableItem.itemData.type == ItemType.Generatable && !IsDragging() && CanClick() && IsSelected())
+            {
+                generator.TryGenerateItem();
+            }
         }
 
-        // 가장 가까운 빈 위치 찾기
+        
 
-
+        // 이전에 선택된 아이템의 selectIcon 비활성화
+        if (currentlySelectedItem != null && currentlySelectedItem != this)
+        {
+            currentlySelectedItem.mergeableItem.selectIcon.SetActive(false);
+        }
+        // 현재 아이템을 선택된 아이템으로 설정
+        currentlySelectedItem = this;
+        mergeableItem.OnSelected();
     }
 
     private IEnumerator EnableClickAfterCooldown()
@@ -85,6 +107,10 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         canClick = true;
     }
 
+    public bool IsSelected()
+    {
+        return isSelected;
+    }
     public bool IsDragging()
     {
         return isDragging;

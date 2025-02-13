@@ -10,7 +10,8 @@ public class GameManager : BaseManager
 
     public const int GRID_WIDTH = 8;
     public const int GRID_HEIGHT = 8;
-
+    [Header("Script References")]
+    public InfoPanelController infoPanelController;
     [Header("Energy Settings")]
     [SerializeField] private int maxEnergy = 100;
     public int MaxEnergy => maxEnergy;
@@ -28,7 +29,8 @@ public class GameManager : BaseManager
 
     [Header("SO References")]
     [SerializeField] private ItemData[] itemDatas;
-    [SerializeField] private GeneratorData[] genDatas;
+    [SerializeField] private GeneratorDB[] genDatas;
+    [SerializeField] public CraftingDB craftingDB;
 
     [Header("Guest Referemces")]
     private GameObject guestBoard;
@@ -45,7 +47,7 @@ public class GameManager : BaseManager
     
     private int currentScore;
     private Dictionary<string, ItemData> itemDataDic = new Dictionary<string, ItemData>();
-    private Dictionary<string, GeneratorData> genDataDic = new Dictionary<string, GeneratorData>();
+    private Dictionary<string, GeneratorDB> genDataDic = new Dictionary<string, GeneratorDB>();
     [SerializeField] private ObjectPool<GameObject> itemPool;
     private bool isGamePaused;
 
@@ -143,6 +145,10 @@ public class GameManager : BaseManager
     {
         return itemDataDic[itemId];
     }
+    public Sprite GetItemSprite(ItemKey key)
+    {
+        return itemDataDic[key.id].items[key.lv-1].itemSprite;
+    }
     public MergeableItem SpawnItem(string itemId, int level, Vector2Int position)
     {
         GameObject itemObj = itemPool.Get();
@@ -163,45 +169,98 @@ public class GameManager : BaseManager
     public Generator SpawnGenerator(string itemId, int level, Vector2Int position)
     {
         MergeableItem item = SpawnItem(itemId, level, position);
-        Generator generator = item.gameObject.AddComponent<Generator>();
-        generator.genData = genDataDic[itemId];
-        return generator;
-    }
+        
+        Generator tempGenerator = item.gameObject.AddComponent<Generator>();
+        tempGenerator.genDB = genDataDic[itemId];
+        tempGenerator.Initialize();
 
+        DraggableItem draggableItem = item.gameObject.GetComponent<DraggableItem>();
+        draggableItem.generator = tempGenerator;
+        return tempGenerator;
+    }
     public bool TryMergeItems(MergeableItem item1, MergeableItem neighbor)
     {
-        if (!item1.CanMergeWith(neighbor))
+        if (item1.CanMergeWith(neighbor))
         {
-            return false;
-        }
-
-        //Vector2Int mergePosition = Managers.Grid.GetGridPosition(item1.transform.position);
-        Vector2Int mergePosition = neighbor.GridPosition;
-        // 다음 레벨 아이템 생성
-        MergeableItem mergedItem = SpawnItem(item1.itemData.id, item1.Lv + 1, mergePosition);
-        if (mergedItem != null)
-        {
-            // 기존 아이템 제거
-            //Managers.Grid.RemoveItem(Managers.Grid.GetGridPosition(item1.transform.position));
-            //Managers.Grid.RemoveItem(Managers.Grid.GetGridPosition(item2.transform.position));
-            AddScore(CalculateMergeScore(mergedItem.Lv));
-
-            Managers.Grid.RemoveItem(item1.GridPosition);
-            //Managers.Grid.RemoveItem(neighbor.GridPosition);
-
+            neighbor.LevelUp();
+            Managers.Grid.DetatchItemFromGrid(item1.GridPosition);
             ReturnItemToPool(item1.gameObject);
-            ReturnItemToPool(neighbor.gameObject);
-
-            //Managers.Grid.PlaceItem(mergedItem, mergePosition);
-            // 점수 추가
-
-            //onItemMerged?.Invoke(mergedItem);
-
             return true;
         }
+        else if(item1.GetCraftingResult(neighbor) != null)
+        {
+            ItemKey crftedItemKey = item1.GetCraftingResult(neighbor).Value;
+            Vector2Int mergePosition = neighbor.GridPosition;
+            Managers.Grid.DetatchItemFromGrid(item1.GridPosition);
+            ReturnItemToPool(item1.gameObject);
+            Managers.Grid.DetatchItemFromGrid(neighbor.GridPosition);
+            ReturnItemToPool(neighbor.gameObject);
+            SpawnItem(crftedItemKey.id, crftedItemKey.lv, mergePosition);
+            return true;
+        }
+        //Vector2Int mergePosition = Managers.Grid.GetGridPosition(item1.transform.position);
+        //Vector2Int mergePosition = neighbor.GridPosition;
+
+
+        // 다음 레벨 아이템 생성
+        //MergeableItem mergedItem = SpawnItem(item1.itemData.id, item1.Lv + 1, mergePosition);
+        //if (mergedItem != null)
+        //{
+        // 기존 아이템 제거
+        //Managers.Grid.RemoveItem(Managers.Grid.GetGridPosition(item1.transform.position));
+        //Managers.Grid.RemoveItem(Managers.Grid.GetGridPosition(item2.transform.position));
+        //AddScore(CalculateMergeScore(mergedItem.Lv));
+
+        //Managers.Grid.RemoveItem(item1.GridPosition);
+        //Managers.Grid.RemoveItem(neighbor.GridPosition);
+
+        //ReturnItemToPool(item1.gameObject);
+        //ReturnItemToPool(neighbor.gameObject);
+
+        //Managers.Grid.PlaceItem(mergedItem, mergePosition);
+        // 점수 추가
+
+        //onItemMerged?.Invoke(mergedItem);
+
+        //return true;
+        //}
 
         return false;
     }
+    //public bool TryMergeItems(MergeableItem item1, MergeableItem neighbor)
+    //{
+    //    if (!item1.CanMergeWith(neighbor))
+    //    {
+    //        return false;
+    //    }
+
+    //    //Vector2Int mergePosition = Managers.Grid.GetGridPosition(item1.transform.position);
+    //    Vector2Int mergePosition = neighbor.GridPosition;
+    //    // 다음 레벨 아이템 생성
+    //    MergeableItem mergedItem = SpawnItem(item1.itemData.id, item1.Lv + 1, mergePosition);
+    //    if (mergedItem != null)
+    //    {
+    //        // 기존 아이템 제거
+    //        //Managers.Grid.RemoveItem(Managers.Grid.GetGridPosition(item1.transform.position));
+    //        //Managers.Grid.RemoveItem(Managers.Grid.GetGridPosition(item2.transform.position));
+    //        AddScore(CalculateMergeScore(mergedItem.Lv));
+
+    //        Managers.Grid.RemoveItem(item1.GridPosition);
+    //        //Managers.Grid.RemoveItem(neighbor.GridPosition);
+
+    //        ReturnItemToPool(item1.gameObject);
+    //        ReturnItemToPool(neighbor.gameObject);
+
+    //        //Managers.Grid.PlaceItem(mergedItem, mergePosition);
+    //        // 점수 추가
+
+    //        //onItemMerged?.Invoke(mergedItem);
+
+    //        return true;
+    //    }
+
+    //    return false;
+    //}
 
     private int CalculateMergeScore(int level)
     {
@@ -217,14 +276,14 @@ public class GameManager : BaseManager
         // 현재 보유 중인 제너레이터들을 확인
         foreach (var generator in Managers.Grid.FindAllGenerators())
         {
-            GeneratorData generatorData = generator.genData;
+            GeneratorDB generatorData = generator.genDB;
 
             // 제너레이터의 레벨에 따른 생성 가능한 아이템 ID를 추가
-            foreach (var levelData in generatorData.generatorLevelDatas)
+            foreach (var levelData in generatorData.generatorDatas)
             {
                 foreach (var item in levelData.generatableItems)
                 {
-                    availableItemIds.Add(item.itemInfo.id);
+                    availableItemIds.Add(item.key.id);
                 }
             }
         }
@@ -240,7 +299,7 @@ public class GameManager : BaseManager
         Guest guest = Instantiate(guestPrefab, guestBoard.transform).GetComponent<Guest>();
 
         int count = Random.Range(1, 3);
-        Item[] tempItems = new Item[count];
+        ItemKey[] tempItems = new ItemKey[count];
         List<string> availableItems = GetAvailableItemIds();
         for (int i = 0; i < count; i++)
         {

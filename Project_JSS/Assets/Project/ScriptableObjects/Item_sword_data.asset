@@ -13,19 +13,25 @@ MonoBehaviour:
   m_Name: Item_sword_data
   m_EditorClassIdentifier: 
   id: item_sword
+  type: 0
   items:
   - itemSprite: {fileID: 21300000, guid: 240d9de0ccc29814a96394e40eecb3ba, type: 3}
     level: 1
     itemName: 
+    price: 10
   - itemSprite: {fileID: 21300000, guid: 0c66d8d1c4bf27842ae4b0f91d02dd2f, type: 3}
     level: 2
     itemName: 
+    price: 20
   - itemSprite: {fileID: 21300000, guid: d9a3632e37830f34eb893b7cb19f6f84, type: 3}
     level: 3
     itemName: 
+    price: 40
   - itemSprite: {fileID: 21300000, guid: 6bd30bb763b52124f8394277e19d5c84, type: 3}
     level: 4
     itemName: 
+    price: 80
   - itemSprite: {fileID: 21300000, guid: 2621aa51975a6004ca245bfc93f90734, type: 3}
     level: 5
     itemName: 
+    price: 160

@@ -6,7 +6,7 @@ using UnityEngine;
 public class SaveData
 {
     public List<ItemData> items = new List<ItemData>();
-    public List<GeneratorData> generators = new List<GeneratorData>();
+    public List<GeneratorDB> generators = new List<GeneratorDB>();
     public float energy;
     public int score;
     public string playerName;
@@ -16,6 +16,7 @@ public class SaveData
     {
         public string itemId;
         public int level;
+        public ItemType type;
         public Vector2Int position;
     }
 }

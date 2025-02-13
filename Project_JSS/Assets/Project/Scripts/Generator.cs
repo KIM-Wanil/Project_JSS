@@ -1,11 +1,12 @@
 // Generator.cs - 아이템을 생성하는 제너레이터
 using UnityEngine;
 using UnityEngine.UI;
-using static GeneratorData;
+using System.Collections.Generic;
+using static GeneratorDB;
 
 public class Generator : MonoBehaviour
 {
-    public GeneratorData genData;
+    public GeneratorDB genDB;
     public Button generatorButton; // 버튼 컴포넌트 추가
     private MergeableItem mergeableItem;
     private int currentDurability;
@@ -15,15 +16,15 @@ public class Generator : MonoBehaviour
     private GameObject durablilty;
     private Image durabilityGauge; // 내구도를 표시할 Image 컴포넌트
 
+    private GeneratorData genData;
     private void Awake()
     {
         mergeableItem = GetComponent<MergeableItem>();
         draggableItem = GetComponent<DraggableItem>(); // DraggableItem 컴포넌트 가져오기
-        generatorButton = gameObject.AddComponent<Button>();
-        generatorButton.targetGraphic = mergeableItem.ItemImage;
+        generatorButton = mergeableItem.button;
 
         // Image 컴포넌트 추가
-        durablilty = transform.GetChild(0).gameObject;
+        durablilty = transform.GetChild(1).gameObject;
         durablilty.SetActive(true);
         durabilityGauge = durablilty.transform.Find("DurabilityGauge").GetComponent<Image>();
 
@@ -38,26 +39,36 @@ public class Generator : MonoBehaviour
         //}
     }
 
-    private void Start()
+    public void Initialize()
     {
-        maxDurability = genData.generatorLevelDatas[mergeableItem.Lv - 1].maxDurability;
+        genData = genDB.generatorDatas[mergeableItem.Lv - 1];
+        maxDurability = genData.maxDurability;
         currentDurability = maxDurability;
         UpdateDurabilityUI();
 
-        // 버튼 클릭 이벤트 설정
-        if (generatorButton != null)
+        List<Sprite> generatableSprites = new List<Sprite>();
+
+        foreach (var item in genData.generatableItems)
         {
-            generatorButton.onClick.AddListener(OnGeneratorClicked);
+            generatableSprites.Add(Managers.Game.GetItemSprite(item.key));
         }
+        mergeableItem.button.onClick.AddListener(() =>
+                Managers.Game.infoPanelController.PrintGeneratorDesc(mergeableItem.itemKey, generatableSprites));
+
+        //// 버튼 클릭 이벤트 설정
+        //if (generatorButton != null)
+        //{
+        //    generatorButton.onClick.AddListener(OnGeneratorClicked);
+        //}
     }
 
     private void OnDestroy()
     {
-        // 버튼 클릭 이벤트 해제
-        if (generatorButton != null)
-        {
-            generatorButton.onClick.RemoveListener(OnGeneratorClicked);
-        }
+        //// 버튼 클릭 이벤트 해제
+        //if (generatorButton != null)
+        //{
+        //    generatorButton.onClick.RemoveListener(OnGeneratorClicked);
+        //}
     }
 
     private void OnGeneratorClicked()
@@ -68,13 +79,16 @@ public class Generator : MonoBehaviour
         {
             return;
         }
-
+        if(!draggableItem.IsSelected())
+        {
+           return;
+        }
         TryGenerateItem();
     }
 
     public bool TryGenerateItem()
     {
-        if (currentDurability <= 0 || !Managers.Game.TrySpendEnergy(genData.energyCost))
+        if (currentDurability <= 0 || !Managers.Game.TrySpendEnergy(genDB.energyCost))
             return false;
 
         currentDurability--;
@@ -83,9 +97,9 @@ public class Generator : MonoBehaviour
         float randomValue = Random.value;
         float accumulatedChance = 0;
 
-        foreach (GeneratableItem item in genData.generatorLevelDatas[mergeableItem.Lv - 1].generatableItems)
+        foreach (GeneratableItem item in genDB.generatorDatas[mergeableItem.Lv - 1].generatableItems)
         {
-            Debug.Log(item.itemInfo.id);
+            Debug.Log(item.key.id);
             accumulatedChance += item.spawnChance;
 
             if (randomValue <= accumulatedChance)
@@ -98,7 +112,8 @@ public class Generator : MonoBehaviour
                 }
                 else
                 {
-                    Managers.Game.SpawnItem(item.itemInfo.id, item.itemInfo.lv, (Vector2Int)pos);
+                    //나중에 usable아이템 제너레이터도 추가
+                    Managers.Game.SpawnItem(item.key.id, item.key.lv, (Vector2Int)pos);
                 }
                 break;
             }

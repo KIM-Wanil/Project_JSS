@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Item_anvil_data
   m_EditorClassIdentifier: 
   id: gen_anvil
+  type: 1
   items:
   - itemSprite: {fileID: 21300000, guid: d05e431cde2d9e142a046d2b17e44b2b, type: 3}
     level: 1
-    itemName: 
+    itemName: Stone
+    price: 0
   - itemSprite: {fileID: 21300000, guid: 902c603bc83141a48b39d113c256e107, type: 3}
     level: 2
-    itemName: 
+    itemName: Iron
+    price: 0
   - itemSprite: {fileID: 21300000, guid: 8c8a1d50430caaa42919023ee4490685, type: 3}
     level: 3
-    itemName: 
+    itemName: Anvil
+    price: 0

@@ -13,19 +13,25 @@ MonoBehaviour:
   m_Name: Item_hammer_data
   m_EditorClassIdentifier: 
   id: item_hammer
+  type: 0
   items:
   - itemSprite: {fileID: 21300000, guid: 6a6a0fa4c9071994f8b2ce40f876f21f, type: 3}
     level: 1
-    itemName: 
+    itemName: noraml hammer
+    price: 10
   - itemSprite: {fileID: 21300000, guid: 97417f0ede8451b41bb2ed8a7c45c501, type: 3}
     level: 2
-    itemName: 
+    itemName: soso hammer
+    price: 20
   - itemSprite: {fileID: 21300000, guid: 9772aae979355ad449ce7bdf52bfa300, type: 3}
     level: 3
-    itemName: 
+    itemName: good hammer
+    price: 40
   - itemSprite: {fileID: 21300000, guid: f33e9bd4f9dc86344899475fa83ff5f4, type: 3}
     level: 4
-    itemName: 
+    itemName: strong hammer
+    price: 80
   - itemSprite: {fileID: 21300000, guid: 6a6fadcbd2bd4b24eb46a5986d5b1cfc, type: 3}
     level: 5
-    itemName: 
+    itemName: special hammer
+    price: 160

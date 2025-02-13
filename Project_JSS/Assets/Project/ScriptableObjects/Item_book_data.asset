@@ -13,19 +13,25 @@ MonoBehaviour:
   m_Name: Item_book_data
   m_EditorClassIdentifier: 
   id: item_book
+  type: 0
   items:
   - itemSprite: {fileID: 21300000, guid: 708d5a6ac0ab704408a49c259d7108d5, type: 3}
     level: 1
     itemName: 
+    price: 10
   - itemSprite: {fileID: 21300000, guid: b3819a9e671097a4fb70a605aa95506c, type: 3}
     level: 2
     itemName: 
+    price: 20
   - itemSprite: {fileID: 21300000, guid: 302f662c6a88ee547a92a2ad2eb946f3, type: 3}
     level: 3
     itemName: 
+    price: 40
   - itemSprite: {fileID: 21300000, guid: c2e743b028a993444be98865b43ac355, type: 3}
     level: 4
     itemName: 
+    price: 80
   - itemSprite: {fileID: 21300000, guid: 48e6a817553c2494888fd27f15d1d25d, type: 3}
     level: 5
     itemName: 
+    price: 160

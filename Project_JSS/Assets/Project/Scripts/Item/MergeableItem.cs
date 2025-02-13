@@ -1,15 +1,19 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MergeableItem : MonoBehaviour
 {
+    [SerializeField] public Button button;
+    [SerializeField] public GameObject selectIcon;
     [Header("Item Settings")]
     [SerializeField] protected int lv = 1;
+    private int lvIndex => Mathf.Clamp(lv - 1, 0, itemData.items.Length - 1);
     //[SerializeField] protected string itemId;
     [SerializeField] protected Image itemImage;
     public ItemData itemData;
-
+    public ItemKey itemKey;
 
     [Header("Effects")]
     [SerializeField] protected ParticleSystem mergeEffect;
@@ -35,10 +39,22 @@ public class MergeableItem : MonoBehaviour
         }
     }
 
-    public void Initialize(int newLevel)
+    public void Initialize(int inputLv)
     {
-        lv = Mathf.Clamp(newLevel, 1, itemData.items.Length);
+        lv = Mathf.Clamp(inputLv, 1, itemData.items.Length);
         UpdateVisuals();
+        itemKey = new ItemKey(itemData.id, lv);
+        switch (itemData.type)
+        {
+            case ItemType.Normal:
+                button.onClick.AddListener(() =>
+                Managers.Game.infoPanelController.PrintItemDesc(itemKey, itemData.items[lvIndex].price, SellThisItem)
+            );
+                break;
+            default:
+                break;
+        }
+
         isInitialized = true;
 
         if (spawnEffect != null)
@@ -57,13 +73,17 @@ public class MergeableItem : MonoBehaviour
         UpdateVisuals();
         isInitialized = true;
     }
-
+    public void SellThisItem()
+    {
+       Managers.Game.AddGold(itemData.items[lvIndex].price);
+       Managers.Grid.RemoveItemFromGrid(gridPosition);
+        Debug.Log(gridPosition);
+    }
     protected void UpdateVisuals()
     {
         if (itemImage != null  && itemData.items.Length > 0)
         {
-            int levelIndex = Mathf.Clamp(lv - 1, 0, itemData.items.Length - 1);
-            itemImage.sprite = itemData.items[levelIndex].itemSprite;
+            itemImage.sprite = itemData.items[lvIndex].itemSprite;
         }
     }
 
@@ -74,6 +94,16 @@ public class MergeableItem : MonoBehaviour
                other.itemData.id == itemData.id &&
                other.lv == lv &&
                lv < itemData.items.Length; // 최대 레벨 체크
+    }
+    public ItemKey? GetCraftingResult(MergeableItem other)
+    {
+        if(other == null || other == this)
+        {
+            return null;
+        }
+
+        return Managers.Game.craftingDB.FindCraftingResult(itemKey, other.itemKey);
+
     }
 
     public void OnMerged()
@@ -87,7 +117,7 @@ public class MergeableItem : MonoBehaviour
         }
 
         onMerged?.Invoke();
-        Managers.Grid.RemoveItem(gridPosition);
+        Managers.Grid.DetatchItemFromGrid(gridPosition);
     }
 
     public void SetGridPosition(Vector2Int pos)
@@ -100,9 +130,18 @@ public class MergeableItem : MonoBehaviour
         if (lv < itemData.items.Length)
         {
             lv++;
+            itemKey.lv = lv;
             UpdateVisuals();
             onLevelChanged?.Invoke(lv);
         }
+    }
+    public void OnSelected()
+    {
+        selectIcon.SetActive(true);
+    }
+    public void OnDeSelected()
+    {
+        selectIcon.SetActive(false);
     }
 
     // 아이템 타입별 특수 효과를 위한 가상 메서드들
@@ -110,45 +149,35 @@ public class MergeableItem : MonoBehaviour
     protected virtual void OnItemRemoved() { }
     protected virtual void OnItemMoved() { }
 
-    // 애니메이션 관련 메서드
-    public virtual void PlayMergeAnimation(Vector3 targetPosition, System.Action onComplete = null)
-    {
-        // 기본 구현: 단순 이동
-        StartCoroutine(MergeAnimationCoroutine(targetPosition, onComplete));
-    }
+    //// 애니메이션 관련 메서드
+    //public virtual void PlayMergeAnimation(Vector3 targetPosition, System.Action onComplete = null)
+    //{
+    //    // 기본 구현: 단순 이동
+    //    StartCoroutine(MergeAnimationCoroutine(targetPosition, onComplete));
+    //}
 
-    private System.Collections.IEnumerator MergeAnimationCoroutine(Vector3 targetPosition, System.Action onComplete)
-    {
-        float duration = 0.2f;
-        float elapsed = 0f;
-        Vector3 startPosition = transform.position;
+    //private System.Collections.IEnumerator MergeAnimationCoroutine(Vector3 targetPosition, System.Action onComplete)
+    //{
+    //    float duration = 0.2f;
+    //    float elapsed = 0f;
+    //    Vector3 startPosition = transform.position;
 
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / duration;
+    //    while (elapsed < duration)
+    //    {
+    //        elapsed += Time.deltaTime;
+    //        float t = elapsed / duration;
 
-            // 이징 함수 적용
-            t = 1f - Mathf.Pow(1f - t, 3f); // Cubic ease-out
+    //        // 이징 함수 적용
+    //        t = 1f - Mathf.Pow(1f - t, 3f); // Cubic ease-out
 
-            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            yield return null;
-        }
+    //        transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+    //        yield return null;
+    //    }
 
-        transform.position = targetPosition;
-        onComplete?.Invoke();
-    }
+    //    transform.position = targetPosition;
+    //    onComplete?.Invoke();
+    //}
 
-    // 드래그 관련 메서드
-    public void OnBeginDrag()
-    {
-        //image.sortingOrder = 10; // 드래그 중인 아이템을 최상위로
-    }
-
-    public void OnEndDrag()
-    {
-        //image.sortingOrder = 0; // 원래 정렬 순서로 복구
-    }
 
     // 저장/로드를 위한 데이터 직렬화
     public SaveData.ItemData GetSaveData()

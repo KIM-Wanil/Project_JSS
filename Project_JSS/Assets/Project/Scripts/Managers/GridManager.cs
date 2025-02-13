@@ -317,7 +317,7 @@ public class GridManager : BaseManager
     }
 
     // 아이템을 그리드에서 제거
-    public void RemoveItem(Vector2Int position)
+    public void DetatchItemFromGrid(Vector2Int position)
     {
         if (IsValidPosition(position))
         {
@@ -368,10 +368,11 @@ public class GridManager : BaseManager
             MergeableItem neighbor = grid[position.x, position.y];
             //Debug.Log($"{position.x},{position.y}위치 : {neighbor}");
             //Debug.Log(item.CanMergeWith(neighbor));
-            if (neighbor != null && item.CanMergeWith(neighbor))
-            {
-                return neighbor;
-            }
+            //if (neighbor != null && item.CanMergeWith(neighbor))
+            //{
+            //    return neighbor;
+            //}
+            return neighbor;
         }
 
         //Vector2Int[] directions = new Vector2Int[]
@@ -446,7 +447,7 @@ public class GridManager : BaseManager
             currentGuests.Remove(guest);
         }
     }
-    public bool DoesItemExist(Item item)
+    public bool DoesItemExist(ItemKey item)
     {
         for (int x = 0; x < Width; x++)
         {
@@ -464,7 +465,7 @@ public class GridManager : BaseManager
         return false;
     }
     // 새로운 함수 추가
-    public void RemoveItemFromGrid(Item item)
+    public void FindAndRemoveItemFromGrid(ItemKey item)
     {
         for (int x = 0; x < Width; x++)
         {
@@ -476,12 +477,19 @@ public class GridManager : BaseManager
                     mergeableItem.Lv == item.lv)
                 {
                     // 그리드에서 아이템 제거
-                    grid[x, y] = null;
-                    Destroy(mergeableItem.gameObject);
+                    Vector2Int gridPos = new Vector2Int(x, y);
+                    DetatchItemFromGrid(gridPos);
+                    Managers.Game.ReturnItemToPool(mergeableItem.gameObject);
                     return;
                 }
             }
         }
+    }
+    public void RemoveItemFromGrid(Vector2Int gridPos)
+    {
+        MergeableItem mergeableItem = grid[gridPos.x, gridPos.y];
+        DetatchItemFromGrid(gridPos);
+        Managers.Game.ReturnItemToPool(mergeableItem.gameObject);
     }
 
     public Vector2Int GetNearestEmptyPosition(Vector2Int targetGridPos)

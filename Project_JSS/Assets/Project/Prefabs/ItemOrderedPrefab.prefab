@@ -212,10 +212,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 7652376433928997173}
-  isExist: 0
+  nameText: {fileID: 0}
   checkIcon: {fileID: 2437926448202682402}
-  data: {fileID: 0}
-  lv: 0
+  infoButton: {fileID: 0}
+  itemInfo:
+    id: 
+    lv: 0
 --- !u!1 &7615815065431246310
 GameObject:
   m_ObjectHideFlags: 0

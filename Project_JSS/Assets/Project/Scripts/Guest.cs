@@ -7,24 +7,26 @@ using UnityEditor.Localization.Plugins.XLIFF.V12;
 public class Guest : MonoBehaviour
 {
     public Image image;
-    public GameObject orderBox;
+    public GameObject orderInsideBox;
     public GameObject itemOrderedPrefab;
-    public ItemOrdered[] itemsOrdered;
+    public ItemInfo[] itemsOrdered;
     public TextMeshProUGUI goldText;
     public bool isCompleted = false;
     public Button completeButton;
+    public int gold;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public void Init(Sprite guestSprite, Item[] itemInfo, int goldAmount)
+    public void Init(Sprite guestSprite, ItemKey[] itemInfo, int goldAmount)
     {
         image.sprite = guestSprite;
-        itemsOrdered = new ItemOrdered[itemInfo.Length];
+        itemsOrdered = new ItemInfo[itemInfo.Length];
         for (int i = 0; i < itemInfo.Length; i++)
         {
-            itemsOrdered[i] = Instantiate(itemOrderedPrefab, orderBox.transform).GetComponent<ItemOrdered>();
+            itemsOrdered[i] = Instantiate(itemOrderedPrefab, orderInsideBox.transform).GetComponent<ItemInfo>();
             itemsOrdered[i].Init(itemInfo[i]);
             itemsOrdered[i].transform.GetChild(0).gameObject.SetActive(true);
         }
-        goldText.text = goldAmount.ToString();
+        gold = goldAmount;
+        goldText.text = gold.ToString();
         completeButton.onClick.AddListener(OnCompleteButtonClicked);
         Managers.Grid.AddGuest(this);
     }
@@ -33,8 +35,8 @@ public class Guest : MonoBehaviour
         int count = 0;
         foreach (var itemOrdered in itemsOrdered)
         {
-            Item itemInfo = new Item { id = itemOrdered.data.id, lv = itemOrdered.lv };
-            if (Managers.Grid.DoesItemExist(itemInfo))
+            //Item itemInfo = new Item { id = itemOrdered.data.id, lv = itemOrdered.lv };
+            if (Managers.Grid.DoesItemExist(itemOrdered.key))
             {
                 itemOrdered.ActivateCheckIcon();
                 count++;
@@ -57,11 +59,10 @@ public class Guest : MonoBehaviour
     public void OnCompleteButtonClicked()
     {
         if (!isCompleted) return;
-        Managers.Game.AddGold(int.Parse(goldText.text));
+        Managers.Game.AddGold(gold);
         foreach (var itemOrdered in itemsOrdered)
         {
-            Item itemInfo = new Item { id = itemOrdered.data.id, lv = itemOrdered.lv };
-            Managers.Grid.RemoveItemFromGrid(itemInfo);
+            Managers.Grid.FindAndRemoveItemFromGrid(itemOrdered.key);
             Managers.Grid.CheckGuestsOrder();
         }
         Managers.Grid.RemoveGuest(this);

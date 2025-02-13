@@ -9,28 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30f94d10770555343b88084cf2ae314b, type: 3}
+  m_Script: {fileID: 11500000, guid: b9e5e4c224b0b044d8c85d38570e7b3c, type: 3}
   m_Name: gen_anvil_data
   m_EditorClassIdentifier: 
   genId: gen_anvil
-  generatorLevelDatas:
+  generatorDatas:
   - level: 1
-    maxDurability: 50
+    maxDurability: 500
     generatableItems:
-    - itemInfo:
-        id: item_hammer
+    - key:
+        id: item_sword
         lv: 1
       spawnChance: 0.45
-    - itemInfo:
-        id: item_hammer
+    - key:
+        id: item_sword
         lv: 2
       spawnChance: 0.05
-    - itemInfo:
-        id: item_sword
+    - key:
+        id: item_hammer
         lv: 1
       spawnChance: 0.45
-    - itemInfo:
-        id: item_sword
+    - key:
+        id: item_hammer
         lv: 2
       spawnChance: 0.05
   energyCost: 1

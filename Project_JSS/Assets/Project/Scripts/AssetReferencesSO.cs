@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "NewAssetReferencesDataBase", menuName = "ScriptableObjects/AssetReferencesSO", order = 1)]
+[CreateAssetMenu(fileName = "NewAssetReferencesDataBase", menuName = "Scriptable Objects/AssetReferencesSO", order = 1)]
 public class AssetReferencesSO : ScriptableObject
 {
     [System.Serializable]

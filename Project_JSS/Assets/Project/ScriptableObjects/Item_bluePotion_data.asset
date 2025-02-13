@@ -13,19 +13,25 @@ MonoBehaviour:
   m_Name: Item_bluePotion_data
   m_EditorClassIdentifier: 
   id: item_bluePotion
+  type: 0
   items:
   - itemSprite: {fileID: 21300000, guid: aa209f8cb1d6a9a4296daa5ef03e464a, type: 3}
     level: 1
     itemName: 
+    price: 10
   - itemSprite: {fileID: 21300000, guid: 5c39e6a49bf955a49a98618a4c7a0262, type: 3}
     level: 2
     itemName: 
+    price: 20
   - itemSprite: {fileID: 21300000, guid: d47f6c79dc319bf4cae71ecd568ac1d0, type: 3}
     level: 3
     itemName: 
+    price: 40
   - itemSprite: {fileID: 21300000, guid: 60df7a87219b8a245abf903f57d4606a, type: 3}
     level: 4
     itemName: 
+    price: 80
   - itemSprite: {fileID: 21300000, guid: 317b2f9577247814095aae58af1b2453, type: 3}
     level: 5
     itemName: 
+    price: 160
