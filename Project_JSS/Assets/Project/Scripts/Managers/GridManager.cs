@@ -32,23 +32,11 @@ public class GridManager : BaseManager
         InitializeGrid();
         GenerateTiles(); // 타일 생성 호출
 
-        Vector2Int? emptyPosition = GetEmptyPosition();
-        if (emptyPosition != null)
-        {
-            Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)emptyPosition);
-        }
+        Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
+        Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
+        Managers.Game.SpawnGenerator("gen_orb", 1, (Vector2Int)GetEmptyPosition());
+        Managers.Game.SpawnGenerator("gen_pot", 1, (Vector2Int)GetEmptyPosition());
 
-        Vector2Int? emptyPosition2 = GetEmptyPosition();
-        if (emptyPosition2 != null)
-        {
-            Managers.Game.SpawnGenerator("gen_orb", 1, (Vector2Int)emptyPosition2);
-        }
-
-        Vector2Int? emptyPosition3 = GetEmptyPosition();
-        if (emptyPosition3 != null)
-        {
-            Managers.Game.SpawnGenerator("gen_pot", 1, (Vector2Int)emptyPosition3);
-        }
     }
     private void InitializeGrid()
     {

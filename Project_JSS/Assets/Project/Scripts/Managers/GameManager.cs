@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using static SaveData;
 using System.Linq;
+using static UnityEditor.Progress;
 
 public class GameManager : BaseManager
 {
@@ -201,6 +202,10 @@ public class GameManager : BaseManager
         {
             neighbor.LevelUp();
             Managers.Grid.DetatchItemFromGrid(item1.GridPosition);
+            if (item1.itemData.type == ItemType.Generatable)
+            {
+                item1.GetComponent<Generator>().OnReuturnToItemPool();
+            }
             ReturnItemToPool(item1.gameObject);
             return true;
         }
@@ -291,17 +296,30 @@ public class GameManager : BaseManager
 
 
         // 현재 보유 중인 제너레이터들을 확인
-        foreach (var generator in Managers.Grid.FindAllGenerators())
+        foreach (Generator generator in Managers.Grid.FindAllGenerators())
         {
-            GeneratorDB generatorData = generator.genDB;
-
-            // 제너레이터의 레벨에 따른 생성 가능한 아이템 ID를 추가
-            foreach (var levelData in generatorData.generatorDatas)
+            foreach (var item in generator.genData.generatableItems)
             {
-                foreach (var item in levelData.generatableItems)
-                {
-                    availableItemIds.Add(item.key.id);
-                }
+                availableItemIds.Add(item.key.id);
+            }
+            //GeneratorDB generatorData = generator.genDB;
+
+            //// 제너레이터의 레벨에 따른 생성 가능한 아이템 ID를 추가
+            //foreach (var data in generatorData.generatorDatas)
+            //{
+            //    foreach (var item in data.generatableItems)
+            //    {
+            //        availableItemIds.Add(item.key.id);
+            //    }
+            //}
+        }
+
+        //나중에 현재 제너레이터 상황에 따라 생성가능한 크래프트아이템만 추가하도록 로직 수정
+        foreach(var item in itemDatas)
+        {
+            if (item.type == ItemType.Crafted)
+            {
+                availableItemIds.Add(item.id);
             }
         }
         return availableItemIds.ToList();

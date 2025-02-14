@@ -124,6 +124,11 @@ public class MergeableItem : MonoBehaviour
             UpdateVisuals();
             onLevelChanged?.Invoke(lv);
             Managers.Grid.CheckGuestsOrder();
+
+            if (itemData.type == ItemType.Generatable)
+            {
+                GetComponent<Generator>().Initialize();
+            }
         }
     }
     public void OnSelected()

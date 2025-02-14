@@ -7,7 +7,6 @@ using static GeneratorDB;
 public class Generator : MonoBehaviour
 {
     public GeneratorDB genDB;
-    public Button generatorButton; // 버튼 컴포넌트 추가
     private MergeableItem mergeableItem;
     private int currentDurability;
     private int maxDurability;
@@ -16,13 +15,12 @@ public class Generator : MonoBehaviour
     private GameObject durablilty;
     private Image durabilityGauge; // 내구도를 표시할 Image 컴포넌트
 
-    private GeneratorData genData;
+    public GeneratorData genData;
     public List<Sprite> generatableSprites;
     private void Awake()
     {
         mergeableItem = GetComponent<MergeableItem>();
         draggableItem = GetComponent<DraggableItem>(); // DraggableItem 컴포넌트 가져오기
-        generatorButton = mergeableItem.button;
 
         // Image 컴포넌트 추가
         durablilty = transform.GetChild(1).gameObject;
@@ -62,7 +60,18 @@ public class Generator : MonoBehaviour
         //    generatorButton.onClick.AddListener(OnGeneratorClicked);
         //}
     }
+    public void OnReuturnToItemPool()
+    {
+        mergeableItem = null;
+        draggableItem = null;
+        maxDurability = 0;
+        currentDurability = 0;
+        generatableSprites = null;
 
+        durablilty.SetActive(false);
+        durablilty = null;
+        durabilityGauge = null; 
+    }
     private void OnDestroy()
     {
         //// 버튼 클릭 이벤트 해제
