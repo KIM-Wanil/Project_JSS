@@ -14,7 +14,7 @@ public class MergeableItem : MonoBehaviour
     [SerializeField] protected Image itemImage;
     public ItemData itemData;
     public ItemKey itemKey;
-
+    public int price => itemData.items[lvIndex].price;
     [Header("Effects")]
     [SerializeField] protected ParticleSystem mergeEffect;
     [SerializeField] protected ParticleSystem spawnEffect;
@@ -44,16 +44,16 @@ public class MergeableItem : MonoBehaviour
         lv = Mathf.Clamp(inputLv, 1, itemData.items.Length);
         UpdateVisuals();
         itemKey = new ItemKey(itemData.id, lv);
-        switch (itemData.type)
-        {
-            case ItemType.Normal:
-                button.onClick.AddListener(() =>
-                Managers.Game.infoPanelController.PrintItemDesc(itemKey, itemData.items[lvIndex].price, SellThisItem)
-            );
-                break;
-            default:
-                break;
-        }
+        //switch (itemData.type)
+        //{
+        //    case ItemType.Normal:
+        //        button.onClick.AddListener(() =>
+        //        Managers.Game.infoPanelController.PrintItemDesc(itemKey, itemData.items[lvIndex].price, SellThisItem)
+        //    );
+        //        break;
+        //    default:
+        //        break;
+        //}
 
         isInitialized = true;
 
@@ -133,6 +133,7 @@ public class MergeableItem : MonoBehaviour
             itemKey.lv = lv;
             UpdateVisuals();
             onLevelChanged?.Invoke(lv);
+            Managers.Grid.CheckGuestsOrder();
         }
     }
     public void OnSelected()

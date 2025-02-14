@@ -17,6 +17,7 @@ public class Generator : MonoBehaviour
     private Image durabilityGauge; // 내구도를 표시할 Image 컴포넌트
 
     private GeneratorData genData;
+    public List<Sprite> generatableSprites;
     private void Awake()
     {
         mergeableItem = GetComponent<MergeableItem>();
@@ -46,14 +47,14 @@ public class Generator : MonoBehaviour
         currentDurability = maxDurability;
         UpdateDurabilityUI();
 
-        List<Sprite> generatableSprites = new List<Sprite>();
+        generatableSprites = new List<Sprite>();
 
         foreach (var item in genData.generatableItems)
         {
             generatableSprites.Add(Managers.Game.GetItemSprite(item.key));
         }
-        mergeableItem.button.onClick.AddListener(() =>
-                Managers.Game.infoPanelController.PrintGeneratorDesc(mergeableItem.itemKey, generatableSprites));
+        //mergeableItem.button.onClick.AddListener(() =>
+        //        Managers.Game.infoPanelController.PrintGeneratorDesc(mergeableItem.itemKey, generatableSprites));
 
         //// 버튼 클릭 이벤트 설정
         //if (generatorButton != null)
@@ -71,20 +72,20 @@ public class Generator : MonoBehaviour
         //}
     }
 
-    private void OnGeneratorClicked()
-    {
-        Debug.Log("isDragging: " + draggableItem.IsDragging() + ", CanClick: " + draggableItem.CanClick());
-        // 드래그 중이거나 드래그가 끝난 직후에는 아이템 생성하지 않음
-        if (draggableItem != null && (draggableItem.IsDragging() || !draggableItem.CanClick()))
-        {
-            return;
-        }
-        if(!draggableItem.IsSelected())
-        {
-           return;
-        }
-        TryGenerateItem();
-    }
+    //private void OnGeneratorClicked()
+    //{
+    //    Debug.Log("isDragging: " + draggableItem.IsDragging() + ", CanClick: " + draggableItem.CanClick());
+    //    // 드래그 중이거나 드래그가 끝난 직후에는 아이템 생성하지 않음
+    //    if (draggableItem != null && (draggableItem.IsDragging() || !draggableItem.CanClick()))
+    //    {
+    //        return;
+    //    }
+    //    if(!draggableItem.IsSelected())
+    //    {
+    //       return;
+    //    }
+    //    TryGenerateItem();
+    //}
 
     public bool TryGenerateItem()
     {
