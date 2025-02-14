@@ -95,16 +95,6 @@ public class MergeableItem : MonoBehaviour
                other.lv == lv &&
                lv < itemData.items.Length; // 최대 레벨 체크
     }
-    public ItemKey? GetCraftingResult(MergeableItem other)
-    {
-        if(other == null || other == this)
-        {
-            return null;
-        }
-
-        return Managers.Game.craftingDB.FindCraftingResult(itemKey, other.itemKey);
-
-    }
 
     public void OnMerged()
     {

@@ -149,6 +149,10 @@ public class GameManager : BaseManager
     {
         return itemDataDic[key.id].items[key.lv-1].itemSprite;
     }
+    public string GetItemName(ItemKey key)
+    {
+        return itemDataDic[key.id].items[key.lv - 1].itemName;
+    }
     public MergeableItem SpawnItem(string itemId, int level, Vector2Int position)
     {
         GameObject itemObj = itemPool.Get();
@@ -178,6 +182,19 @@ public class GameManager : BaseManager
         draggableItem.generator = tempGenerator;
         return tempGenerator;
     }
+    public ItemKey? FindCraftingResult(MergeableItem componentItem1, MergeableItem componentItem2)
+    {
+        if (componentItem1 == null || componentItem2 == null || componentItem1 == componentItem2)
+        {
+            return null;
+        }
+
+        return craftingDB.FindCraftingResult(componentItem1.itemKey, componentItem2.itemKey);
+    }
+    public ItemKey[] FindCraftingComponents(ItemKey resultKey)
+    {
+        return craftingDB.FindCraftingComponents(resultKey);
+    }
     public bool TryMergeItems(MergeableItem item1, MergeableItem neighbor)
     {
         if (item1.CanMergeWith(neighbor))
@@ -187,9 +204,9 @@ public class GameManager : BaseManager
             ReturnItemToPool(item1.gameObject);
             return true;
         }
-        else if(item1.GetCraftingResult(neighbor) != null)
+        else if(FindCraftingResult(item1, neighbor) != null)
         {
-            ItemKey crftedItemKey = item1.GetCraftingResult(neighbor).Value;
+            ItemKey crftedItemKey = FindCraftingResult(item1, neighbor).Value;
             Vector2Int mergePosition = neighbor.GridPosition;
             Managers.Grid.DetatchItemFromGrid(item1.GridPosition);
             ReturnItemToPool(item1.gameObject);
@@ -287,8 +304,29 @@ public class GameManager : BaseManager
                 }
             }
         }
-
         return availableItemIds.ToList();
+    }
+    public UnityAction PrintGeneratableGeneratorDesc(ItemKey inputKey)
+    {
+        // 현재 보유 중인 제너레이터들을 확인
+        foreach (var generator in Managers.Grid.FindAllGenerators())
+        {
+            GeneratorDB generatorData = generator.genDB;
+
+            //input아이템을 생성할 수 있는 제너레이터의 설명을 프린트하는 함수를 반환
+            foreach (var levelData in generatorData.generatorDatas)
+            {
+                foreach (var item in levelData.generatableItems)
+                {
+                    if(inputKey.id == item.key.id)
+                    {
+
+                       return generator.GetComponent<DraggableItem>().PrintGeneratorDesc;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     #endregion

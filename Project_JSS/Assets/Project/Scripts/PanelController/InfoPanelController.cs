@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using System.Linq;
 public class InfoPanelController : MonoBehaviour
 {
     public GameObject descInfo;
@@ -28,6 +29,7 @@ public class InfoPanelController : MonoBehaviour
     private void Init()
     {
         targetItem.gameObject.SetActive(false);
+        targetItem.canClick = false;
         descInfo.SetActive(false);
         mergeInfo.SetActive(false);
     }
@@ -58,15 +60,28 @@ public class InfoPanelController : MonoBehaviour
         normalDesc.SetActive(true);
         generatorDesc.SetActive(false);
 
-        //아이템 정보 표시
-        if (targetItem.lvIndex + 1 < targetItem.data.items.Length)
+        switch(targetItem.data.type)
         {
-            descText.text = $"Merge and create {targetItem.data.items[targetItem.lvIndex + 1].itemName} (Lv.{targetItem.key.lv + 1})";
+            case ItemType.Normal:
+                //아이템 정보 표시
+                if (targetItem.lvIndex + 1 < targetItem.data.items.Length)
+                {
+                    descText.text = $"Merge and create {targetItem.data.items[targetItem.lvIndex + 1].itemName} (Lv.{targetItem.key.lv + 1})";
+                }
+                else
+                {
+                    descText.text = "Max level reached";
+                }
+                break;
+
+            case ItemType.Crafted:
+                ItemKey[] componentItemKey = Managers.Game.FindCraftingComponents(inputKey);
+                string componentItemName1 = Managers.Game.GetItemName(componentItemKey[0]);
+                string componentItemName2 = Managers.Game.GetItemName(componentItemKey[1]);
+                descText.text = $"{componentItemName1} + {componentItemName2}";
+                break;
         }
-        else
-        {
-            descText.text = "Max level reached";
-        }
+       
 
         //가격 표시
         priceText.text = price.ToString();
@@ -109,27 +124,51 @@ public class InfoPanelController : MonoBehaviour
     }
     public void PrintComponentItems(ItemKey inputKey)
     {
+        //정보 볼 아이템 설정
+        SetTargetItemBox(inputKey);
+
+        //설명창X 조합식O
         descInfo.SetActive(false);
         mergeInfo.SetActive(true);
 
-        SetTargetItemBox(inputKey);
+        ItemKey[] componentItemKey = new ItemKey[2];
 
-        if (inputKey.lv < 2)
+        switch (targetItem.data.type)
         {
-            return;
+            case ItemType.Normal:
+                Debug.Log(inputKey.lv);
+                if (inputKey.lv > 1)
+                {
+                    ItemKey downgradeItemKey = new ItemKey(inputKey.id, inputKey.lv - 1);
+                    componentItemKey[0] = downgradeItemKey;
+                    componentItemKey[1] = downgradeItemKey;
+                }
+                else
+                {
+                    UnityAction action = Managers.Game.PrintGeneratableGeneratorDesc(inputKey);
+                    action();
+                    return;
+                }
+                break;
+
+            case ItemType.Crafted:
+                componentItemKey = Managers.Game.FindCraftingComponents(inputKey);
+                break;
+            default:
+                Debug.Log("Invalid item type error");
+                return;
         }
-        //일반 머지 아이템만 해당. 크래프팅아이템의 경우 나중에 추가
-        ItemKey componentItem = new ItemKey(inputKey.id, inputKey.lv-1);
 
         for(int i = 0; i < componentItems.Length; i++)
         {
-            componentItems[i].Init(componentItem);
+            componentItems[i].Init(componentItemKey[i]);
             componentItems[i].ActivateNameText();
-            if(Managers.Grid.DoesItemExist(componentItem))
+            if (Managers.Grid.DoesItemExist(componentItemKey[i]))
             {
                 componentItems[i].ActivateCheckIcon();
             }
         }
+        Debug.Log("PrintComponentItems");
     }
     // Update is called once per frame
     void Update()

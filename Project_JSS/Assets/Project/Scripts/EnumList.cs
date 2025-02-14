@@ -45,6 +45,7 @@ public enum ItemType
 {
     Normal =0,
     Generatable,
+    Crafted,
     Usable
 }
 public enum RewardType

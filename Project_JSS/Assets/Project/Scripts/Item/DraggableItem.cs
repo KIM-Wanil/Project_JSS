@@ -30,6 +30,10 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         canvas = GetComponentInParent<Canvas>();
         initialGridPos = mergeableItem.GridPosition;
     }
+    public void PrintGeneratorDesc()
+    {
+        Managers.Game.infoPanelController.PrintGeneratorDesc(mergeableItem.itemKey, generator.generatableSprites);
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -100,8 +104,12 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         switch (mergeableItem.itemData.type)
         {
             case ItemType.Normal:
+            case ItemType.Crafted:
                 Managers.Game.infoPanelController.PrintItemDesc(mergeableItem.itemKey, mergeableItem.price, mergeableItem.SellThisItem);
                 break;
+
+                //Managers.Game.infoPanelController.PrintComponentItems(mergeableItem.itemKey);
+                //break;
 
             case ItemType.Generatable:
                 if (generator != null)
@@ -112,7 +120,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                     }
                     else
                     {
-                        Managers.Game.infoPanelController.PrintGeneratorDesc(mergeableItem.itemKey, generator.generatableSprites);
+                        PrintGeneratorDesc();
                     }
                 } 
                 break;
@@ -142,7 +150,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         // 머지 가능한 이웃 찾기
         MergeableItem neighbor = Managers.Grid.FindMergeableNeighbor((Vector2Int)gridPosition, mergeableItem);
 
-        if (neighbor != null && Managers.Game.TryMergeItems(mergeableItem, neighbor))
+        if (neighbor != null && mergeableItem.itemData.type !=ItemType.Crafted && Managers.Game.TryMergeItems(mergeableItem, neighbor))
         {
             // 머지 수행
             Debug.Log("머지 실행");

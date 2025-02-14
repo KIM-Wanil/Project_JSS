@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
-public class ItemInfo : MonoBehaviour
+public class ItemInfo : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI nameText;
@@ -15,6 +16,8 @@ public class ItemInfo : MonoBehaviour
     public ItemKey key;
     private bool isExist = false;
     public int lvIndex;
+
+    public bool canClick = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Init(ItemKey inputKey)
     {
@@ -29,6 +32,22 @@ public class ItemInfo : MonoBehaviour
             details = data.items[lvIndex];
             image.sprite = details.itemSprite;
         }  
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("Click");
+        if (!canClick) return;
+        switch (data.type)
+        {
+            case ItemType.Normal:
+            case ItemType.Crafted:
+                Managers.Game.infoPanelController.PrintComponentItems(key);
+                break;
+            default:
+                break;
+
+        }
+
     }
     // InfoButton 활성화 메서드 추가
     public void ActivateNameText()

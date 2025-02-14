@@ -18,6 +18,20 @@ public class CraftingDB : ScriptableObject
         }
         return null;
     }
+    public ItemKey[] FindCraftingComponents(ItemKey resultKey1)
+    {
+        ItemKey[] componentKeys = new ItemKey[2];
+        foreach (CraftingRecipe recipe in craftingRecipe)
+        {
+            if (IsSameItemKey(recipe.result, resultKey1))
+            {
+                componentKeys[0] = recipe.componentA;
+                componentKeys[1] = recipe.componentB;
+                return componentKeys;
+            }
+        }
+        return null;
+    }
     public bool IsSameItemKey(ItemKey itemKey1, ItemKey itemKey2)
     {
         return itemKey1.id == itemKey2.id && itemKey1.lv == itemKey2.lv;
