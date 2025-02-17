@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Item_purplePotion_data
   m_EditorClassIdentifier: 
   id: item_purplePotion
-  type: 0
+  type: 2
   items:
   - itemSprite: {fileID: 21300000, guid: 7305cf6db1de1f545bb7b95d58d3fca3, type: 3}
     level: 1

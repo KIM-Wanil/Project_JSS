@@ -17,7 +17,7 @@ MonoBehaviour:
   items:
   - itemSprite: {fileID: 21300000, guid: 1b6988e4b6dc4f74d896e84dc494d910, type: 3}
     level: 1
-    itemName: 
+    itemName: red potion
     price: 10
   - itemSprite: {fileID: 21300000, guid: 1573452dcbd0b674fbd1f0e08ef74007, type: 3}
     level: 2

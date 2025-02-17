@@ -15,7 +15,7 @@ MonoBehaviour:
   genId: gen_anvil
   generatorDatas:
   - level: 1
-    maxDurability: 500
+    maxDurability: 50
     generatableItems:
     - key:
         id: item_sword
@@ -32,5 +32,24 @@ MonoBehaviour:
     - key:
         id: item_hammer
         lv: 2
+      spawnChance: 0.05
+  - level: 2
+    maxDurability: 100
+    generatableItems:
+    - key:
+        id: item_sword
+        lv: 2
+      spawnChance: 0.45
+    - key:
+        id: item_sword
+        lv: 3
+      spawnChance: 0.05
+    - key:
+        id: item_hammer
+        lv: 2
+      spawnChance: 0.45
+    - key:
+        id: item_hammer
+        lv: 3
       spawnChance: 0.05
   energyCost: 1

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -46,6 +47,9 @@ public class Managers : MonoBehaviour
     [SerializeField] private GridManager _grid;
     public static GridManager Grid => Instance._grid;
 
+    [SerializeField] private BackendManager _backend;
+    public static BackendManager Backend => Instance._backend;
+
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -69,6 +73,7 @@ public class Managers : MonoBehaviour
         _game.Init();
         _save.Init();
         _grid.Init();
+        _backend.Init();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
