@@ -8,24 +8,32 @@ using UnityEngine.UI;
 using System.Text;
 using TMPro;
 [Serializable]
-public class UIManager : BaseManager
+public class TopPanelViewer : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
-    [SerializeField] public float targetAspect = 16f / 9f;
-    private TextMeshProUGUI energyText; // TextMeshProUGUI 컴포넌트 추가
-    private TextMeshProUGUI goldText; // TextMeshProUGUI 컴포넌트 추가
+    [SerializeField] private TextMeshProUGUI energyText; // TextMeshProUGUI 컴포넌트 추가
+    [SerializeField] private TextMeshProUGUI goldText; // TextMeshProUGUI 컴포넌트 추가
+    [SerializeField] private TextMeshProUGUI nickNameText; // TextMeshProUGUI 컴포넌트 추가
     // private TextMeshProUGUI maxEnergyText; // TextMeshProUGUI 컴포넌트 추가
 
-    private void Awake()
+    public void Awake()
     {
-        mainCamera = Camera.main;
-        //UpdateLetterbox();
-        energyText = GameObject.Find("EnergyAmountText").GetComponent<TextMeshProUGUI>();
-        goldText = GameObject.Find("GoldAmountText").GetComponent<TextMeshProUGUI>();
-    }
+        //if(energyText)
+        // energyText가 null일 때만 Find 수행
+        if (!energyText)
+        {
+            energyText = GameObject.Find("EnergyAmountText").GetComponent<TextMeshProUGUI>();
+        }
 
-    private void Start()
-    {
+        // goldText가 null일 때만 Find 수행
+        if (!goldText)
+        {
+            goldText = GameObject.Find("GoldAmountText").GetComponent<TextMeshProUGUI>();
+        }
+        // nickNameText가 null일 때만 Find 수행
+        if (!nickNameText)
+        {
+            nickNameText = GameObject.Find("NicknameText").GetComponent<TextMeshProUGUI>();
+        }
         // GameManager의 에너지 변경 이벤트 구독
         Managers.Game.onEnergyChanged.AddListener(UpdateEnergyUI);
         // 초기 에너지 UI 설정
@@ -35,28 +43,42 @@ public class UIManager : BaseManager
         Managers.Game.onGoldChanged.AddListener(UpdateGoldUI);
         // 초기 에너지 UI 설정
         UpdateGoldUI(Managers.Game.CurrentGold);
+        
+        
     }
 
-    private void OnDestroy()
+    private void Start()
     {
-        // GameManager의 에너지 변경 이벤트 구독 해제
-        if (Managers.Game != null)
-        {
-            Managers.Game.onEnergyChanged.RemoveListener(UpdateEnergyUI);
-        }
+        
     }
 
+    //private void OnDestroy()
+    //{
+    //    // GameManager의 에너지 변경 이벤트 구독 해제
+    //    if (Managers.Game != null)
+    //    {
+    //        Managers.Game.onEnergyChanged.RemoveListener(UpdateEnergyUI);
+    //    }
+    //}
+    //닉네임 업데이트 메서드
+    public void UpdateNickname()
+    {
+        Debug.Log("update nickname");
+        //닉네임이 없으면 gamer_id를 출력하고, 닉네임이 있으면 닉네임 출력
+        nickNameText.text = UserInfo.Data.nickname == null ?
+                            UserInfo.Data.gamerId : UserInfo.Data.nickname;
+    }
     // 에너지 UI 업데이트 메서드
     private void UpdateEnergyUI(int currentEnergy)
     {
-        if (energyText != null)
+        if (!energyText)
         {
             energyText.text = $"{currentEnergy}";
         }
     }
     private void UpdateGoldUI(int currentEnergy)
     {
-        if (goldText != null)
+        if (!goldText)
         {
             goldText.text = $"{currentEnergy}";
         }

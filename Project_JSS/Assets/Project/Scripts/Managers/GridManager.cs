@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class GridManager : BaseManager
 {
@@ -29,13 +30,19 @@ public class GridManager : BaseManager
 
     public override void Init()
     {
+        Debug.Log(SceneManager.GetActiveScene().name);
+        Debug.Log(SceneManager.GetSceneByName("Main").name);
+        if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
+            return;
+        Debug.Log("GridManager initialized");
         InitializeGrid();
         GenerateTiles(); // 타일 생성 호출
-
         Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
         Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
         Managers.Game.SpawnGenerator("gen_orb", 1, (Vector2Int)GetEmptyPosition());
         Managers.Game.SpawnGenerator("gen_pot", 1, (Vector2Int)GetEmptyPosition());
+        
+
 
     }
     private void InitializeGrid()

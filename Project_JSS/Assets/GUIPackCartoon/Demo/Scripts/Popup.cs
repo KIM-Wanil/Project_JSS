@@ -59,7 +59,7 @@ namespace Ricimi
             image.canvasRenderer.SetAlpha(0.0f);
             image.CrossFadeAlpha(1.0f, 0.4f, false);
 
-            var canvas = GameObject.Find("Canvas");
+            var canvas = transform.GetComponentInParent<Canvas>();
             m_background.transform.localScale = new Vector3(1, 1, 1);
             m_background.GetComponent<RectTransform>().sizeDelta = canvas.GetComponent<RectTransform>().sizeDelta;
             m_background.transform.SetParent(canvas.transform, false);

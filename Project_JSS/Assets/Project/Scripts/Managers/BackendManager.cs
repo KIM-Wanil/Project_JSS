@@ -8,7 +8,13 @@ public class BackendManager : BaseManager
         base.Init();
         BackendSetup();
     }
-
+    private void Update()
+    {
+        if (Backend.IsInitialized)
+        {
+            
+        }
+    }
     // Update is called once per frame
     private void BackendSetup()
     {

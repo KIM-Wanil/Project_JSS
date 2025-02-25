@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using static SaveData;
 using System.Linq;
 using static UnityEditor.Progress;
+using UnityEngine.SceneManagement;
 
 public class GameManager : BaseManager
 {
@@ -62,6 +63,9 @@ public class GameManager : BaseManager
     }
     private void InitializeGame()
     {
+        if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
+            return;
+
         // «¡∏Æ∆’ µÒº≈≥ ∏Æ √ ±‚»≠
         foreach (var itemData in itemDatas)
         {
@@ -77,6 +81,7 @@ public class GameManager : BaseManager
         itemPool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 50, 100);
 
         guestBoard = GameObject.Find("GuestBoard");
+
 
         //LoadGame();
     }

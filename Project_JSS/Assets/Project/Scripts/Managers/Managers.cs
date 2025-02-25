@@ -35,9 +35,6 @@ public class Managers : MonoBehaviour
     //[SerializeField] private SettingsManager _settings;
     //public static SettingsManager Settings => Instance._settings;
 
-    [SerializeField] private UIManager _ui;
-    public static UIManager UI => Instance._ui;
-
     [SerializeField] private GameManager _game;
     public static GameManager Game => Instance._game;
 
@@ -69,18 +66,20 @@ public class Managers : MonoBehaviour
         _db.Init();
         _asset.Init();
         //_settings.Init();
-        _ui.Init();
-        _game.Init();
         _save.Init();
-        _grid.Init();
         _backend.Init();
+        _game.Init();
+        _grid.Init();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
+        Debug.Log("¾À ·Îµå");
+        _game.Init();
+        _grid.Init();
         //_ui.UpdateLetterbox();
         //_settings.Init();
+
         Debug.Log($"OnSceneLoaded {scene}");
     }
     private void OnDestroy()
