@@ -258,20 +258,40 @@ public class MessengerManager : MonoBehaviour
         GameObject messagePrefab = GetMessagePrefab(message.type);
         GameObject messageObject = Instantiate(messagePrefab, messageListContent);
 
-        // 메시지 내용 설정
-        TextMeshProUGUI messageText = messageObject.GetComponentInChildren<TextMeshProUGUI>();
-        if (messageText != null)
+        if(message.type == ChatMessage.MessageType.PlayerMessage)
         {
-            messageText.text = message.messageText;
+            TextMeshProUGUI messageText = messageObject.GetComponentInChildren<TextMeshProUGUI>();
+            if (messageText != null)
+            {
+                messageText.text = message.messageText;
+            }
         }
-
-        // 프로필 이미지 설정
-        Image profileImage = messageObject.GetComponentInChildren<Image>();
-        if (profileImage != null && message.senderProfileImage != null)
+        else if(message.type == ChatMessage.MessageType.CharacterMessage)
         {
-            profileImage.sprite = message.senderProfileImage;
-        }
+            CharacterChat characterChat = messageObject.GetComponent<CharacterChat>();
+            // 프로필 이미지 설정
+            Image profileImage = characterChat.profileImage;
+            if (profileImage != null && message.senderProfileImage != null)
+            {
+                profileImage.sprite = message.senderProfileImage;
+            }
 
+            // 프로필 이름 설정
+            TextMeshProUGUI characterChatName = characterChat.characterName;
+            if (characterChatName != null)
+            {
+                characterChatName.text = message.senderName;
+            }
+            // 메시지 내용 설정
+            TextMeshProUGUI characterChatMessage = characterChat.message;
+            if (characterChatMessage != null)
+            {
+                characterChatMessage.text = message.messageText;
+            }
+
+            
+        }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(messageObject.GetComponent<RectTransform>());
         return messageObject;
     }
 

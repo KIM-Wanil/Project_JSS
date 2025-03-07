@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using UnityEngine.Rendering.VirtualTexturing;
 
 [System.Serializable]
 public class CharacterProfile
@@ -27,51 +29,82 @@ public class CharacterProfile
     }
 }
 
-public class Message
-{
-    public string role;
-    public string content;
-}
-
-[System.Serializable]
+// Claude API 요청 형식 수정
+[Serializable]
 public class ClaudeRequest
 {
-    public string model = "claude-3-7-sonnet-20250219";
-    public List<Message> messages;
-    public double temperature = 0.7;
-    public int max_tokens = 1000;
+    public string model;
+    public string system;  // 문자열로 정의
+    public List<MessageRequest> messages;
+    public float temperature;
+    public int max_tokens;
+    public bool stream = false; // 명시적으로 기본값 설정
 }
 
-[System.Serializable]
+[Serializable]
+public class MessageRequest
+{
+    public string role;  // "user" 또는 "assistant"
+    public List<ContentItem> content;  // 배열로 변경
+}
+
+[Serializable]
+public class ContentItem
+{
+    public string type;  // "text"
+    public string text;
+}
+
+// Claude API 응답 형식
+[Serializable]
 public class ClaudeResponse
 {
     public string id;
     public string type;
-    public ContentObject content;
+    public long created_at;
+    public string model;
+    public List<ResponseContentItem> content;
+    public string role;
+    public string stop_reason;
+    public Usage usage;
 }
 
-[System.Serializable]
-public class ContentObject
-{
-    public List<ContentBlock> blocks;
-}
-
-[System.Serializable]
-public class ContentBlock
+[Serializable]
+public class ResponseContentItem
 {
     public string type;
     public string text;
 }
 
+[Serializable]
+public class Usage
+{
+    public int input_tokens;
+    public int output_tokens;
+}
+
+// 대화 메시지 저장용 클래스 (내부 저장용)
+[Serializable]
+public class ConversationMessage
+{
+    public string role;
+    public string content;
+}
+
 public class DialogueManager : MonoBehaviour
 {
-    private string apiKey = "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";
+    private string apiKey = "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";
     private string apiUrl = "https://api.anthropic.com/v1/messages";
 
     public Dictionary<string, CharacterProfile> characters = new Dictionary<string, CharacterProfile>();
-    private Dictionary<string, List<Message>> conversationHistory = new Dictionary<string, List<Message>>();
-
+    private Dictionary<string, List<ConversationMessage>> conversationHistory = new Dictionary<string, List<ConversationMessage>>();
     private string currentGameState = "idle"; // idle, quest, battle, romance_event 등
+
+    // 게임 상태 변화 감지를 위한 변수들
+    private bool gameStateChanged = false;
+    private bool affectionLevelChanged = false;
+    private string lastGameState = "";
+    private Dictionary<string, int> lastAffectionLevels = new Dictionary<string, int>();
 
     void Awake()
     {
@@ -84,15 +117,14 @@ public class DialogueManager : MonoBehaviour
         CharacterProfile Linaw = new CharacterProfile
         {
             characterName = "리나",
-            personality = "차분하고 지적이며 마법에 대한 깊은 지식을 가진 마법사",
-            background = "고대 마법 학교에서 수석으로 졸업했으며, 잃어버린 마법 서적을 찾아 여행 중입니다.",
-            interests = new List<string> { "마법", "고대 문명", "책", "별자리" },
-            relationships = new Dictionary<string, int> { { "로안", 60 }, { "세린", 80 } },
-            affectionLevel = 30
+            personality = "조용한, 여린, 부끄러움많은, 착한",
+            background = "함께 엘프의 숲을 나온 동생들의 생계를 위해 모험가 일을 하고 있다.겉으로 큰 반응은 없지만 사소한 말들에 일희일비하는 여린 인물이다.마음이 여려 일부 토벌 의뢰를 잘 수행하지 못하기도 한다..",
+            interests = new List<string> { "엘프", "모험", "퀘스트", "궁수" },
+            affectionLevel = 100
         };
 
         characters.Add("리나", Linaw);
-        conversationHistory.Add("리나", new List<Message>());
+        conversationHistory.Add("리나", new List<ConversationMessage>());
 
         // 다른 캐릭터들도 추가...
     }
@@ -115,144 +147,241 @@ public class DialogueManager : MonoBehaviour
         Debug.Log($"게임 상태가 {newState}로 변경되었습니다.");
     }
 
-    // 대화를 Claude API에 전송하고 응답 받기
+    // 수정된 API 호출 함수
     public async Task<string> GetResponseFromClaude(string characterName, string playerInput)
     {
         if (!characters.ContainsKey(characterName))
         {
             return "오류: 존재하지 않는 캐릭터입니다.";
         }
-
         CharacterProfile character = characters[characterName];
 
-        // 시스템 메시지 생성 (캐릭터 페르소나와 현재 상황 포함)
-        string systemPrompt = CreateCharacterPrompt(characterName);
-
-        // 대화 이력 가져오기
-        List<Message> history = conversationHistory[characterName];
-
-        // 시스템 메시지 추가
-        List<Message> messages = new List<Message>
+        // 대화 이력 가져오기 (내부 저장용)
+        List<ConversationMessage> history = conversationHistory[characterName];
+        bool isNewConversation = history.Count == 0 || gameStateChanged || affectionLevelChanged;
+        //bool isNewConversation = true;
+        if (isNewConversation)
         {
-            new Message { role = "system", content = systemPrompt }
-        };
+            history.Clear();
+            gameStateChanged = false;
+            affectionLevelChanged = false;
+        }
+
+        // API 요청용 메시지 포맷팅
+        List<MessageRequest> apiMessages = new List<MessageRequest>();
 
         // 대화 이력 추가 (최대 10개 유지)
         int startIdx = Math.Max(0, history.Count - 10);
         for (int i = startIdx; i < history.Count; i++)
         {
-            messages.Add(history[i]);
+            ConversationMessage historyMsg = history[i];
+            MessageRequest apiMsg = new MessageRequest
+            {
+                role = historyMsg.role,
+                content = new List<ContentItem>
+                {
+                    new ContentItem { type = "text", text = historyMsg.content }
+                }
+            };
+            apiMessages.Add(apiMsg);
         }
 
-        // 플레이어 메시지 추가
-        Message userMessage = new Message { role = "user", content = playerInput };
-        messages.Add(userMessage);
-
-        // API 요청 생성
-        ClaudeRequest request = new ClaudeRequest
+        // 현재 사용자 메시지 추가
+        MessageRequest userMessage = new MessageRequest
         {
-            messages = messages
-        };
-
-        string jsonRequest = JsonConvert.SerializeObject(request);
-
-        // API 호출
-        using (UnityWebRequest webRequest = new UnityWebRequest(apiUrl, "POST"))
-        {
-            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRequest);
-            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("Content-Type", "application/json");
-            webRequest.SetRequestHeader("x-api-key", apiKey);
-            webRequest.SetRequestHeader("anthropic-version", "2023-06-01");
-
-            await webRequest.SendWebRequest();
-
-            if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
-                webRequest.result == UnityWebRequest.Result.ProtocolError)
+            role = "user",
+            content = new List<ContentItem>
             {
-                Debug.LogError($"Error: {webRequest.error}");
-                return "대화 오류가 발생했습니다.";
+                new ContentItem { type = "text", text = playerInput }
+            }
+        };
+        apiMessages.Add(userMessage);
+
+        try
+        {
+            //// API 요청 생성
+            //ClaudeRequest request = new ClaudeRequest
+            //{
+            //    model = "claude-3-7-sonnet-20250219",
+            //    messages = apiMessages,
+            //    temperature = 0.7f,
+            //    max_tokens = 1000,
+            //    stream = false // 명시적으로 false 설정
+            //};
+
+            ClaudeRequest request2;
+            if (isNewConversation)
+            {
+                request2 = new ClaudeRequest
+                {
+                    model = "claude-3-7-sonnet-20250219",
+                    messages = apiMessages,
+                    temperature = 0.7f,
+                    max_tokens = 1000,
+                    stream = false,
+                    system = CreateCharacterPrompt(characterName)
+                };
             }
             else
             {
-                string responseJson = webRequest.downloadHandler.text;
-                ClaudeResponse response = JsonConvert.DeserializeObject<ClaudeResponse>(responseJson);
-
-                if (response.content.blocks.Count > 0)
+                request2 = new ClaudeRequest
                 {
-                    string responseText = response.content.blocks[0].text;
+                    model = "claude-3-7-sonnet-20250219",
+                    messages = apiMessages,
+                    temperature = 0.7f,
+                    max_tokens = 1000,
+                    stream = false,
+                    system = ""
+                    // system 필드를 포함하지 않음
+                };
+            }
 
-                    // 대화 이력에 플레이어 메시지와 응답 추가
-                    history.Add(userMessage);
-                    history.Add(new Message { role = "assistant", content = responseText });
+            string jsonRequest = JsonConvert.SerializeObject(request2);
+            Debug.Log($"Request JSON: {jsonRequest}");
 
-                    return responseText;
+            using (UnityWebRequest webRequest = new UnityWebRequest(apiUrl, "POST"))
+            {
+                byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRequest);
+                webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                webRequest.downloadHandler = new DownloadHandlerBuffer();
+                webRequest.SetRequestHeader("Content-Type", "application/json");
+                webRequest.SetRequestHeader("x-api-key", apiKey);
+                webRequest.SetRequestHeader("anthropic-version", "2023-06-01");
+
+                // 비동기 요청 전송 및 완료 대기
+                var operation = webRequest.SendWebRequest();
+
+                while (!operation.isDone)
+                {
+                    await Task.Delay(100); // 100ms 간격으로 체크
+                }
+
+                if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
+                    webRequest.result == UnityWebRequest.Result.ProtocolError)
+                {
+                    Debug.LogError($"API 요청 오류: {webRequest.error}");
+                    Debug.LogError($"응답 내용: {webRequest.downloadHandler.text}");
+
+                    // 오류 응답을 더 자세히 로깅
+                    if (!string.IsNullOrEmpty(webRequest.downloadHandler.text))
+                    {
+                        try
+                        {
+                            var errorJson = JObject.Parse(webRequest.downloadHandler.text);
+                            Debug.LogError($"오류 상세: {errorJson}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.LogError($"오류 응답 파싱 실패: {ex.Message}");
+                        }
+                    }
+
+                    return "대화 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
                 }
                 else
                 {
-                    return "응답을 받을 수 없습니다.";
+                    string responseJson = webRequest.downloadHandler.text;
+                    Debug.Log($"API 응답: {responseJson}");
+
+                    try
+                    {
+                        ClaudeResponse response = JsonUtility.FromJson<ClaudeResponse>(responseJson);
+
+                        // Newtonsoft.Json을 사용한 대체 파싱 방법
+                        if (response == null || response.content == null || response.content.Count == 0)
+                        {
+                            response = JsonConvert.DeserializeObject<ClaudeResponse>(responseJson);
+                        }
+
+                        if (response != null && response.content != null && response.content.Count > 0)
+                        {
+                            string responseText = response.content[0].text;
+
+                            // 대화 이력에 메시지 추가 (내부 저장용)
+                            history.Add(new ConversationMessage { role = "user", content = playerInput });
+                            history.Add(new ConversationMessage { role = "assistant", content = responseText });
+
+                            return responseText;
+                        }
+                        else
+                        {
+                            Debug.LogError("응답 내용이 비어 있습니다.");
+                            Debug.LogError($"전체 응답: {responseJson}");
+                            return "응답을 받을 수 없습니다.";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"응답 처리 중 오류 발생: {ex.Message}");
+                        Debug.LogError($"전체 응답: {responseJson}");
+                        return "대화 처리 중 오류가 발생했습니다.";
+                    }
                 }
             }
         }
+        catch (Exception ex)
+        {
+            Debug.LogError($"요청 준비 중 오류 발생: {ex.Message}");
+            return "시스템 오류가 발생했습니다.";
+        }
     }
 
-    // 캐릭터의 현재 상태와 성격을 반영한 프롬프트 생성
     private string CreateCharacterPrompt(string characterName)
     {
         CharacterProfile character = characters[characterName];
-
         StringBuilder prompt = new StringBuilder();
-        prompt.AppendLine($"당신은 로맨스 판타지 게임 속의 캐릭터 '{character.characterName}'입니다.");
+        prompt.AppendLine("당신은 이제부터 다음 캐릭터를 연기해주세요:");
+        prompt.AppendLine($"캐릭터명: '{character.characterName}'");
+        prompt.AppendLine($"역할: 판타지 세계의 모험가");
         prompt.AppendLine($"성격: {character.personality}");
-        prompt.AppendLine($"배경: {character.background}");
-        prompt.AppendLine("관심사: " + string.Join(", ", character.interests));
-        prompt.AppendLine($"현재 플레이어에 대한 감정: {character.GetAffectionDescription()}");
-        prompt.AppendLine($"현재 게임 상태: {currentGameState}");
-
-        // 호감도에 따른 대화 스타일 변경
-        if (character.affectionLevel < 30)
-        {
-            prompt.AppendLine("당신은 플레이어에게 다소 냉담하고 거리를 두는 태도를 보입니다.");
-        }
-        else if (character.affectionLevel < 60)
-        {
-            prompt.AppendLine("당신은 플레이어에게 친절하지만 여전히 약간 경계심을 가지고 있습니다.");
-        }
-        else if (character.affectionLevel < 80)
-        {
-            prompt.AppendLine("당신은 플레이어에게 친밀하고 마음을 열기 시작했습니다.");
-        }
-        else
-        {
-            prompt.AppendLine("당신은 플레이어에게 매우 친밀하고 애정을 표현하는 것을 주저하지 않습니다.");
-        }
-
-        // 게임 상태에 따른 대화 컨텍스트 변경
-        switch (currentGameState)
-        {
-            case "battle":
-                prompt.AppendLine("현재 전투 중입니다. 긴장감 있고 짧은 대답이 적절합니다.");
-                break;
-            case "romance_event":
-                prompt.AppendLine("현재 로맨스 이벤트 중입니다. 감정적이고 깊은 대화를 나눌 수 있습니다.");
-                break;
-            case "quest":
-                prompt.AppendLine("현재 퀘스트 수행 중입니다. 임무에 집중하면서도 캐릭터의 개성을 드러내세요.");
-                break;
-            default:
-                prompt.AppendLine("평소 일상적인 대화 중입니다.");
-                break;
-        }
-
-        // 대화 지침
-        prompt.AppendLine("\n대화 지침:");
-        prompt.AppendLine("1. 항상 1인칭으로 대화하며, 자신이 게임 캐릭터라는 것을 인지하지 않습니다.");
-        prompt.AppendLine("2. 대답은 간결하게 1-3문장으로 제한합니다.");
-        prompt.AppendLine("3. 캐릭터의 개성과 현재 감정 상태를 반영하여 응답합니다.");
-        prompt.AppendLine("4. 게임의 판타지 세계관을 유지하며 현실 세계의 기술이나 개념을 언급하지 않습니다.");
-
+        prompt.AppendLine($"배경 요약: {character.background}");
+        prompt.AppendLine($"감정 상태: {character.GetAffectionDescription()}");
+        prompt.AppendLine($"현재 상황: {currentGameState}");
+        prompt.AppendLine($"대화 중인 상대방: 유스타스대륙, 갈바테인길드의 접수원(플레이어)");
+        prompt.AppendLine("지침: 1인칭으로 1-3문장 응답, 판타지 세계관 유지, 행동지시문 없이");
+        prompt.AppendLine("당신은 모험가 캐릭터로서 접수원(플레이어)과 대화해야 합니다.");
         return prompt.ToString();
+    }
+
+    // 게임 상태 설정 메서드 - 상태가 변경될 때 플래그 설정
+    public void SetGameState(string newState)
+    {
+        if (currentGameState != newState)
+        {
+            currentGameState = newState;
+            gameStateChanged = true;
+        }
+    }
+
+    // 호감도 변경 메서드 - 호감도가 변할 때 플래그 설정
+    public void UpdateAffectionLevel(string characterName, int newLevel)
+    {
+        if (!lastAffectionLevels.ContainsKey(characterName))
+        {
+            lastAffectionLevels[characterName] = 0;
+        }
+
+        CharacterProfile character = characters[characterName];
+
+        if (character.affectionLevel != newLevel)
+        {
+            // 호감도 단계가 바뀌었는지 확인 (30, 60, 80 기준점)
+            bool thresholdChanged =
+                (character.affectionLevel < 30 && newLevel >= 30) ||
+                (character.affectionLevel < 60 && newLevel >= 60) ||
+                (character.affectionLevel < 80 && newLevel >= 80) ||
+                (character.affectionLevel >= 30 && newLevel < 30) ||
+                (character.affectionLevel >= 60 && newLevel < 60) ||
+                (character.affectionLevel >= 80 && newLevel < 80);
+
+            character.affectionLevel = newLevel;
+            lastAffectionLevels[characterName] = newLevel;
+
+            if (thresholdChanged)
+            {
+                affectionLevelChanged = true;
+            }
+        }
     }
 
     // 게임 내 이벤트를 대화 컨텍스트에 추가
@@ -260,7 +389,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (conversationHistory.ContainsKey(characterName))
         {
-            Message systemMessage = new Message
+            ConversationMessage systemMessage = new ConversationMessage
             {
                 role = "system",
                 content = $"게임 이벤트: {eventDescription}. 이 상황을 인지하고 적절히 반응하세요."
@@ -290,7 +419,7 @@ public class DialogueManager : MonoBehaviour
             if (PlayerPrefs.HasKey($"ConversationHistory_{character}"))
             {
                 string historyJson = PlayerPrefs.GetString($"ConversationHistory_{character}");
-                conversationHistory[character] = JsonConvert.DeserializeObject<List<Message>>(historyJson);
+                conversationHistory[character] = JsonConvert.DeserializeObject<List<ConversationMessage>>(historyJson);
             }
         }
     }
