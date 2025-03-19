@@ -10,8 +10,8 @@ public class GameManager : BaseManager
 {
     //public static GameManager Instance { get; private set; }
 
-    public const int GRID_WIDTH = 8;
-    public const int GRID_HEIGHT = 8;
+    public const int GRID_WIDTH = 7;
+    public const int GRID_HEIGHT = 9;
     [Header("Script References")]
     public InfoPanelController infoPanelController;
     [Header("Energy Settings")]
