@@ -8222,6 +8222,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '@Managers'
       objectReference: {fileID: 0}
+    - target: {fileID: 2775502945984428542, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: infoPanelController
+      value: 
+      objectReference: {fileID: 585702198}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

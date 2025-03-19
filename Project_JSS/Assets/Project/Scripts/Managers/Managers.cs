@@ -69,7 +69,7 @@ public class Managers : MonoBehaviour
         _save.Init();
         _backend.Init();
         _game.Init();
-        _grid.Init();
+        //_grid.Init();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
