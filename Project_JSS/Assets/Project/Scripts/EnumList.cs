@@ -28,6 +28,7 @@ public struct ItemDetails
     public Sprite itemSprite;
     public int level;
     public string itemName;
+    public string itemDesc;
     public int price;
 }
 [System.Serializable]
@@ -45,8 +46,8 @@ public enum ItemType
 {
     Normal =0,
     Generatable,
-    Crafted,
-    Usable
+    Usable,
+    Crafted
 }
 public enum RewardType
 {

@@ -1,0 +1,11 @@
+ID,Type,Level,Name,Desc,Price,Sprite,end
+G001,Generatable,1,공구함,1111111111111,,공구함_LV1,end
+N001,Normal,1,드라이버,2222222222,1,공구_드라이버,end
+N001,Normal,2,플라이어,33333333333333,2,공구_플라이어,end
+N001,Normal,3,스패너,44444,3,공구_스패너,end
+N001,Normal,4,톱,555555,4,공구_톱,end
+G002,Generatable,1,청소 도구 카트,66666666,,청소 도구 카트_LV1,end
+N002,Normal,1,솔,777777,1,청소_솔,end
+N002,Normal,2,빗자루,8888888,2,청소_빗자루,end
+N002,Normal,3,대걸레,9999,3,청소_대걸레,end
+N002,Normal,4,청소기,101010,4,청소_청소기,end

@@ -10,7 +10,7 @@ public class GridManager : BaseManager
     private float boardWidth;
     private float boardHeight;
     private float tileSize;
-    private float spacing = 0f;
+    private float spacing = 5f;
     //[SerializeField] private bool showDebugGrid = true;
     [SerializeField] private GameObject tilePrefab; // 타일 프리팹 추가
 
@@ -109,14 +109,14 @@ public class GridManager : BaseManager
                 tilePositions[i, j] = tileObject.transform.position;
 
                 //타일 체크무늬로 보이게 띄엄띄엄 표시
-                if((i+j) %2 ==0)
-                {
-                    tileObject.transform.GetChild(0).gameObject.SetActive(true);
-                }
-                else
-                {
-                   tileObject.transform.GetChild(0).gameObject.SetActive(false);
-                }
+                //if((i+j) %2 ==0)
+                //{
+                //    tileObject.transform.GetChild(0).gameObject.SetActive(true);
+                //}
+                //else
+                //{
+                //   tileObject.transform.GetChild(0).gameObject.SetActive(false);
+                //}
             }
         }
     }

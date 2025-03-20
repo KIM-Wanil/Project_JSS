@@ -6,7 +6,7 @@ using UnityEngine;
 public class SaveData
 {
     public List<ItemData> items = new List<ItemData>();
-    public List<GeneratorDB> generators = new List<GeneratorDB>();
+    public List<GeneratorSO> generators = new List<GeneratorSO>();
     public float energy;
     public int score;
     public string playerName;

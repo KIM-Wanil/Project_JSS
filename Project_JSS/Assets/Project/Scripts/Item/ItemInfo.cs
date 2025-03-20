@@ -11,7 +11,7 @@ public class ItemInfo : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject checkIcon;
     [SerializeField] private Button infoButton;
 
-    public ItemData data;
+    public ItemSO data;
     public ItemDetails details;
     public ItemKey key;
     private bool isExist = false;

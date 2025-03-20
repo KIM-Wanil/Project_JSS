@@ -12,7 +12,7 @@ public class MergeableItem : MonoBehaviour
     private int lvIndex => Mathf.Clamp(lv - 1, 0, itemData.items.Length - 1);
     //[SerializeField] protected string itemId;
     [SerializeField] protected Image itemImage;
-    public ItemData itemData;
+    public ItemSO itemData;
     public ItemKey itemKey;
     public int price => itemData.items[lvIndex].price;
     [Header("Effects")]
