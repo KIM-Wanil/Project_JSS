@@ -64,7 +64,7 @@ public class CSVParser : EditorWindow
         foreach (var itemSO in itemSOs)
         {
             string assetPath = AssetDatabase.GetAssetPath(itemSO);
-            string addressableName = Path.GetFileNameWithoutExtension(assetPath);
+            string addressableName = $"Items/{Path.GetFileNameWithoutExtension(assetPath)}";
             SetAsAddressable(assetPath, addressableName);
         }
 
@@ -93,7 +93,7 @@ public class CSVParser : EditorWindow
         foreach (var generatorSO in generatorSOs)
         {
             string assetPath = AssetDatabase.GetAssetPath(generatorSO);
-            string addressableName = Path.GetFileNameWithoutExtension(assetPath);
+            string addressableName = $"Generators/{Path.GetFileNameWithoutExtension(assetPath)}";
             SetAsAddressable(assetPath, addressableName);
         }
 

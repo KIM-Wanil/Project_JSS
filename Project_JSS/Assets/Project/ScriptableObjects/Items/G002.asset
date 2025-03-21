@@ -15,7 +15,7 @@ MonoBehaviour:
   id: G002
   type: 1
   items:
-  - itemSprite: {fileID: 0}
+  - itemSprite: {fileID: 21300000, guid: 8c8a1d50430caaa42919023ee4490685, type: 3}
     level: 1
     itemName: "\uCCAD\uC18C \uB3C4\uAD6C \uCE74\uD2B8"
     itemDesc: 66666666

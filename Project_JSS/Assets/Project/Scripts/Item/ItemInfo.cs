@@ -41,7 +41,7 @@ public class ItemInfo : MonoBehaviour, IPointerClickHandler
         {
             case ItemType.Normal:
             case ItemType.Crafted:
-                Managers.Game.infoPanelController.PrintComponentItems(key);
+                //Managers.Game.infoPanelController.PrintComponentItems(key);
                 break;
             default:
                 break;

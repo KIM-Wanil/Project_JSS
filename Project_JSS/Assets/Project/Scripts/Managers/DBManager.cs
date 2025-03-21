@@ -8,33 +8,22 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 [Serializable]
 public class DBManager : BaseManager
 {
-    //public Dictionary<string, int> acquiredIngredientDict = new Dictionary<string, int>();
+    private ItemDB itemDB = new ItemDB();
+    private GeneratorDB generatorDB = new GeneratorDB();
 
-    //private IngredientDB ingredientDB = new IngredientDB();
-    //public void AcquireIngredient2(string ingredientId, int num)
-    //{
-    //    if (acquiredIngredientDict.ContainsKey(ingredientId))
-    //    {
-    //        acquiredIngredientDict[ingredientId] += num;
-    //    }
-    //    else
-    //    {
-    //        acquiredIngredientDict.Add(ingredientId, num);
-    //    }
-    //}
-    //public Dictionary<string, int> GetAcquiredIngredientDict()
-    //{
-    //    return acquiredIngredientDict;
-    //}
-    // Start is called before the first frame update
     public override void Init()
     {
         Debug.Log("DBManager initialized");
     }
 
-    //재료 정보 가져오는거 
-    //public Task<IngredientSO> LoadIngredient(string iconId)
-    //{
-    //    return ingredientDB.LoadIngredient(iconId);
-    //}
+    //아이템 정보 가져오는거 
+    public Task<ItemSO> LoadItem(string id)
+    {
+        return itemDB.LoadItem(id);
+    }
+    //제너레이터 정보 가져오는거
+    public Task<GeneratorSO> LoadGenerator(string id)
+    {
+        return generatorDB.LoadGenerator(id);
+    }
 }

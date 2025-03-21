@@ -10,14 +10,14 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Vector2Int initialGridPos;
     private RectTransform rectTransform;
     private Canvas canvas;
-    private MergeableItem mergeableItem;
+    public MergeableItem mergeableItem;
     public Generator generator;
     private bool isDragging; // 드래그 상태를 추적하는 변수
     //[SerializeField] private bool canClick = true; // 클릭 가능 여부를 추적하는 변수
     private float clickCooldown = 0.1f; // 클릭을 무시할 시간 (초)
     private bool isSelected => currentlySelectedItem == this; // 현재 선택된 아이템인지 확인하는 프로퍼티
     // 현재 선택된 아이템을 추적하는 정적 변수
-    private static DraggableItem currentlySelectedItem;
+    public static DraggableItem currentlySelectedItem;
 
     // 클릭과 드래그를 구분하기 위한 변수
     private Vector2 pointerDownPosition;
@@ -30,10 +30,10 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         canvas = GetComponentInParent<Canvas>();
         initialGridPos = mergeableItem.GridPosition;
     }
-    public void PrintGeneratorDesc()
-    {
-        Managers.Game.infoPanelController.PrintGeneratorDesc(mergeableItem.itemKey, generator.generatableSprites);
-    }
+    //public void PrintGeneratorDesc()
+    //{
+    //    Managers.Game.infoPanelController.PrintGeneratorDesc(mergeableItem.itemKey, generator.generatableSprites);
+    //}
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -104,7 +104,6 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         switch (mergeableItem.itemData.type)
         {
             case ItemType.Normal:
-            case ItemType.Crafted:
                 Managers.Game.infoPanelController.PrintItemDesc(mergeableItem.itemKey, mergeableItem.price, mergeableItem.SellThisItem);
                 break;
 
@@ -120,7 +119,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                     }
                     else
                     {
-                        PrintGeneratorDesc();
+                        Managers.Game.infoPanelController.PrintItemDesc(mergeableItem.itemKey);
                     }
                 } 
                 break;

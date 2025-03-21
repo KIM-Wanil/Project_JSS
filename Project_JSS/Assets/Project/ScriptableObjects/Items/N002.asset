@@ -15,22 +15,22 @@ MonoBehaviour:
   id: N002
   type: 0
   items:
-  - itemSprite: {fileID: 0}
+  - itemSprite: {fileID: 21300000, guid: 240d9de0ccc29814a96394e40eecb3ba, type: 3}
     level: 1
     itemName: "\uC194"
     itemDesc: 777777
     price: 1
-  - itemSprite: {fileID: 0}
+  - itemSprite: {fileID: 21300000, guid: 0c66d8d1c4bf27842ae4b0f91d02dd2f, type: 3}
     level: 2
     itemName: "\uBE57\uC790\uB8E8"
     itemDesc: 8888888
     price: 2
-  - itemSprite: {fileID: 0}
+  - itemSprite: {fileID: 21300000, guid: d9a3632e37830f34eb893b7cb19f6f84, type: 3}
     level: 3
     itemName: "\uB300\uAC78\uB808"
     itemDesc: 9999
     price: 3
-  - itemSprite: {fileID: 0}
+  - itemSprite: {fileID: 21300000, guid: 6bd30bb763b52124f8394277e19d5c84, type: 3}
     level: 4
     itemName: "\uCCAD\uC18C\uAE30"
     itemDesc: 101010

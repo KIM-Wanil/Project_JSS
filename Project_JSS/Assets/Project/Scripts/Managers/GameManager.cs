@@ -30,8 +30,10 @@ public class GameManager : BaseManager
     //[SerializeField] private GameObject generatorPrefab;
 
     [Header("SO References")]
-    [SerializeField] private ItemSO[] itemDatas;
-    [SerializeField] private GeneratorSO[] genDatas;
+    //[SerializeField] private ItemSO[] itemDatas;
+    [SerializeField] private string[] itemIds = {"N001", "N002"};
+    //[SerializeField] private GeneratorSO[] genDatas;
+    [SerializeField] private string[] genIds = {"G001", "G002"};
     [SerializeField] public CraftingDB craftingDB;
 
     [Header("Guest Referemces")]
@@ -51,8 +53,15 @@ public class GameManager : BaseManager
     private Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
     private Dictionary<string, GeneratorSO> genDataDic = new Dictionary<string, GeneratorSO>();
     [SerializeField] private ObjectPool<GameObject> itemPool;
-    private bool isGamePaused;
 
+    [Header("Bool Values")]
+    private bool isGamePaused;
+    public bool IsDataLoaded { get; private set; } = false;
+    public void OnClickSetMergeBoardTest()
+    {
+        SpawnGenerator("G001", 1, (Vector2Int)Managers.Grid.GetEmptyPosition());
+        SpawnGenerator("G002", 1, (Vector2Int)Managers.Grid.GetEmptyPosition());
+    }
     private void Awake()
     {
     }
@@ -61,27 +70,46 @@ public class GameManager : BaseManager
         base.Init();
         InitializeGame();
     }
+    private async void GetData()
+    {
+        IsDataLoaded = false; // 데이터 로드 시작 시 false로 설정
+
+        string[] allItemIds = itemIds.Concat(genIds).ToArray();
+        foreach (string id in allItemIds)
+        {
+            ItemSO itemData = await Managers.DB.LoadItem(id);
+            itemDataDic[id] = itemData;
+            Debug.Log($"{id} : {itemDataDic[id]} ");
+        }
+        foreach (string id in genIds)
+        {
+            GeneratorSO genData = await Managers.DB.LoadGenerator(id);
+            genDataDic[id] = genData;
+            Debug.Log($"{id} : {genDataDic[id]} ");
+        }
+
+        IsDataLoaded = true; // 데이터 로드 완료 시 true로 설정
+    }
     private void InitializeGame()
     {
         if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
             return;
 
-        // 프리팹 딕셔너리 초기화
-        foreach (var itemData in itemDatas)
-        {
-            itemDataDic[itemData.id] = itemData;
-        }
+        //// 프리팹 딕셔너리 초기화
+        //foreach (var itemData in itemDatas)
+        //{
+        //    itemDataDic[itemData.id] = itemData;
+        //}
 
-        foreach (var genData in genDatas)
-        {
-            genDataDic[genData.genId] = genData;
-        }
+        //foreach (var genData in genDatas)
+        //{
+        //    genDataDic[genData.genId] = genData;
+        //}
 
         // 오브젝트 풀 초기화
         itemPool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 50, 100);
-
         guestBoard = GameObject.Find("GuestBoard");
-
+        GetData();
 
         //LoadGame();
     }
@@ -169,6 +197,7 @@ public class GameManager : BaseManager
         {
             item.itemData = itemDataDic[itemId];
             item.Initialize(level);
+            item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
             Managers.Grid.PlaceItem(item, position);
             //onItemSpawned?.Invoke(item);
         }
@@ -303,38 +332,39 @@ public class GameManager : BaseManager
             //}
         }
 
-        //나중에 현재 제너레이터 상황에 따라 생성가능한 크래프트아이템만 추가하도록 로직 수정
-        foreach(var item in itemDatas)
-        {
-            if (item.type == ItemType.Crafted)
-            {
-                availableItemIds.Add(item.id);
-            }
-        }
+        ////나중에 현재 제너레이터 상황에 따라 생성가능한 크래프트아이템만 추가하도록 로직 수정
+        //foreach(var item in itemDatas)
+        //{
+        //    if (item.type == ItemType.Crafted)
+        //    {
+        //        availableItemIds.Add(item.id);
+        //    }
+        //}
+
         return availableItemIds.ToList();
     }
-    public UnityAction PrintGeneratableGeneratorDesc(ItemKey inputKey)
-    {
-        // 현재 보유 중인 제너레이터들을 확인
-        foreach (var generator in Managers.Grid.FindAllGenerators())
-        {
-            GeneratorSO generatorData = generator.genDB;
+    //public UnityAction PrintGeneratableGeneratorDesc(ItemKey inputKey)
+    //{
+    //    // 현재 보유 중인 제너레이터들을 확인
+    //    foreach (var generator in Managers.Grid.FindAllGenerators())
+    //    {
+    //        GeneratorSO generatorData = generator.genDB;
 
-            //input아이템을 생성할 수 있는 제너레이터의 설명을 프린트하는 함수를 반환
-            foreach (var levelData in generatorData.generatorDatas)
-            {
-                foreach (var item in levelData.generatableItems)
-                {
-                    if(inputKey.id == item.key.id)
-                    {
+    //        //input아이템을 생성할 수 있는 제너레이터의 설명을 프린트하는 함수를 반환
+    //        foreach (var levelData in generatorData.generatorDatas)
+    //        {
+    //            foreach (var item in levelData.generatableItems)
+    //            {
+    //                if(inputKey.id == item.key.id)
+    //                {
 
-                       return generator.GetComponent<DraggableItem>().PrintGeneratorDesc;
-                    }
-                }
-            }
-        }
-        return null;
-    }
+    //                   return generator.GetComponent<DraggableItem>().PrintGeneratorDesc;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    return null;
+    //}
 
     #endregion
 

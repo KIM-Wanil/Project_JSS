@@ -9,7 +9,7 @@ public class GridManager : BaseManager
 {
     private float boardWidth;
     private float boardHeight;
-    private float tileSize;
+    public float TileSize { get; private set; }
     private float spacing = 5f;
     //[SerializeField] private bool showDebugGrid = true;
     [SerializeField] private GameObject tilePrefab; // 타일 프리팹 추가
@@ -37,10 +37,10 @@ public class GridManager : BaseManager
         Debug.Log("GridManager initialized");
         InitializeGrid();
         GenerateTiles(); // 타일 생성 호출
-        Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
-        Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
-        Managers.Game.SpawnGenerator("gen_orb", 1, (Vector2Int)GetEmptyPosition());
-        Managers.Game.SpawnGenerator("gen_pot", 1, (Vector2Int)GetEmptyPosition());
+        //Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
+        //Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
+        //Managers.Game.SpawnGenerator("gen_orb", 1, (Vector2Int)GetEmptyPosition());
+        //Managers.Game.SpawnGenerator("gen_pot", 1, (Vector2Int)GetEmptyPosition());
         
 
 
@@ -72,15 +72,15 @@ public class GridManager : BaseManager
         float totalSpacingY = (Height + 1) * spacing;
         float tileSizeX = (boardWidth - totalSpacingX) / Width;
         float tileSizeY = (boardHeight - totalSpacingY) / Height;
-        tileSize = Mathf.Min(tileSizeX, tileSizeY);
+        TileSize = Mathf.Min(tileSizeX, tileSizeY);
 
         // 그리드 시작 위치 계산 (가운데 정렬)
-        float startX = -boardWidth / 2 + spacing + tileSize / 2;
-        float startY = boardHeight / 2 - spacing - tileSize / 2; // 위쪽에서 시작
+        float startX = -boardWidth / 2 + spacing + TileSize / 2;
+        float startY = boardHeight / 2 - spacing - TileSize / 2; // 위쪽에서 시작
 
         // 여백 계산
-        float extraSpaceX = (boardWidth - (Width * tileSize + (Width + 1) * spacing)) / 2;
-        float extraSpaceY = (boardHeight - (Height * tileSize + (Height + 1) * spacing)) / 2;
+        float extraSpaceX = (boardWidth - (Width * TileSize + (Width + 1) * spacing)) / 2;
+        float extraSpaceY = (boardHeight - (Height * TileSize + (Height + 1) * spacing)) / 2;
 
         gridStartPosition = new Vector2(startX + extraSpaceX, startY - extraSpaceY); // 위쪽에서 시작
 
@@ -88,14 +88,14 @@ public class GridManager : BaseManager
         {
             for (int j = 0; j < Height; j++)
             {
-                Vector3 position = new Vector3(i * (tileSize + spacing), -j * (tileSize + spacing), 0) + (Vector3)gridStartPosition; // y 좌표를 반대로 계산
+                Vector3 position = new Vector3(i * (TileSize + spacing), -j * (TileSize + spacing), 0) + (Vector3)gridStartPosition; // y 좌표를 반대로 계산
                 GameObject tileObject = Instantiate(tilePrefab, position, Quaternion.identity, mergeBoard.transform);
                 tileObject.name = $"Tile_{i}_{j}";
                 // 타일 크기 조정
                 RectTransform tileRect = tileObject.GetComponent<RectTransform>();
                 if (tileRect != null)
                 {
-                    tileRect.sizeDelta = new Vector2(tileSize, tileSize);
+                    tileRect.sizeDelta = new Vector2(TileSize, TileSize);
                     tileRect.anchoredPosition = position;
                 }
 
@@ -245,8 +245,8 @@ public class GridManager : BaseManager
     // 그리드 위치를 월드 좌표로 변환
     public Vector3 GetWorldPosition(Vector2Int gridPosition)
     {
-        float x = gridStartPosition.x + gridPosition.x * (tileSize + spacing);
-        float y = gridStartPosition.y - gridPosition.y * (tileSize + spacing); // y 좌표를 반대로 계산
+        float x = gridStartPosition.x + gridPosition.x * (TileSize + spacing);
+        float y = gridStartPosition.y - gridPosition.y * (TileSize + spacing); // y 좌표를 반대로 계산
         return new Vector3(x, y, 0);
     }
 
@@ -257,8 +257,8 @@ public class GridManager : BaseManager
         Vector2 localPosition = (Vector2)worldPosition - gridStartPosition;
 
         Vector2Int gridPos = new Vector2Int(
-            Mathf.RoundToInt(localPosition.x / (tileSize + spacing)),
-            Mathf.RoundToInt(-localPosition.y / (tileSize + spacing)) // y 좌표를 반대로 계산
+            Mathf.RoundToInt(localPosition.x / (TileSize + spacing)),
+            Mathf.RoundToInt(-localPosition.y / (TileSize + spacing)) // y 좌표를 반대로 계산
         );
 
         if(IsValidPosition(gridPos))
@@ -541,22 +541,22 @@ public class GridManager : BaseManager
         Vector3 mergeBoardPosition = mergeBoard.transform.position;
 
         // 그리드 시작 위치 계산
-        float startX = mergeBoardPosition.x - mergeBoardRect.rect.width / 2 + spacing + tileSize / 2;
-        float startY = mergeBoardPosition.y + mergeBoardRect.rect.height / 2 - spacing - tileSize / 2;
+        float startX = mergeBoardPosition.x - mergeBoardRect.rect.width / 2 + spacing + TileSize / 2;
+        float startY = mergeBoardPosition.y + mergeBoardRect.rect.height / 2 - spacing - TileSize / 2;
 
         // 그리드 라인 그리기
         Gizmos.color = new Color(1f, 1f, 1f, 0.2f);
         for (int x = 0; x <= Width; x++)
         {
-            Vector3 start = new Vector3(startX + x * (tileSize + spacing), startY, 0f);
-            Vector3 end = new Vector3(startX + x * (tileSize + spacing), startY - Height * (tileSize + spacing), 0f);
+            Vector3 start = new Vector3(startX + x * (TileSize + spacing), startY, 0f);
+            Vector3 end = new Vector3(startX + x * (TileSize + spacing), startY - Height * (TileSize + spacing), 0f);
             Gizmos.DrawLine(start, end);
         }
 
         for (int y = 0; y <= Height; y++)
         {
-            Vector3 start = new Vector3(startX, startY - y * (tileSize + spacing), 0f);
-            Vector3 end = new Vector3(startX + Width * (tileSize + spacing), startY - y * (tileSize + spacing), 0f);
+            Vector3 start = new Vector3(startX, startY - y * (TileSize + spacing), 0f);
+            Vector3 end = new Vector3(startX + Width * (TileSize + spacing), startY - y * (TileSize + spacing), 0f);
             Gizmos.DrawLine(start, end);
         }
 
@@ -565,16 +565,16 @@ public class GridManager : BaseManager
         {
             for (int y = 0; y < Height; y++)
             {
-                Vector3 center = new Vector3(startX + x * (tileSize + spacing), startY - y * (tileSize + spacing), 0f);
+                Vector3 center = new Vector3(startX + x * (TileSize + spacing), startY - y * (TileSize + spacing), 0f);
                 if (grid[x, y] != null)
                 {
                     Gizmos.color = Color.green; // 아이템이 있는 경우 초록색
-                    Gizmos.DrawSphere(center, tileSize / 4);
+                    Gizmos.DrawSphere(center, TileSize / 4);
                 }
                 else
                 {
                     Gizmos.color = Color.red; // 아이템이 없는 경우 빨간색
-                    Gizmos.DrawWireSphere(center, tileSize / 4);
+                    Gizmos.DrawWireSphere(center, TileSize / 4);
                 }
             }
         }

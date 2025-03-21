@@ -68,7 +68,7 @@ public class Managers : MonoBehaviour
         //_settings.Init();
         _save.Init();
         _backend.Init();
-        _game.Init();
+        //_game.Init();
         //_grid.Init();
     }
 
