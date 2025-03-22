@@ -17,12 +17,16 @@ public class GameManager : BaseManager
     [Header("Energy Settings")]
     [SerializeField] private int maxEnergy = 100;
     public int MaxEnergy => maxEnergy;
-    [SerializeField] private float energyRegenRate = 1f;
+    [SerializeField] private float energyRegenRate = 600f;
+    private float energyRegenRemainSec = 0f;
+    public float EnergyRegenRemainSec => energyRegenRemainSec;
+    private bool isEnergyRegening = false;
+    public bool IsEnergyRegening => isEnergyRegening;
     [SerializeField] private int energyRegenAmount = 1;
-    private float currentEnergy;
-    public float CurrentEnergy => currentEnergy;
+    private int currentEnergy;
+    public int CurrentEnergy => currentEnergy;
     [Header("Gold Settings")]
-    [SerializeField] private int currentGold = 0;
+    [SerializeField] private int currentGold = 100;
     public int CurrentGold => currentGold;
 
     [Header("Prefab References")]
@@ -43,6 +47,7 @@ public class GameManager : BaseManager
 
     [Header("Game Events")]
     public UnityEvent<int> onEnergyChanged;
+    public UnityEvent<int> onEnergyRegenTimeChanged;
     public UnityEvent<int> onGoldChanged;
     public UnityEvent<int> onScoreChanged;
     public UnityEvent<MergeableItem> onItemMerged;
@@ -110,27 +115,48 @@ public class GameManager : BaseManager
         itemPool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 50, 100);
         guestBoard = GameObject.Find("GuestBoard");
         GetData();
-
+        currentEnergy = maxEnergy;
         //LoadGame();
     }
 
     private void Start()
     {
-        currentEnergy = maxEnergy;
-        InvokeRepeating(nameof(RegenerateEnergy), energyRegenRate, energyRegenRate);
+        energyRegenRemainSec = energyRegenRate;
+        FlagRegenEnergy(currentEnergy);
+        onEnergyChanged.AddListener(FlagRegenEnergy);
     }
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CreateGuest();
+            CreateRandomGuest();
         }
     }
     #region Energy Management
-
-    private void RegenerateEnergy()
+    public void FlagRegenEnergy(int currentEnergy)
     {
         if (currentEnergy < maxEnergy)
+        {
+            if(!isEnergyRegening)
+            {
+                isEnergyRegening = true;
+                InvokeRepeating(nameof(RegenerateEnergy), 1f, 1f);
+                onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(energyRegenRemainSec));
+            }    
+        }
+        else
+        {
+            isEnergyRegening = false;
+            CancelInvoke(nameof(RegenerateEnergy));
+            onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(energyRegenRemainSec));
+        }
+    }
+    private void RegenerateEnergy()
+    {
+        Debug.Log(energyRegenRemainSec);
+        energyRegenRemainSec -= 1f;
+        onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(energyRegenRemainSec));
+        if (currentEnergy < maxEnergy && energyRegenRemainSec <= 0f)
         {
             AddEnergy(energyRegenAmount);
         }
@@ -138,8 +164,9 @@ public class GameManager : BaseManager
 
     public void AddEnergy(int amount)
     {
+        energyRegenRemainSec = energyRegenRate;
         currentEnergy = Mathf.Min(currentEnergy + amount, maxEnergy);
-        onEnergyChanged?.Invoke(Mathf.RoundToInt(currentEnergy));
+        onEnergyChanged?.Invoke(currentEnergy);
     }
 
     public bool TrySpendEnergy(int amount)
@@ -147,7 +174,7 @@ public class GameManager : BaseManager
         if (currentEnergy >= amount)
         {
             currentEnergy -= amount;
-            onEnergyChanged?.Invoke(Mathf.RoundToInt(currentEnergy));
+            onEnergyChanged?.Invoke(currentEnergy);
             return true;
         }
         return false;
@@ -369,20 +396,30 @@ public class GameManager : BaseManager
     #endregion
 
     #region Guest Management
-    public void CreateGuest()
+    public void CreateRandomGuest()
     {
         Guest guest = Instantiate(guestPrefab, guestBoard.transform).GetComponent<Guest>();
 
         int count = Random.Range(1, 3);
         ItemKey[] tempItems = new ItemKey[count];
         List<string> availableItems = GetAvailableItemIds();
+        if(availableItems.Count <= 0)
+        {
+            Debug.LogError("제너레이터가 없음");
+            return;
+        }
+        Dictionary<ItemKey, int> goalItems = new Dictionary<ItemKey, int>();
         for (int i = 0; i < count; i++)
         {
             tempItems[i].id = availableItems[Random.Range(0, availableItems.Count)];
-            tempItems[i].lv = Random.Range(3, 5);
+            //tempItems[i].id = "N001";
+            tempItems[i].lv = Random.Range(2, 4);
+
+            goalItems[tempItems[i]] = Random.Range(1, 3);
         }
-        int goldAmount = Random.Range(30, 61);
-        guest.Init(guestSprites[Random.Range(0, guestSprites.Length)], tempItems, goldAmount*10);
+        int goldAmount = Random.Range(1, 4);
+        goldAmount *= count;
+        guest.Init(goalItems, goldAmount);
     }
     #endregion
 

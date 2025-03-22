@@ -3,11 +3,11 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEditor.AdaptivePerformance.Editor;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
+using System.Collections.Generic;
 
 public class Guest : MonoBehaviour
 {
-    public Image image;
-    public GameObject orderInsideBox;
+    //public GameObject orderInsideBox;
     public GameObject itemOrderedPrefab;
     public ItemInfo[] itemsOrdered;
     public TextMeshProUGUI goldText;
@@ -15,35 +15,31 @@ public class Guest : MonoBehaviour
     public Button completeButton;
     public int gold;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public void Init(Sprite guestSprite, ItemKey[] itemInfo, int goldAmount)
+    public void Init(Dictionary<ItemKey, int> goalItems, int goldAmount)
     {
-        image.sprite = guestSprite;
-        itemsOrdered = new ItemInfo[itemInfo.Length];
-        for (int i = 0; i < itemInfo.Length; i++)
+        itemsOrdered = new ItemInfo[goalItems.Count];
+        int i = 0;
+        foreach (var itemKey in goalItems)
         {
-            itemsOrdered[i] = Instantiate(itemOrderedPrefab, orderInsideBox.transform).GetComponent<ItemInfo>();
-            itemsOrdered[i].Init(itemInfo[i]);
-            itemsOrdered[i].transform.GetChild(0).gameObject.SetActive(true);
+            itemsOrdered[i] = Instantiate(itemOrderedPrefab, this.transform).GetComponent<ItemInfo>();
+            itemsOrdered[i].Init(itemKey.Key, itemKey.Value);
+            i++;
         }
+
         gold = goldAmount;
-        goldText.text = gold.ToString();
+        goldText.text = $"+{gold}";
         completeButton.onClick.AddListener(OnCompleteButtonClicked);
         Managers.Grid.AddGuest(this);
     }
     public void CheckItemsIsExist()
     {
         int count = 0;
-        foreach (var itemOrdered in itemsOrdered)
+        foreach (ItemInfo itemOrdered in itemsOrdered)
         {
-            //Item itemInfo = new Item { id = itemOrdered.data.id, lv = itemOrdered.lv };
-            if (Managers.Grid.DoesItemExist(itemOrdered.key))
+            if (itemOrdered.IsComplete)
             {
-                itemOrdered.ActivateCheckIcon();
+                itemOrdered.UpdateCountText();
                 count++;
-            }
-            else
-            {
-                itemOrdered.DeactivateCheckIcon();
             }
         }
 
@@ -60,11 +56,14 @@ public class Guest : MonoBehaviour
     {
         if (!isCompleted) return;
         Managers.Game.AddGold(gold);
-        foreach (var itemOrdered in itemsOrdered)
+        foreach (ItemInfo itemOrdered in itemsOrdered)
         {
-            Managers.Grid.FindAndRemoveItemFromGrid(itemOrdered.key);
-            Managers.Grid.CheckGuestsOrder();
+            for (int i = 0; i < itemOrdered.goalCount; i++)
+            {
+                Managers.Grid.FindAndRemoveItemFromGrid(itemOrdered.key);
+            }
         }
+        Managers.Grid.CheckGuestsOrder();
         Managers.Grid.RemoveGuest(this);
         Invoke("DestroyGuest", 0.2f);
     }

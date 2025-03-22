@@ -22,11 +22,15 @@ public class AssetManager : BaseManager
         var assetReference = assetReferences.GetBackgroundAssetReference(backgroundKey);
         LoadAsset<Sprite>(backgroundKey, assetReference, onComplete, $"background sprite: {backgroundKey}");
     }
-
+    public void LoadEffect(string effectKey, Action<GameObject> onComplete)
+    {
+        var assetReference = assetReferences.GetEffectAssetReference(effectKey);
+        LoadAsset<GameObject>(effectKey, assetReference, onComplete, $"effect: {effectKey}");
+    }
     public void LoadSound(string soundKey, SoundType type, Action<AudioClip> onComplete)
     {
         var assetReference = assetReferences.GetSoundAssetReference(soundKey, type);
-        LoadAsset<AudioClip>(soundKey, assetReference, onComplete, $"sound effect: {soundKey}");
+        LoadAsset<AudioClip>(soundKey, assetReference, onComplete, $"sound effects: {soundKey}");
     }
     //일반 소리 재생
     public void PlaySound(string soundKey, SoundType type)

@@ -81,6 +81,13 @@ public class MergeableItem : MonoBehaviour
     }
     protected void UpdateVisuals()
     {
+        if (mergeEffect != null)
+        {
+            // 이펙트를 부모에서 분리하고 자동 제거되도록 설정
+            mergeEffect.transform.SetParent(null);
+            mergeEffect.Play();
+            Destroy(mergeEffect.gameObject, mergeEffect.main.duration);
+        }
         if (itemImage != null  && itemData.items.Length > 0)
         {
             itemImage.sprite = itemData.items[lvIndex].itemSprite;
@@ -107,7 +114,7 @@ public class MergeableItem : MonoBehaviour
         }
 
         onMerged?.Invoke();
-        Managers.Grid.DetatchItemFromGrid(gridPosition);
+        //Managers.Grid.DetatchItemFromGrid(gridPosition);
     }
 
     public void SetGridPosition(Vector2Int pos)

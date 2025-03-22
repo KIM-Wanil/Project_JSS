@@ -7,7 +7,7 @@ public class SaveData
 {
     public List<ItemData> items = new List<ItemData>();
     public List<GeneratorSO> generators = new List<GeneratorSO>();
-    public float energy;
+    public int energy;
     public int score;
     public string playerName;
 

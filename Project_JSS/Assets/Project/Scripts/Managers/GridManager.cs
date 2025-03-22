@@ -30,8 +30,8 @@ public class GridManager : BaseManager
 
     public override void Init()
     {
-        Debug.Log(SceneManager.GetActiveScene().name);
-        Debug.Log(SceneManager.GetSceneByName("Main").name);
+        //Debug.Log(SceneManager.GetActiveScene().name);
+        //Debug.Log(SceneManager.GetSceneByName("Main").name);
         if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
             return;
         Debug.Log("GridManager initialized");
@@ -458,6 +458,24 @@ public class GridManager : BaseManager
             }
         }
         return false;
+    }
+    public int CountItem(ItemKey item)
+    {
+        int count = 0;
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                MergeableItem mergeableItem = grid[x, y];
+                if (mergeableItem != null &&
+                    mergeableItem.itemData.id == item.id &&
+                    mergeableItem.Lv == item.lv)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
     // 새로운 함수 추가
     public void FindAndRemoveItemFromGrid(ItemKey item)

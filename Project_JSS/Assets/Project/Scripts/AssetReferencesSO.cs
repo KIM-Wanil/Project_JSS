@@ -13,6 +13,7 @@ public class AssetReferencesSO : ScriptableObject
     }
 
     public List<AssetReference2> guestSprites;
+    public List<AssetReference2> effects;
     public List<AssetReference2> BGMSounds;
     public List<AssetReference2> UISounds;
     public List<AssetReference2> effectSounds;
@@ -21,6 +22,11 @@ public class AssetReferencesSO : ScriptableObject
     {
         
         return guestSprites.Find(img => img.key == key)?.assetReference;
+    }
+    public UnityEngine.AddressableAssets.AssetReference GetEffectAssetReference(string key)
+    {
+
+        return effects.Find(effect => effect.key == key)?.assetReference;
     }
     public UnityEngine.AddressableAssets.AssetReference GetSoundAssetReference(string key, SoundType type)
     {

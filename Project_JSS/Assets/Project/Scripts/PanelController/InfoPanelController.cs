@@ -15,47 +15,49 @@ public class InfoPanelController : MonoBehaviour
     public TextMeshProUGUI descText;
     public TextMeshProUGUI priceText;
     public Button sellButton;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         Init();
         sellButton.onClick.AddListener(Init);
     }
+
     private void Update()
     {
-        //수정 필요
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    // 클릭한 위치에 DraggableItem이 있는지 확인
-        //    PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
-        //    {
-        //        position = Input.mousePosition
-        //    };
-
-        //    List<RaycastResult> results = new List<RaycastResult>();
-        //    EventSystem.current.RaycastAll(pointerEventData, results);
-
-        //    bool isDraggableItemClicked = results.Any(r => r.gameObject.GetComponent<DraggableItem>() != null);
-
-        //    if (!isDraggableItemClicked && DraggableItem.currentlySelectedItem != null)
-        //    {
-        //        DraggableItem.currentlySelectedItem.mergeableItem.OnDeSelected();
-        //        DraggableItem.currentlySelectedItem = null;
-        //        Init();
-        //    }
-        //}
+        if (Input.GetMouseButtonUp(0))
+        {
+            Invoke("HandlePointerUp",0.1f);
+        }
     }
 
-    public void PrintItemDesc(ItemKey inputKey,int price = -1, UnityAction onItemSold = null)
+    public void HandlePointerUp()
     {
+        // 클릭한 위치에 DraggableItem이 있는지 확인
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
 
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, results);
 
+        bool isDraggableItemClicked = results.Any(r => r.gameObject.GetComponent<DraggableItem>() != null);
+        //Debug.Log($"isDraggableItemClicked : {isDraggableItemClicked}");
+        if (!isDraggableItemClicked && DraggableItem.currentlySelectedItem != null)
+        {
+            DraggableItem.currentlySelectedItem.mergeableItem.OnDeSelected();
+            DraggableItem.currentlySelectedItem = null;
+            Init();
+        }
+    }
+
+    public void PrintItemDesc(ItemKey inputKey, int price = -1, UnityAction onItemSold = null)
+    {
         descInfo.SetActive(true);
         ItemSO data = Managers.Game.GetItemData(inputKey.id);
 
-
-        //아이템 이름 오른쪽에 표시
-        nameText.text = data.items[inputKey.lv-1].itemName;
+        // 아이템 이름 오른쪽에 표시
+        nameText.text = data.items[inputKey.lv - 1].itemName;
         switch (data.type)
         {
             case ItemType.Normal:
@@ -90,13 +92,12 @@ public class InfoPanelController : MonoBehaviour
                 break;
         }
     }
+
     public void Init()
     {
         sellButton.onClick.RemoveAllListeners();
         sellButton.gameObject.SetActive(false);
         descInfo.SetActive(false);
         normalTextObj.SetActive(true);
-
     }
-
 }
