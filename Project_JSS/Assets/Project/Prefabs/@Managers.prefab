@@ -105,27 +105,22 @@ MonoBehaviour:
   energyRegenAmount: 1
   currentGold: 0
   itemPrefab: {fileID: 6021443315596796148, guid: 59e5fb6f619816d49ab58350bb61c497, type: 3}
-  itemDatas:
-  - {fileID: 11400000, guid: 4eb3492584a65674f887961148a4dfc9, type: 2}
-  - {fileID: 11400000, guid: 0b64fd1483bb9c64797883211fe9ed51, type: 2}
-  - {fileID: 11400000, guid: 19be6597421e99742bc7c104664baad3, type: 2}
-  - {fileID: 11400000, guid: d615c65bb28574e4e99bae3cb2c3fae8, type: 2}
-  - {fileID: 11400000, guid: 3fd5c5948ef82074f93844028fce7708, type: 2}
-  - {fileID: 11400000, guid: 4c6f6571478c2b9419defd999acf3080, type: 2}
-  - {fileID: 11400000, guid: 39f909546a7c15246b80dbf3865dcfd0, type: 2}
-  - {fileID: 11400000, guid: 48389bffba2635a43b3065605b0f45f8, type: 2}
-  - {fileID: 11400000, guid: de9c5a5a265932d45b80dfe0190f951d, type: 2}
-  - {fileID: 11400000, guid: 386ca6f3013017e4f9149d3b60df36c9, type: 2}
-  genDatas:
-  - {fileID: 11400000, guid: aa43ceacab572fb4196c0c17175826b9, type: 2}
-  - {fileID: 11400000, guid: 5e41a9fc9ca74804c91b133e46d71743, type: 2}
-  - {fileID: 11400000, guid: 0c94cd1001018e14fbf85bc6d5f38c70, type: 2}
+  generatorPrefab: {fileID: 6021443315596796148, guid: f6bd98f188776e64da381a3131e8e8ac, type: 3}
+  itemIds:
+  - N001
+  - N002
+  genIds:
+  - G001
+  - G002
   craftingDB: {fileID: 11400000, guid: c418044f59a67e74ea75db338536aad4, type: 2}
   guestPrefab: {fileID: 1529359811846399558, guid: 3b5ff8ee2f0058e4d9df34723645c47d, type: 3}
   guestSprites:
   - {fileID: -487218574355610979, guid: 7a8833143bd988b48a5e979a070f59af, type: 3}
   - {fileID: 6828411025017851012, guid: 6107fe0053404c348aac77529162fedc, type: 3}
   onEnergyChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnergyRegenTimeChanged:
     m_PersistentCalls:
       m_Calls: []
   onGoldChanged:

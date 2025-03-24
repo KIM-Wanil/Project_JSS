@@ -31,7 +31,7 @@ public class GameManager : BaseManager
 
     [Header("Prefab References")]
     [SerializeField] private GameObject itemPrefab;
-    //[SerializeField] private GameObject generatorPrefab;
+    [SerializeField] private GameObject generatorPrefab;
 
     [Header("SO References")]
     //[SerializeField] private ItemSO[] itemDatas;
@@ -58,6 +58,8 @@ public class GameManager : BaseManager
     private Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
     private Dictionary<string, GeneratorSO> genDataDic = new Dictionary<string, GeneratorSO>();
     [SerializeField] private ObjectPool<GameObject> itemPool;
+    [SerializeField] private ObjectPool<GameObject> generatorPool;
+
 
     [Header("Bool Values")]
     private bool isGamePaused;
@@ -111,8 +113,12 @@ public class GameManager : BaseManager
         //    genDataDic[genData.genId] = genData;
         //}
 
-        // 오브젝트 풀 초기화
+        // 아이템 오브젝트 풀 초기화
         itemPool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 50, 100);
+
+        // 제너레이터 오브젝트 풀 초기화
+        generatorPool = new ObjectPool<GameObject>(CreatePooledGenerator, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 10, 20);
+        
         guestBoard = GameObject.Find("GuestBoard");
         GetData();
         currentEnergy = maxEnergy;
@@ -234,14 +240,24 @@ public class GameManager : BaseManager
     }
     public Generator SpawnGenerator(string itemId, int level, Vector2Int position)
     {
-        MergeableItem item = SpawnItem(itemId, level, position);
-        
-        Generator tempGenerator = item.gameObject.AddComponent<Generator>();
+        GameObject genObj = generatorPool.Get();
+        //itemObj.transform.position = Managers.Grid.GetWorldPosition(position);
+
+        MergeableItem item = genObj.GetComponent<MergeableItem>();
+        if (item != null)
+        {
+            item.itemData = itemDataDic[itemId];
+            item.Initialize(level);
+            item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+            Managers.Grid.PlaceItem(item, position);
+            //onItemSpawned?.Invoke(item);
+        }
+
+
+        Generator tempGenerator = item.gameObject.GetComponent<Generator>();
         tempGenerator.genDB = genDataDic[itemId];
         tempGenerator.Initialize();
 
-        DraggableItem draggableItem = item.gameObject.GetComponent<DraggableItem>();
-        draggableItem.generator = tempGenerator;
         return tempGenerator;
     }
     public ItemKey? FindCraftingResult(MergeableItem componentItem1, MergeableItem componentItem2)
@@ -256,6 +272,14 @@ public class GameManager : BaseManager
     public ItemKey[] FindCraftingComponents(ItemKey resultKey)
     {
         return craftingDB.FindCraftingComponents(resultKey);
+    }
+    public bool CanMerge(MergeableItem draggingItem, MergeableItem targetItem)
+    {
+        if (draggingItem.CanMergeWith(targetItem))
+        {
+            return true;
+        }
+        return false;
     }
     public bool TryMergeItems(MergeableItem draggingItem, MergeableItem targetItem)
     {
@@ -431,7 +455,12 @@ public class GameManager : BaseManager
         obj.SetActive(false);
         return obj;
     }
-
+    private GameObject CreatePooledGenerator()
+    {
+        GameObject obj = Instantiate(generatorPrefab); // 기본 제너레이터 프리팹
+        obj.SetActive(false);
+        return obj;
+    }
     private void OnTakeFromPool(GameObject obj)
     {
         obj.SetActive(true);
@@ -451,7 +480,10 @@ public class GameManager : BaseManager
     {
         itemPool.Release(item);
     }
-
+    public void ReturnGeneratorToPool(GameObject generator)
+    {
+        generatorPool.Release(generator);
+    }
     #endregion
 
     #region Save/Load System

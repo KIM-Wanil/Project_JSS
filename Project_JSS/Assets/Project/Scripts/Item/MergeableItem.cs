@@ -1,8 +1,10 @@
+
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using DG.Tweening;
+using Unity.VisualScripting;
 public class MergeableItem : MonoBehaviour
 {
     [SerializeField] public Button button;
@@ -27,6 +29,8 @@ public class MergeableItem : MonoBehaviour
     protected Vector2Int gridPosition;
     protected bool isInitialized = false;
 
+    public ItemEffect itemEffect;
+
     public int Lv => lv;
     public Vector2Int GridPosition => gridPosition;
     public Image ItemImage => itemImage;
@@ -36,6 +40,10 @@ public class MergeableItem : MonoBehaviour
         if (itemImage == null)
         {
             itemImage = GetComponent<Image>();
+        }
+        if (itemEffect.IsUnityNull())
+        {
+            itemEffect = transform.GetComponentInChildren<ItemEffect>();
         }
     }
 
@@ -126,6 +134,7 @@ public class MergeableItem : MonoBehaviour
     {
         if (lv < itemData.items.Length)
         {
+            itemEffect.PlaySuccessMergeEffect();
             lv++;
             itemKey.lv = lv;
             UpdateVisuals();
@@ -136,6 +145,15 @@ public class MergeableItem : MonoBehaviour
             {
                 GetComponent<Generator>().Initialize();
             }
+
+            // DoTween을 사용하여 아이템 이미지의 크기 변화를 애니메이션으로 추가
+            itemImage.rectTransform.localScale = 0.5f * Vector3.one; // 처음 크기를 50%로 설정
+            DG.Tweening.Sequence sequence = DOTween.Sequence();
+            sequence.AppendInterval(10f / 60f) // 처음 10프레임 동안 대기
+                    .Append(itemImage.rectTransform.DOScale(1.25f, 10f / 60f).SetEase(Ease.InOutQuad)) // 11f ~ 21f: 50% -> 125%
+                    .Append(itemImage.rectTransform.DOScale(0.75f, 10f / 60f).SetEase(Ease.InOutQuad)) // 21f ~ 31f: 125% -> 75%
+                    .Append(itemImage.rectTransform.DOScale(1.0f, 10f / 60f).SetEase(Ease.InOutQuad)) // 31f ~ 41f: 75% -> 100%
+                    .Play(); // 시퀀스를 실행
         }
     }
     public void OnSelected()

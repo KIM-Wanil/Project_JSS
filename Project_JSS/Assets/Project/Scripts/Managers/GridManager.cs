@@ -4,6 +4,7 @@ using UnityEditor.Localization.Plugins.XLIFF.V12;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class GridManager : BaseManager
 {
@@ -24,6 +25,7 @@ public class GridManager : BaseManager
     private RectTransform mergeBoardRectT; 
     public GameObject MergeBoard => mergeBoard;
     public RectTransform MergeBoardRectT => mergeBoardRectT;
+    private MergeEffect mergeEffect; 
 
     public int Width => GameManager.GRID_WIDTH;
     public int Height => GameManager.GRID_HEIGHT;
@@ -37,12 +39,18 @@ public class GridManager : BaseManager
         Debug.Log("GridManager initialized");
         InitializeGrid();
         GenerateTiles(); // 타일 생성 호출
-        //Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
-        //Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
-        //Managers.Game.SpawnGenerator("gen_orb", 1, (Vector2Int)GetEmptyPosition());
-        //Managers.Game.SpawnGenerator("gen_pot", 1, (Vector2Int)GetEmptyPosition());
-        
+                         //Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
+                         //Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
+                         //Managers.Game.SpawnGenerator("gen_orb", 1, (Vector2Int)GetEmptyPosition());
+                         //Managers.Game.SpawnGenerator("gen_pot", 1, (Vector2Int)GetEmptyPosition());
 
+        mergeEffect = GameObject.Find("MergeEffect").GetComponent<MergeEffect>();
+        if (mergeEffect.IsUnityNull())
+        {
+            Debug.LogError("MergeEffect not found!");
+            return;
+        }
+        mergeEffect.transform.SetAsLastSibling();
 
     }
     private void InitializeGrid()
@@ -52,9 +60,11 @@ public class GridManager : BaseManager
 
     private void GenerateTiles()
     {
+        
+
         mergeBoard = GameObject.Find("MergeBoard");
         mergeBoardRectT = mergeBoard.GetComponent<RectTransform>();
-        if (mergeBoard == null)
+        if (mergeBoard.IsUnityNull())
         {
             Debug.LogError("MergeBoard not found!");
             return;
@@ -120,7 +130,15 @@ public class GridManager : BaseManager
             }
         }
     }
-
+    public void PlayTryMergeEffect(Vector2Int position)
+    {
+        mergeEffect.PlayTryMerge();
+        mergeEffect.rectTransform.anchoredPosition = GetWorldPosition(position);
+    }
+    public void StopTryMergeEffect()
+    {
+        mergeEffect.Init();
+    }
     // 그리드의 특정 위치에 있는 아이템 반환
     public MergeableItem GetItemAt(Vector2Int position)
     {
