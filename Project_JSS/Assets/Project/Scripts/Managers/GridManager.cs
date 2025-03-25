@@ -610,7 +610,7 @@ public class GridManager : BaseManager
                 MergeableItem mergeableItem = grid[x, y];
                 if (mergeableItem != null &&
                     mergeableItem.itemData.id == item.id &&
-                    mergeableItem.Lv == item.lv)
+                    mergeableItem.Lv == item.lv && !mergeableItem.isLock)
                 {
                     count++;
                 }
@@ -626,9 +626,10 @@ public class GridManager : BaseManager
             for (int y = 0; y < Height; y++)
             {
                 MergeableItem mergeableItem = grid[x, y];
+
                 if (mergeableItem != null &&
                     mergeableItem.itemData.id == item.id &&
-                    mergeableItem.Lv == item.lv)
+                    mergeableItem.Lv == item.lv && !mergeableItem.isLock)
                 {
                     // 그리드에서 아이템 제거
                     Vector2Int gridPos = new Vector2Int(x, y);

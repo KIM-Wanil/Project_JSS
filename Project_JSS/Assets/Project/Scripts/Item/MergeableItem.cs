@@ -55,9 +55,10 @@ public class MergeableItem : MonoBehaviour
         }
     }
 
-    public void Initialize(int inputLv, bool isLock = false)
+    public void Initialize(int inputLv, bool inputIsLock = false)
     {
-        if(isLock && itemData.type==ItemType.Normal)
+        isLock = inputIsLock;
+        if (isLock && itemData.type==ItemType.Normal)
         {
             LockImageObj.SetActive(true);
             ItemImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);

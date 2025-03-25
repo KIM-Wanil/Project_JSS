@@ -30,21 +30,28 @@ public class Guest : MonoBehaviour
         goldText.text = $"+{gold}";
         completeButton.onClick.AddListener(OnCompleteButtonClicked);
         Managers.Grid.AddGuest(this);
+
+        CheckItemsIsExist();
+
     }
     public void CheckItemsIsExist()
     {
         int count = 0;
         foreach (ItemInfo itemOrdered in itemsOrdered)
         {
+            itemOrdered.UpdateCountText();
             if (itemOrdered.IsComplete)
-            {
-                itemOrdered.UpdateCountText();
+            {            
                 count++;
             }
         }
 
         if (count == itemsOrdered.Length)
         {
+            foreach (ItemInfo itemOrdered in itemsOrdered)
+            {
+                itemOrdered.DeactivateAll();
+            }
             ActivateCompleteButton();
         }
         else
@@ -56,6 +63,7 @@ public class Guest : MonoBehaviour
     {
         if (!isCompleted) return;
         Managers.Game.AddGold(gold);
+        Debug.Log($"Add Gold: {gold}");
         foreach (ItemInfo itemOrdered in itemsOrdered)
         {
             for (int i = 0; i < itemOrdered.goalCount; i++)

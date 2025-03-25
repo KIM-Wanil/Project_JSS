@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 
-public class ItemInfo : MonoBehaviour, IPointerClickHandler
+public class ItemInfo : MonoBehaviour//, IPointerClickHandler
 {
     [SerializeField] private Image image;
     [SerializeField] private GameObject checkIcon;
@@ -44,29 +44,30 @@ public class ItemInfo : MonoBehaviour, IPointerClickHandler
         countText.text = $"{currentCount}/{goalCount}";
         if(currentCount>= goalCount)
         {
-            IsComplete = true;
+            ActivateCheckIconAndCount();
         }
         else
         {
-            IsComplete = false;
+
+            DeactivateCheckIconAndCount();
         }
     }
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log("Click");
-        if (!canClick) return;
-        switch (data.type)
-        {
-            case ItemType.Normal:
-            case ItemType.Generatable:
-                Debug.Log("아이템 정보창 팝업");
-                break;
-            default:
-                break;
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    //    Debug.Log("Click");
+    //    if (!canClick) return;
+    //    switch (data.type)
+    //    {
+    //        case ItemType.Normal:
+    //        case ItemType.Generatable:
+    //            Debug.Log("아이템 정보창 팝업");
+    //            break;
+    //        default:
+    //            break;
 
-        }
+    //    }
 
-    }
+    //}
 
     // InfoButton 활성화 메서드 추가
     public void ActivateInfoButton()
@@ -79,23 +80,27 @@ public class ItemInfo : MonoBehaviour, IPointerClickHandler
             //});
             infoButton.gameObject.SetActive(true);
         }
+        
     }
     // checkIcon 활성화 메서드 추가
-    //public void ActivateCheckIcon()
-    //{
-    //    if (checkIcon != null)
-    //    {
-    //        isExist = true;
-    //        checkIcon.SetActive(true);
-    //    }
-    //}
-    //// checkIcon 비활성화 메서드 추가
-    //public void DeactivateCheckIcon()
-    //{
-    //    if (checkIcon != null)
-    //    {
-    //        isExist = false;
-    //        checkIcon.SetActive(false);
-    //    }
-    //}
+    public void ActivateCheckIconAndCount()
+    {
+        checkIcon.SetActive(true);
+        countText.enabled = false;
+        IsComplete = true;
+    }
+    // checkIcon 비활성화 메서드 추가
+    public void DeactivateCheckIconAndCount()
+    {
+
+        checkIcon.SetActive(false);
+        countText.enabled = true;
+        IsComplete = false;
+    }
+    public void DeactivateAll()
+    {
+
+        checkIcon.SetActive(false);
+        countText.enabled = false;
+    }
 }
