@@ -7,7 +7,9 @@ using DG.Tweening;
 using Unity.VisualScripting;
 public class MergeableItem : MonoBehaviour
 {
-    [SerializeField] public Button button;
+    
+    public GameObject LockImageObj;
+    public bool isLock = false;
     [SerializeField] public GameObject selectIcon;
     [Header("Item Settings")]
     [SerializeField] protected int lv = 1;
@@ -17,10 +19,7 @@ public class MergeableItem : MonoBehaviour
     public ItemSO itemData;
     public ItemKey itemKey;
     public int price => itemData.items[lvIndex].price;
-    [Header("Effects")]
-    [SerializeField] protected ParticleSystem mergeEffect;
-    [SerializeField] protected ParticleSystem spawnEffect;
-
+    [SerializeField] private DraggableItem draggableItem;
     [Header("Events")]
     public UnityEvent<int> onLevelChanged;
     public UnityEvent onMerged;
@@ -30,6 +29,7 @@ public class MergeableItem : MonoBehaviour
     protected bool isInitialized = false;
 
     public ItemEffect itemEffect;
+    public RectTransform itemRectT;
 
     public int Lv => lv;
     public Vector2Int GridPosition => gridPosition;
@@ -37,7 +37,7 @@ public class MergeableItem : MonoBehaviour
     
     private void Awake()
     {
-        if (itemImage == null)
+        if (itemImage.IsUnityNull())
         {
             itemImage = GetComponent<Image>();
         }
@@ -45,10 +45,24 @@ public class MergeableItem : MonoBehaviour
         {
             itemEffect = transform.GetComponentInChildren<ItemEffect>();
         }
+        if (itemRectT.IsUnityNull())
+        {
+            itemRectT = GetComponent<RectTransform>();
+        }
+        if(draggableItem.IsUnityNull())
+        {
+            draggableItem = GetComponent<DraggableItem>();
+        }
     }
 
-    public void Initialize(int inputLv)
+    public void Initialize(int inputLv, bool isLock = false)
     {
+        if(isLock && itemData.type==ItemType.Normal)
+        {
+            LockImageObj.SetActive(true);
+            ItemImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+            draggableItem.enabled = false;
+        }
         lv = Mathf.Clamp(inputLv, 1, itemData.items.Length);
         UpdateVisuals();
         itemKey = new ItemKey(itemData.id, lv);
@@ -64,13 +78,6 @@ public class MergeableItem : MonoBehaviour
         //}
 
         isInitialized = true;
-
-        if (spawnEffect != null)
-        {
-            spawnEffect.Play();
-        }
-
-        onSpawned?.Invoke();
     }
 
     public void Initialize(SaveData.ItemData saveData)
@@ -89,13 +96,6 @@ public class MergeableItem : MonoBehaviour
     }
     protected void UpdateVisuals()
     {
-        if (mergeEffect != null)
-        {
-            // 이펙트를 부모에서 분리하고 자동 제거되도록 설정
-            mergeEffect.transform.SetParent(null);
-            mergeEffect.Play();
-            Destroy(mergeEffect.gameObject, mergeEffect.main.duration);
-        }
         if (itemImage != null  && itemData.items.Length > 0)
         {
             itemImage.sprite = itemData.items[lvIndex].itemSprite;
@@ -111,19 +111,6 @@ public class MergeableItem : MonoBehaviour
                lv < itemData.items.Length; // 최대 레벨 체크
     }
 
-    public void OnMerged()
-    {
-        if (mergeEffect != null)
-        {
-            // 이펙트를 부모에서 분리하고 자동 제거되도록 설정
-            mergeEffect.transform.SetParent(null);
-            mergeEffect.Play();
-            Destroy(mergeEffect.gameObject, mergeEffect.main.duration);
-        }
-
-        onMerged?.Invoke();
-        //Managers.Grid.DetatchItemFromGrid(gridPosition);
-    }
 
     public void SetGridPosition(Vector2Int pos)
     {
@@ -134,6 +121,13 @@ public class MergeableItem : MonoBehaviour
     {
         if (lv < itemData.items.Length)
         {
+            if (isLock)
+            {
+                LockImageObj.SetActive(false);
+                ItemImage.color = new Color(1f, 1f, 1f, 1f);
+                draggableItem.enabled = true;
+                isLock = false;
+            }
             itemEffect.PlaySuccessMergeEffect();
             lv++;
             itemKey.lv = lv;

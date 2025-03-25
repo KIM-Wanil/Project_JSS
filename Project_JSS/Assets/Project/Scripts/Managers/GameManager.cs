@@ -66,8 +66,10 @@ public class GameManager : BaseManager
     public bool IsDataLoaded { get; private set; } = false;
     public void OnClickSetMergeBoardTest()
     {
-        SpawnGenerator("G001", 1, (Vector2Int)Managers.Grid.GetEmptyPosition());
-        SpawnGenerator("G002", 1, (Vector2Int)Managers.Grid.GetEmptyPosition());
+        SpawnItem("N001", 2, new Vector2Int(0, 0), true);
+        SpawnItem("N002", 2, new Vector2Int(1, 0), true);
+        SpawnMoveGenerator("G001", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
+        SpawnMoveGenerator("G002", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
     }
     private void Awake()
     {
@@ -96,6 +98,7 @@ public class GameManager : BaseManager
         }
 
         IsDataLoaded = true; // 데이터 로드 완료 시 true로 설정
+        
     }
     private void InitializeGame()
     {
@@ -220,29 +223,38 @@ public class GameManager : BaseManager
     {
         return itemDataDic[key.id].items[key.lv - 1].itemName;
     }
-    public MergeableItem SpawnItem(string itemId, int level, Vector2Int position)
+    //이 경우에만 잠겨있는 아이템 존재
+    public MergeableItem SpawnItem(string itemId, int level, Vector2Int targetGridposition, bool isLock = false)
     {
         GameObject itemObj = itemPool.Get();
-        //itemObj.transform.position = Managers.Grid.GetWorldPosition(position);
-
+        MergeableItem item = itemObj.GetComponent<MergeableItem>();
+        if (item != null)
+        {
+            item.itemData = itemDataDic[itemId];
+            item.Initialize(level, isLock);
+            item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+            Managers.Grid.PlaceItem(item, targetGridposition);
+        }
+        Managers.Grid.CheckGuestsOrder();
+        return item;
+    }
+    public MergeableItem SpawnMoveItem(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
+    {
+        GameObject itemObj = itemPool.Get();
         MergeableItem item = itemObj.GetComponent<MergeableItem>();
         if (item != null)
         {
             item.itemData = itemDataDic[itemId];
             item.Initialize(level);
             item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-            Managers.Grid.PlaceItem(item, position);
-            //onItemSpawned?.Invoke(item);
+            Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
         }
-
         Managers.Grid.CheckGuestsOrder();
         return item;
     }
     public Generator SpawnGenerator(string itemId, int level, Vector2Int position)
     {
         GameObject genObj = generatorPool.Get();
-        //itemObj.transform.position = Managers.Grid.GetWorldPosition(position);
-
         MergeableItem item = genObj.GetComponent<MergeableItem>();
         if (item != null)
         {
@@ -252,8 +264,24 @@ public class GameManager : BaseManager
             Managers.Grid.PlaceItem(item, position);
             //onItemSpawned?.Invoke(item);
         }
+        Generator tempGenerator = item.gameObject.GetComponent<Generator>();
+        tempGenerator.genDB = genDataDic[itemId];
+        tempGenerator.Initialize();
 
-
+        return tempGenerator;
+    }
+    public Generator SpawnMoveGenerator(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
+    {
+        GameObject genObj = generatorPool.Get();
+        MergeableItem item = genObj.GetComponent<MergeableItem>();
+        if (item != null)
+        {
+            item.itemData = itemDataDic[itemId];
+            item.Initialize(level);
+            item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+            Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
+            //onItemSpawned?.Invoke(item);
+        }
         Generator tempGenerator = item.gameObject.GetComponent<Generator>();
         tempGenerator.genDB = genDataDic[itemId];
         tempGenerator.Initialize();

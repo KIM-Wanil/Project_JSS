@@ -18,6 +18,7 @@ public class SaveData
         public int level;
         public ItemType type;
         public Vector2Int position;
+        public bool isLock;
     }
 }
 

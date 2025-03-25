@@ -11,10 +11,10 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class CSVParser : EditorWindow
 {
     public TextAsset itemCsvFile;
-    private const string itemAdressablePath = "Assets/Project/ScriptableObjects/Items/";
-    private const string itemSpritePath = "Assets/Project/Sprites/";
+    private const string itemAdressablePath = "Assets/Project/ScriptableObjects/Item/";
+    private const string itemSpritePath = "Assets/Project/Sprites/Item/";
     public TextAsset generatorCsvFile;
-    private const string generatorAdressablePath = "Assets/Project/ScriptableObjects/Generators/";
+    private const string generatorAdressablePath = "Assets/Project/ScriptableObjects/Generator/";
     const int A = 0, B = 1, C = 2, D = 3, E = 4,
               F = 5, G = 6, H = 7, I = 8, J = 9,
               K = 10, L = 11, M = 12, N = 13, O = 14;

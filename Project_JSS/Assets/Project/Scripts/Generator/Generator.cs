@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using static GeneratorSO;
+using Unity.VisualScripting;
 
 public class Generator : MonoBehaviour
 {
@@ -12,21 +13,29 @@ public class Generator : MonoBehaviour
     private int maxDurability;
     private DraggableItem draggableItem; // DraggableItem 컴포넌트 참조
 
-    private GameObject durablilty;
-    private Image durabilityGauge; // 내구도를 표시할 Image 컴포넌트
+    [SerializeField] private GameObject durablilty;
+    [SerializeField] private Image durabilityGauge; // 내구도를 표시할 Image 컴포넌트
 
     public GeneratorData genData;
     public List<Sprite> generatableSprites;
+
+    public MergeEffect genEffect;
+    private bool canGenerate = true;
     private void Awake()
     {
         mergeableItem = GetComponent<MergeableItem>();
         draggableItem = GetComponent<DraggableItem>(); // DraggableItem 컴포넌트 가져오기
 
         // Image 컴포넌트 추가
-        durablilty = transform.GetChild(1).gameObject;
+        //durablilty = transform.GetChild(1).gameObject;
         durablilty.SetActive(true);
-        durabilityGauge = durablilty.transform.Find("DurabilityGauge").GetComponent<Image>();
+        //durabilityGauge = durablilty.transform.Find("DurabilityGauge").GetComponent<Image>();
 
+        if (genEffect.IsUnityNull())
+        {
+            genEffect = GetComponent<MergeEffect>();
+            //genEffect.Init();
+        }
         //durabilitySlider = imageObject.AddComponent<Image>();
         //if(durabilitySlider != null)
         //{
@@ -40,6 +49,18 @@ public class Generator : MonoBehaviour
 
     public void Initialize()
     {
+        ////저렙 생산못하는 제너레이터 생기면 레벨 맞춰서 수정하기
+        //if(mergeableItem.Lv < 4)
+        //{
+        //    canGenerate = false;
+        //    mergeEffect.Init();
+        //}
+        //else
+        //{
+        //    canGenerate = true;
+        //    mergeEffect.PlayMerge();
+        //}
+        genEffect.PlayEffect();
         genData = genDB.generatorDatas[mergeableItem.Lv - 1];
         maxDurability = genData.maxDurability;
         currentDurability = maxDurability;
@@ -114,7 +135,7 @@ public class Generator : MonoBehaviour
 
             if (randomValue <= accumulatedChance)
             {
-                Vector2Int? pos = Managers.Grid.GetEmptyPosition();
+                Vector2Int? pos = Managers.Grid.GetNearestPosition(mergeableItem.GridPosition);
                 if (pos == null)
                 {
                     Debug.Log("No empty position");
@@ -123,7 +144,7 @@ public class Generator : MonoBehaviour
                 else
                 {
                     //나중에 usable아이템 제너레이터도 추가
-                    Managers.Game.SpawnItem(item.key.id, item.key.lv, (Vector2Int)pos);
+                    Managers.Game.SpawnMoveItem(item.key.id, item.key.lv, Managers.Grid.GetTilePosition(mergeableItem.GridPosition),(Vector2Int)pos);
                 }
                 break;
             }

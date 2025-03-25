@@ -6,44 +6,72 @@ using UnityEngine.UI;
 public class MergeEffect : MonoBehaviour
 {
     public RectTransform rectTransform;
-    [SerializeField] private Image lightImage;
-    private Animator lightAnimator;
-    [SerializeField] private Image circleImage;
-    private Animator circleAnimator;
-    [SerializeField] private Image tryParticleImage;
-    private Animator tryParticleAnimator;
+    [SerializeField] private Image[] effectImage;
+    [SerializeField] private string[] effectTrigger;
+    private Animator[] effectAnimator;
 
-    public bool isTryAnimPlaying = false;
+
+    //[SerializeField] private Image lightImage;
+    //private Animator lightAnimator;
+    //[SerializeField] private Image circleImage;
+    //private Animator circleAnimator;
+    //[SerializeField] private Image particleImage;
+    //private Animator particleAnimator;
+
+    public bool isEffectPlaying = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        if (!lightImage.IsUnityNull())
+
+        // effectAnimator 배열 초기화
+        effectAnimator = new Animator[effectImage.Length];
+        for (int i=0; i<effectImage.Length; i++)
         {
-            lightAnimator = lightImage.GetComponent<Animator>();
-            if(lightAnimator.IsUnityNull())
+            if (!effectImage[i].IsUnityNull())
             {
-                Debug.LogError("successParticleAnimator is null");
-            }
-        }
-        if (!circleImage.IsUnityNull())
-        {
-            circleAnimator = circleImage.GetComponent<Animator>();
-            if (circleAnimator.IsUnityNull())
-            {
-                Debug.LogError("circleAnimator is null");
-            }
-        }
-        if (!tryParticleImage.IsUnityNull())
-        {
-            tryParticleAnimator = tryParticleImage.GetComponent<Animator>();
-            if (tryParticleAnimator.IsUnityNull())
-            {
-                Debug.LogError("tryParticleAnimator is null");
+                effectAnimator[i] = effectImage[i].GetComponent<Animator>();
+                if (effectAnimator[i].IsUnityNull())
+                {
+                    Debug.LogError($"effectAnimator[{i}] is null");
+                }
+                if(string.IsNullOrEmpty(effectTrigger[i]))
+                {
+                    Debug.LogError($"effectTrigger[{i}] is null");
+                }
             }
         }
 
-        Init();
+        //if (!lightImage.IsUnityNull())
+        //{
+        //    lightAnimator = lightImage.GetComponent<Animator>();
+        //    if(lightAnimator.IsUnityNull())
+        //    {
+        //        Debug.LogError("lightAnimator is null");
+        //    }
+        //}
+        //if (!circleImage.IsUnityNull())
+        //{
+        //    circleAnimator = circleImage.GetComponent<Animator>();
+        //    if (circleAnimator.IsUnityNull())
+        //    {
+        //        Debug.LogError("circleAnimator is null");
+        //    }
+        //}
+        //if (!particleImage.IsUnityNull())
+        //{
+        //    particleAnimator = particleImage.GetComponent<Animator>();
+        //    if (particleAnimator.IsUnityNull())
+        //    {
+        //        Debug.LogError("particleAnimator is null");
+        //    }
+        //}
+
+        for (int i = 0; i < effectImage.Length; i++)
+        {
+            effectImage[i].enabled = false;
+        }
+        isEffectPlaying = false;
         //PlayTryMerge();
     }
 
@@ -51,29 +79,41 @@ public class MergeEffect : MonoBehaviour
     {
         //this.gameObject.SetActive(false);
 
-        lightImage.enabled = false;
-        circleImage.enabled = false;
-        tryParticleImage.enabled = false;
+        for(int i=0; i < effectImage.Length; i++)
+        {
+            effectImage[i].enabled = false;
+            effectAnimator[i].Rebind();
+        }
 
-        tryParticleAnimator.Rebind();
-        circleAnimator.Rebind();
-        lightAnimator.Rebind();
+        //lightImage.enabled = false;
+        //circleImage.enabled = false;
+        //particleImage.enabled = false;
 
-        isTryAnimPlaying = false;
+        //particleAnimator.Rebind();
+        //circleAnimator.Rebind();
+        //lightAnimator.Rebind();
+
+        isEffectPlaying = false;
     }
-    public void PlayTryMerge()
+    public void PlayEffect()
     {
-        if (isTryAnimPlaying) return;
-        isTryAnimPlaying = true;
+        if (isEffectPlaying) return;
+        isEffectPlaying = true;
         //this.gameObject.SetActive(true);
 
-        lightImage.enabled = true;
-        circleImage.enabled = true;
-        tryParticleImage.enabled = true;
+        for (int i = 0; i < effectImage.Length; i++)
+        {
+            effectImage[i].enabled = true;
+            effectAnimator[i].SetTrigger(effectTrigger[i]);
+        }
 
-        tryParticleAnimator.SetTrigger("PlayTryParticle");
-        circleAnimator.SetTrigger("PlayCircle");
-        lightAnimator.SetTrigger("PlayLight");
+        //lightImage.enabled = true;
+        //circleImage.enabled = true;
+        //particleImage.enabled = true;
+
+        //particleAnimator.SetTrigger("PlayParticle");
+        //circleAnimator.SetTrigger("PlayCircle");
+        //lightAnimator.SetTrigger("PlayLight");
     }
     // Update is called once per frame
     void Update()

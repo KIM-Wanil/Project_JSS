@@ -32,8 +32,11 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        mergeableItem = GetComponent<MergeableItem>();
-        canvas = GetComponentInParent<Canvas>();
+        if(mergeableItem.IsUnityNull())
+        {
+            mergeableItem = GetComponent<MergeableItem>();
+        }
+        canvas = GetComponentInParent<Canvas>(); 
         initialGridPos = mergeableItem.GridPosition;
 
         
@@ -159,7 +162,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         {
             StopCoroutine(mergeEffectCoroutine);
             mergeEffectCoroutine = null;
-            Managers.Grid.StopTryMergeEffect();
+            Managers.Grid.StopMergeEffect();
         }
     }
 
@@ -177,7 +180,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                     if (mergeEffectCoroutine != null)
                     {
                         StopCoroutine(mergeEffectCoroutine);
-                        Managers.Grid.StopTryMergeEffect();
+                        Managers.Grid.StopMergeEffect();
                     }
                     mergeEffectCoroutine = StartCoroutine(ShowMergeEffectAfterDelay(neighbor.GridPosition));
                 }
@@ -189,7 +192,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 {
                     StopCoroutine(mergeEffectCoroutine);
                     mergeEffectCoroutine = null;
-                    Managers.Grid.StopTryMergeEffect();
+                    Managers.Grid.StopMergeEffect();
                 }
             }
         }
@@ -200,7 +203,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         yield return new WaitForSeconds(mergeEffectDelay);
         if (potentialMergeTarget != null)
         {
-            Managers.Grid.PlayTryMergeEffect(gridPos);
+            Managers.Grid.PlayMergeEffect(gridPos);
             Debug.Log("머지 이펙트 발생");
         }
     }

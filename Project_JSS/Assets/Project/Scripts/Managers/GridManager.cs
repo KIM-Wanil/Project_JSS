@@ -5,7 +5,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
-
+using DG.Tweening;
 public class GridManager : BaseManager
 {
     private float boardWidth;
@@ -25,7 +25,7 @@ public class GridManager : BaseManager
     private RectTransform mergeBoardRectT; 
     public GameObject MergeBoard => mergeBoard;
     public RectTransform MergeBoardRectT => mergeBoardRectT;
-    private MergeEffect mergeEffect; 
+    private MergeEffect mergeTryEffect; 
 
     public int Width => GameManager.GRID_WIDTH;
     public int Height => GameManager.GRID_HEIGHT;
@@ -44,13 +44,16 @@ public class GridManager : BaseManager
                          //Managers.Game.SpawnGenerator("gen_orb", 1, (Vector2Int)GetEmptyPosition());
                          //Managers.Game.SpawnGenerator("gen_pot", 1, (Vector2Int)GetEmptyPosition());
 
-        mergeEffect = GameObject.Find("MergeEffect").GetComponent<MergeEffect>();
-        if (mergeEffect.IsUnityNull())
+        mergeTryEffect = GameObject.Find("MergeTryEffect").GetComponent<MergeEffect>();
+        if (mergeTryEffect.IsUnityNull())
         {
             Debug.LogError("MergeEffect not found!");
             return;
         }
-        mergeEffect.transform.SetAsLastSibling();
+        mergeTryEffect.transform.SetAsLastSibling();
+
+        //Managers.Game.SpawnItem("N001", 2, new Vector2Int(0,0), true);
+        //Managers.Game.SpawnItem("N002", 2, new Vector2Int(1,0), true);
 
     }
     private void InitializeGrid()
@@ -116,7 +119,8 @@ public class GridManager : BaseManager
                 }
 
                 tiles[i, j] = tileObject;
-                tilePositions[i, j] = tileObject.transform.position;
+                //tilePositions[i, j] = tileObject.transform.position;
+                tilePositions[i, j] = tileRect.anchoredPosition;
 
                 //타일 체크무늬로 보이게 띄엄띄엄 표시
                 //if((i+j) %2 ==0)
@@ -130,14 +134,14 @@ public class GridManager : BaseManager
             }
         }
     }
-    public void PlayTryMergeEffect(Vector2Int position)
+    public void PlayMergeEffect(Vector2Int position)
     {
-        mergeEffect.PlayTryMerge();
-        mergeEffect.rectTransform.anchoredPosition = GetWorldPosition(position);
+        mergeTryEffect.PlayEffect();
+        mergeTryEffect.rectTransform.anchoredPosition = GetTilePosition(position);
     }
-    public void StopTryMergeEffect()
+    public void StopMergeEffect()
     {
-        mergeEffect.Init();
+        mergeTryEffect.Init();
     }
     // 그리드의 특정 위치에 있는 아이템 반환
     public MergeableItem GetItemAt(Vector2Int position)
@@ -198,7 +202,7 @@ public class GridManager : BaseManager
         MergeableItem item = grid[fromPosition.x, fromPosition.y];
         grid[fromPosition.x, fromPosition.y] = null;
         grid[toPosition.x, toPosition.y] = item;
-        item.transform.position = GetWorldPosition(toPosition);
+        item.transform.position = GetTilePosition(toPosition);
         item.SetGridPosition(toPosition);
 
         return true;
@@ -260,19 +264,73 @@ public class GridManager : BaseManager
         // 빈 자리가 없으면 null 반환
         return null;
     }
-    // 그리드 위치를 월드 좌표로 변환
-    public Vector3 GetWorldPosition(Vector2Int gridPosition)
+    public Vector2Int? GetNearestPosition(Vector2Int startPos)
     {
-        float x = gridStartPosition.x + gridPosition.x * (TileSize + spacing);
-        float y = gridStartPosition.y - gridPosition.y * (TileSize + spacing); // y 좌표를 반대로 계산
-        return new Vector3(x, y, 0);
+        // BFS를 위한 큐와 방문 기록
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
+        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
+
+        // 초기 위치를 큐에 추가
+        queue.Enqueue(startPos);
+        visited.Add(startPos);
+
+        // 방향 벡터 (상, 좌, 우, 하, 좌상, 우상, 좌하, 우하)
+        Vector2Int[] directions = new Vector2Int[]
+        {
+        new Vector2Int(0, 1),   // 상
+        new Vector2Int(-1, 0),  // 좌
+        new Vector2Int(1, 0),   // 우
+        new Vector2Int(0, -1),  // 하
+        new Vector2Int(-1, 1),  // 좌상
+        new Vector2Int(1, 1),   // 우상
+        new Vector2Int(-1, -1), // 좌하
+        new Vector2Int(1, -1)   // 우하
+        };
+
+        while (queue.Count > 0)
+        {
+            Vector2Int currentPos = queue.Dequeue();
+
+            // 현재 위치가 유효하고 빈 위치인지 확인
+            if (IsValidPosition(currentPos) && IsEmptyPosition(currentPos))
+            {
+                return currentPos;
+            }
+
+            // 인접한 모든 방향을 검사
+            foreach (var direction in directions)
+            {
+                Vector2Int newPos = currentPos + direction;
+
+                // 그리드 범위 내에 있고 방문하지 않은 위치만 큐에 추가
+                if (newPos.x >= 0 && newPos.x < Width &&
+                    newPos.y >= 0 && newPos.y < Height &&
+                    !visited.Contains(newPos))
+                {
+                    queue.Enqueue(newPos);
+                    visited.Add(newPos);
+                }
+            }
+        }
+
+        // 빈 위치를 찾지 못한 경우 null 반환
+        return null;
+    }
+    // 그리드 위치를 월드 좌표로 변환
+    public Vector3 GetTilePosition(Vector2Int gridPosition)
+    {
+        //float x = gridStartPosition.x + gridPosition.x * (TileSize + spacing);
+        //float y = gridStartPosition.y - gridPosition.y * (TileSize + spacing); // y 좌표를 반대로 계산
+        //return new Vector3(x, y, 0);
+
+        return tilePositions[gridPosition.x, gridPosition.y];
     }
 
 
     // 월드 좌표를 그리드 위치로 변환
-    public Vector2Int? GetGridPosition(Vector3 worldPosition)
+    public Vector2Int? GetGridPosition(Vector3 tilePosition)
     {
-        Vector2 localPosition = (Vector2)worldPosition - gridStartPosition;
+        Vector2 localPosition = (Vector2)tilePosition - gridStartPosition;
 
         Vector2Int gridPos = new Vector2Int(
             Mathf.RoundToInt(localPosition.x / (TileSize + spacing)),
@@ -303,29 +361,94 @@ public class GridManager : BaseManager
     }
 
     // 아이템을 그리드에 배치
-    public bool PlaceItem(MergeableItem item, Vector2Int position)
+    public bool PlaceMoveItem(MergeableItem item, Vector2 startTilePosition, Vector2Int targetGridposition)
     {
-        //if (!IsValidPosition(position) || !IsEmptyPosition(position))
-        //{
-        //    Debug.Log("배치 불가");
-        //    return false;
-        //}
+        item.transform.SetParent(mergeBoard.transform);
+        item.itemRectT.anchoredPosition = startTilePosition;
+
+        Vector2 targetTilePosition = GetTilePosition(targetGridposition);
+
+        Debug.Log($"startTilePosition:{startTilePosition}/targetTilePosition:{targetTilePosition}");
+
+        // 이동 시간 계산 (거리에 비례)
+        float distance = Vector2.Distance(startTilePosition, targetTilePosition);
+        float moveDuration = distance * 0.003f; // 속도 조절을 위해 5로 나눔
+        Debug.Log($"distance:{distance}/moveDuration:{moveDuration}");
+
+        // 1. 직선 벡터 구하기
+        Vector2 direction = (targetTilePosition - startTilePosition).normalized;
+        Vector2 perpendicularVector = new Vector2();
+        if (direction.x > 0)
+        {
+            perpendicularVector = new Vector2(-direction.y, direction.x);
+        }
+        else
+        {
+            perpendicularVector = new Vector2(direction.y, -direction.x);
+        }
+
+        // 4. 벡터 정규화
+        perpendicularVector = perpendicularVector.normalized;
+
+
+        // 포물선 이동 시퀀스 생성
+        DG.Tweening.Sequence sequence = DOTween.Sequence();
+
+        // 포물선 경로 설정
+        Vector2 controlPoint = new Vector2();
+        if(Mathf.Abs(startTilePosition.x - targetTilePosition.x) < TileSize * 0.5f)
+        {
+            controlPoint = (startTilePosition + targetTilePosition) * 0.5f;
+        }
+        else
+        {
+            controlPoint = (startTilePosition + targetTilePosition) * 0.5f + perpendicularVector * distance * 0.2f;
+        } 
+        Debug.Log($"controlPoint:{controlPoint}");
+
+        // 반동 효과를 위한 추가 제어점 설정
+        Vector2 overshootPoint = targetTilePosition + (direction * 5f); // 
+        Debug.Log($"overshootPoint:{overshootPoint}");
+
+        sequence.Append(item.itemRectT.DOLocalPath(new Vector3[] { startTilePosition, controlPoint, overshootPoint, targetTilePosition }, moveDuration ,PathType.CatmullRom, PathMode.Ignore).SetEase(Ease.OutQuart));
+
+        // 시퀀스 완료 시 실행할 코드
+        sequence.OnComplete(() =>
+        {
+            // 아이템을 타일의 자식으로 배치
+            item.transform.SetParent(tiles[targetGridposition.x, targetGridposition.y].transform);
+
+            // 아이템의 위치 설정
+            //item.transform.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
+
+            item.itemRectT.localScale = Vector3.one;
+            item.itemRectT.anchoredPosition = Vector3.zero;
+
+            // 아이템의 Sibling Index를 타일보다 앞에 배치
+            item.transform.SetSiblingIndex(tiles[targetGridposition.x, targetGridposition.y].transform.GetSiblingIndex() + 1);
+
+               
+        });
+        sequence.Play();
+        // 그리드에 아이템 배치
+        grid[targetGridposition.x, targetGridposition.y] = item;
+        item.SetGridPosition(targetGridposition);
+        return true;
+    }
+    public bool PlaceItem(MergeableItem item, Vector2Int targetGridposition)
+    {
 
         // 아이템을 타일의 자식으로 배치
-        item.transform.SetParent(tiles[position.x, position.y].transform);
-
+        item.transform.SetParent(tiles[targetGridposition.x, targetGridposition.y].transform);
         // 아이템의 위치 설정
         item.transform.localPosition = Vector3.zero;
-
-        item.GetComponent<RectTransform>().localScale = Vector3.one;
-
         // 아이템의 Sibling Index를 타일보다 앞에 배치
-        item.transform.SetSiblingIndex(tiles[position.x, position.y].transform.GetSiblingIndex() + 1);
+        item.transform.SetSiblingIndex(tiles[targetGridposition.x, targetGridposition.y].transform.GetSiblingIndex() + 1);
 
         // 그리드에 아이템 배치
-        grid[position.x, position.y] = item;
-        item.SetGridPosition(position);
-
+        item.GetComponent<RectTransform>().localScale = Vector3.one;
+        grid[targetGridposition.x, targetGridposition.y] = item;
+        item.SetGridPosition(targetGridposition);
         return true;
     }
 

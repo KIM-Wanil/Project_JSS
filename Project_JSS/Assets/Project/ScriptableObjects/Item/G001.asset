@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c6ed7453db13f6469dac6da6fb62123, type: 3}
-  m_Name: G002
+  m_Name: G001
   m_EditorClassIdentifier: 
-  id: G002
+  id: G001
   type: 1
   items:
-  - itemSprite: {fileID: 21300000, guid: 8c8a1d50430caaa42919023ee4490685, type: 3}
+  - itemSprite: {fileID: 21300000, guid: f6c9d8ee1b185f84d84f673672c62460, type: 3}
     level: 1
-    itemName: "\uCCAD\uC18C \uB3C4\uAD6C \uCE74\uD2B8"
-    itemDesc: 66666666
+    itemName: "\uACF5\uAD6C\uD568"
+    itemDesc: "\uACF5\uAD6C\uAC00 \uB2F4\uACA8\uC788\uB294 \uAE30\uBCF8 \uACF5\uAD6C\uD568\uC774\uBA70<c>
+      \uD3AD\uAC00\uC774\uBC84\uAC00 \uB418\uAE30 \uC704\uD55C \uD544\uC218\uD488\uC785\uB2C8\uB2E4!!"
     price: -1
