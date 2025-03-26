@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5bb757afcb90841999110a9686d494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetReferences: {fileID: 11400000, guid: cbd5a0758274b8543b08b069d217624c, type: 2}
+  assetReferences: {fileID: 11400000, guid: 4aac46dab0fd1614d992146a1e29b9fa, type: 2}
   audioSourceBGM: {fileID: 5244751524000426707}
   audioSourceUI: {fileID: 2472750873941029893}
   audioSourceEffect: {fileID: 1391175797798043340}
@@ -103,7 +103,6 @@ MonoBehaviour:
   maxEnergy: 100
   energyRegenRate: 1
   energyRegenAmount: 1
-  currentGold: 0
   itemPrefab: {fileID: 6021443315596796148, guid: 59e5fb6f619816d49ab58350bb61c497, type: 3}
   generatorPrefab: {fileID: 6021443315596796148, guid: f6bd98f188776e64da381a3131e8e8ac, type: 3}
   itemIds:
@@ -126,7 +125,7 @@ MonoBehaviour:
   onGoldChanged:
     m_PersistentCalls:
       m_Calls: []
-  onScoreChanged:
+  onGemChanged:
     m_PersistentCalls:
       m_Calls: []
   onItemMerged:

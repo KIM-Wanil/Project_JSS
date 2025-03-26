@@ -16,6 +16,10 @@ public class ItemEffect : MonoBehaviour
                 Debug.LogError("successParticleAnimator is null");
             }
         }
+        //successParticleImage.enabled = false;
+    }
+    private void Start()
+    {
         successParticleImage.enabled = false;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created

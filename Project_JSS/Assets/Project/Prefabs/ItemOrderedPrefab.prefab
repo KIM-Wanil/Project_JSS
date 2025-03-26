@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 7130636814549221421}
   - component: {fileID: 4238058689751034644}
   - component: {fileID: 6449729903511830233}
+  - component: {fileID: 8407555261615972882}
   m_Layer: 5
   m_Name: CheckIcon
   m_TagString: Untagged
@@ -169,10 +170,10 @@ RectTransform:
   m_Father: {fileID: 3897998479343077965}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 10}
+  m_SizeDelta: {x: 0, y: 75}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4238058689751034644
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -211,6 +212,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8407555261615972882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437926448202682402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 1
+  m_AspectRatio: 1
 --- !u!1 &2575151252055849222
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +508,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3897998479343077965}
   - component: {fileID: 142025567297766806}
-  - component: {fileID: 8066319292996406383}
+  - component: {fileID: 6897298302908154122}
   m_Layer: 5
   m_Name: ItemOrderedPrefab
   m_TagString: Untagged
@@ -532,7 +547,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6752757116831376951}
   m_CullTransparentMesh: 1
---- !u!114 &8066319292996406383
+--- !u!114 &6897298302908154122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -541,7 +556,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6752757116831376951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a26ec9f229e0e0468a767856063cade, type: 3}
+  m_Script: {fileID: 11500000, guid: 0212c706be9847b47b246315fbb75bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 7652376433928997173}

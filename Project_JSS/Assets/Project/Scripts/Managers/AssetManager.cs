@@ -17,10 +17,10 @@ public class AssetManager : BaseManager
     private Dictionary<string, UnityEngine.Object> cachedAssets = new Dictionary<string, UnityEngine.Object>();
 
 
-    public void LoadBackgroundImage(string backgroundKey, Action<Sprite> onComplete)
+    public void LoadSprite(string backgroundKey, Action<Sprite> onComplete)
     {
-        var assetReference = assetReferences.GetBackgroundAssetReference(backgroundKey);
-        LoadAsset<Sprite>(backgroundKey, assetReference, onComplete, $"background sprite: {backgroundKey}");
+        var assetReference = assetReferences.GetSpriteAssetReference(backgroundKey);
+        LoadAsset<Sprite>(backgroundKey, assetReference, onComplete, $"sprite: {backgroundKey}");
     }
     public void LoadEffect(string effectKey, Action<GameObject> onComplete)
     {
@@ -159,28 +159,28 @@ public class AssetManager : BaseManager
         // 캐시에 존재하는지 확인
         if (cachedAssets.TryGetValue(key, out var cachedAsset))
         {
-            // 다음 프레임에서 콜백 실행
-            //Debug.Log("실행전");
-            //Debug.Log($"Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
-            //Debug.Log(onComplete.Target);
-            //Debug.Log(onComplete.Method);
-            //Debug.Log($"캐시된 에셋: {cachedAsset}");
-
-            // 메인 스레드에서 실행되도록 보장
-            StartCoroutine(ExecuteOnNextFrame(() =>
-            {
-                //Debug.Log("실행후");
-                //Debug.Log($"Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
-                //Debug.Log(onComplete.Target);
-                //Debug.Log(onComplete.Method);
-                //Debug.Log($"캐시된 에셋: {cachedAsset}");
-                onComplete?.Invoke(cachedAsset as T);
-            }));
+            onComplete?.Invoke(cachedAsset as T);
             return;
         }
 
         if (assetReference != null)
         {
+            // 이미 로드된 에셋인지 확인
+            if (assetReference.OperationHandle.IsValid())
+            {
+                if (assetReference.OperationHandle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    onComplete?.Invoke(assetReference.OperationHandle.Result as T);
+                    return;
+                }
+                else if (assetReference.OperationHandle.Status == AsyncOperationStatus.Failed)
+                {
+                    Debug.LogError($"Failed to load {errorMessage}");
+                    return;
+                }
+            }
+
+            // 에셋 로드
             assetReference.LoadAssetAsync<T>().Completed += handle =>
             {
                 if (handle.Status == AsyncOperationStatus.Succeeded)

@@ -97,13 +97,14 @@ public class GridManager : BaseManager
 
         gridStartPosition = new Vector2(startX + extraSpaceX, startY - extraSpaceY); // 위쪽에서 시작
 
-        for (int i = 0; i < Width; i++)
+        for (int col = 0; col < Width; col++)
         {
-            for (int j = 0; j < Height; j++)
+            for (int row = 0; row < Height; row++)
             {
-                Vector3 position = new Vector3(i * (TileSize + spacing), -j * (TileSize + spacing), 0) + (Vector3)gridStartPosition; // y 좌표를 반대로 계산
+                Vector3 position = new Vector3(col * (TileSize + spacing), -row * (TileSize + spacing), 0) + (Vector3)gridStartPosition; // y 좌표를 반대로 계산
                 GameObject tileObject = Instantiate(tilePrefab, position, Quaternion.identity, mergeBoard.transform);
-                tileObject.name = $"Tile_{i}_{j}";
+                char c = (char)('A' + col);
+                tileObject.name = $"Tile_{c}{row}";
                 // 타일 크기 조정
                 RectTransform tileRect = tileObject.GetComponent<RectTransform>();
                 if (tileRect != null)
@@ -115,12 +116,12 @@ public class GridManager : BaseManager
                 Tile tile = tileObject.GetComponent<Tile>();
                 if (tile != null)
                 {
-                    tile.Initialize(new Vector2Int(i, j));
+                    tile.Initialize(new Vector2Int(col, row));
                 }
 
-                tiles[i, j] = tileObject;
+                tiles[col, row] = tileObject;
                 //tilePositions[i, j] = tileObject.transform.position;
-                tilePositions[i, j] = tileRect.anchoredPosition;
+                tilePositions[col, row] = tileRect.anchoredPosition;
 
                 //타일 체크무늬로 보이게 띄엄띄엄 표시
                 //if((i+j) %2 ==0)
@@ -312,9 +313,38 @@ public class GridManager : BaseManager
                 }
             }
         }
-
         // 빈 위치를 찾지 못한 경우 null 반환
         return null;
+    }
+    public void OpenNearBox(Vector2Int startPos)
+    {
+        // 방향 벡터 (상, 좌, 우, 하)
+        Vector2Int[] directions = new Vector2Int[]
+        {
+            new Vector2Int(0, 1),   // 상
+            new Vector2Int(-1, 0),  // 좌
+            new Vector2Int(1, 0),   // 우
+            new Vector2Int(0, -1),  // 하
+        };
+
+
+        // 인접한 모든 방향을 검사
+        foreach (var direction in directions)
+        {
+            Vector2Int newPos = startPos + direction;
+            if (IsValidPosition(newPos) && !IsEmptyPosition(newPos))
+            {
+                MergeableItem item = grid[newPos.x, newPos.y];
+                if (item.state == ItemState.InBox)
+                {
+                    item.Initialize(item.Lv, ItemState.Locked);
+
+                }
+            }
+        }
+
+        // 빈 위치를 찾지 못한 경우 null 반환
+        return;
     }
     // 그리드 위치를 월드 좌표로 변환
     public Vector3 GetTilePosition(Vector2Int gridPosition)
@@ -478,7 +508,7 @@ public class GridManager : BaseManager
                     Vector2Int[] checkDirections = new Vector2Int[]
                     {
                         new Vector2Int(1, 0),  // 오른쪽
-                        new Vector2Int(0, 1)   // 위쪽
+                        new Vector2Int(0, 1)   // 아래쪽
                     };
                     foreach (var direction in checkDirections)
                     {
@@ -610,7 +640,7 @@ public class GridManager : BaseManager
                 MergeableItem mergeableItem = grid[x, y];
                 if (mergeableItem != null &&
                     mergeableItem.itemData.id == item.id &&
-                    mergeableItem.Lv == item.lv && !mergeableItem.isLock)
+                    mergeableItem.Lv == item.lv && mergeableItem.state == ItemState.None)
                 {
                     count++;
                 }
@@ -629,7 +659,7 @@ public class GridManager : BaseManager
 
                 if (mergeableItem != null &&
                     mergeableItem.itemData.id == item.id &&
-                    mergeableItem.Lv == item.lv && !mergeableItem.isLock)
+                    mergeableItem.Lv == item.lv && mergeableItem.state == ItemState.None)
                 {
                     // 그리드에서 아이템 제거
                     Vector2Int gridPos = new Vector2Int(x, y);

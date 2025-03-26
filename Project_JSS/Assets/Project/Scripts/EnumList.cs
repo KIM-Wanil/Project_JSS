@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 [System.Serializable]
 public struct CraftingRecipe
 {
@@ -46,8 +47,13 @@ public enum ItemType
 {
     Normal =0,
     Generatable,
-    Usable,
-    Crafted
+    Usable
+}
+public enum ItemState
+{
+    None = 0,
+    Locked,
+    InBox
 }
 public enum RewardType
 {
@@ -73,4 +79,5 @@ public enum Direction
 }
 public class EnumList : MonoBehaviour
 {
+
 }

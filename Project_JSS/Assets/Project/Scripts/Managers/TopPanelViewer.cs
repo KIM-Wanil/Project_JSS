@@ -14,6 +14,7 @@ public class TopPanelViewer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI energyText; 
     [SerializeField] private TextMeshProUGUI energyRegenTimeText; 
     [SerializeField] private TextMeshProUGUI goldText; 
+    [SerializeField] private TextMeshProUGUI gemText; 
     [SerializeField] private TextMeshProUGUI nickNameText; 
     // private TextMeshProUGUI maxEnergyText; 
 
@@ -33,6 +34,11 @@ public class TopPanelViewer : MonoBehaviour
         if (!goldText)
         {
             goldText = GameObject.Find("GoldAmountText").GetComponent<TextMeshProUGUI>();
+        }
+        // goldText가 null일 때만 Find 수행
+        if (!gemText)
+        {
+            gemText = GameObject.Find("GemAmountText").GetComponent<TextMeshProUGUI>();
         }
         // nickNameText가 null일 때만 Find 수행
         if (!nickNameText)
@@ -59,6 +65,11 @@ public class TopPanelViewer : MonoBehaviour
         Managers.Game.onGoldChanged.AddListener(UpdateGoldUI);
         // 초기 골드 UI 설정
         UpdateGoldUI(Managers.Game.CurrentGold);
+
+        // GameManager의 골드 변경 이벤트 구독
+        Managers.Game.onGemChanged.AddListener(UpdateGemUI);
+        // 초기 골드 UI 설정
+        UpdateGemUI(Managers.Game.CurrentGem);
     }
 
     //private void OnDestroy()
@@ -110,6 +121,13 @@ public class TopPanelViewer : MonoBehaviour
         if (goldText)
         {
             goldText.text = $"{currentEnergy}";
+        }
+    }
+    private void UpdateGemUI(int currentGem)
+    {
+        if (gemText)
+        {
+            gemText.text = $"{currentGem}";
         }
     }
 

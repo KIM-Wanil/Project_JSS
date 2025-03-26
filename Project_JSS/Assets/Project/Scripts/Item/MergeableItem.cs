@@ -7,9 +7,9 @@ using DG.Tweening;
 using Unity.VisualScripting;
 public class MergeableItem : MonoBehaviour
 {
-    
+    [SerializeField] private Sprite boxSprite;
     public GameObject LockImageObj;
-    public bool isLock = false;
+    public ItemState state { get; private set; }
     [SerializeField] public GameObject selectIcon;
     [Header("Item Settings")]
     [SerializeField] protected int lv = 1;
@@ -55,15 +55,10 @@ public class MergeableItem : MonoBehaviour
         }
     }
 
-    public void Initialize(int inputLv, bool inputIsLock = false)
+    public void Initialize(int inputLv, ItemState inputState = ItemState.None)
     {
-        isLock = inputIsLock;
-        if (isLock && itemData.type==ItemType.Normal)
-        {
-            LockImageObj.SetActive(true);
-            ItemImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
-            draggableItem.enabled = false;
-        }
+        state = inputState;
+        Debug.Log(state);
         lv = Mathf.Clamp(inputLv, 1, itemData.items.Length);
         UpdateVisuals();
         itemKey = new ItemKey(itemData.id, lv);
@@ -81,14 +76,18 @@ public class MergeableItem : MonoBehaviour
         isInitialized = true;
     }
 
-    public void Initialize(SaveData.ItemData saveData)
-    {
-        //itemId = saveData.itemId;
-        lv = saveData.level;
-        gridPosition = saveData.position;
-        UpdateVisuals();
-        isInitialized = true;
-    }
+    //public void Initialize(SaveData.ItemData saveData)
+    //{
+    //    //itemId = saveData.itemId;
+
+
+    //    lv = saveData.level;
+    //    gridPosition = saveData.position;
+    //    UpdateVisuals();
+    //    isInitialized = true;
+
+
+    //}
     public void SellThisItem()
     {
        Managers.Game.AddGold(itemData.items[lvIndex].price);
@@ -99,7 +98,30 @@ public class MergeableItem : MonoBehaviour
     {
         if (itemImage != null  && itemData.items.Length > 0)
         {
-            itemImage.sprite = itemData.items[lvIndex].itemSprite;
+            if (itemData.type == ItemType.Normal)
+            {
+                switch (state)
+                {
+                    case ItemState.None:
+                        itemImage.sprite = itemData.items[lvIndex].itemSprite;
+                        break;
+                    case ItemState.Locked:
+                        itemImage.sprite = itemData.items[lvIndex].itemSprite;
+                        ItemImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+                        LockImageObj.SetActive(true);
+                        draggableItem.enabled = false;
+                        break;
+                    case ItemState.InBox:
+                        itemImage.sprite = boxSprite;
+                        ItemImage.color = new Color(1.0f, 1.0f, 1.0f, 1f);
+                        draggableItem.enabled = false;
+                        break;
+                }
+            }
+            else
+            {
+               itemImage.sprite = itemData.items[lvIndex].itemSprite;
+            }
         }
     }
 
@@ -121,18 +143,19 @@ public class MergeableItem : MonoBehaviour
     public void LevelUp()
     {
         if (lv < itemData.items.Length)
-        {
-            if (isLock)
-            {
-                LockImageObj.SetActive(false);
-                ItemImage.color = new Color(1f, 1f, 1f, 1f);
-                draggableItem.enabled = true;
-                isLock = false;
-            }
+        {          
             itemEffect.PlaySuccessMergeEffect();
             lv++;
             itemKey.lv = lv;
             UpdateVisuals();
+            if (state == ItemState.Locked)
+            {
+                state = ItemState.None;
+                LockImageObj.SetActive(false);
+                ItemImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                draggableItem.enabled = true;
+                Managers.Grid.OpenNearBox(gridPosition);
+            }            
             onLevelChanged?.Invoke(lv);
             Managers.Grid.CheckGuestsOrder();
 
