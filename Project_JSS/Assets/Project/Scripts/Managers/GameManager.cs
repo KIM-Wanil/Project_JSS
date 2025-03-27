@@ -14,7 +14,7 @@ public class GameManager : BaseManager
     public const int GRID_WIDTH = 7;
     public const int GRID_HEIGHT = 9;
     [Header("Script References")]
-    public InfoPanelController infoPanelController;
+    //public InfoPanelController infoPanelController;
     [Header("Energy Settings")]
     [SerializeField] private int maxEnergy = 100;
     public int MaxEnergy => maxEnergy;
@@ -41,7 +41,6 @@ public class GameManager : BaseManager
     [SerializeField] private string[] itemIds = {"N000", "N001", "N002"};
     //[SerializeField] private GeneratorSO[] genDatas;
     [SerializeField] private string[] genIds = {"G001", "G002"};
-    [SerializeField] public CraftingDB craftingDB;
 
     [Header("Guest Referemces")]
     [SerializeField] private GameObject guestBoard;
@@ -60,6 +59,11 @@ public class GameManager : BaseManager
     public UnityEvent<MergeableItem> onItemMerged;
     public UnityEvent<MergeableItem> onItemSpawned;
 
+    public UnityEvent<ItemKey, int, UnityAction> onSellableItemSelected;
+    public UnityEvent<ItemKey> onUnsellableItemSelected;
+    public UnityEvent<ItemKey> onLockedItemSelected;
+    public UnityEvent onItemDeSelected;
+
     
     
     private Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
@@ -75,6 +79,22 @@ public class GameManager : BaseManager
     {
         SpawnMoveGenerator("G001", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
         SpawnMoveGenerator("G002", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
+    }
+    public void SelectSellableItem(ItemKey inputKey, int price = -1, UnityAction onItemSold = null)
+    {
+        onSellableItemSelected.Invoke(inputKey, price, onItemSold);
+    }
+    public void SelectUnsellableItem(ItemKey inputKey)
+    {
+        onUnsellableItemSelected.Invoke(inputKey);
+    }
+    public void SelectLockedItem(ItemKey inputKey)
+    {
+        onLockedItemSelected.Invoke(inputKey);
+    }
+    public void DeSelecItem()
+    {
+        onItemDeSelected.Invoke();
     }
     private void Awake()
     {
@@ -293,19 +313,6 @@ public class GameManager : BaseManager
         tempGenerator.Initialize();
 
         return tempGenerator;
-    }
-    public ItemKey? FindCraftingResult(MergeableItem componentItem1, MergeableItem componentItem2)
-    {
-        if (componentItem1 == null || componentItem2 == null || componentItem1 == componentItem2)
-        {
-            return null;
-        }
-
-        return craftingDB.FindCraftingResult(componentItem1.itemKey, componentItem2.itemKey);
-    }
-    public ItemKey[] FindCraftingComponents(ItemKey resultKey)
-    {
-        return craftingDB.FindCraftingComponents(resultKey);
     }
     public bool CanMerge(MergeableItem draggingItem, MergeableItem targetItem)
     {

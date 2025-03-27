@@ -19,7 +19,7 @@ public class MergeableItem : MonoBehaviour
     public ItemSO itemData;
     public ItemKey itemKey;
     public int price => itemData.items[lvIndex].price;
-    [SerializeField] private DraggableItem draggableItem;
+    public DraggableItem draggableItem;
     [Header("Events")]
     public UnityEvent<int> onLevelChanged;
     public UnityEvent onMerged;
@@ -109,7 +109,7 @@ public class MergeableItem : MonoBehaviour
                         itemImage.sprite = itemData.items[lvIndex].itemSprite;
                         ItemImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                         LockImageObj.SetActive(true);
-                        draggableItem.enabled = false;
+                        //draggableItem.enabled = false;
                         break;
                     case ItemState.InBox:
                         itemImage.sprite = boxSprite;
@@ -177,10 +177,12 @@ public class MergeableItem : MonoBehaviour
     public void OnSelected()
     {
         selectIcon.SetActive(true);
+
     }
     public void OnDeSelected()
     {
         selectIcon.SetActive(false);
+
     }
 
     // 아이템 타입별 특수 효과를 위한 가상 메서드들

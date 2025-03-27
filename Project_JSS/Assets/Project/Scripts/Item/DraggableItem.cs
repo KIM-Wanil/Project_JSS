@@ -5,6 +5,7 @@ using System.Collections;
 using static SaveData;
 using System;
 using Unity.VisualScripting;
+using DG.Tweening;
 public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
     private Vector2 dragOffset;
@@ -27,20 +28,15 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private float checkInterval = 0.1f; // 머지 가능 여부를 확인하는 간격
     private float lastCheckTime;
 
-    
-
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        if(mergeableItem.IsUnityNull())
+        if (mergeableItem.IsUnityNull())
         {
             mergeableItem = GetComponent<MergeableItem>();
         }
-        canvas = GetComponentInParent<Canvas>(); 
+        canvas = GetComponentInParent<Canvas>();
         initialGridPos = mergeableItem.GridPosition;
-
-        
-        //itemEffect.gameObject.SetActive(false);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -52,7 +48,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
 
         initialGridPos = mergeableItem.GridPosition;
-        Managers.Grid.DetatchItemFromGrid(mergeableItem.GridPosition);
+        
         transform.SetParent(Managers.Grid.MergeBoard.transform);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(Managers.Grid.MergeBoardRectT, eventData.position, eventData.pressEventCamera, out dragOffset);
         dragOffset = rectTransform.anchoredPosition - dragOffset;
@@ -62,12 +58,22 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (mergeableItem.state == ItemState.Locked)
+        {
+            return;
+        }
+
         isDragging = true;
         mergeableItem.OnDeSelected();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (mergeableItem.state == ItemState.Locked)
+        {
+            return;
+        }
+
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(Managers.Grid.MergeBoardRectT, eventData.position, eventData.pressEventCamera, out Vector2 localPoint))
         {
             rectTransform.anchoredPosition = localPoint + dragOffset;
@@ -82,6 +88,11 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (mergeableItem.state == ItemState.Locked)
+        {
+            return;
+        }
+
         isDragging = false;
         //HandleDragEnd(eventData);
     }
@@ -94,7 +105,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         {
             HandleClick();
         }
-        else
+        else if (mergeableItem.state != ItemState.Locked)
         {
             HandleDragEnd(eventData);
         }
@@ -105,24 +116,42 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Debug.Log("단순 클릭");
 
         Managers.Grid.PlaceItem(mergeableItem, initialGridPos);
+        ItemType type = mergeableItem.itemData.type;
+        if (type == ItemType.Generatable && !isSelected)
+        {
+            generator.TryGenerateItem();
+            DG.Tweening.Sequence sequence = DOTween.Sequence();
+            sequence.Append(mergeableItem.itemRectT.DOScale(new Vector3(1.08f, 0.8f, 1f), 13f / 60f).SetEase(Ease.OutQuad))
+                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(0.9f, 1.25f, 0.95f), 7f / 60f).SetEase(Ease.OutQuad))
+                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(1.1f, 0.94f, 1f), 12f / 60f).SetEase(Ease.OutQuad))
+                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(0.96f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad))
+                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(1f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad));
+            sequence.Play();
+        }
+        else
+        {
+            SelectItem();
+        }
+    }
+
+    public void SelectItem()
+    {
         switch (mergeableItem.itemData.type)
         {
             case ItemType.Normal:
-                Managers.Game.infoPanelController.PrintItemDesc(mergeableItem.itemKey, mergeableItem.price, mergeableItem.SellThisItem);
+                if (mergeableItem.state == ItemState.Locked)
+                {
+                    Managers.Game.SelectLockedItem(mergeableItem.itemKey);
+                }
+                else
+
+                {
+                    Managers.Game.SelectSellableItem(mergeableItem.itemKey, mergeableItem.price, mergeableItem.SellThisItem);
+                }
                 break;
 
             case ItemType.Generatable:
-                if (generator != null)
-                {
-                    if (isSelected)
-                    {
-                        generator.TryGenerateItem();
-                    }
-                    else
-                    {
-                        Managers.Game.infoPanelController.PrintItemDesc(mergeableItem.itemKey);
-                    }
-                }
+                Managers.Game.SelectUnsellableItem(mergeableItem.itemKey);
                 break;
 
             default:
@@ -142,6 +171,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             Managers.Grid.PlaceItem(mergeableItem, initialGridPos);
             return;
         }
+        Managers.Grid.DetatchItemFromGrid(mergeableItem.GridPosition);
 
         Vector2Int nearestEmpty = Managers.Grid.GetNearestEmptyPosition((Vector2Int)gridPosition);
 
@@ -150,10 +180,12 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (!neighbor.IsUnityNull() && Managers.Game.TryMergeItems(mergeableItem, neighbor))
         {
             
+            neighbor.draggableItem.SelectItem();
             Debug.Log("머지 실행");
         }
         else
         {
+            SelectItem();
             Managers.Grid.PlaceItem(mergeableItem, nearestEmpty);
         }
 

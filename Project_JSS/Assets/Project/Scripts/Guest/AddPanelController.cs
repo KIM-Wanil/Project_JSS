@@ -67,14 +67,28 @@ public class AddPanelController : MonoBehaviour
 
                 countIcon.SetActive(false);
             }
-            else//if (rewardQueue.Count >= 3)
+            else if (rewardQueue.Count == 3)
             {
                 rewardCards[0].SetActive(true);
                 rewardCards[1].SetActive(true);
                 rewardCards[2].SetActive(true);
 
+                countIcon.SetActive(false);
+            }
+            else
+            {
+                rewardCards[0].SetActive(true);
+                rewardCards[1].SetActive(true);
+                rewardCards[2].SetActive(true);
                 countIcon.SetActive(true);
-
+                if (rewardQueue.Count - 3 < 10)
+                {
+                    countText.text = $"{rewardQueue.Count - 3}";
+                }
+                else
+                {
+                    countText.text = "+9";
+                }
             }
 
         }

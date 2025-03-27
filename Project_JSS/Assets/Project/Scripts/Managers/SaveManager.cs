@@ -143,6 +143,19 @@ public class SaveManager : BaseManager
 
         initialData.rewardQueue.Enqueue(new ItemKey("G001", 1));
         initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
 
         return initialData;
     }
