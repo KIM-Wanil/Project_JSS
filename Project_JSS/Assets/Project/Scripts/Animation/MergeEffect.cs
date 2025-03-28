@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor.AdaptivePerformance.Editor;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine.UI;
 
 public class MergeEffect : MonoBehaviour
 {
+    [SerializeField] private float effectTime = 1f;
     public RectTransform rectTransform;
     [SerializeField] private Image[] effectImage;
     [SerializeField] private string[] effectTrigger;
@@ -106,14 +108,19 @@ public class MergeEffect : MonoBehaviour
             effectImage[i].enabled = true;
             effectAnimator[i].SetTrigger(effectTrigger[i]);
         }
+    }
+    public void PlayEffectAtTime(float time)
+    {
+        if (isEffectPlaying) return;
+        isEffectPlaying = true;
 
-        //lightImage.enabled = true;
-        //circleImage.enabled = true;
-        //particleImage.enabled = true;
-
-        //particleAnimator.SetTrigger("PlayParticle");
-        //circleAnimator.SetTrigger("PlayCircle");
-        //lightAnimator.SetTrigger("PlayLight");
+        for (int i = 0; i < effectImage.Length; i++)
+        {
+            effectImage[i].enabled = true;
+            effectAnimator[i].Play(effectTrigger[i], -1, time / effectTime); // 트리거 대신 상태 이름을 사용하여 재생
+        }
+        Debug.Log($"PlayEffectAtTime: {time}");
+        Debug.Log($"PlayEffectAtPercent: {time / effectTime}");
     }
     // Update is called once per frame
     void Update()

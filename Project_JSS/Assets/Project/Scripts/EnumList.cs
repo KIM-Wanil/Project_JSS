@@ -51,7 +51,7 @@ public enum ItemType
 }
 public enum ItemState
 {
-    None = 0,
+    Normal = 0,
     Locked,
     InBox
 }

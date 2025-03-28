@@ -55,7 +55,7 @@ public class MergeableItem : MonoBehaviour
         }
     }
 
-    public void Initialize(int inputLv, ItemState inputState = ItemState.None)
+    public void Initialize(int inputLv, ItemState inputState = ItemState.Normal)
     {
         state = inputState;
         Debug.Log(state);
@@ -102,7 +102,7 @@ public class MergeableItem : MonoBehaviour
             {
                 switch (state)
                 {
-                    case ItemState.None:
+                    case ItemState.Normal:
                         itemImage.sprite = itemData.items[lvIndex].itemSprite;
                         break;
                     case ItemState.Locked:
@@ -150,7 +150,7 @@ public class MergeableItem : MonoBehaviour
             UpdateVisuals();
             if (state == ItemState.Locked)
             {
-                state = ItemState.None;
+                state = ItemState.Normal;
                 LockImageObj.SetActive(false);
                 ItemImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 draggableItem.enabled = true;
@@ -161,7 +161,7 @@ public class MergeableItem : MonoBehaviour
 
             if (itemData.type == ItemType.Generatable)
             {
-                GetComponent<Generator>().Initialize();
+                GetComponent<Generator>().Initialize(Managers.Game.GeneratorSyncTime);
             }
 
             // DoTween을 사용하여 아이템 이미지의 크기 변화를 애니메이션으로 추가

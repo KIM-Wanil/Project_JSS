@@ -47,7 +47,7 @@ public class Generator : MonoBehaviour
         //}
     }
 
-    public void Initialize()
+    public void Initialize(float syncTime)
     {
         ////저렙 생산못하는 제너레이터 생기면 레벨 맞춰서 수정하기
         //if(mergeableItem.Lv < 4)
@@ -60,7 +60,7 @@ public class Generator : MonoBehaviour
         //    canGenerate = true;
         //    mergeEffect.PlayMerge();
         //}
-        genEffect.PlayEffect();
+        genEffect.PlayEffectAtTime(syncTime);
         genData = genDB.generatorDatas[mergeableItem.Lv - 1];
         maxDurability = genData.maxDurability;
         currentDurability = maxDurability;

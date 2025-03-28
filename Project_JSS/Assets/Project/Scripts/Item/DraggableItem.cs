@@ -28,6 +28,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private float checkInterval = 0.1f; // 머지 가능 여부를 확인하는 간격
     private float lastCheckTime;
 
+
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -48,10 +49,9 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
 
         initialGridPos = mergeableItem.GridPosition;
+
         
-        transform.SetParent(Managers.Grid.MergeBoard.transform);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(Managers.Grid.MergeBoardRectT, eventData.position, eventData.pressEventCamera, out dragOffset);
-        dragOffset = rectTransform.anchoredPosition - dragOffset;
+        
 
         pointerDownPosition = eventData.position;
     }
@@ -62,6 +62,12 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         {
             return;
         }
+        //////
+        transform.SetParent(Managers.Grid.MergeBoard.transform);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(Managers.Grid.MergeBoardRectT, eventData.position, eventData.pressEventCamera, out dragOffset);
+        dragOffset = rectTransform.anchoredPosition - dragOffset;
+        /////
+
 
         isDragging = true;
         mergeableItem.OnDeSelected();
@@ -171,7 +177,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             Managers.Grid.PlaceItem(mergeableItem, initialGridPos);
             return;
         }
-        Managers.Grid.DetatchItemFromGrid(mergeableItem.GridPosition);
+        
 
         Vector2Int nearestEmpty = Managers.Grid.GetNearestEmptyPosition((Vector2Int)gridPosition);
 
@@ -186,6 +192,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         else
         {
             SelectItem();
+            Managers.Grid.DetatchItemFromGrid(mergeableItem.GridPosition);
             Managers.Grid.PlaceItem(mergeableItem, nearestEmpty);
         }
 

@@ -6,6 +6,7 @@ using System.Linq;
 using static UnityEditor.Progress;
 using UnityEngine.SceneManagement;
 using System;
+using static UnityEngine.Tilemaps.Tilemap;
 
 public class GameManager : BaseManager
 {
@@ -35,6 +36,8 @@ public class GameManager : BaseManager
     [Header("Prefab References")]
     [SerializeField] private GameObject itemPrefab;
     [SerializeField] private GameObject generatorPrefab;
+    private float generatorSyncTime;
+    public float GeneratorSyncTime => generatorSyncTime;
 
     [Header("SO References")]
     //[SerializeField] private ItemSO[] itemDatas;
@@ -69,12 +72,13 @@ public class GameManager : BaseManager
     private Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
     private Dictionary<string, GeneratorSO> genDataDic = new Dictionary<string, GeneratorSO>();
     [SerializeField] private ObjectPool<GameObject> itemPool;
-    [SerializeField] private ObjectPool<GameObject> generatorPool;
-
+    [SerializeField] private ObjectPool<GameObject> generatorPool;   
 
     [Header("Bool Values")]
     private bool isGamePaused;
     public bool IsDataLoaded { get; private set; } = false;
+
+
     public void OnClickSetMergeBoardTest()
     {
         SpawnMoveGenerator("G001", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
@@ -104,7 +108,7 @@ public class GameManager : BaseManager
         base.Init();
         InitializeGame();
     }
-    private async void GetData()
+    private async void LoadData()
     {
         IsDataLoaded = false; // 데이터 로드 시작 시 false로 설정
 
@@ -124,7 +128,7 @@ public class GameManager : BaseManager
 
         IsDataLoaded = true; // 데이터 로드 완료 시 true로 설정
         LoadGame();
-        onRewardQueueChanged?.Invoke(currentRewardQueue);
+        
     }
     private void InitializeGame()
     {
@@ -137,8 +141,9 @@ public class GameManager : BaseManager
         generatorPool = new ObjectPool<GameObject>(CreatePooledGenerator, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 10, 20);
         
         guestBoard = GameObject.Find("GuestBoard");
-        GetData();
-        currentEnergy = maxEnergy;
+        LoadData();
+
+        generatorSyncTime = Time.time % 4f; // 4초 주기로 동기화
         //LoadGame();
     }
 
@@ -161,6 +166,7 @@ public class GameManager : BaseManager
     }
     public void Update()
     {
+        generatorSyncTime = Time.time % 4f;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CreateRandomGuest();
@@ -187,7 +193,7 @@ public class GameManager : BaseManager
     }
     private void RegenerateEnergy()
     {
-        Debug.Log(energyRegenRemainSec);
+        //Debug.Log(energyRegenRemainSec);
         energyRegenRemainSec -= 1f;
         onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(energyRegenRemainSec));
         if (currentEnergy < maxEnergy && energyRegenRemainSec <= 0f)
@@ -249,7 +255,7 @@ public class GameManager : BaseManager
         return itemDataDic[key.id].items[key.lv - 1].itemName;
     }
     //이 경우에만 잠겨있는 아이템 존재
-    public MergeableItem SpawnItem(string itemId, int level, Vector2Int targetGridposition, ItemState state = ItemState.None)
+    public MergeableItem SpawnItem(string itemId, int level, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
     {
         GameObject itemObj = itemPool.Get();
         MergeableItem item = itemObj.GetComponent<MergeableItem>();
@@ -292,7 +298,7 @@ public class GameManager : BaseManager
         }
         Generator tempGenerator = item.gameObject.GetComponent<Generator>();
         tempGenerator.genDB = genDataDic[itemId];
-        tempGenerator.Initialize();
+        tempGenerator.Initialize(generatorSyncTime);
 
         return tempGenerator;
     }
@@ -310,7 +316,7 @@ public class GameManager : BaseManager
         }
         Generator tempGenerator = item.gameObject.GetComponent<Generator>();
         tempGenerator.genDB = genDataDic[itemId];
-        tempGenerator.Initialize();
+        tempGenerator.Initialize(generatorSyncTime);
 
         return tempGenerator;
     }
@@ -326,8 +332,11 @@ public class GameManager : BaseManager
     {
         if (draggingItem.CanMergeWith(targetItem))
         {
-            targetItem.LevelUp();
+            Managers.Grid.DetatchItemFromGrid(targetItem.GridPosition);
             Managers.Grid.DetatchItemFromGrid(draggingItem.GridPosition);
+
+            targetItem.LevelUp();
+            Managers.Grid.AttatchItemToGrid(targetItem, targetItem.GridPosition);
             if (draggingItem.itemData.type == ItemType.Generatable)
             {
                 draggingItem.GetComponent<Generator>().OnReuturnToItemPool();
@@ -540,7 +549,7 @@ public class GameManager : BaseManager
         {
             energy = currentEnergy,
             gold = currentGem,
-            rewardQueue = currentRewardQueue
+            rewardList = new List<ItemKey>(currentRewardQueue)
         };
 
         // 현재 그리드의 모든 아이템 저장
@@ -562,7 +571,8 @@ public class GameManager : BaseManager
                 }
             }
         }
-
+        Debug.Log($"현재 보상카드{currentRewardQueue.Count}개 있음");
+        Debug.Log($"보상카드{saveData.rewardList.Count}개 저장");
         Managers.Save.SaveGame(saveData);
     }
 
@@ -572,8 +582,7 @@ public class GameManager : BaseManager
         if (saveData != null)
         {
             currentEnergy = saveData.energy;
-            currentGem = saveData.gold;
-            currentRewardQueue = saveData.rewardQueue;
+            currentRewardQueue = new Queue<ItemKey>(saveData.rewardList);
             // 저장된 아이템들 복원
             foreach (var itemData in saveData.items)
             {
@@ -591,6 +600,8 @@ public class GameManager : BaseManager
 
             onEnergyChanged?.Invoke(Mathf.RoundToInt(currentEnergy));
             onGemChanged?.Invoke(currentGem);
+            Debug.Log($"보상카드{currentRewardQueue.Count}개 불러옴");
+            onRewardQueueChanged?.Invoke(currentRewardQueue);
         }
     }
 

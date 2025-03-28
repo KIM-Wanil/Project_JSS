@@ -1,11 +1,11 @@
-using UnityEngine;
-using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
-using static UnityEngine.RuleTile.TilingRuleOutput;
-using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
 using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using static UnityEditor.Progress;
 public class GridManager : BaseManager
 {
     private float boardWidth;
@@ -29,6 +29,15 @@ public class GridManager : BaseManager
 
     public int Width => GameManager.GRID_WIDTH;
     public int Height => GameManager.GRID_HEIGHT;
+
+    
+    private Dictionary<ItemKey, List<Vector2Int>> ownedItemsCanBeMerged = new Dictionary<ItemKey, List<Vector2Int>>();
+    private Coroutine mouseCheckCoroutine;
+    private bool isMouseMoving;
+    private MergeableItem itemToAnnounce1;
+    private MergeableItem itemToAnnounce2;
+
+    DG.Tweening.Sequence announceMovingSequence;
 
     public override void Init()
     {
@@ -135,6 +144,113 @@ public class GridManager : BaseManager
             }
         }
     }
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            isMouseMoving = true;
+            if (mouseCheckCoroutine != null)
+            {
+                StopCoroutine(mouseCheckCoroutine);
+                itemToAnnounce1 = null;
+                itemToAnnounce2 = null;
+                if (announceMovingSequence != null)
+                {
+                    announceMovingSequence.Kill();
+                }
+            }
+            ResetItemsPosition();
+            StartMouseCheck();
+        }
+    }
+
+    private void StartMouseCheck()
+    {
+        isMouseMoving = false;
+        mouseCheckCoroutine = StartCoroutine(CheckMouseMovement());
+    }
+
+    private IEnumerator CheckMouseMovement()
+    {
+        Debug.Log("CheckMouseMovement Start");
+        yield return new WaitForSeconds(2f);
+        if (!isMouseMoving)
+        {
+            (Vector2Int, Vector2Int)? mergeablePosPair = FindMergeablePosPair();
+            foreach(var a in ownedItemsCanBeMerged)
+            {
+               Debug.Log($"key:{a.Key.id} (LV:{a.Key.lv})");
+                foreach(var b in a.Value)
+                {
+                    Debug.Log($"value:{b}");
+                }
+            }
+            if (mergeablePosPair.HasValue)
+            {
+                Debug.Log("MergeablePosPair Found");
+                StartCoroutine(PerformMovementEffect(mergeablePosPair.Value.Item1, mergeablePosPair.Value.Item2));
+            }
+        }
+    }
+
+    private IEnumerator PerformMovementEffect( Vector2Int pos1, Vector2Int pos2)
+    {
+        Debug.Log("PerformMovementEffect");
+        itemToAnnounce1 = GetItemAt(pos1);
+        if(itemToAnnounce1 == null)
+        {
+            Debug.LogError("itemToAnnounce1 is null");
+            yield break;
+        }
+        itemToAnnounce2 = GetItemAt(pos2);
+        if(itemToAnnounce2 == null)
+        {
+            Debug.LogError("itemToAnnounce2 is null");
+            yield break;
+        }
+
+        Vector3 direction1 = (tilePositions[pos2.x, pos2.y] - tilePositions[pos1.x, pos1.y]).normalized * 10f;
+        Vector3 direction2 = (tilePositions[pos1.x, pos1.y] - tilePositions[pos2.x, pos2.y]).normalized * 10f;
+
+        if (announceMovingSequence != null)
+        {
+            announceMovingSequence.Kill();
+        }
+        announceMovingSequence = DG.Tweening.DOTween.Sequence();
+
+        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOLocalMove(direction1, 0.5f));//.SetLoops(-1, LoopType.Yoyo));
+        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOLocalMove(direction2, 0.5f));//.SetLoops(-1, LoopType.Yoyo));
+        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOLocalMove(direction2, 0.5f));//.SetLoops(-1, LoopType.Yoyo));
+        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOLocalMove(direction1, 0.5f));//.SetLoops(-1, LoopType.Yoyo));
+        
+        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOLocalMove(direction1, 0.5f));//.SetLoops(-1, LoopType.Yoyo));
+        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOLocalMove(direction2, 0.5f));//.SetLoops(-1, LoopType.Yoyo));
+        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOLocalMove(direction2, 0.5f));//.SetLoops(-1, LoopType.Yoyo));
+        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOLocalMove(direction1, 0.5f));//.SetLoops(-1, LoopType.Yoyo));
+        
+        announceMovingSequence.AppendInterval(0.5f);
+        announceMovingSequence.SetLoops(-1);
+        announceMovingSequence.Play();
+
+        while (!isMouseMoving)
+        {
+            yield return null;
+        }
+
+        announceMovingSequence.Kill();
+        ResetItemsPosition();
+    }
+
+    private void ResetItemsPosition()
+    {
+        if (itemToAnnounce1 != null && itemToAnnounce2 != null)
+        {
+            itemToAnnounce1.itemRectT.anchoredPosition = Vector3.zero;
+            itemToAnnounce2.itemRectT.anchoredPosition = Vector3.zero;
+            itemToAnnounce1 = null;
+            itemToAnnounce2 = null;
+        }
+    }
     public void PlayMergeEffect(Vector2Int position)
     {
         mergeTryEffect.PlayEffect();
@@ -201,10 +317,15 @@ public class GridManager : BaseManager
             return false;
 
         MergeableItem item = grid[fromPosition.x, fromPosition.y];
-        grid[fromPosition.x, fromPosition.y] = null;
-        grid[toPosition.x, toPosition.y] = item;
+
+        //grid[fromPosition.x, fromPosition.y] = null;
+        DetatchItemFromGrid(fromPosition);
+
+        //grid[toPosition.x, toPosition.y] = item;
+        AttatchItemToGrid(item, toPosition);
+
         item.transform.position = GetTilePosition(toPosition);
-        item.SetGridPosition(toPosition);
+        //item.SetGridPosition(toPosition);
 
         return true;
     }
@@ -461,8 +582,9 @@ public class GridManager : BaseManager
         });
         sequence.Play();
         // 그리드에 아이템 배치
-        grid[targetGridposition.x, targetGridposition.y] = item;
-        item.SetGridPosition(targetGridposition);
+        AttatchItemToGrid(item, targetGridposition);
+        //grid[targetGridposition.x, targetGridposition.y] = item;
+        //item.SetGridPosition(targetGridposition);
         return true;
     }
     public bool PlaceItem(MergeableItem item, Vector2Int targetGridposition)
@@ -477,8 +599,9 @@ public class GridManager : BaseManager
 
         // 그리드에 아이템 배치
         item.GetComponent<RectTransform>().localScale = Vector3.one;
-        grid[targetGridposition.x, targetGridposition.y] = item;
-        item.SetGridPosition(targetGridposition);
+        //grid[targetGridposition.x, targetGridposition.y] = item;
+        AttatchItemToGrid(item, targetGridposition);
+        
         return true;
     }
 
@@ -487,7 +610,38 @@ public class GridManager : BaseManager
     {
         if (IsValidPosition(position))
         {
+            MergeableItem item = GetItemAt(position);
+            if (item.Lv < item.itemData.items.Length && item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
+            {
+                RemoveOwnedItemsCanBeMerged(item);
+            }
             grid[position.x, position.y] = null;
+        }
+    }
+    public void DetatchItemFromGrid(MergeableItem item)
+    {
+        if (IsValidPosition(item.GridPosition))
+        {
+            if (item.Lv < item.itemData.items.Length && item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
+            {
+                RemoveOwnedItemsCanBeMerged(item);
+            }
+            grid[item.GridPosition.x, item.GridPosition.y] = null;
+        }
+    }
+    public void AttatchItemToGrid(MergeableItem item, Vector2Int position)
+    {
+        if (IsValidPosition(position))
+        {
+            item.SetGridPosition(position);
+            //지금 합성 조건 : 레벨 최대 미만, 제너레이터가 아니고, 상자상태가 아닌 경우     
+            //추후 변동 가능
+            if (item.Lv < item.itemData.items.Length && item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
+            {
+                Debug.Log("AddOwnedItemsCanBeMerged");
+                AddOwnedItemsCanBeMerged(item);
+            }
+            grid[position.x, position.y] = item;
         }
     }
 
@@ -525,7 +679,79 @@ public class GridManager : BaseManager
 
         return mergeablePairs;
     }
+    // 아이템이 생성되거나 합성될 때 호출되는 메서드
+    public void AddOwnedItemsCanBeMerged(MergeableItem item)
+    {
+        var key = item.itemKey;
+        if (!ownedItemsCanBeMerged.ContainsKey(key))
+        {
+            ownedItemsCanBeMerged[key] = new List<Vector2Int>();
+        }
+        ownedItemsCanBeMerged[key].Add(item.GridPosition);
+    }
 
+    // 아이템이 제거될 때 호출되는 메서드
+    public void RemoveOwnedItemsCanBeMerged(MergeableItem item)
+    {
+        var key = item.itemKey;
+        if (ownedItemsCanBeMerged.TryGetValue(key, out var positions))
+        {
+            positions.Remove(item.GridPosition);
+
+            if (positions.Count == 0)
+            {
+                ownedItemsCanBeMerged.Remove(key);
+            }
+        }
+    }
+    public (Vector2Int, Vector2Int)? FindTwoClosestLowerLevelItems(ItemKey itemKey)
+    {
+        if (ownedItemsCanBeMerged.TryGetValue(itemKey, out var positions) && positions.Count >= 2)
+        {
+            return (positions[0], positions[1]);
+        }
+        return null;
+    }
+    public (Vector2Int, Vector2Int)? FindMergeablePosPair()
+    {
+
+        Debug.Log("FindMergeablePosPair");
+        (Vector2Int, Vector2Int)? mergeblePosPair = null;
+
+
+        foreach (var guest in currentGuests)
+        {
+            foreach (var item in guest.itemsOrdered)
+            {
+                if(item.IsFulfill)
+                {
+                    continue;
+                }
+                mergeblePosPair = FindTwoClosestLowerLevelItems(item.key);
+                if (ownedItemsCanBeMerged.TryGetValue(item.key, out var positions) && positions.Count >= 2)
+                {
+                    mergeblePosPair = (positions[0], positions[1]);
+                    return mergeblePosPair;
+                }
+            }
+        }
+
+
+        if(mergeblePosPair == null)
+        {
+            foreach(var item in ownedItemsCanBeMerged)
+            {
+                if (item.Value.Count() >= 2)
+                {
+                    mergeblePosPair = (item.Value[0], item.Value[1]);
+                    return mergeblePosPair;
+                }
+            }
+        }
+        return null;
+    }
+    
+    
     // 특정 위치 주변의 머지 가능한 아이템 찾기
     public MergeableItem FindMergeableNeighbor(Vector2Int position, MergeableItem item)
     {
@@ -640,7 +866,7 @@ public class GridManager : BaseManager
                 MergeableItem mergeableItem = grid[x, y];
                 if (mergeableItem != null &&
                     mergeableItem.itemData.id == item.id &&
-                    mergeableItem.Lv == item.lv && mergeableItem.state == ItemState.None)
+                    mergeableItem.Lv == item.lv && mergeableItem.state == ItemState.Normal)
                 {
                     count++;
                 }
@@ -659,7 +885,7 @@ public class GridManager : BaseManager
 
                 if (mergeableItem != null &&
                     mergeableItem.itemData.id == item.id &&
-                    mergeableItem.Lv == item.lv && mergeableItem.state == ItemState.None)
+                    mergeableItem.Lv == item.lv && mergeableItem.state == ItemState.Normal)
                 {
                     // 그리드에서 아이템 제거
                     Vector2Int gridPos = new Vector2Int(x, y);

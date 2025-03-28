@@ -83,7 +83,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TryMergeParticle
+  m_Name: PlayTryParticle
   m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions: []
@@ -134,7 +134,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TryMergeLight
+  m_Name: PlayTryLight
   m_Speed: 0.75
   m_CycleOffset: 0
   m_Transitions: []
@@ -160,7 +160,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GenParticle
+  m_Name: PlayGenParticle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -297,7 +297,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GenLight
+  m_Name: PlayGenLight
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -373,7 +373,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TryMergeCircle
+  m_Name: PlayTryCircle
   m_Speed: 0.75
   m_CycleOffset: 0
   m_Transitions: []
@@ -424,7 +424,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GenEnergy
+  m_Name: PlayGenEnergy
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

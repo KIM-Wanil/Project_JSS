@@ -39,8 +39,6 @@ public class AddPanelController : MonoBehaviour
     }
     public void UpdateRewardList(Queue<ItemKey> rewardQueue)
     {
-        Debug.Log("UpdateRewardList");
-        Debug.Log(rewardQueue.Count);
         if (rewardQueue.Count <= 0)
         {
             rewardList.SetActive(false);

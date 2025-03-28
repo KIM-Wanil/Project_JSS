@@ -321,6 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eca7c19f95570a4e9cdf421c781e769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectTime: 0
   rectTransform: {fileID: 0}
   effectImage:
   - {fileID: 1036641665}
@@ -7312,7 +7313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &3969383029024062578
 GameObject:
   m_ObjectHideFlags: 0
@@ -7755,7 +7756,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4564782787685208675
 RectTransform:
   m_ObjectHideFlags: 0

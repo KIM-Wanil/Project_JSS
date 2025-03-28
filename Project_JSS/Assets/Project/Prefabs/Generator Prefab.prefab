@@ -845,6 +845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eca7c19f95570a4e9cdf421c781e769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectTime: 4
   rectTransform: {fileID: 0}
   effectImage:
   - {fileID: 2957481953022920265}

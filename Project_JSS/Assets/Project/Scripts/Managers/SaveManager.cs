@@ -7,7 +7,7 @@ public class SaveData
 {
     public List<ItemData> items = new List<ItemData>();
     public List<GeneratorSO> generators = new List<GeneratorSO>();
-    public Queue<ItemKey> rewardQueue = new Queue<ItemKey>();
+    public List<ItemKey> rewardList = new List<ItemKey>();
     public int energy;
     public int gold;
     public int gem;
@@ -138,24 +138,43 @@ public class SaveManager : BaseManager
         initialData.items.Add(SetItemData(new Vector2Int(E, 7), "N001", 3, ItemType.Normal, ItemState.Locked));
 
         //제러레이터 설정
-        initialData.items.Add(SetItemData(new Vector2Int(C, 2), "G001", 1, ItemType.Generatable, ItemState.None));
-        initialData.items.Add(SetItemData(new Vector2Int(D, 2), "G002", 1, ItemType.Generatable, ItemState.None));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 2), "G001", 1, ItemType.Generatable, ItemState.Normal));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 2), "G002", 1, ItemType.Generatable, ItemState.Normal));
 
-        initialData.rewardQueue.Enqueue(new ItemKey("G001", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
-        initialData.rewardQueue.Enqueue(new ItemKey("G002", 1));
+        initialData.rewardList.Add(new ItemKey("G001", 1));
+        initialData.rewardList.Add(new ItemKey("G002", 1));
+        initialData.rewardList.Add(new ItemKey("G001", 1));
+        initialData.rewardList.Add(new ItemKey("G002", 1));
+        initialData.rewardList.Add(new ItemKey("G001", 1));
+
+        initialData.rewardList.Add(new ItemKey("G002", 1));
+        initialData.rewardList.Add(new ItemKey("G001", 1));
+        initialData.rewardList.Add(new ItemKey("G002", 1));
+        initialData.rewardList.Add(new ItemKey("G001", 1));
+        initialData.rewardList.Add(new ItemKey("G002", 1));
+
+        initialData.rewardList.Add(new ItemKey("G001", 1));
+        initialData.rewardList.Add(new ItemKey("G002", 1));
+        initialData.rewardList.Add(new ItemKey("G001", 1));
+        initialData.rewardList.Add(new ItemKey("G002", 1));
+        initialData.rewardList.Add(new ItemKey("G001", 1));
+
+
+        //initialData.rewardList.Enqueue(new ItemKey("G001", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
+        //initialData.rewardList.Enqueue(new ItemKey("G002", 1));
 
         return initialData;
     }
