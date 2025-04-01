@@ -454,7 +454,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1456600877c45a4aab6b070d35a501a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxSprite: {fileID: 21300000, guid: 114fa3bc57b3658448cb385cf02466a1, type: 3}
+  boxSprite:
+  - {fileID: 21300000, guid: 114fa3bc57b3658448cb385cf02466a1, type: 3}
+  - {fileID: 21300000, guid: 85be07f6b020c2a4f9c45102fc460148, type: 3}
   LockImageObj: {fileID: 5055157410324238804}
   selectIcon: {fileID: 4680628058801706838}
   lv: 1

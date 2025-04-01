@@ -7,7 +7,7 @@ using DG.Tweening;
 using Unity.VisualScripting;
 public class MergeableItem : MonoBehaviour
 {
-    [SerializeField] private Sprite boxSprite;
+    [SerializeField] private Sprite[] boxSprite = new Sprite[2];
     public GameObject LockImageObj;
     public ItemState state { get; private set; }
     [SerializeField] public GameObject selectIcon;
@@ -55,11 +55,12 @@ public class MergeableItem : MonoBehaviour
         }
     }
 
-    public void Initialize(int inputLv, ItemState inputState = ItemState.Normal)
+    public void Initialize(int inputLv, Vector2Int pos, ItemState inputState = ItemState.Normal)
     {
-        state = inputState;
-        Debug.Log(state);
         lv = Mathf.Clamp(inputLv, 1, itemData.items.Length);
+        SetGridPosition(pos);
+        state = inputState;
+
         UpdateVisuals();
         itemKey = new ItemKey(itemData.id, lv);
         //switch (itemData.type)
@@ -72,7 +73,10 @@ public class MergeableItem : MonoBehaviour
         //    default:
         //        break;
         //}
-
+        if (!itemEffect.IsUnityNull())
+        {
+            itemEffect.successParticleImage.enabled = false;
+        }
         isInitialized = true;
     }
 
@@ -92,7 +96,6 @@ public class MergeableItem : MonoBehaviour
     {
        Managers.Game.AddGold(itemData.items[lvIndex].price);
        Managers.Grid.RemoveItemFromGrid(gridPosition);
-        Debug.Log(gridPosition);
     }
     protected void UpdateVisuals()
     {
@@ -112,7 +115,15 @@ public class MergeableItem : MonoBehaviour
                         //draggableItem.enabled = false;
                         break;
                     case ItemState.InBox:
-                        itemImage.sprite = boxSprite;
+                        Debug.Log((GridPosition.x + GridPosition.y) % 2);
+                        if ((GridPosition.x + GridPosition.y) % 2 == 0)
+                        {
+                            itemImage.sprite = boxSprite[0];
+                        }
+                        else
+                        {
+                            itemImage.sprite = boxSprite[1];
+                        }
                         ItemImage.color = new Color(1.0f, 1.0f, 1.0f, 1f);
                         draggableItem.enabled = false;
                         break;
@@ -129,6 +140,7 @@ public class MergeableItem : MonoBehaviour
     {
         return other != null &&
                other != this &&
+               other.state != ItemState.InBox &&
                other.itemData.id == itemData.id &&
                other.lv == lv &&
                lv < itemData.items.Length; // 최대 레벨 체크
@@ -157,7 +169,7 @@ public class MergeableItem : MonoBehaviour
                 Managers.Grid.OpenNearBox(gridPosition);
             }            
             onLevelChanged?.Invoke(lv);
-            Managers.Grid.CheckGuestsOrder();
+            
 
             if (itemData.type == ItemType.Generatable)
             {

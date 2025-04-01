@@ -26,7 +26,7 @@ public class Progress : MonoBehaviour
         {
             current += Time.deltaTime;
             percent = current / progressTime;
-            textProgressData.text = $"Now Loading... {sliderProgress.value*100:F0}%";
+            textProgressData.text = $"연금술사 펭귄의 작업대를 만드는 중... {sliderProgress.value*100:F0}%";
             sliderProgress.value = Mathf.Lerp(0, 1, percent);
             yield return null;
         }

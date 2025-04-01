@@ -254,6 +254,10 @@ public class GameManager : BaseManager
     {
         return itemDataDic[key.id].items[key.lv - 1].itemName;
     }
+    public int GetItemMaxLevel(ItemKey key)
+    {
+        return itemDataDic[key.id].items.Length;
+    }
     //이 경우에만 잠겨있는 아이템 존재
     public MergeableItem SpawnItem(string itemId, int level, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
     {
@@ -262,7 +266,7 @@ public class GameManager : BaseManager
         if (item != null)
         {
             item.itemData = itemDataDic[itemId];
-            item.Initialize(level, state);
+            item.Initialize(level, targetGridposition, state);
             item.itemRectT.sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
             Managers.Grid.PlaceItem(item, targetGridposition);
             
@@ -277,7 +281,7 @@ public class GameManager : BaseManager
         if (item != null)
         {
             item.itemData = itemDataDic[itemId];
-            item.Initialize(level);
+            item.Initialize(level, targetGridposition);
             item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
             Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
         }
@@ -291,7 +295,7 @@ public class GameManager : BaseManager
         if (item != null)
         {
             item.itemData = itemDataDic[itemId];
-            item.Initialize(level);
+            item.Initialize(level, position);
             item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
             Managers.Grid.PlaceItem(item, position);
             //onItemSpawned?.Invoke(item);
@@ -309,7 +313,7 @@ public class GameManager : BaseManager
         if (item != null)
         {
             item.itemData = itemDataDic[itemId];
-            item.Initialize(level);
+            item.Initialize(level, targetGridposition);
             item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
             Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
             //onItemSpawned?.Invoke(item);
@@ -337,11 +341,9 @@ public class GameManager : BaseManager
 
             targetItem.LevelUp();
             Managers.Grid.AttatchItemToGrid(targetItem, targetItem.GridPosition);
-            if (draggingItem.itemData.type == ItemType.Generatable)
-            {
-                draggingItem.GetComponent<Generator>().OnReuturnToItemPool();
-            }
-            ReturnItemToPool(draggingItem.gameObject);
+            Managers.Grid.CheckGuestsOrder();
+
+            ReturnItemToPool(draggingItem);
             return true;
         }
 
@@ -531,13 +533,24 @@ public class GameManager : BaseManager
         Destroy(obj);
     }
 
-    public void ReturnItemToPool(GameObject item)
+    public void ReturnItemToPool(MergeableItem item)
     {
-        itemPool.Release(item);
+        if (item.itemData.type == ItemType.Generatable)
+        {
+            ReturnGeneratorToPool(item.gameObject);
+        }
+        else
+        {
+            ReturnNormalItemToPool(item.gameObject);
+        }
     }
-    public void ReturnGeneratorToPool(GameObject generator)
+    public void ReturnNormalItemToPool(GameObject itemObj)
     {
-        generatorPool.Release(generator);
+        itemPool.Release(itemObj);
+    }
+    public void ReturnGeneratorToPool(GameObject genObj)
+    {
+        generatorPool.Release(genObj);
     }
     #endregion
 

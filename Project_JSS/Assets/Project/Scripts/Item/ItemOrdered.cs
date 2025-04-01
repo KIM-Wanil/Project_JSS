@@ -39,7 +39,7 @@ public class ItemOrdered : MonoBehaviour//, IPointerClickHandler
     }
     public void UpdateCountText()
     {
-        currentCount = Managers.Grid.CountItem(key);
+        currentCount = Managers.Grid.CountNormalItem(key);
         countText.text = $"{currentCount}/{goalCount}";
         if(currentCount>= goalCount)
         {

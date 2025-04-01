@@ -94,7 +94,7 @@ public class Guest : MonoBehaviour
         {
             for (int i = 0; i < itemOrdered.goalCount; i++)
             {
-                Managers.Grid.FindAndRemoveItemFromGrid(itemOrdered.key);
+                Managers.Grid.FindAndRemoveNormalItemFromGrid(itemOrdered.key);
             }
         }
         Managers.Grid.CheckGuestsOrder();

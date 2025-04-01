@@ -51,7 +51,8 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         initialGridPos = mergeableItem.GridPosition;
 
         
-        
+
+
 
         pointerDownPosition = eventData.position;
     }
@@ -192,7 +193,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         else
         {
             SelectItem();
-            Managers.Grid.DetatchItemFromGrid(mergeableItem.GridPosition);
+            Managers.Grid.DetatchItemFromGrid(initialGridPos);
             Managers.Grid.PlaceItem(mergeableItem, nearestEmpty);
         }
 
