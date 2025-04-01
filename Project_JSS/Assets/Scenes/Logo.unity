@@ -700,7 +700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progress: {fileID: 1958131584}
-  nextScene: 1
+  nextScene: 2
 --- !u!4 &1129376250
 Transform:
   m_ObjectHideFlags: 0
