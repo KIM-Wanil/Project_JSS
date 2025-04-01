@@ -18,16 +18,16 @@ public class FloorManager : MonoBehaviour
     }
     private void Start()
     {
-        for(int i =0; i< furnitureNum; i++)
-        {
-            availableFurniturePrefabs[i].transform.position = grid.GridPositionToWorld(availableFurniturePrefabs[i].GridPosition);
-            placedFurniture.Add(availableFurniturePrefabs[i].GridPosition, availableFurniturePrefabs[i]);
+        //for(int i =0; i< furnitureNum; i++)
+        //{
+        //    availableFurniturePrefabs[i].transform.position = grid.GridPositionToWorld(availableFurniturePrefabs[i].GridPosition);
+        //    placedFurniture.Add(availableFurniturePrefabs[i].GridPosition, availableFurniturePrefabs[i]);
            
-        }
-        foreach (var info in placedFurniture)
-        {
-            grid.OccupiedCell(info.Key,info.Value.Size,true);
-        }
+        //}
+        //foreach (var info in placedFurniture)
+        //{
+        //    grid.OccupiedCell(info.Key,info.Value.Size,true);
+        //}
       
     }
     // 가구 배치 가능 여부 체크

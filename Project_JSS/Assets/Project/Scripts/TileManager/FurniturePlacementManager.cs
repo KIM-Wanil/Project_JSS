@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class FurniturePlacementManager : MonoBehaviour
 {
+    [SerializeField] FloorData[] floorData;
     [Header("Settings")]
     public float longPressDuration = 0.5f;
     public float gridSize = 1.0f;
@@ -16,6 +17,7 @@ public class FurniturePlacementManager : MonoBehaviour
     [SerializeField] IsometricGrid[] isometricGrids;
     IsometricGrid currentGrid;
     FurnitureInfo currentInfo;
+
     private GameObject selectedFurniture;
     private Vector3? originalPosition;
     private Vector2Int gridPosition;
@@ -24,6 +26,11 @@ public class FurniturePlacementManager : MonoBehaviour
     private float pressTime = 0f;
     private bool isLongPress = false;
     private int currentFloor = 0;
+
+    public Transform furnitureParent; // 가구들을 담을 부모 객체
+    public GameObject furniturePrefab;
+    public List<GameObject> availableFurnitureObject;
+    Queue<GameObject> furnitureObjectQueue;
     private Dictionary<int, List<GameObject>> furnitureByFloor = new Dictionary<int, List<GameObject>>();
     private Camera mainCamera;
     private bool isDragging = false;
@@ -49,6 +56,7 @@ public class FurniturePlacementManager : MonoBehaviour
         rotateButton.onClick.AddListener(RotateFurniture);
         confirmButton.onClick.AddListener(ConfirmPlacement);
         cancelButton.onClick.AddListener(CancelPlacement);
+        SwitchFloor(0);
     }
 
     private void Update()
@@ -276,7 +284,16 @@ public class FurniturePlacementManager : MonoBehaviour
             DeselectFurniture();
         }
     }
-
+    public void Placement(GameObject gameObject)
+    {
+        if (gameObject != null)
+        {
+            // 그리드에 맞추기
+            Vector3 snappedPosition = currentGrid.GridPositionToWorld(gameObject.GetComponent<FurnitureInfo>().GridPosition);
+            gameObject.transform.position = snappedPosition;
+            currentGrid.OccupiedCell(selectedFurniture.transform.position, gameObject.GetComponent<FurnitureInfo>().Size, true);
+        }
+    }
     // 가구 배치 취소
     public void CancelPlacement()
     {
@@ -353,31 +370,10 @@ public class FurniturePlacementManager : MonoBehaviour
             }
         }
     }
-
-    // 가구 충돌 검사
-    private bool CheckFurnitureCollision(Vector3 position)
-    {
-        // 선택된 가구의 콜라이더 정보
-        Collider furnitureCollider = selectedFurniture.GetComponent<Collider>();
-        Vector3 size = furnitureCollider.bounds.size;
-
-        // 약간 작은 박스 캐스트로 충돌 검사
-        float reductionFactor = 0.9f;
-        size *= reductionFactor;
-
-        // 충돌 검사 제외할 레이어 마스크 (현재 선택된 가구 제외)
-        int layerMask = (1 << selectedFurniture.layer) | (1 << LayerMask.NameToLayer("Floor"));
-        layerMask = ~layerMask;
-
-        // 박스 캐스트로 충돌 검사
-        return Physics.CheckBox(position + furnitureCollider.bounds.center - selectedFurniture.transform.position,
-                                size / 2, selectedFurniture.transform.rotation, layerMask);
-    }
-
     // 층 변경
     public void SwitchFloor(int floorNumber)
     {
-        if (floorNumber < 0 || floorNumber >= furnitureByFloor.Count)
+        if (floorNumber < 0 || floorNumber >= floorData.Length)
             return;
 
         // 선택된 가구가 있으면 선택 해제
@@ -387,20 +383,41 @@ public class FurniturePlacementManager : MonoBehaviour
         }
 
         // 현재 층 가구 비활성화
-        foreach (GameObject furniture in furnitureByFloor[currentFloor])
+        foreach (GameObject furniture in availableFurnitureObject)
         {
-            furniture.SetActive(false);
+            furniture.GetComponent<FurnitureInfo>().SetSpriterenderColor();
+            furniture.gameObject.SetActive(false);
+            furnitureObjectQueue.Enqueue(furniture);
         }
 
         // 새 층으로 변경
         currentFloor = floorNumber;
+        FurnitureData[] furnitureInfos= floorData[currentFloor].furnitureInfos;
 
-        // 새 층 가구 활성화
-        foreach (GameObject furniture in furnitureByFloor[currentFloor])
+        foreach (FurnitureData data in furnitureInfos)
         {
-            furniture.SetActive(true);
-        }
+            if (data.isUnlocked)
+            {
+                if (furnitureObjectQueue.Count == 0)
+                {
+                    GameObject newObj = Object.Instantiate(furniturePrefab, furnitureParent);
+                    newObj.GetComponent<FurnitureInfo>().SettingData(data);
+                    newObj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset;
+                    newObj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset2;
+                    availableFurnitureObject.Add(newObj);
 
+                }
+                else
+                {
+                    GameObject obj = furnitureObjectQueue.Dequeue();
+                    obj.SetActive(true);
+                    obj.GetComponent<FurnitureInfo>().SettingData(data);
+                    obj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset;
+                    obj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset2;
+                    availableFurnitureObject.Add(obj);
+                }
+            }
+        }
         // UI 업데이트 (필요하다면)
         UpdateFloorUI();
     }
