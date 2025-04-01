@@ -75,8 +75,8 @@ public class Managers : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("¾À ·Îµå");
-        _game.Init();
-        _grid.Init();
+        //_game.Init();
+        //_grid.Init();
         //_ui.UpdateLetterbox();
         //_settings.Init();
 

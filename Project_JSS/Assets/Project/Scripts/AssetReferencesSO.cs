@@ -12,15 +12,21 @@ public class AssetReferencesSO : ScriptableObject
         public UnityEngine.AddressableAssets.AssetReference assetReference;
     }
 
-    public List<AssetReference2> guestSprites;
+    public List<AssetReference2> sprites;
+    public List<AssetReference2> effects;
     public List<AssetReference2> BGMSounds;
     public List<AssetReference2> UISounds;
     public List<AssetReference2> effectSounds;
 
-    public UnityEngine.AddressableAssets.AssetReference GetBackgroundAssetReference(string key)
+    public UnityEngine.AddressableAssets.AssetReference GetSpriteAssetReference(string key)
     {
         
-        return guestSprites.Find(img => img.key == key)?.assetReference;
+        return sprites.Find(img => img.key == key)?.assetReference;
+    }
+    public UnityEngine.AddressableAssets.AssetReference GetEffectAssetReference(string key)
+    {
+
+        return effects.Find(effect => effect.key == key)?.assetReference;
     }
     public UnityEngine.AddressableAssets.AssetReference GetSoundAssetReference(string key, SoundType type)
     {
