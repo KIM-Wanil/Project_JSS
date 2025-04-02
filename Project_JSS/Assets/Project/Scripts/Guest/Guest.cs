@@ -90,16 +90,27 @@ public class Guest : MonoBehaviour
         if (!isCompleted) return;
         Managers.Game.AddGold(gold);
         Debug.Log($"Add Gold: {gold}");
+        Sequence sequence = DOTween.Sequence();
+        sequence.AppendInterval(0.1f);
         foreach (ItemOrdered itemOrdered in itemsOrdered)
         {
-            for (int i = 0; i < itemOrdered.goalCount; i++)
+            List<Vector2Int> targetPositions = Managers.Grid.FindNormalItemsFromGrid(itemOrdered.key, itemOrdered.goalCount);
+            foreach (Vector2Int targetPos in targetPositions)
             {
-                Managers.Grid.FindAndRemoveNormalItemFromGrid(itemOrdered.key);
+                sequence.Join(Managers.Grid.RemoveItemFromGridToGuest(targetPos, itemOrdered.rectT.position));
             }
+            Managers.Grid.UncheckNormalItem(itemOrdered.key);
         }
-        Managers.Grid.CheckGuestsOrder();
-        Managers.Grid.RemoveGuest(this);
-        Invoke("DestroyGuest", 0.2f);
+        //동전 짤랑거리면서 ui동전에 들어가는 거 sequence에 추가
+
+        //
+        sequence.OnComplete(() =>
+        {
+            Managers.Grid.RemoveGuest(this);
+            Managers.Grid.CheckGuestsOrder();
+            DestroyGuest();
+        });
+        
     }
 
     public void ActivateCompleteButton()

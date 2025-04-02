@@ -51,6 +51,7 @@ public class GridManager : BaseManager
         if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
             return;
         Debug.Log("GridManager initialized");
+        base.Init();
         InitializeGrid();
         GenerateTiles(); // 타일 생성 호출
                          //Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
@@ -1036,77 +1037,87 @@ public class GridManager : BaseManager
             MergeableItem tempItem = GetItemAt(pos);
             if (tempItem.state != ItemState.Locked)
             {
+                tempItem.isCheck = true;
+                tempItem.OnChecked();
                 count++;
             }
         }
-
-
         return count;
-        //int count = 0;
-        //for (int x = 0; x < Width; x++)
-        //{
-        //    for (int y = 0; y < Height; y++)
-        //    {
-        //        MergeableItem mergeableItem = grid[x, y];
-        //        if (mergeableItem != null &&
-        //            mergeableItem.itemData.id == item.id &&
-        //            mergeableItem.Lv == item.lv && mergeableItem.state == ItemState.Normal)
-        //        {
-        //            count++;
-        //        }
-        //    }
-        //}
-        //return count;
     }
     // 아이템키로 머지판에서 노말아이템 찾아서 삭제 (퀘스트 완료시)
-    public void FindAndRemoveNormalItemFromGrid(ItemKey item)
+    public List<Vector2Int> FindNormalItemsFromGrid(ItemKey item, int goalCount)
     {
+        List <Vector2Int> targetPositions = new List<Vector2Int>();
         if (ownedNormalItems.ContainsKey(item))
         {
-            Vector2Int? targetPos = null;
             foreach (var pos in ownedNormalItems[item])
             {
                 MergeableItem tempItem = GetItemAt(pos);
                 if (tempItem.state != ItemState.Locked)
                 {
-                    targetPos = pos;
-                    break;
+                    targetPositions.Add(pos);
+                    if(targetPositions.Count == goalCount)
+                    {
+                        return targetPositions;
+                    }
                 }
             }
-            if (!targetPos.HasValue) return;
-            
-            MergeableItem mergeableItem = GetItemAt(targetPos.Value);
-
-            if (mergeableItem != null)
+            if(targetPositions.Count < goalCount)
             {
-                RemoveItemFromGrid(targetPos.Value);
-                //ownedNormalItems[item].Remove(targetPos.Value);
-                Debug.Log($"{Managers.Game.GetItemName(item)}/위치:{targetPos.Value}/ 찾아서 삭제");
+                return null;
             }
         }
-
-        //for (int x = 0; x < Width; x++)
-        //{
-        //    for (int y = 0; y < Height; y++)
-        //    {
-        //        MergeableItem mergeableItem = grid[x, y];
-
-        //        if (mergeableItem != null &&
-        //            mergeableItem.itemData.id == item.id &&
-        //            mergeableItem.Lv == item.lv && mergeableItem.state == ItemState.Normal)
-        //        {
-        //            // 그리드에서 아이템 제거
-        //            Vector2Int gridPos = new Vector2Int(x, y);
-        //            DetatchItemFromGrid(gridPos);
-        //            Managers.Game.ReturnItemToPool(mergeableItem.gameObject);
-        //            return;
-        //        }
-        //    }
-        //}
+        return null;
     }
-    public void RemoveItemFromGrid(Vector2Int gridPos)
+    public void UncheckNormalItem(ItemKey item)
     {
-        MergeableItem mergeableItem = grid[gridPos.x, gridPos.y];
+        if (ownedNormalItems.ContainsKey(item))
+        {
+            foreach (var pos in ownedNormalItems[item])
+            {
+                MergeableItem tempItem = GetItemAt(pos);
+                if (tempItem.isCheck)
+                {
+                    tempItem.isCheck = false;
+                    tempItem.OnUnchecked();
+                }
+            }
+        }
+    }
+    public DG.Tweening.Sequence RemoveItemFromGridToGuest(MergeableItem mergeableItem, Vector3 worldPosition)
+    {
+        DG.Tweening.Sequence sequence = DOTween.Sequence();
+        sequence.Append(mergeableItem.itemRectT.DOMove(worldPosition, 0.5f));
+        sequence.OnComplete(() =>
+        {
+            // 이동이 끝난 후 DetatchItemFromGrid와 ReturnItemToPool을 실행합니다.
+            DetatchItemFromGrid(mergeableItem.GridPosition);
+            Managers.Game.ReturnItemToPool(mergeableItem);
+        });
+        return sequence;
+    }
+    public DG.Tweening.Sequence RemoveItemFromGridToGuest(Vector2Int gridPos, Vector3 worldPosition)
+    {
+        MergeableItem mergeableItem = GetItemAt(gridPos);
+        mergeableItem.transform.SetParent(mergeBoard.transform);
+        DG.Tweening.Sequence sequence = DOTween.Sequence();
+        sequence.Append(mergeableItem.itemRectT.DOMove(worldPosition, 0.5f));
+        sequence.OnComplete(() =>
+        {
+            // 이동이 끝난 후 DetatchItemFromGrid와 ReturnItemToPool을 실행합니다.
+            DetatchItemFromGrid(mergeableItem.GridPosition);
+            Managers.Game.ReturnItemToPool(mergeableItem);
+        });
+        return sequence;
+    }
+    public void RemoveItemFromGridInstantly(MergeableItem mergeableItem)
+    {
+        DetatchItemFromGrid(mergeableItem.GridPosition);
+        Managers.Game.ReturnItemToPool(mergeableItem);
+    }
+    public void RemoveItemFromGridInstantly(Vector2Int gridPos)
+    {
+        MergeableItem mergeableItem = GetItemAt(gridPos);
         DetatchItemFromGrid(gridPos);
         Managers.Game.ReturnItemToPool(mergeableItem);
     }

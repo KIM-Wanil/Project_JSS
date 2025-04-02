@@ -155,7 +155,7 @@ public class InputController : MonoBehaviour
 
         Vector2 tilePos1 = Managers.Grid.GetTilePosition(pos1);
         Vector2 tilePos2 = Managers.Grid.GetTilePosition(pos2);
-         
+
         Vector2 direction1 = (tilePos2 - tilePos1).normalized * 10f;
         Vector2 direction2 = (tilePos1 - tilePos2).normalized * 10f;
 
@@ -166,15 +166,15 @@ public class InputController : MonoBehaviour
         }
         announceMovingSequence = DG.Tweening.DOTween.Sequence();
 
-        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(direction1, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(direction2, 0.5f));
-        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
+        announceMovingSequence.Append(itemToAnnounce1.itemImageRectT.DOAnchorPos(direction1, 0.5f));
+        announceMovingSequence.Join(itemToAnnounce2.itemImageRectT.DOAnchorPos(direction2, 0.5f));
+        announceMovingSequence.Append(itemToAnnounce1.itemImageRectT.DOAnchorPos(Vector2.zero, 0.5f));
+        announceMovingSequence.Join(itemToAnnounce2.itemImageRectT.DOAnchorPos(Vector2.zero, 0.5f));
 
-        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(direction1, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(direction2, 0.5f));
-        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
+        announceMovingSequence.Append(itemToAnnounce1.itemImageRectT.DOAnchorPos(direction1, 0.5f));
+        announceMovingSequence.Join(itemToAnnounce2.itemImageRectT.DOAnchorPos(direction2, 0.5f));
+        announceMovingSequence.Append(itemToAnnounce1.itemImageRectT.DOAnchorPos(Vector2.zero, 0.5f));
+        announceMovingSequence.Join(itemToAnnounce2.itemImageRectT.DOAnchorPos(Vector2.zero, 0.5f));
 
         announceMovingSequence.AppendInterval(0.5f);
         announceMovingSequence.SetLoops(-1);

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using static GeneratorSO;
 using Unity.VisualScripting;
+using DG.Tweening;
 
 public class Generator : MonoBehaviour
 {
@@ -150,6 +151,13 @@ public class Generator : MonoBehaviour
             }
         }
 
+        DG.Tweening.Sequence sequence = DOTween.Sequence();
+        sequence.Append(mergeableItem.itemRectT.DOScale(new Vector3(1.08f, 0.8f, 1f), 13f / 60f).SetEase(Ease.OutQuad))
+                .Append(mergeableItem.itemRectT.DOScale(new Vector3(0.9f, 1.25f, 0.95f), 7f / 60f).SetEase(Ease.OutQuad))
+                .Append(mergeableItem.itemRectT.DOScale(new Vector3(1.1f, 0.94f, 1f), 12f / 60f).SetEase(Ease.OutQuad))
+                .Append(mergeableItem.itemRectT.DOScale(new Vector3(0.96f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad))
+                .Append(mergeableItem.itemRectT.DOScale(new Vector3(1f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad));
+        sequence.Play();
         return true;
     }
 

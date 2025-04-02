@@ -12,7 +12,7 @@ public class ItemOrdered : MonoBehaviour//, IPointerClickHandler
     [SerializeField] private GameObject checkIcon;
     [SerializeField] private Button infoButton;
     [SerializeField] private TextMeshProUGUI countText;
-
+    public RectTransform rectT;
     public ItemSO data;
     public ItemDetails details;
     public ItemKey key;
@@ -25,6 +25,7 @@ public class ItemOrdered : MonoBehaviour//, IPointerClickHandler
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Init(ItemKey inputKey, int inputGoalCount)
     {
+        rectT = GetComponent<RectTransform>();
         key = inputKey;
         goalCount = inputGoalCount;
         data = Managers.Game.GetItemData(inputKey.id);

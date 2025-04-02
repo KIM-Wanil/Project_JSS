@@ -124,16 +124,11 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         Managers.Grid.PlaceItem(mergeableItem, initialGridPos);
         ItemType type = mergeableItem.itemData.type;
-        if (type == ItemType.Generatable && !isSelected)
+        if (type == ItemType.Generatable && isSelected)
+        //if (type == ItemType.Generatable && mergeableItem.isSelect)
         {
             generator.TryGenerateItem();
-            DG.Tweening.Sequence sequence = DOTween.Sequence();
-            sequence.Append(mergeableItem.itemRectT.DOScale(new Vector3(1.08f, 0.8f, 1f), 13f / 60f).SetEase(Ease.OutQuad))
-                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(0.9f, 1.25f, 0.95f), 7f / 60f).SetEase(Ease.OutQuad))
-                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(1.1f, 0.94f, 1f), 12f / 60f).SetEase(Ease.OutQuad))
-                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(0.96f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad))
-                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(1f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad));
-            sequence.Play();
+            
         }
         else
         {
@@ -165,6 +160,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 break;
         }
         currentlySelectedItem = this;
+       
         mergeableItem.OnSelected();
     }
 

@@ -105,6 +105,8 @@ public class GameManager : BaseManager
     }
     public override void Init()
     {
+        if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
+            return;
         base.Init();
         InitializeGame();
     }
@@ -132,8 +134,7 @@ public class GameManager : BaseManager
     }
     private void InitializeGame()
     {
-        if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
-            return;
+        
         // 아이템 오브젝트 풀 초기화
         itemPool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 50, 100);
 

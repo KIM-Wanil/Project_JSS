@@ -46,9 +46,10 @@ public class InfoPanelController : MonoBehaviour
         EventSystem.current.RaycastAll(pointerEventData, results);
 
         bool isDraggableItemClicked = results.Any(r => r.gameObject.GetComponent<DraggableItem>() != null);
-        //Debug.Log($"isDraggableItemClicked : {isDraggableItemClicked}");
+        Debug.Log($"isDraggableItemClicked : {isDraggableItemClicked}");
         if (!isDraggableItemClicked && DraggableItem.currentlySelectedItem != null)
         {
+            
             DraggableItem.currentlySelectedItem.mergeableItem.OnDeSelected();
             DraggableItem.currentlySelectedItem = null;
             InitToBasicDesc();
