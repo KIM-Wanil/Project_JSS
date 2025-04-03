@@ -121,13 +121,13 @@ public class InputController : MonoBehaviour
     void ResetTimer()
     {
         timer = 0f;
-
+        ResetItemsPosition();
         // 코루틴이 실행 중이면 중지
         if (isCoroutineRunning)
         {
             StopCoroutine("InactivityCoroutine");
             announceMovingSequence.Kill();
-            ResetItemsPosition();
+            
             isCoroutineRunning = false;
 
             if (showDebugLogs)

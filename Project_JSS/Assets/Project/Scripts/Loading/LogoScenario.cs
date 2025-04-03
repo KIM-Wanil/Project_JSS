@@ -9,6 +9,7 @@ public class LogoScenario : MonoBehaviour
     private void Awake()
     {
         SystemSetup();
+        Managers.Asset.PlayBGMFadeInSound("MainBGM", 0.5f);
     }
 
     // Update is called once per frame

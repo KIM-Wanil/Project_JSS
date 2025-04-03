@@ -6,9 +6,13 @@ using UnityEditor.Localization.Plugins.XLIFF.V12;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
+using UnityEngine.Events;
 
 public class Guest : MonoBehaviour
 {
+    public RectTransform goldIconRectT;
+    public UnityEvent<Guest> OnGuestCompleted;
+
     public GameObject itemOrderedPrefab;
     public ItemOrdered[] itemsOrdered;
     public TextMeshProUGUI goldText;
@@ -16,7 +20,7 @@ public class Guest : MonoBehaviour
     public Button completeButton;
     public int gold;
 
-    public void Init(Dictionary<ItemKey, int> goalItems, int goldAmount)
+    public void Init(int goldAmount, Dictionary<ItemKey, int> goalItems)
     {
         if (goalItems == null)
         {
@@ -77,6 +81,7 @@ public class Guest : MonoBehaviour
             {
                 itemOrdered.DeactivateAll();
             }
+            OnGuestCompleted?.Invoke(this);
             ActivateCompleteButton();
         }
         else
@@ -88,7 +93,7 @@ public class Guest : MonoBehaviour
     public void OnCompleteButtonClicked()
     {
         if (!isCompleted) return;
-        Managers.Game.AddGold(gold);
+        //Managers.Game.AddGold(gold);
         Debug.Log($"Add Gold: {gold}");
         Sequence sequence = DOTween.Sequence();
         sequence.AppendInterval(0.1f);
@@ -102,7 +107,7 @@ public class Guest : MonoBehaviour
             Managers.Grid.UncheckNormalItem(itemOrdered.key);
         }
         //동전 짤랑거리면서 ui동전에 들어가는 거 sequence에 추가
-
+        sequence.AppendCallback( ()=> Managers.Game.SpawnGold(goldIconRectT.position ,gold ,GoodsType.Gold));
         //
         sequence.OnComplete(() =>
         {

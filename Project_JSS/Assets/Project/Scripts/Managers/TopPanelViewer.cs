@@ -3,14 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Text;
 using TMPro;
 using Unity.VisualScripting;
+using System.Buffers;
 [Serializable]
 public class TopPanelViewer : MonoBehaviour
 {
+    [SerializeField] private ItemCollector goldItemCollector; 
+
     [SerializeField] private TextMeshProUGUI energyText; 
     [SerializeField] private TextMeshProUGUI energyRegenTimeText; 
     [SerializeField] private TextMeshProUGUI goldText; 
@@ -46,7 +50,7 @@ public class TopPanelViewer : MonoBehaviour
             nickNameText = GameObject.Find("NicknameText").GetComponent<TextMeshProUGUI>();
         }
         // GameManager의 에너지 변경 이벤트 구독
-        
+
     }
 
     private void Start()

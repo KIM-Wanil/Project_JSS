@@ -14,6 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprites: []
   effects: []
-  BGMSounds: []
+  BGMSounds:
+  - key: MainBGM
+    assetReference:
+      m_AssetGUID: 6e847f7514c206c4ba86361bd0924e44
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   UISounds: []
   effectSounds: []

@@ -45,15 +45,14 @@ public class GameManager : BaseManager
     //[SerializeField] private GeneratorSO[] genDatas;
     [SerializeField] private string[] genIds = {"G001", "G002"};
 
-    [Header("Guest Referemces")]
-    [SerializeField] private GameObject guestBoard;
-    [SerializeField] private GameObject guestPrefab;
-    [SerializeField] private Sprite[] guestSprites;
+    
+
     
 
     [Header("Game Events")]
     public UnityEvent<int> onEnergyChanged;
     public UnityEvent<int> onEnergyRegenTimeChanged;
+    public UnityEvent<Vector2,int,GoodsType> onGoldSpawned;
     public UnityEvent<int> onGoldChanged;
     public UnityEvent<int> onGemChanged;
 
@@ -141,7 +140,6 @@ public class GameManager : BaseManager
         // 제너레이터 오브젝트 풀 초기화
         generatorPool = new ObjectPool<GameObject>(CreatePooledGenerator, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 10, 20);
         
-        guestBoard = GameObject.Find("GuestBoard");
         LoadData();
 
         generatorSyncTime = Time.time % 4f; // 4초 주기로 동기화
@@ -168,10 +166,6 @@ public class GameManager : BaseManager
     public void Update()
     {
         generatorSyncTime = Time.time % 4f;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CreateRandomGuest();
-        }
     }
     #region Energy Management
     public void FlagRegenEnergy(int currentEnergy)
@@ -224,10 +218,26 @@ public class GameManager : BaseManager
     #endregion
 
     #region Gold Management
+    public void GetGold(int amount)
+    {
+        onGoldChanged?.Invoke(currentGold);
+    }
+    public void SpawnGold(Vector2 point, int count, GoodsType type = GoodsType.Gold)
+    {
+        onGoldSpawned?.Invoke(point, count, type);
+    }
     public void AddGold(int amount)
     {
         currentGold += amount;
         onGoldChanged?.Invoke(currentGold);
+    }
+
+    #endregion
+    #region Gem Management
+    public void AddGem(int amount)
+    {
+        currentGem += amount;
+        onGemChanged?.Invoke(currentGem);
     }
 
     #endregion
@@ -472,38 +482,7 @@ public class GameManager : BaseManager
 
     #endregion
 
-    #region Guest Management
-    public void CreateRandomGuest()
-    {
-        Guest guest = Instantiate(guestPrefab, guestBoard.transform).GetComponent<Guest>();
-        if (guest == null)
-        {
-            throw new InvalidOperationException("Failed to instantiate guestPrefab.");
-        }
-        int count = UnityEngine.Random.Range(1, 3);
-        ItemKey[] tempItems = new ItemKey[count];
-        List<string> availableItems = GetAvailableItemIds();
-        if(availableItems.Count <= 0)
-        {
-            Debug.LogError("제너레이터가 없음");
-            return;
-        }
-        Dictionary<ItemKey, int> goalItems = new Dictionary<ItemKey, int>();
-        for (int i = 0; i < count; i++)
-        {
-            tempItems[i].id = availableItems[UnityEngine.Random.Range(0, availableItems.Count)];
-            //tempItems[i].id = "N001";
-            tempItems[i].lv = UnityEngine.Random.Range(2, 4);
-
-            goalItems[tempItems[i]] = UnityEngine.Random.Range(1, 3);
-        }
-        int goldAmount = UnityEngine.Random.Range(1, 4);
-        goldAmount *= count;
-        Debug.Log("골아이템개수" + goalItems.Count());
-      
-        guest.Init(goalItems, goldAmount);
-    }
-    #endregion
+    
 
     #region Object Pooling
 

@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: e45b939344d9101448a7a54d2cd14b8a
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 6e847f7514c206c4ba86361bd0924e44
+    m_Address: Assets/Project/Sound/BGM/Penguin, Penguin, Penguins forever!.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f0f3deebc6c12184db5f1594f8a2f6ba, type: 2}
   m_SchemaSet:

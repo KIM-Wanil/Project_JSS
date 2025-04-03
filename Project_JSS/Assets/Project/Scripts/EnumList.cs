@@ -55,13 +55,12 @@ public enum ItemState
     Locked,
     InBox
 }
-public enum RewardType
+public enum GoodsType
 {
     None = 0,
-    Item,
     Gold,
     Energy,
-    Crystal
+    Gem
 }
 public enum SoundType
 {
