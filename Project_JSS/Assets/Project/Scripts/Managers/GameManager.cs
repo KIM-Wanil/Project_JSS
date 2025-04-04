@@ -11,7 +11,8 @@ using static UnityEngine.Tilemaps.Tilemap;
 public class GameManager : BaseManager
 {
     //public static GameManager Instance { get; private set; }
-
+    [SerializeField] private GameObject rippleEffectPrefab;
+    [SerializeField] private Canvas cursorCanvas;
     public const int GRID_WIDTH = 7;
     public const int GRID_HEIGHT = 9;
     [Header("Script References")]
@@ -76,8 +77,25 @@ public class GameManager : BaseManager
     [Header("Bool Values")]
     private bool isGamePaused;
     public bool IsDataLoaded { get; private set; } = false;
-
-
+    private void Start()
+    {
+        energyRegenRemainSec = energyRegenRate;
+        FlagRegenEnergy(currentEnergy);
+        onEnergyChanged.AddListener(FlagRegenEnergy);
+    }
+    public void Update()
+    {
+        generatorSyncTime = Time.time % 4f;
+        if (Input.GetMouseButtonUp(0))
+        { 
+            CreateRippleEffect();
+        }
+    }
+    private void CreateRippleEffect()
+    {
+        GameObject ripple = Instantiate(rippleEffectPrefab, Input.mousePosition, Quaternion.identity, cursorCanvas.transform);
+        ripple.transform.SetSiblingIndex(0);
+    }
     public void OnClickSetMergeBoardTest()
     {
         SpawnMoveGenerator("G001", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
@@ -157,16 +175,7 @@ public class GameManager : BaseManager
         onRewardQueueChanged?.Invoke(currentRewardQueue);
     }
 
-    private void Start()
-    {
-        energyRegenRemainSec = energyRegenRate;
-        FlagRegenEnergy(currentEnergy);
-        onEnergyChanged.AddListener(FlagRegenEnergy);
-    }
-    public void Update()
-    {
-        generatorSyncTime = Time.time % 4f;
-    }
+    
     #region Energy Management
     public void FlagRegenEnergy(int currentEnergy)
     {

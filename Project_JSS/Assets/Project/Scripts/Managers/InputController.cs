@@ -77,6 +77,8 @@ public class InputController : MonoBehaviour
 
             CheckInactivity();
         }
+
+
     }
 
     void CheckMobileInput()
