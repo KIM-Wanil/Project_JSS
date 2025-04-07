@@ -12,7 +12,7 @@ public class FurnitureInfo : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     [SerializeField] string furnitureName;
-    [SerializeField] int floor;
+    [SerializeField] bool isFloor;
 
     [SerializeField] Vector2Int gridPosition;
     [SerializeField] Vector2Int[] size;
@@ -34,7 +34,7 @@ public class FurnitureInfo : MonoBehaviour
 
     private Vector3 originalPosition;
 
-    public int Floor { get { return floor; } }
+    public bool IsFloor { get { return isFloor; } }
     public Vector2Int Size { get { return size[rotation]; } }
     public Vector2Int GridPosition { get { return gridPosition; } set => gridPosition = value; }
     public Vector2Int TartgetPosition { get { return tartgetPosition[rotation]; ; } }

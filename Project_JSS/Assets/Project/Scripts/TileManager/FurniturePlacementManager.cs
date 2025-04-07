@@ -14,8 +14,8 @@ public class FurniturePlacementManager : MonoBehaviour
     public float tileOffsetX = 32f; // 타일 X 오프셋 (픽셀)
     public float tileOffsetY = 16f; // 타일 Y 오프셋 (픽셀)
     // 내부 상태 변수
-    [SerializeField] IsometricGrid[] isometricGrids;
-    IsometricGrid currentGrid;
+    [SerializeField] IsoGird[] isometricGrids;
+    IsoGird currentGrid;
     FurnitureInfo currentInfo;
 
     private GameObject selectedFurniture;
@@ -35,6 +35,8 @@ public class FurniturePlacementManager : MonoBehaviour
     private Camera mainCamera;
     private bool isDragging = false;
     private Vector3 lastValidPosition;
+
+    private Vector3 dragOffset;
 
     [SerializeField] GameObject tile;
     List<GameObject> tiles;
@@ -138,7 +140,11 @@ public class FurniturePlacementManager : MonoBehaviour
                 if (hit2D.collider != null)
                 {
                     if (hit2D.collider.gameObject == selectedFurniture)
+                    {
+                        dragOffset = (Vector3)mousePosition - selectedFurniture.transform.position;
                         isDragging = true;
+                    }
+                     
                 }
                     // 이미 가구가 선택된 상태에서는 드래그 시작
 
@@ -190,12 +196,25 @@ public class FurniturePlacementManager : MonoBehaviour
                 selectedFurniture = hitObject;
                 //selectedFurniture.GetComponent<SpriteRenderer>().sortingOrder =23;
                 currentInfo = hitObject.GetComponent<FurnitureInfo>();
-                currentGrid = isometricGrids[currentInfo.Floor];
+                if (currentInfo.IsFloor)
+                {
+                    currentGrid = isometricGrids[0];
+                }
+                else
+                {
+                    if (mousePosition.x >=0) 
+                        currentGrid = isometricGrids[1];
+                    else
+                        currentGrid = isometricGrids[2];
+                }
 
                 originalPosition = selectedFurniture.transform.position;
                 originalRotation = currentInfo.Rotation;
                 currentGrid.OccupiedCell(originalPosition.Value, currentInfo.Size, false);
                 gridPosition = currentGrid.WorldToGridPosition(originalPosition.Value);
+
+                dragOffset = (Vector3)mousePosition - selectedFurniture.transform.position;
+
                 // 선택 표시 (예: 외곽선 효과)
                 HighlightFurniture(true);
                 Debug.Log(hitObject.name);
@@ -251,6 +270,7 @@ public class FurniturePlacementManager : MonoBehaviour
     private void MoveFurniture(Vector2 screenPosition)
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(screenPosition);
+        pos = pos - dragOffset;
         if (gridPosition != currentGrid.WorldToGridPosition(pos))
         {
             gridPosition = currentGrid.WorldToGridPosition(pos);
