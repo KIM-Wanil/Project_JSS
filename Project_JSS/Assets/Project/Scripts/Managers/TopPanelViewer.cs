@@ -110,6 +110,7 @@ public class TopPanelViewer : MonoBehaviour
 
         if (Managers.Game.IsEnergyRegening)
         {
+            Debug.Log("에너지 회복 중입니다." + currentEnergyRegenTime);
             energyRegenTimeText.gameObject.SetActive(true);
             TimeSpan timeSpan = TimeSpan.FromSeconds(currentEnergyRegenTime);
             energyRegenTimeText.text = $"+ {timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";

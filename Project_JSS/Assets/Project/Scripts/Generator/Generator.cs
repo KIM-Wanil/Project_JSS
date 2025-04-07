@@ -71,6 +71,7 @@ public class Generator : MonoBehaviour
 
         foreach (var item in genData.generatableItems)
         {
+            Debug.Log(item.key.id + item.key.Lv);
             generatableSprites.Add(Managers.Game.GetItemSprite(item.key));
         }
         //mergeableItem.button.onClick.AddListener(() =>
@@ -147,7 +148,7 @@ public class Generator : MonoBehaviour
                 else
                 {
                     //나중에 usable아이템 제너레이터도 추가
-                    Managers.Game.SpawnMoveItem(item.key.id, item.key.lv, Managers.Grid.GetTilePosition(mergeableItem.GridPosition),(Vector2Int)pos);
+                    Managers.Game.SpawnMoveItem(item.key.id, item.key.Lv, Managers.Grid.GetTilePosition(mergeableItem.GridPosition),(Vector2Int)pos);
                 }
                 break;
             }

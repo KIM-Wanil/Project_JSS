@@ -19,5 +19,5 @@ MonoBehaviour:
     generatableItems:
     - key:
         id: N001
-        lv: 1
+        Lv: 1
       spawnChance: 1

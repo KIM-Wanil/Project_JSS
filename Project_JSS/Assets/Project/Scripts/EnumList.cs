@@ -38,10 +38,10 @@ public struct ItemKey
     public ItemKey(string id, int lv)
     {
         this.id = id.ToString();
-        this.lv = lv;
+        this.Lv = lv;
     }
     public string id;
-    public int lv;
+    public int Lv;
 }
 public enum ItemType
 {

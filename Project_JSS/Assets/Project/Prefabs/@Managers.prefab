@@ -640,7 +640,7 @@ MonoBehaviour:
   rippleEffectPrefab: {fileID: 8484976313129590826, guid: 7588405faa6f92b4992acdbaee9bf1d7, type: 3}
   cursorCanvas: {fileID: 412148086236438487}
   maxEnergy: 100
-  energyRegenRate: 1
+  energyRegenRate: 600
   energyRegenAmount: 1
   itemPrefab: {fileID: 6021443315596796148, guid: 59e5fb6f619816d49ab58350bb61c497, type: 3}
   generatorPrefab: {fileID: 6021443315596796148, guid: f6bd98f188776e64da381a3131e8e8ac, type: 3}
@@ -686,6 +686,12 @@ MonoBehaviour:
   onItemDeSelected:
     m_PersistentCalls:
       m_Calls: []
+  onRandomGuestCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  onGuestCreated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3323455971959722646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,6 +704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145c8c8c57ab8e24388d1301f0cfaa83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isClear: 0
 --- !u!114 &1855489228620817168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -712,6 +719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 4253818419915719359, guid: b387dc1f416c7214c8b831c932489608, type: 3}
   currentGuests: []
+  mergeBoard: {fileID: 0}
 --- !u!114 &3460521090243891948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1930,6 +1938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ee96027db40ca41b5845a25de82be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundKey: 
   image: {fileID: 2838703150405755675}
   useNormalAnimation: 1
   useHighlightedAnimation: 0

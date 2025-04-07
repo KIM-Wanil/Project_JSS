@@ -635,7 +635,7 @@ public class GridManager : BaseManager
             itemTweens[item].Kill();
             itemTweens.Remove(item);
         }
-        item.ItemImage.raycastTarget = false;
+        item.draggableItem.SetInteractionEnabled(false);
         // 현재 아이템의 실제 월드 위치 저장
         Vector3 actualStartPosition = item.transform.position;
 
@@ -657,13 +657,14 @@ public class GridManager : BaseManager
         // 트윈 완료 시 실행할 코드
         moveTween.OnComplete(() =>
         {
+            item.draggableItem.SetInteractionEnabled(true);
             // 아이템을 타일의 자식으로 배치
             item.transform.SetParent(tiles[targetGridposition.x, targetGridposition.y].transform);
             // 아이템의 위치 설정
             item.itemRectT.localScale = Vector3.one;
             item.itemRectT.anchoredPosition = Vector3.zero;
 
-            item.ItemImage.raycastTarget = true;
+            
             Managers.Grid.CheckGuestsOrder();
             // 트윈 애니메이션 제거
             itemTweens.Remove(item);
@@ -774,7 +775,7 @@ public class GridManager : BaseManager
         if (IsValidPosition(position))
         {
             MergeableItem item = GetItemAt(position);
-            if (item.Lv < item.itemData.items.Length && item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
+            if (item.Lv <= item.itemData.items.Length && item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
             {
                 RemoveOwnedItemsCanBeMerged(item);
             }
@@ -1001,7 +1002,7 @@ public class GridManager : BaseManager
                 {
                     continue;
                 }
-                for(int i = item.key.lv -1; i > 0; i--)
+                for(int i = item.key.Lv -1; i > 0; i--)
                 {
                     ItemKey keyToFind = new ItemKey(item.key.id, i);
                     mergeblePosPair = FindNearestItemPairCanBeMerged(keyToFind);
@@ -1025,9 +1026,9 @@ public class GridManager : BaseManager
         {
             foreach (var item in itemsToCheck)
             {
-                Debug.Log($"{Managers.Game.GetItemName(item.Key)}/아이템 레벨 {item.Key.lv}/최대 레벨{Managers.Game.GetItemMaxLevel(item.Key)}");
+                Debug.Log($"{Managers.Game.GetItemName(item.Key)}/아이템 레벨 {item.Key.Lv}/최대 레벨{Managers.Game.GetItemMaxLevel(item.Key)}");
                 //아이템이 최대 레벨인 경우 제외
-                if(item.Key.lv == Managers.Game.GetItemMaxLevel(item.Key))
+                if(item.Key.Lv == Managers.Game.GetItemMaxLevel(item.Key))
                 {
                     continue;
                 }
@@ -1139,7 +1140,7 @@ public class GridManager : BaseManager
                 MergeableItem mergeableItem = grid[x, y];
                 if (mergeableItem != null &&
                     mergeableItem.itemData.id == item.id &&
-                    mergeableItem.Lv == item.lv)
+                    mergeableItem.Lv == item.Lv)
                 {
                     return true;
                 }
@@ -1219,6 +1220,14 @@ public class GridManager : BaseManager
     public DG.Tweening.Sequence RemoveItemFromGridToGuest(Vector2Int gridPos, Vector3 worldPosition)
     {
         MergeableItem mergeableItem = GetItemAt(gridPos);
+
+        if(mergeableItem.draggableItem = DraggableItem.currentlySelectedItem)
+        {
+            DraggableItem.currentlySelectedItem.mergeableItem.OnDeSelected();
+            DraggableItem.currentlySelectedItem = null;
+            Managers.Game.DeSelecItem();
+        }
+
         mergeableItem.transform.SetParent(mergeBoard.transform);
         DG.Tweening.Sequence sequence = DOTween.Sequence();
         sequence.Append(mergeableItem.itemRectT.DOMove(worldPosition, 0.5f));

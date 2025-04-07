@@ -22,6 +22,7 @@ public class MergeableItem : MonoBehaviour
     private int lvIndex => Mathf.Clamp(lv - 1, 0, itemData.items.Length - 1);
     //[SerializeField] protected string itemId;
     [SerializeField] protected Image itemImage;
+    public Image image;
     public RectTransform itemImageRectT;
     public ItemSO itemData;
     public ItemKey itemKey;
@@ -44,10 +45,15 @@ public class MergeableItem : MonoBehaviour
     
     private void Awake()
     {
+        if (image.IsUnityNull())
+        {
+            image = GetComponent<Image>();
+            
+        }
         if (itemImage.IsUnityNull())
         {
-            itemImage = GetComponent<Image>();
-            
+            itemImage = transform.GetChild(2).GetComponent<Image>();
+
         }
         itemImageRectT = itemImage.rectTransform;
         if (itemEffect.IsUnityNull())
@@ -176,7 +182,7 @@ public class MergeableItem : MonoBehaviour
                other != this &&
                other.state != ItemState.InBox &&
                other.itemData.id == itemData.id &&
-               other.lv == lv &&
+               other.Lv == lv &&
                lv < itemData.items.Length; // 최대 레벨 체크
     }
 
@@ -193,7 +199,7 @@ public class MergeableItem : MonoBehaviour
 
             itemEffect.PlaySuccessMergeEffect();
             lv++;
-            itemKey.lv = lv;
+            itemKey.Lv = lv;
             string soundKey = lv.ToString();
             Managers.Asset.PlaySound(soundKey, SoundType.Effect);
             UpdateVisuals();

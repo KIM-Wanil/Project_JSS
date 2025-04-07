@@ -28,33 +28,33 @@ public class InfoPanelController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0))
-        {
-            Invoke("HandlePointerUp",0.1f);
-        }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    Invoke("HandlePointerUp",0.1f);
+        //}
     }
 
-    public void HandlePointerUp()
-    {
-        // 클릭한 위치에 DraggableItem이 있는지 확인
-        PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
-        {
-            position = Input.mousePosition
-        };
+    //public void HandlePointerUp()
+    //{
+    //    // 클릭한 위치에 DraggableItem이 있는지 확인
+    //    PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
+    //    {
+    //        position = Input.mousePosition
+    //    };
 
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerEventData, results);
+    //    List<RaycastResult> results = new List<RaycastResult>();
+    //    EventSystem.current.RaycastAll(pointerEventData, results);
 
-        bool isDraggableItemClicked = results.Any(r => r.gameObject.GetComponent<DraggableItem>() != null);
-        Debug.Log($"isDraggableItemClicked : {isDraggableItemClicked}");
-        if (!isDraggableItemClicked && DraggableItem.currentlySelectedItem != null)
-        {
+    //    bool isDraggableItemClicked = results.Any(r => r.gameObject.GetComponent<DraggableItem>() != null);
+    //    Debug.Log($"isDraggableItemClicked : {isDraggableItemClicked}");
+    //    if (!isDraggableItemClicked && DraggableItem.currentlySelectedItem != null)
+    //    {
             
-            DraggableItem.currentlySelectedItem.mergeableItem.OnDeSelected();
-            DraggableItem.currentlySelectedItem = null;
-            InitToBasicDesc();
-        }
-    }
+    //        DraggableItem.currentlySelectedItem.mergeableItem.OnDeSelected();
+    //        DraggableItem.currentlySelectedItem = null;
+    //        InitToBasicDesc();
+    //    }
+    //}
 
     public void PrintSellableItemDesc(ItemKey inputKey, int price = -1, UnityAction onItemSold = null)
     {
@@ -63,7 +63,7 @@ public class InfoPanelController : MonoBehaviour
         if (data.type != ItemType.Normal) return; //현재 노말 아이템만 판매 가능
         descInfo.SetActive(true);
 
-        nameText.text = $"{data.items[inputKey.lv - 1].itemName} (Lv {inputKey.lv})";
+        nameText.text = $"{data.items[inputKey.Lv - 1].itemName} (Lv {inputKey.Lv})";
         basicTextObj.SetActive(false);
 
         sellButton.onClick.AddListener(onItemSold);
@@ -73,7 +73,7 @@ public class InfoPanelController : MonoBehaviour
 
         itemNameInfo.offsetMax = new Vector2(-119f, itemNameInfo.offsetMax.y);
         descText.rectTransform.offsetMax = new Vector2(-119f, descText.rectTransform.offsetMax.y);
-        descText.text = data.items[inputKey.lv - 1].itemDesc;
+        descText.text = data.items[inputKey.Lv - 1].itemDesc;
 
     }
     public void PrintUnsellableItemDesc(ItemKey inputKey)
@@ -83,7 +83,7 @@ public class InfoPanelController : MonoBehaviour
         if (data.type == ItemType.Normal) return; //현재 노말 아이템만 판매 가능
         descInfo.SetActive(true);
 
-        nameText.text = $"{data.items[inputKey.lv - 1].itemName} (Lv {inputKey.lv})";
+        nameText.text = $"{data.items[inputKey.Lv - 1].itemName} (Lv {inputKey.Lv})";
         basicTextObj.SetActive(false);
 
         sellButton.onClick.RemoveAllListeners();
@@ -91,7 +91,7 @@ public class InfoPanelController : MonoBehaviour
 
         itemNameInfo.offsetMax = new Vector2(-25f, itemNameInfo.offsetMax.y);
         descText.rectTransform.offsetMax = new Vector2(-25f, descText.rectTransform.offsetMax.y);
-        descText.text = data.items[inputKey.lv - 1].itemDesc;
+        descText.text = data.items[inputKey.Lv - 1].itemDesc;
     }
     public void PrintLockedItemDesc(ItemKey inputKey)
     {
@@ -100,7 +100,7 @@ public class InfoPanelController : MonoBehaviour
         if (data.type != ItemType.Normal) return; //현재 노말 아이템만 판매 가능
         descInfo.SetActive(true);
 
-        nameText.text = $"{data.items[inputKey.lv - 1].itemName} (Lv {inputKey.lv})";
+        nameText.text = $"{data.items[inputKey.Lv - 1].itemName} (Lv {inputKey.Lv})";
         basicTextObj.SetActive(false);
 
         sellButton.onClick.RemoveAllListeners();

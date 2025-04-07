@@ -81,9 +81,7 @@ public class GameManager : BaseManager
     public bool IsDataLoaded { get; private set; } = false;
     private void Start()
     {
-        energyRegenRemainSec = energyRegenRate;
-        FlagRegenEnergy(currentEnergy);
-        onEnergyChanged.AddListener(FlagRegenEnergy);
+        
     }
     public void Update()
     {
@@ -127,6 +125,10 @@ public class GameManager : BaseManager
         if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
             return;
         base.Init();
+        energyRegenRemainSec = energyRegenRate;
+        FlagRegenEnergy(currentEnergy);
+        onEnergyChanged.AddListener(FlagRegenEnergy);
+
         InitializeGame();
 
 
@@ -273,11 +275,11 @@ public class GameManager : BaseManager
     }
     public Sprite GetItemSprite(ItemKey key)
     {
-        return itemDataDic[key.id].items[key.lv-1].itemSprite;
+        return itemDataDic[key.id].items[key.Lv-1].itemSprite;
     }
     public string GetItemName(ItemKey key)
     {
-        return itemDataDic[key.id].items[key.lv - 1].itemName;
+        return itemDataDic[key.id].items[key.Lv - 1].itemName;
     }
     public int GetItemMaxLevel(ItemKey key)
     {
