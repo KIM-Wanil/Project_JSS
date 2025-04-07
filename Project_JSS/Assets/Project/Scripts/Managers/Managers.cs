@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -75,8 +74,8 @@ public class Managers : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("¾À ·Îµå");
-        _game.Init();
         _grid.Init();
+        _game.Init();
         //_ui.UpdateLetterbox();
         //_settings.Init();
 

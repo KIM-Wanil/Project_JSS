@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.AdaptivePerformance.Editor;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
@@ -111,6 +109,7 @@ public class Guest : MonoBehaviour
         //
         sequence.OnComplete(() =>
         {
+            //Managers.Asset.PlaySound("", SoundType.Effect);
             Managers.Grid.RemoveGuest(this);
             Managers.Grid.CheckGuestsOrder();
             DestroyGuest();

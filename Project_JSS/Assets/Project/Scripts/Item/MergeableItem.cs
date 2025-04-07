@@ -189,10 +189,13 @@ public class MergeableItem : MonoBehaviour
     public void LevelUp()
     {
         if (lv < itemData.items.Length)
-        {          
+        {
+
             itemEffect.PlaySuccessMergeEffect();
             lv++;
             itemKey.lv = lv;
+            string soundKey = lv.ToString();
+            Managers.Asset.PlaySound(soundKey, SoundType.Effect);
             UpdateVisuals();
             if (state == ItemState.Locked)
             {

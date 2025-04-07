@@ -123,6 +123,8 @@ public class Generator : MonoBehaviour
         if (currentDurability <= 0 || !Managers.Game.TrySpendEnergy(1))
             return false;
 
+       Managers.Asset.PlaySound("Pop_Item", SoundType.Effect);
+
         currentDurability--;
         UpdateDurabilityUI();
 

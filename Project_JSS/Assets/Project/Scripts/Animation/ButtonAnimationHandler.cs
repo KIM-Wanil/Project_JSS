@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class ButtonAnimationHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
+    [SerializeField] private string soundKey;
     private Button button;
     [SerializeField] private Image image;
     private RectTransform imageRectT;
@@ -53,6 +54,11 @@ public class ButtonAnimationHandler : MonoBehaviour, IPointerDownHandler, IPoint
                     .Append(imageRectT.DOScale(new Vector3(1.1f, 0.94f, 1f), 12f / 60f).SetEase(Ease.OutQuad))
                     .Append(imageRectT.DOScale(new Vector3(0.96f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad))
                     .Append(imageRectT.DOScale(new Vector3(1f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad));
+
+            if(!string.IsNullOrEmpty(soundKey))
+            {
+                Managers.Asset.PlaySound(soundKey, SoundType.UI);
+            }
         }
     }
 

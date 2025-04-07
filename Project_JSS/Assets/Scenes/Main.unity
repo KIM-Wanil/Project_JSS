@@ -1387,7 +1387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f172b4552462d1648aa23b35df8eabbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inactivityTime: 2
+  inactivityTime: 3
   coroutineExecutionTime: 3
   showDebugLogs: 1
 --- !u!1 &600591990
@@ -4497,6 +4497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ee96027db40ca41b5845a25de82be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundKey: Click_Open
   image: {fileID: 1444796919}
   useNormalAnimation: 1
   useHighlightedAnimation: 0
@@ -4747,7 +4748,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.000015258789, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1897329932
@@ -5660,6 +5661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ee96027db40ca41b5845a25de82be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundKey: Click_Transition
   image: {fileID: 8928826028845005149}
   useNormalAnimation: 1
   useHighlightedAnimation: 0
@@ -6309,7 +6311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2775502945984428542, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
       propertyPath: energyRegenRate
-      value: 10
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 2775502945984428542, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
       propertyPath: generatorPrefab
@@ -6319,8 +6321,16 @@ PrefabInstance:
       propertyPath: infoPanelController
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2779436114469336180, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2887336190621895994, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135608197594861897, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_text
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3350376191890074987, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
@@ -7059,6 +7069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ee96027db40ca41b5845a25de82be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundKey: Pop_Item
   image: {fileID: 9207633535766047919}
   useNormalAnimation: 1
   useHighlightedAnimation: 0

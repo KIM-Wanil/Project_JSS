@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 [System.Serializable]
 public class SaveData
 {
@@ -27,6 +29,7 @@ public class SaveData
 // SaveManager.cs
 public class SaveManager : BaseManager
 {
+    public bool isClear = false;
     private const string SAVE_KEY = "MergeGameSave";
     private const int A = 0; 
     private const int B = 1; 
@@ -35,9 +38,17 @@ public class SaveManager : BaseManager
     private const int E = 4; 
     private const int F = 5; 
     private const int G = 6; 
-    private const int H = 7; 
+    private const int H = 7;
 
-
+    public void Update()
+    {
+       if(Input.GetKeyDown(KeyCode.F5))
+        {
+            ClearPlayerPrefs();
+            isClear = true;
+        }
+    }
+    
     public void SaveGame(SaveData saveData)
     {
         string json = JsonUtility.ToJson(saveData);
@@ -131,11 +142,11 @@ public class SaveManager : BaseManager
 
 
         //잠긴 아이템 설정 
-        initialData.items.Add(SetItemData(new Vector2Int(B, 3), "N002", 3, ItemType.Normal, ItemState.Locked));
-        initialData.items.Add(SetItemData(new Vector2Int(F, 5), "N002", 4, ItemType.Normal, ItemState.Locked));
+        initialData.items.Add(SetItemData(new Vector2Int(B, 3), "N002", 2, ItemType.Normal, ItemState.Locked));
+        initialData.items.Add(SetItemData(new Vector2Int(F, 5), "N002", 3, ItemType.Normal, ItemState.Locked));
 
-        initialData.items.Add(SetItemData(new Vector2Int(C, 1), "N001", 4, ItemType.Normal, ItemState.Locked));
-        initialData.items.Add(SetItemData(new Vector2Int(E, 7), "N001", 3, ItemType.Normal, ItemState.Locked));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 1), "N001", 3, ItemType.Normal, ItemState.Locked));
+        initialData.items.Add(SetItemData(new Vector2Int(E, 7), "N001", 2, ItemType.Normal, ItemState.Locked));
 
         //제러레이터 설정
         initialData.items.Add(SetItemData(new Vector2Int(C, 2), "G001", 1, ItemType.Generatable, ItemState.Normal));
@@ -143,21 +154,21 @@ public class SaveManager : BaseManager
 
         initialData.rewardList.Add(new ItemKey("G001", 1));
         initialData.rewardList.Add(new ItemKey("G002", 1));
-        initialData.rewardList.Add(new ItemKey("G001", 1));
-        initialData.rewardList.Add(new ItemKey("G002", 1));
-        initialData.rewardList.Add(new ItemKey("G001", 1));
+        //initialData.rewardList.Add(new ItemKey("G001", 1));
+        //initialData.rewardList.Add(new ItemKey("G002", 1));
+        //initialData.rewardList.Add(new ItemKey("G001", 1));
 
-        initialData.rewardList.Add(new ItemKey("G002", 1));
-        initialData.rewardList.Add(new ItemKey("G001", 1));
-        initialData.rewardList.Add(new ItemKey("G002", 1));
-        initialData.rewardList.Add(new ItemKey("G001", 1));
-        initialData.rewardList.Add(new ItemKey("G002", 1));
+        //initialData.rewardList.Add(new ItemKey("G002", 1));
+        //initialData.rewardList.Add(new ItemKey("G001", 1));
+        //initialData.rewardList.Add(new ItemKey("G002", 1));
+        //initialData.rewardList.Add(new ItemKey("G001", 1));
+        //initialData.rewardList.Add(new ItemKey("G002", 1));
 
-        initialData.rewardList.Add(new ItemKey("G001", 1));
-        initialData.rewardList.Add(new ItemKey("G002", 1));
-        initialData.rewardList.Add(new ItemKey("G001", 1));
-        initialData.rewardList.Add(new ItemKey("G002", 1));
-        initialData.rewardList.Add(new ItemKey("G001", 1));
+        //initialData.rewardList.Add(new ItemKey("G001", 1));
+        //initialData.rewardList.Add(new ItemKey("G002", 1));
+        //initialData.rewardList.Add(new ItemKey("G001", 1));
+        //initialData.rewardList.Add(new ItemKey("G002", 1));
+        //initialData.rewardList.Add(new ItemKey("G001", 1));
 
 
         //initialData.rewardList.Enqueue(new ItemKey("G001", 1));
@@ -201,7 +212,7 @@ public class SaveManager : BaseManager
     // 자동 저장
     private void OnApplicationPause(bool pauseStatus)
     {
-        if (pauseStatus)
+        if (pauseStatus && !isClear)
         {
             SaveGame(LoadGame());
         }
@@ -209,7 +220,8 @@ public class SaveManager : BaseManager
 
     private void OnApplicationQuit()
     {
-        SaveGame(LoadGame());
+        if (!isClear)
+        { SaveGame(LoadGame()); }
     }
 }
 

@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using DG.Tweening;
 
 public class ItemOrdered : MonoBehaviour//, IPointerClickHandler

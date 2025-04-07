@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using static SaveData;
 using System.Linq;
-using static UnityEditor.Progress;
 using UnityEngine.SceneManagement;
 using System;
 using static UnityEngine.Tilemaps.Tilemap;
@@ -66,9 +65,12 @@ public class GameManager : BaseManager
     public UnityEvent<ItemKey> onUnsellableItemSelected;
     public UnityEvent<ItemKey> onLockedItemSelected;
     public UnityEvent onItemDeSelected;
+    public UnityEvent onRandomGuestCreated; 
+    public UnityEvent<int, KeyValuePair<ItemKey, int>, KeyValuePair<ItemKey, int>?> onGuestCreated;
 
-    
-    
+
+
+
     private Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
     private Dictionary<string, GeneratorSO> genDataDic = new Dictionary<string, GeneratorSO>();
     [SerializeField] private ObjectPool<GameObject> itemPool;
@@ -87,7 +89,7 @@ public class GameManager : BaseManager
     {
         generatorSyncTime = Time.time % 4f;
         if (Input.GetMouseButtonUp(0))
-        { 
+        {
             CreateRippleEffect();
         }
     }
@@ -96,11 +98,11 @@ public class GameManager : BaseManager
         GameObject ripple = Instantiate(rippleEffectPrefab, Input.mousePosition, Quaternion.identity, cursorCanvas.transform);
         ripple.transform.SetSiblingIndex(0);
     }
-    public void OnClickSetMergeBoardTest()
-    {
-        SpawnMoveGenerator("G001", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
-        SpawnMoveGenerator("G002", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
-    }
+    //public void OnClickSetMergeBoardTest()
+    //{
+    //    SpawnMoveGenerator("G001", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
+    //    SpawnMoveGenerator("G002", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
+    //}
     public void SelectSellableItem(ItemKey inputKey, int price = -1, UnityAction onItemSold = null)
     {
         onSellableItemSelected.Invoke(inputKey, price, onItemSold);
@@ -126,6 +128,9 @@ public class GameManager : BaseManager
             return;
         base.Init();
         InitializeGame();
+
+
+        
     }
     private async void LoadData()
     {
@@ -291,13 +296,16 @@ public class GameManager : BaseManager
             Managers.Grid.PlaceItem(item, targetGridposition);
             
         }
-        Managers.Grid.CheckGuestsOrder();
+
         return item;
     }
     public MergeableItem SpawnMoveItem(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
     {
         GameObject itemObj = itemPool.Get();
         MergeableItem item = itemObj.GetComponent<MergeableItem>();
+        //itemObj.transform.SetParent(Managers.Grid.mergeBoard.transform);
+        item.itemRectT.anchoredPosition = startWorldPosition;
+        Debug.Log(item.itemRectT.anchoredPosition);
         if (item != null)
         {
             item.itemData = itemDataDic[itemId];
@@ -305,9 +313,10 @@ public class GameManager : BaseManager
             item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
             Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
         }
-        Managers.Grid.CheckGuestsOrder();
+        
         return item;
     }
+
     public Generator SpawnGenerator(string itemId, int level, Vector2Int position)
     {
         GameObject genObj = generatorPool.Get();
@@ -356,6 +365,7 @@ public class GameManager : BaseManager
     {
         if (draggingItem.CanMergeWith(targetItem))
         {
+            
             Managers.Grid.DetatchItemFromGrid(targetItem.GridPosition);
             Managers.Grid.DetatchItemFromGrid(draggingItem.GridPosition);
 
@@ -364,6 +374,7 @@ public class GameManager : BaseManager
             Managers.Grid.CheckGuestsOrder();
 
             ReturnItemToPool(draggingItem);
+          
             return true;
         }
 
@@ -497,13 +508,13 @@ public class GameManager : BaseManager
 
     private GameObject CreatePooledItem()
     {
-        GameObject obj = Instantiate(itemPrefab); // 기본 아이템 프리팹
+        GameObject obj = Instantiate(itemPrefab, Managers.Grid.MergeBoard.transform); // 기본 아이템 프리팹
         obj.SetActive(false);
         return obj;
     }
     private GameObject CreatePooledGenerator()
     {
-        GameObject obj = Instantiate(generatorPrefab); // 기본 제너레이터 프리팹
+        GameObject obj = Instantiate(generatorPrefab, Managers.Grid.MergeBoard.transform); // 기본 제너레이터 프리팹
         obj.SetActive(false);
         return obj;
     }
@@ -605,6 +616,25 @@ public class GameManager : BaseManager
             Debug.Log($"보상카드{currentRewardQueue.Count}개 불러옴");
             onRewardQueueChanged?.Invoke(currentRewardQueue);
         }
+        KeyValuePair<ItemKey, int>temp1 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 2), 1);
+        KeyValuePair<ItemKey, int>temp2 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 3), 1);
+        KeyValuePair<ItemKey, int>temp3 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 4), 1);
+
+        KeyValuePair<ItemKey, int>temp4 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 2), 1);
+        KeyValuePair<ItemKey, int>temp5 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 3), 1);
+        KeyValuePair<ItemKey, int>temp6 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 4), 1);
+
+        KeyValuePair<ItemKey, int>temp7 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 2), 2);
+        KeyValuePair<ItemKey, int>temp8 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 4), 2);
+
+        KeyValuePair<ItemKey, int>temp9 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 4), 2);
+        KeyValuePair<ItemKey, int>temp10 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 3), 2);
+
+        onGuestCreated?.Invoke(1, temp1, null);
+        onGuestCreated?.Invoke(1, temp4, null);
+        onGuestCreated?.Invoke(4, temp7, temp5);
+        onGuestCreated?.Invoke(4, temp10, null);
+        onGuestCreated?.Invoke(12, temp6, temp9);
     }
 
     #endregion
@@ -641,7 +671,7 @@ public class GameManager : BaseManager
 
     private void OnApplicationPause(bool pauseStatus)
     {
-        if (pauseStatus)
+        if (pauseStatus && !Managers.Save.isClear)
         {
             SaveGame();
         }
@@ -649,7 +679,7 @@ public class GameManager : BaseManager
 
     private void OnApplicationQuit()
     {
-        SaveGame();
+        if(!Managers.Save.isClear) SaveGame();
     }
 
     #endregion

@@ -4,7 +4,7 @@ using DG.Tweening;
 public class InputController : MonoBehaviour
 {
     [Tooltip("입력 비활성 시간 (초)")]
-    public float inactivityTime = 2.0f;
+    public float inactivityTime = 3.0f;
 
     [Tooltip("코루틴 실행 시간 (초)")]
     public float coroutineExecutionTime = 3.0f;
@@ -22,6 +22,7 @@ public class InputController : MonoBehaviour
     private MergeableItem itemToAnnounce1;
     private MergeableItem itemToAnnounce2;
 
+    private IEnumerator timerCoroutine;
     void Start()
     {
         // 현재 실행 환경이 모바일인지 확인
@@ -37,6 +38,8 @@ public class InputController : MonoBehaviour
         {
             lastMousePosition = Input.mousePosition;
         }
+
+        timerCoroutine = InactivityCoroutine(Vector2Int.zero, Vector2Int.zero);
     }
 
     void Update()
@@ -89,7 +92,7 @@ public class InputController : MonoBehaviour
         if (touchInput)
         {
             // 터치가 감지되었으므로 타이머 초기화
-            ResetTimer();
+            //ResetTimer();
             wasInputDetected = true;
         }
         else if (wasInputDetected || timer > 0)
@@ -131,11 +134,7 @@ public class InputController : MonoBehaviour
             announceMovingSequence.Kill();
             
             isCoroutineRunning = false;
-
-            if (showDebugLogs)
-            {
-                Debug.Log("입력 감지: 코루틴 중지됨");
-            }
+            Debug.Log("입력 감지: 코루틴 중지됨");
         }
     }
 
@@ -178,7 +177,7 @@ public class InputController : MonoBehaviour
         announceMovingSequence.Append(itemToAnnounce1.itemImageRectT.DOAnchorPos(Vector2.zero, 0.5f));
         announceMovingSequence.Join(itemToAnnounce2.itemImageRectT.DOAnchorPos(Vector2.zero, 0.5f));
 
-        announceMovingSequence.AppendInterval(0.5f);
+        announceMovingSequence.AppendInterval(1.0f);
         announceMovingSequence.SetLoops(-1);
         announceMovingSequence.Play();
 
@@ -191,17 +190,23 @@ public class InputController : MonoBehaviour
 
             yield return null;
         }
-        Debug.Log("코루틴 종료");
-        announceMovingSequence.Kill();
-        ResetItemsPosition();
-        isCoroutineRunning = false;
+        Debug.Log("코루틴 종료1");
+        //ResetTimer();
+        yield break;
+        //announceMovingSequence.Kill();
+        //ResetItemsPosition();
+        //isCoroutineRunning = false;
     }
     private void ResetItemsPosition()
     {
+        //Debug.Log($"ResetItemsPosition {itemToAnnounce1},{itemToAnnounce2}");
         if (itemToAnnounce1 != null && itemToAnnounce2 != null)
         {
-            itemToAnnounce1.itemRectT.anchoredPosition = Vector3.zero;
-            itemToAnnounce2.itemRectT.anchoredPosition = Vector3.zero;
+            itemToAnnounce1.itemImageRectT.anchoredPosition = Vector3.zero;
+            itemToAnnounce2.itemImageRectT.anchoredPosition = Vector3.zero;
+
+            //Debug.Log($"ItemsPosition {itemToAnnounce1.itemRectT.anchoredPosition},{itemToAnnounce2.itemRectT.anchoredPosition}");
+
             itemToAnnounce1 = null;
             itemToAnnounce2 = null;
         }

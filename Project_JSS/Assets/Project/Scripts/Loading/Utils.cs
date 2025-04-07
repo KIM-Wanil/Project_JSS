@@ -1,4 +1,4 @@
-using UnityEditor.PackageManager;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,7 +17,7 @@ public static class Utils
 
     public static void LoadScene(string sceneName)
     {
-        if(sceneName == "")
+        if(string.IsNullOrEmpty(sceneName))
         {
             SceneManager.LoadScene(GetActiveScene());
         }

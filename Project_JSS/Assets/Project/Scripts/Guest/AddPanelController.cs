@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using DG.Tweening;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 public class AddPanelController : MonoBehaviour
 {
     public RectTransform firstGuestRectT;
@@ -24,6 +23,8 @@ public class AddPanelController : MonoBehaviour
     private void Awake()
     {
         Managers.Game.onRewardQueueChanged.AddListener(UpdateRewardList);
+        Managers.Game.onRandomGuestCreated.AddListener(CreateRandomGuest);
+        Managers.Game.onGuestCreated.AddListener(CreateGuest);
         rewardListButton.onClick.AddListener(OnClickRewardListButton);
 
         rewardList.SetActive(false);
@@ -168,7 +169,7 @@ public class AddPanelController : MonoBehaviour
         ItemType RewardItemType = Managers.Game.GetItemData(Managers.Game.currentRewardQueue.Peek().id).type;
         if (RewardItemType == ItemType.Generatable)
         {
-            Managers.Game.SpawnMoveGenerator(Managers.Game.currentRewardQueue.Peek().id, Managers.Game.currentRewardQueue.Peek().lv, new Vector2(-115f, 515f), (Vector2Int)Managers.Grid.GetEmptyPosition());
+            Managers.Game.SpawnMoveGenerator(Managers.Game.currentRewardQueue.Peek().id, Managers.Game.currentRewardQueue.Peek().lv, rewardListButton.transform.position, (Vector2Int)Managers.Grid.GetEmptyPosition());
             Managers.Game.DequeueReward();
         }
     }
