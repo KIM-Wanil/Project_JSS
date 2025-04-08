@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public abstract class IsoGird : MonoBehaviour
@@ -11,9 +13,16 @@ public abstract class IsoGird : MonoBehaviour
     public int gridWidth = 12;
     public int gridHeight = 12;
     public Color gridLineColor = Color.red;
+
+    Vector2Int furnitureSize;
+    [SerializeField] GameObject tile;
+    List<GameObject> tiles;
+    Queue<GameObject> tilesQueue;
     public void Awake()
     {
         InitializeGrid(gridWidth, gridHeight);
+        tiles = new List<GameObject>();
+        tilesQueue = new Queue<GameObject>();
     }
     // Update is called once per frame
     void Update()
@@ -28,7 +37,51 @@ public abstract class IsoGird : MonoBehaviour
     {
         return occupiedCells[x, y];
     }
+    public void TileSetting(Transform furniture, Vector2Int size,Vector2Int gridPosition)
+    {
+        furnitureSize = size;
+        for (int x = 0; x < furnitureSize.x; x++)
+        {
+            for (int y = 0; y < furnitureSize.y; y++)
+            {
+                Vector3 vector = GridPositionToWorld(new Vector2Int( gridPosition.x + x, gridPosition.y + y));
+                GameObject obj;
+                if (!tilesQueue.TryDequeue(out obj))
+                    obj = Instantiate(tile, vector, furniture.rotation, furniture);
+                else
+                {
+                    obj.transform.SetParent(furniture);
+                    obj.transform.position = vector;
+                    obj.SetActive(true);
+                }
+                tiles.Add(obj);
+            }
+        }
+    }
     public bool CanPlaceFurniture(Vector2Int pos)
+    {
+        bool IsCan = true;
+        int num = 0;
+        for (int x = 0; x < furnitureSize.x; x++)
+        {
+            for (int y = 0; y < furnitureSize.y; y++)
+            {
+                if (!CanPlaceTile(new Vector2Int(pos.x + x, pos.y + y)))
+                {
+                    Debug.Log("Can not Place");
+                    tiles[num].GetComponent<SpriteRenderer>().color = Color.red;
+                    IsCan = false;
+                }
+                else
+                {
+                    tiles[num].GetComponent<SpriteRenderer>().color = Color.green;
+                }
+                num++;
+            }
+        }
+        return IsCan;
+    }
+    public bool CanPlaceTile(Vector2Int pos)
     {
         // 그리드 범위 체크
         if (pos.x < 0 || pos.y < 0 ||
@@ -39,6 +92,15 @@ public abstract class IsoGird : MonoBehaviour
         // 이미 점유된 셀인지 체크
         return !occupiedCells[pos.x, pos.y];
     }
+    public void FreeViewOff()
+    {
+        foreach (GameObject gameObject in tiles)
+        {
+            gameObject.gameObject.SetActive(false);
+            tilesQueue.Enqueue(gameObject);
+        }
+        tiles.Clear();
+    }
     public void OccupiedCell(Vector3 worldPosition, Vector2Int size, bool occupied)
     {
         Vector2Int pos = WorldToGridPosition(worldPosition);
@@ -47,6 +109,8 @@ public abstract class IsoGird : MonoBehaviour
             for (int y = 0; y < size.y; y++)
             {
                 Debug.Log(new Vector2(pos.x + x, pos.y + y));
+                if (pos.x + x >= gridWidth || pos.y + y >= gridHeight)
+                    continue;
                 occupiedCells[pos.x + x, pos.y + y] = occupied;
             }
         }

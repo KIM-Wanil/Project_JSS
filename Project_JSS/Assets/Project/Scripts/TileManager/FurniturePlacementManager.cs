@@ -16,6 +16,7 @@ public class FurniturePlacementManager : MonoBehaviour
     // 내부 상태 변수
     [SerializeField] IsoGird[] isometricGrids;
     IsoGird currentGrid;
+    int gridNumbers;
     FurnitureInfo currentInfo;
 
     private GameObject selectedFurniture;
@@ -40,11 +41,13 @@ public class FurniturePlacementManager : MonoBehaviour
 
     [SerializeField] GameObject tile;
     List<GameObject> tiles;
+
     [Header("UI")]
     [SerializeField] GameObject uiObject;
     [SerializeField] Button rotateButton;            // 회전 버튼
     [SerializeField] Button confirmButton;           // 확정 버튼
     [SerializeField] Button cancelButton;            // 취소 버튼
+
 
     private void Awake()
     {
@@ -199,13 +202,22 @@ public class FurniturePlacementManager : MonoBehaviour
                 if (currentInfo.IsFloor)
                 {
                     currentGrid = isometricGrids[0];
+                    gridNumbers = 0;
                 }
                 else
                 {
-                    if (mousePosition.x >=0) 
+                    if (mousePosition.x >=0)
+                    {
                         currentGrid = isometricGrids[1];
+                        gridNumbers = 1;
+                    }
+
                     else
+                    {
                         currentGrid = isometricGrids[2];
+                        gridNumbers = 2;
+                    }
+                      
                 }
 
                 originalPosition = selectedFurniture.transform.position;
@@ -215,8 +227,6 @@ public class FurniturePlacementManager : MonoBehaviour
 
                 dragOffset = (Vector3)mousePosition - selectedFurniture.transform.position;
 
-                // 선택 표시 (예: 외곽선 효과)
-                HighlightFurniture(true);
                 Debug.Log(hitObject.name);
 
                 // 컨트롤 패널 표시
@@ -224,15 +234,9 @@ public class FurniturePlacementManager : MonoBehaviour
 
                 // 마지막 유효 위치 저장
                 lastValidPosition = selectedFurniture.transform.position;
-
-                for (int x = 0;x <currentInfo.Size.x;x++)
-                {
-                    for (int y = 0; y < currentInfo.Size.y; y++)
-                    {
-                       GameObject obj = Instantiate(tile,new Vector2(originalPosition.Value.x + tileOffsetX*(x-y)*0.5f, originalPosition.Value.y + tileOffsetY* (x + y) * 0.5f), hitObject.transform.rotation, hitObject.transform);
-                       tiles.Add(obj);
-                    }
-                }
+                currentGrid.TileSetting(hitObject.transform, currentInfo.Size, currentInfo.GridPosition);
+                currentGrid.CanPlaceFurniture(currentInfo.GridPosition);
+                
                 uiObject.SetActive(true);
                 uiObject.transform.SetParent(selectedFurniture.transform);
                 uiObject.transform.position = selectedFurniture.transform.position;
@@ -241,42 +245,56 @@ public class FurniturePlacementManager : MonoBehaviour
         }
     }
     
-    public bool CanPlaceFurniture()
-    {
-        Vector2Int size = currentInfo.Size;
-        bool IsCan = true;
-        Vector2Int pos = gridPosition;
-        int num = 0;
-        for (int x = 0; x < size.x; x++)
-        {
-            for (int y = 0; y < size.y; y++)
-            {
-                if (!currentGrid.CanPlaceFurniture(new Vector2Int(pos.x+x, pos.y+y)))
-                {
-                    Debug.Log("Can not Place");
-                    tiles[num].GetComponent<SpriteRenderer>().color = Color.red;
-                    IsCan =  false;
-                }
-                else
-                {
-                    tiles[num].GetComponent<SpriteRenderer>().color = Color.green;
-                }
-                num++;
-            }
-        }
-        return IsCan;
-    }
     // 가구 이동
     private void MoveFurniture(Vector2 screenPosition)
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(screenPosition);
-        pos = pos - dragOffset;
+
+        if (gridNumbers != 0)
+        {
+            if (pos.x >= 0 && currentGrid != isometricGrids[1])
+            {
+                currentGrid.FreeViewOff();
+                selectedFurniture.transform.localScale = new Vector3(-1, 1, 1);
+                currentGrid = isometricGrids[1];
+                gridNumbers = 1;
+                dragOffset = new Vector3(-dragOffset.x, dragOffset.y,0);
+                pos = pos - dragOffset;
+                gridPosition = currentGrid.WorldToGridPosition(pos);
+                selectedFurniture.transform.position = currentGrid.GridPositionToWorld(gridPosition);
+                currentGrid.TileSetting(selectedFurniture.transform, currentInfo.Size, currentGrid.WorldToGridPosition(selectedFurniture.transform.position));
+                return;
+            }
+            else if (pos.x < 0 && currentGrid != isometricGrids[2])
+            {
+                currentGrid.FreeViewOff();
+                selectedFurniture.transform.localScale = new Vector3(1, 1, 1);
+                currentGrid = isometricGrids[2];
+                gridNumbers = 2;
+                dragOffset = new Vector3(-dragOffset.x, dragOffset.y, 0);
+                pos = pos - dragOffset;
+                gridPosition = currentGrid.WorldToGridPosition(pos);
+                selectedFurniture.transform.position = currentGrid.GridPositionToWorld(gridPosition);
+                currentGrid.TileSetting(selectedFurniture.transform, currentInfo.Size, currentGrid.WorldToGridPosition(selectedFurniture.transform.position));
+                return;
+            }
+            else
+            {
+                pos = pos - dragOffset;
+            }
+        }
+        else
+        {
+            pos = pos - dragOffset;
+        }
+       
+
+
         if (gridPosition != currentGrid.WorldToGridPosition(pos))
         {
             gridPosition = currentGrid.WorldToGridPosition(pos);
-            Vector3 snappedPosition = currentGrid.GridPositionToWorld(gridPosition);
-            selectedFurniture.transform.position = snappedPosition; 
-            CanPlaceFurniture();
+            selectedFurniture.transform.position = currentGrid.GridPositionToWorld(gridPosition);
+            currentGrid.CanPlaceFurniture(gridPosition);
         }
 
     }
@@ -293,7 +311,7 @@ public class FurniturePlacementManager : MonoBehaviour
     // 가구 배치 확정
     public void ConfirmPlacement()
     {
-        if (selectedFurniture != null && CanPlaceFurniture())
+        if (selectedFurniture != null && currentGrid.CanPlaceFurniture(gridPosition))
         {
             // 그리드에 맞추기
             Vector3 snappedPosition = currentGrid.SortGrid(selectedFurniture.transform.position);
@@ -335,59 +353,15 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         if (selectedFurniture != null)
         {
-            // 선택 효과 제거
-            HighlightFurniture(false);
 
             selectedFurniture = null;
             originalPosition = null;
             originalRotation = 0;
+            currentGrid.FreeViewOff();
             currentInfo = null;
             currentGrid = null;
             uiObject.SetActive(false);
-            FreeViewOff();
-        }
-    }
-    public void FreeViewOff()
-    {
-        foreach (GameObject gameObject in tiles)
-        {
-            Destroy(gameObject);
-        }
-        tiles.Clear();
-    }
-    // 그리드 스냅 기능
-    private Vector3 SnapToGrid(Vector3 position)
-    {
-        float x = Mathf.Round(position.x / gridSize) * gridSize;
-        float y = position.y; // 높이는 유지
-        float z = Mathf.Round(position.z / gridSize) * gridSize;
-        return new Vector3(x, y, z);
-    }
-
-    // 가구 하이라이트 표시
-    private void HighlightFurniture(bool highlight)
-    {
-        // 가구의 모든 렌더러 컴포넌트 찾기
-        Renderer[] renderers = selectedFurniture.GetComponentsInChildren<Renderer>();
-
-        foreach (Renderer renderer in renderers)
-        {
-            // 재질의 외곽선 효과 설정 (쉐이더에 따라 다를 수 있음)
-            Material[] materials = renderer.materials;
-            foreach (Material material in materials)
-            {
-                if (highlight)
-                {
-                    // 선택 효과 설정 (예: Outline 효과나 색상 변경)
-                    material.SetFloat("_OutlineWidth", 0.02f);
-                    material.SetColor("_OutlineColor", Color.yellow);
-                }
-                else
-                {
-                    // 선택 효과 제거
-                    material.SetFloat("_OutlineWidth", 0f);
-                }
-            }
+           
         }
     }
     // 층 변경
