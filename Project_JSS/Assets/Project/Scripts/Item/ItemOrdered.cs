@@ -97,6 +97,14 @@ public class ItemOrdered : MonoBehaviour//, IPointerClickHandler
                 {
                 });
     }
+    public void OnCheckIcon()
+    {
+        checkIcon.SetActive(true);
+        countText.enabled = false;
+        checkIcon.transform.localScale = Vector3.one * 0.5f; // 초기 크기를 0.5로 설정
+        IsFulfill = true;
+
+    }
     // checkIcon 비활성화 메서드 추가
     public void DeactivateCheckIcon()
     {

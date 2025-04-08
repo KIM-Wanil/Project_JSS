@@ -72,6 +72,7 @@ public class MergeableItem : MonoBehaviour
 
     public void Initialize(int inputLv, Vector2Int pos, ItemState inputState = ItemState.Normal)
     {
+        draggableItem = GetComponent<DraggableItem>();
         lv = Mathf.Clamp(inputLv, 1, itemData.items.Length);
         SetGridPosition(pos);
         state = inputState;

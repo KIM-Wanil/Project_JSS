@@ -286,74 +286,84 @@ public class GameManager : BaseManager
         return itemDataDic[key.id].items.Length;
     }
     //이 경우에만 잠겨있는 아이템 존재
-    public MergeableItem SpawnItem(string itemId, int level, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
+    public bool SpawnItem(string itemId, int level, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
     {
         GameObject itemObj = itemPool.Get();
-        MergeableItem item = itemObj.GetComponent<MergeableItem>();
-        if (item != null)
-        {
-            item.itemData = itemDataDic[itemId];
-            item.Initialize(level, targetGridposition, state);
-            item.itemRectT.sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-            Managers.Grid.PlaceItem(item, targetGridposition);
-            
-        }
+        if (!itemObj) return false;
 
-        return item;
-    }
-    public MergeableItem SpawnMoveItem(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
-    {
-        GameObject itemObj = itemPool.Get();
         MergeableItem item = itemObj.GetComponent<MergeableItem>();
-        //itemObj.transform.SetParent(Managers.Grid.mergeBoard.transform);
-        item.itemRectT.anchoredPosition = startWorldPosition;
-        Debug.Log(item.itemRectT.anchoredPosition);
-        if (item != null)
-        {
-            item.itemData = itemDataDic[itemId];
-            item.Initialize(level, targetGridposition);
-            item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-            Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
-        }
+        if (!item) return false;
         
-        return item;
+        item.itemData = itemDataDic[itemId];
+        item.Initialize(level, targetGridposition, state);
+        item.draggableItem.Initialize();
+        item.itemRectT.sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+        Managers.Grid.PlaceItem(item, targetGridposition);
+            
+        
+
+        return true;
+    }
+    public bool SpawnMoveItem(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
+    {
+        GameObject itemObj = itemPool.Get();
+        if (!itemObj) return false;
+
+        MergeableItem item = itemObj.GetComponent<MergeableItem>();
+        if (!item) return false;
+        
+        item.transform.position = startWorldPosition;
+        //item.itemRectT.anchoredPosition = startWorldPosition;
+        item.itemData = itemDataDic[itemId];
+        item.Initialize(level, targetGridposition);
+        item.draggableItem.Initialize();
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+        Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
+        
+        
+        return true;
     }
 
-    public Generator SpawnGenerator(string itemId, int level, Vector2Int position)
+    public bool SpawnGenerator(string itemId, int level, Vector2Int position)
     {
         GameObject genObj = generatorPool.Get();
+        if (!genObj) return false;
+
         MergeableItem item = genObj.GetComponent<MergeableItem>();
-        if (item != null)
-        {
-            item.itemData = itemDataDic[itemId];
-            item.Initialize(level, position);
-            item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-            Managers.Grid.PlaceItem(item, position);
-            //onItemSpawned?.Invoke(item);
-        }
+        if (!item) return false;
+
+        item.itemData = itemDataDic[itemId];
+        item.Initialize(level, position);
+        item.draggableItem.Initialize();
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+        Managers.Grid.PlaceItem(item, position);
+        
         Generator tempGenerator = item.gameObject.GetComponent<Generator>();
         tempGenerator.genDB = genDataDic[itemId];
         tempGenerator.Initialize(generatorSyncTime);
 
-        return tempGenerator;
+        return true;
     }
-    public Generator SpawnMoveGenerator(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
+    public bool SpawnMoveGenerator(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
     {
         GameObject genObj = generatorPool.Get();
+        if (!genObj) return false;
+
         MergeableItem item = genObj.GetComponent<MergeableItem>();
-        if (item != null)
-        {
-            item.itemData = itemDataDic[itemId];
-            item.Initialize(level, targetGridposition);
-            item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-            Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
-            //onItemSpawned?.Invoke(item);
-        }
+        if (!item) return false;
+
+        item.transform.position = startWorldPosition;
+        item.itemData = itemDataDic[itemId];
+        item.Initialize(level, targetGridposition);
+        item.draggableItem.Initialize();
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+        Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
+
         Generator tempGenerator = item.gameObject.GetComponent<Generator>();
         tempGenerator.genDB = genDataDic[itemId];
         tempGenerator.Initialize(generatorSyncTime);
 
-        return tempGenerator;
+        return true;
     }
     public bool CanMerge(MergeableItem draggingItem, MergeableItem targetItem)
     {
@@ -604,10 +614,10 @@ public class GameManager : BaseManager
                 switch(itemData.type)
                 {
                     case ItemType.Normal:
-                        SpawnItem(itemData.itemId, itemData.level, itemData.position, itemData.state);
+                        if(SpawnItem(itemData.itemId, itemData.level, itemData.position, itemData.state)) {}
                         break;
                     case ItemType.Generatable:
-                        SpawnGenerator(itemData.itemId, itemData.level, itemData.position);
+                        if (SpawnGenerator(itemData.itemId, itemData.level, itemData.position)) {}
                         break;
 
                 }

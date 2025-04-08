@@ -58,16 +58,18 @@ public class SaveManager : BaseManager
 
     public SaveData LoadGame()
     {
-        if (PlayerPrefs.HasKey(SAVE_KEY))
-        {
-            string json = PlayerPrefs.GetString(SAVE_KEY);
-            return JsonUtility.FromJson<SaveData>(json);
-        }
-        else
-        {
-            // 저장된 데이터가 없을 경우 기본 데이터 생성
-            return CreateInitialSaveData();
-        }
+        return CreateInitialSaveData();
+
+        //if (PlayerPrefs.HasKey(SAVE_KEY))
+        //{
+        //    string json = PlayerPrefs.GetString(SAVE_KEY);
+        //    return JsonUtility.FromJson<SaveData>(json);
+        //}
+        //else
+        //{
+        //    // 저장된 데이터가 없을 경우 기본 데이터 생성
+        //    return CreateInitialSaveData();
+        //}
     }
 
     private SaveData CreateInitialSaveData()

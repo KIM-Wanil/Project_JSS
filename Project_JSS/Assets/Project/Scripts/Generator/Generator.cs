@@ -148,7 +148,8 @@ public class Generator : MonoBehaviour
                 else
                 {
                     //나중에 usable아이템 제너레이터도 추가
-                    Managers.Game.SpawnMoveItem(item.key.id, item.key.Lv, Managers.Grid.GetTilePosition(mergeableItem.GridPosition),(Vector2Int)pos);
+                    if (Managers.Game.SpawnMoveItem(item.key.id, item.key.Lv, this.transform.position, (Vector2Int)pos)) { }
+                    //if (Managers.Game.SpawnMoveItem(item.key.id, item.key.Lv, Managers.Grid.GetTilePosition(mergeableItem.GridPosition), (Vector2Int)pos)) { }
                 }
                 break;
             }

@@ -93,13 +93,94 @@ public class AddPanelController : MonoBehaviour
         guest.Init(goldAmount,goalItems);
         guest.OnGuestCompleted.AddListener(MoveCompletedGuestToLeft);
     }
+    //public void MoveCompletedGuestToLeft(Guest completedGuest)
+    //{
+    //    // Get the list of all guests
+    //    Debug.Log("MoveCompletedGuestToLeft");
+    //    RectTransform completedGuestRect = completedGuest.rectT;
+    //    int targetCount = completedGuestRect.GetSiblingIndex();
+    //    // Check if the completed guest is already at the target position
+    //    if (targetCount == 3)
+    //    {
+    //        Debug.Log("이미첫번째게스트라 리턴");
+    //        return; // If already at the target position, do nothing
+    //    }
+    //    List<RectTransform> guestRects = new List<RectTransform>();
+    //    for (int i = 3; i < targetCount; i++)
+    //    {
+    //        Transform child = guestBoard.transform.GetChild(i);
+    //        if (child.GetComponent<Guest>() != null && child.gameObject != completedGuest.gameObject)
+    //        {
+    //            guestRects.Add(child.GetComponent<RectTransform>());
+    //        }
+    //    }
 
+    //    // Move the completed guest to the first position
+        
+    //    float spacing = 20f; // HorizontalLayoutGroup의 spacing 값
+    //    float targetX = firstGuestRectT.position.x;
+
+        
+
+    //    Sequence sequence = DOTween.Sequence();
+    //    // Scroll to the left with animation
+    //    sequence.AppendCallback(() =>
+    //    {
+    //        DOTween.To(() => scrollRect.horizontalNormalizedPosition, x => scrollRect.horizontalNormalizedPosition = x, 0, 0.5f);
+    //    });
+
+    //    // Move the completed guest to the first position if it's not already there
+    //    int completedGuestIndex = Managers.Grid.currentGuests.FindIndex(x => x.Equals(completedGuest));
+    //    if (completedGuestIndex != 0)
+    //    {
+    //        // Create a copy of the currentGuests list
+    //        List<Guest> currentGuestsCopy = new List<Guest>(Managers.Grid.currentGuests);
+
+    //        // Remove the completed guest from its current position
+    //        currentGuestsCopy.RemoveAt(completedGuestIndex);
+    //        // Insert the completed guest at the first position
+    //        currentGuestsCopy.Insert(0, completedGuest);
+
+    //        // Update the original list
+    //        Managers.Grid.currentGuests = currentGuestsCopy;
+
+    //        sequence.Join(completedGuestRect.DOMoveX(targetX, 0.5f));
+    //        // Move other guests to the right
+    //        for (int i = 0; i < guestRects.Count; i++)
+    //        {
+    //            float newX = guestRects[i].position.x + (completedGuestRect.rect.width + spacing);
+    //            sequence.Join(guestRects[i].DOMoveX(newX, 0.5f));
+    //        }
+    //    }
+
+    //    sequence.OnComplete(() =>
+    //    {
+    //        // Set sibling index for completed guest
+    //        completedGuestRect.SetSiblingIndex(3);
+
+    //        // Set sibling index for other guests
+    //        for (int i = 0; i < guestRects.Count; i++)
+    //        {
+    //            guestRects[i].SetSiblingIndex(4 + i);
+    //        }
+    //    });
+
+    //    sequence.Play();
+    //}
     public void MoveCompletedGuestToLeft(Guest completedGuest)
     {
         // Get the list of all guests
         Debug.Log("MoveCompletedGuestToLeft");
+        RectTransform completedGuestRect = completedGuest.rectT;
+        int targetCount = completedGuestRect.GetSiblingIndex();
+        // Check if the completed guest is already at the target position
+        if (targetCount == 3)
+        {
+            Debug.Log("이미첫번째게스트라 리턴");
+            return; // If already at the target position, do nothing
+        }
         List<RectTransform> guestRects = new List<RectTransform>();
-        for (int i = 0; i < guestBoard.transform.childCount; i++)
+        for (int i = 3; i < targetCount; i++)
         {
             Transform child = guestBoard.transform.GetChild(i);
             if (child.GetComponent<Guest>() != null && child.gameObject != completedGuest.gameObject)
@@ -109,16 +190,11 @@ public class AddPanelController : MonoBehaviour
         }
 
         // Move the completed guest to the first position
-        RectTransform completedGuestRect = completedGuest.GetComponent<RectTransform>();
         float spacing = 20f; // HorizontalLayoutGroup의 spacing 값
         float targetX = firstGuestRectT.anchoredPosition.x;
 
         // Check if the completed guest is already at the target position
-        if (completedGuestRect.GetSiblingIndex()==3)
-        {
-            Debug.Log("이미첫번째게스트라 리턴");
-            return; // If already at the target position, do nothing
-        }
+        
         //if (Mathf.Approximately(completedGuestRect.anchoredPosition.x, targetX))
         //{
         //    return; // If already at the target position, do nothing
@@ -176,8 +252,10 @@ public class AddPanelController : MonoBehaviour
         ItemType RewardItemType = Managers.Game.GetItemData(Managers.Game.currentRewardQueue.Peek().id).type;
         if (RewardItemType == ItemType.Generatable)
         {
-            Managers.Game.SpawnMoveGenerator(Managers.Game.currentRewardQueue.Peek().id, Managers.Game.currentRewardQueue.Peek().Lv, rewardListButton.transform.position, (Vector2Int)Managers.Grid.GetEmptyPosition());
-            Managers.Game.DequeueReward();
+            if(Managers.Game.SpawnMoveGenerator(Managers.Game.currentRewardQueue.Peek().id, Managers.Game.currentRewardQueue.Peek().Lv, rewardListButton.transform.position, (Vector2Int)Managers.Grid.GetEmptyPosition()))
+            {
+                Managers.Game.DequeueReward();
+            };
         }
     }
 

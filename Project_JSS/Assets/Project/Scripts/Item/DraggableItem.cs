@@ -8,40 +8,60 @@ using Unity.VisualScripting;
 using DG.Tweening;
 public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
-    private Vector2 dragOffset;
-    private Vector2Int initialGridPos;
-    private RectTransform rectTransform;
-    private Canvas canvas;
-    public MergeableItem mergeableItem;
-    public Generator generator;
-    private bool isDragging;
-    private float clickCooldown = 0.1f;
-    private float lastClickTime;
-    private bool isSelected => currentlySelectedItem == this;
     public static DraggableItem currentlySelectedItem;
 
-    private Vector2 pointerDownPosition;
+    [Header("고정 레퍼런스")]
+    public MergeableItem mergeableItem;
+    private RectTransform rectTransform;
+    private Canvas canvas;
+    public Generator generator;
+    private Coroutine mergeEffectCoroutine;
+
+    [Header("고정 값")]
     private const float dragThreshold = 10f;
+    private const float clickCooldown = 0.1f;
+    private const float mergeEffectDelay = 0.2f;
+    private const float checkInterval = 0.1f; // 머지 가능 여부를 확인하는 간격
+
+    [Header("변수")]
+    private Vector2 dragOffset;
+    private Vector2Int initialGridPos;
+    private Vector2 pointerDownPosition;
 
     private MergeableItem potentialMergeTarget;
-    private float mergeEffectDelay = 0.2f;
-    private Coroutine mergeEffectCoroutine;
-    private float checkInterval = 0.1f; // 머지 가능 여부를 확인하는 간격
+
+    private float lastClickTime;
     private float lastCheckTime;
-    private bool isInteractionEnabled = true;
-    private void Start()
+
+    private bool isSelected => currentlySelectedItem == this;
+    private bool isDragging;
+    public bool isInteractionEnabled = true;
+    private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-        if (mergeableItem.IsUnityNull())
+        if (!mergeableItem)
         {
             mergeableItem = GetComponent<MergeableItem>();
         }
+        rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
-        initialGridPos = mergeableItem.GridPosition;
+
+        //Initialize();
+    }
+    public void Initialize()
+    {
+        dragOffset = Vector2.zero;
+        initialGridPos = Vector2Int.zero;
+        pointerDownPosition = Vector2.zero;
+        lastClickTime = Time.time;
+        lastCheckTime = Time.time;
+
+        isDragging = false;
+        isInteractionEnabled = true;
     }
     public void SetInteractionEnabled(bool isEnabled)
     {
         isInteractionEnabled = isEnabled;
+        
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -124,6 +144,8 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void HandleClick()
     {
+        if (!isInteractionEnabled) return;
+
         if (Time.time - lastClickTime < clickCooldown)
         {
             return;
@@ -137,7 +159,10 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         ItemType type = mergeableItem.itemData.type;
         if (type == ItemType.Generatable && isSelected)
         {
-            generator.TryGenerateItem();
+            if (generator)
+            {
+                generator.TryGenerateItem();
+            }
         }
         else
         {
@@ -175,6 +200,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void HandleDragEnd(PointerEventData eventData)
     {
+        if (!isInteractionEnabled) return;
         Debug.Log("드래그 끝");
 
         Vector2Int? gridPosition = Managers.Grid.GetGridPosition(rectTransform.anchoredPosition);

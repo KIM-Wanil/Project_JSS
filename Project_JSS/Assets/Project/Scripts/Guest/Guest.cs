@@ -8,6 +8,7 @@ using UnityEngine.Events;
 
 public class Guest : MonoBehaviour
 {
+    public RectTransform rectT;
     public RectTransform goldIconRectT;
     public UnityEvent<Guest> OnGuestCompleted;
 
@@ -20,6 +21,7 @@ public class Guest : MonoBehaviour
 
     public void Init(int goldAmount, Dictionary<ItemKey, int> goalItems)
     {
+        rectT = GetComponent<RectTransform>();
         if (goalItems == null)
         {
             throw new ArgumentNullException(nameof(goalItems), "goalItems cannot be null");
@@ -69,6 +71,11 @@ public class Guest : MonoBehaviour
             if (itemOrdered.IsFulfill)
             {
                 count++;
+                itemOrdered.OnCheckIcon();
+            }
+            else
+            {
+                itemOrdered.DeactivateCheckIcon();
             }
         }
 

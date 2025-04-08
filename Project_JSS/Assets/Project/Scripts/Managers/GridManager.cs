@@ -640,10 +640,10 @@ public class GridManager : BaseManager
             itemTweens[item].Kill();
             itemTweens.Remove(item);
         }
-        item.GetComponent<DraggableItem>().SetInteractionEnabled(false);
+        item.draggableItem.SetInteractionEnabled(false);
 
         // 현재 아이템의 실제 월드 위치 저장
-        Vector3 actualStartPosition = item.transform.position;
+        Vector2 actualStartPosition = item.transform.position;
 
         // 그리드에 아이템 논리적 배치
         AttatchItemToGrid(item, targetGridposition);
@@ -653,28 +653,33 @@ public class GridManager : BaseManager
         Debug.Log($"startTilePosition:{actualStartPosition}/targetTilePosition:{targetTilePosition}");
 
         // 거리 계산 
-        float distance = Vector2.Distance(actualStartPosition, targetTilePosition);
-        float moveDuration = distance * 0.003f;
+        float distance = Vector2.Distance(targetTilePosition, actualStartPosition);
+
+        // 해상도에 따른 정규화
+        float normalizedDistance = distance / Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
+        float moveDuration = normalizedDistance * 2.0f; // 0.5f는 기준 duration 시간
+
         Debug.Log($"distance:{distance}/moveDuration:{moveDuration}");
 
         // DOMove를 사용 (DOAnchorPos 대신)
-        Tween moveTween = item.transform.DOMove(new Vector3(targetTilePosition.x, targetTilePosition.y, item.transform.position.z), moveDuration).SetEase(Ease.OutQuad);
+        Tween moveTween = item.transform.DOMove(targetTilePosition, moveDuration)
+            .SetEase(Ease.OutQuad)
+            .SetAutoKill(false)
+            .OnComplete(() =>
+            {
+                item.draggableItem.SetInteractionEnabled(true);
+                // 아이템을 타일의 자식으로 배치
+                item.transform.SetParent(tiles[targetGridposition.x, targetGridposition.y].transform);
+                // 아이템의 위치 설정
+                item.itemRectT.localScale = Vector3.one;
+                item.itemRectT.anchoredPosition = Vector3.zero;
 
-        // 트윈 완료 시 실행할 코드
-        moveTween.OnComplete(() =>
-        {
-            item.draggableItem.SetInteractionEnabled(true);
-            // 아이템을 타일의 자식으로 배치
-            item.transform.SetParent(tiles[targetGridposition.x, targetGridposition.y].transform);
-            // 아이템의 위치 설정
-            item.itemRectT.localScale = Vector3.one;
-            item.itemRectT.anchoredPosition = Vector3.zero;
-
-            
-            Managers.Grid.CheckGuestsOrder();
-            // 트윈 애니메이션 제거
-            itemTweens.Remove(item);
-        });
+                Managers.Grid.CheckGuestsOrder();
+                // 트윈 애니메이션 제거
+                itemTweens.Remove(item);
+                Debug.Log("스폰트윈종료");
+            }
+            );
 
         // 트윈 애니메이션 저장
         itemTweens[item] = moveTween;
@@ -1260,11 +1265,11 @@ public class GridManager : BaseManager
     public Vector2Int GetNearestEmptyPosition(Vector2Int targetGridPos)
     {
 
-        // 시작 위치가 빈 위치라면 바로 반환
-        if (IsEmptyPosition(targetGridPos))
-        {
-            return targetGridPos;
-        }
+        //// 시작 위치가 빈 위치라면 바로 반환
+        //if (IsEmptyPosition(targetGridPos))
+        //{
+        //    return targetGridPos;
+        //}
 
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
