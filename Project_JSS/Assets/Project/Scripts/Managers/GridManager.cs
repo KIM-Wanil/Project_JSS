@@ -625,6 +625,11 @@ public class GridManager : BaseManager
     //}
     public bool PlaceMoveItem(MergeableItem item, Vector2 startWorldPosition, Vector2Int targetGridposition)
     {
+        if (item == null)
+        {
+            Debug.LogError("item is null in PlaceMoveItem method");
+            return false;
+        }
         // 기존 트윈 애니메이션 중지 및 제거
         if (itemTweens == null)
         {
@@ -635,7 +640,8 @@ public class GridManager : BaseManager
             itemTweens[item].Kill();
             itemTweens.Remove(item);
         }
-        item.draggableItem.SetInteractionEnabled(false);
+        item.GetComponent<DraggableItem>().SetInteractionEnabled(false);
+
         // 현재 아이템의 실제 월드 위치 저장
         Vector3 actualStartPosition = item.transform.position;
 
