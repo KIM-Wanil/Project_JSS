@@ -3176,7 +3176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   furnitureName: 
   isFloor: 0
-  gridPosition: {x: 8, y: 3}
+  gridPosition: {x: 8, y: 2}
   size:
   - {x: 3, y: 5}
   - {x: 3, y: 5}
@@ -3432,7 +3432,7 @@ GameObject:
   - component: {fileID: 1895584101}
   m_Layer: 0
   m_Name: firelight_wall
-  m_TagString: Untagged
+  m_TagString: Furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -52,6 +52,7 @@ public abstract class IsoGird : MonoBehaviour
                 {
                     obj.transform.SetParent(furniture);
                     obj.transform.position = vector;
+                    obj.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                     obj.SetActive(true);
                 }
                 tiles.Add(obj);
