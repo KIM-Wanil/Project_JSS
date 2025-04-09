@@ -139,7 +139,7 @@ public class Generator : MonoBehaviour
 
             if (randomValue <= accumulatedChance)
             {
-                Vector2Int? pos = Managers.Grid.GetNearestPosition(mergeableItem.GridPosition);
+                Vector2Int? pos = Managers.Grid.GetNearestPosition(mergeableItem.gridPosition);
                 if (pos == null)
                 {
                     Debug.Log("No empty position");
@@ -156,11 +156,11 @@ public class Generator : MonoBehaviour
         }
 
         DG.Tweening.Sequence sequence = DOTween.Sequence();
-        sequence.Append(mergeableItem.itemRectT.DOScale(new Vector3(1.08f, 0.8f, 1f), 13f / 60f).SetEase(Ease.OutQuad))
-                .Append(mergeableItem.itemRectT.DOScale(new Vector3(0.9f, 1.25f, 0.95f), 7f / 60f).SetEase(Ease.OutQuad))
-                .Append(mergeableItem.itemRectT.DOScale(new Vector3(1.1f, 0.94f, 1f), 12f / 60f).SetEase(Ease.OutQuad))
-                .Append(mergeableItem.itemRectT.DOScale(new Vector3(0.96f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad))
-                .Append(mergeableItem.itemRectT.DOScale(new Vector3(1f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad));
+        sequence.Append(mergeableItem.rectT.DOScale(new Vector3(1.08f, 0.8f, 1f), 13f / 60f).SetEase(Ease.OutQuad))
+                .Append(mergeableItem.rectT.DOScale(new Vector3(0.9f, 1.25f, 0.95f), 7f / 60f).SetEase(Ease.OutQuad))
+                .Append(mergeableItem.rectT.DOScale(new Vector3(1.1f, 0.94f, 1f), 12f / 60f).SetEase(Ease.OutQuad))
+                .Append(mergeableItem.rectT.DOScale(new Vector3(0.96f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad))
+                .Append(mergeableItem.rectT.DOScale(new Vector3(1f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad));
         sequence.Play();
         return true;
     }

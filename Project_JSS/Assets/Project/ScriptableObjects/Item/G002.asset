@@ -22,3 +22,7 @@ MonoBehaviour:
       \uBA3C\uC9C0\uC640\uC758 \uC804\uC7C1\uC5D0\uC11C \uC2B9\uB9AC\uD560 \uC218
       \uC788\uC2B5\uB2C8\uB2E4!"
     price: -1
+    bubbleChance: 0
+    adChance: 0
+    bubbleCost: 0
+    bubbleTime: 0

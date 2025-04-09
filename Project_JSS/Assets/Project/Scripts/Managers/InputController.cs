@@ -167,15 +167,15 @@ public class InputController : MonoBehaviour
         }
         announceMovingSequence = DG.Tweening.DOTween.Sequence();
 
-        announceMovingSequence.Append(itemToAnnounce1.itemImageRectT.DOAnchorPos(direction1, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemImageRectT.DOAnchorPos(direction2, 0.5f));
-        announceMovingSequence.Append(itemToAnnounce1.itemImageRectT.DOAnchorPos(Vector2.zero, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemImageRectT.DOAnchorPos(Vector2.zero, 0.5f));
+        announceMovingSequence.Append(itemToAnnounce1.itemImage.rectTransform.DOAnchorPos(direction1, 0.5f));
+        announceMovingSequence.Join(itemToAnnounce2.itemImage.rectTransform.DOAnchorPos(direction2, 0.5f));
+        announceMovingSequence.Append(itemToAnnounce1.itemImage.rectTransform.DOAnchorPos(Vector2.zero, 0.5f));
+        announceMovingSequence.Join(itemToAnnounce2.itemImage.rectTransform.DOAnchorPos(Vector2.zero, 0.5f));
 
-        announceMovingSequence.Append(itemToAnnounce1.itemImageRectT.DOAnchorPos(direction1, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemImageRectT.DOAnchorPos(direction2, 0.5f));
-        announceMovingSequence.Append(itemToAnnounce1.itemImageRectT.DOAnchorPos(Vector2.zero, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemImageRectT.DOAnchorPos(Vector2.zero, 0.5f));
+        announceMovingSequence.Append(itemToAnnounce1.itemImage.rectTransform.DOAnchorPos(direction1, 0.5f));
+        announceMovingSequence.Join(itemToAnnounce2.itemImage.rectTransform.DOAnchorPos(direction2, 0.5f));
+        announceMovingSequence.Append(itemToAnnounce1.itemImage.rectTransform.DOAnchorPos(Vector2.zero, 0.5f));
+        announceMovingSequence.Join(itemToAnnounce2.itemImage.rectTransform.DOAnchorPos(Vector2.zero, 0.5f));
 
         announceMovingSequence.AppendInterval(1.0f);
         announceMovingSequence.SetLoops(-1);
@@ -202,8 +202,8 @@ public class InputController : MonoBehaviour
         //Debug.Log($"ResetItemsPosition {itemToAnnounce1},{itemToAnnounce2}");
         if (itemToAnnounce1 != null && itemToAnnounce2 != null)
         {
-            itemToAnnounce1.itemImageRectT.anchoredPosition = Vector3.zero;
-            itemToAnnounce2.itemImageRectT.anchoredPosition = Vector3.zero;
+            itemToAnnounce1.itemImage.rectTransform.anchoredPosition = Vector3.zero;
+            itemToAnnounce2.itemImage.rectTransform.anchoredPosition = Vector3.zero;
 
             //Debug.Log($"ItemsPosition {itemToAnnounce1.itemRectT.anchoredPosition},{itemToAnnounce2.itemRectT.anchoredPosition}");
 

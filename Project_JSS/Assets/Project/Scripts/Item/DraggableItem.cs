@@ -73,7 +73,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             currentlySelectedItem = null;
         }
 
-        initialGridPos = mergeableItem.GridPosition;
+        initialGridPos = mergeableItem.gridPosition;
         pointerDownPosition = eventData.position;
     }
 
@@ -181,6 +181,14 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 {
                     Managers.Game.SelectLockedItem(mergeableItem.itemKey);
                 }
+                if (mergeableItem.state == ItemState.BubbleAd)
+                {
+                    Managers.Game.SelectAdBubbleItem(mergeableItem.itemKey, mergeableItem.PopBubbleItemByAd, mergeableItem.GiveUpBubbleItem);
+                }
+                else if (mergeableItem.state == ItemState.BubbleGem)
+                {
+                    Managers.Game.SelectGemBubbleItem(mergeableItem.itemKey, mergeableItem.PopBubbleItemByGem, mergeableItem.SkipBubbleItem);
+                }
                 else
                 {
                     Managers.Game.SelectSellableItem(mergeableItem.itemKey, mergeableItem.price, mergeableItem.SellThisItem);
@@ -254,7 +262,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                         StopCoroutine(mergeEffectCoroutine);
                         Managers.Grid.StopMergeEffect();
                     }
-                    mergeEffectCoroutine = StartCoroutine(ShowMergeEffectAfterDelay(neighbor.GridPosition));
+                    mergeEffectCoroutine = StartCoroutine(ShowMergeEffectAfterDelay(neighbor.gridPosition));
                 }
             }
             else

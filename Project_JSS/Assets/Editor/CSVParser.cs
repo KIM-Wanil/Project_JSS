@@ -121,7 +121,12 @@ public class CSVParser : EditorWindow
                 itemName = row[D],
                 itemDesc = row[E],
                 price = string.IsNullOrEmpty(row[F]) ? -1 : int.Parse(row[F]),
-                itemSprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{itemSpritePath}/{row[G]}.png")
+                itemSprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{itemSpritePath}/{row[G]}.png"),
+                
+                bubbleChance = string.IsNullOrEmpty(row[H]) ? 0 : float.Parse(row[H]) * 0.01f,
+                adChance = string.IsNullOrEmpty(row[I]) ? 0 : float.Parse(row[I]) * 0.01f,
+                bubbleCost = string.IsNullOrEmpty(row[J]) ? 0 : int.Parse(row[J]),
+                bubbleTime = string.IsNullOrEmpty(row[K]) ? 0 : float.Parse(row[K]),
             };
 
             if (itemDictionary.ContainsKey(id))
@@ -206,7 +211,7 @@ public class CSVParser : EditorWindow
                 items.Add(new GeneratableItem
                 {
                     key = new ItemKey(itemId, level + 1),
-                    spawnChance = chance / 100f
+                    spawnChance = chance * 0.01f
                 });
             }
         }

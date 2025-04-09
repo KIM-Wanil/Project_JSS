@@ -671,8 +671,8 @@ public class GridManager : BaseManager
                 // 아이템을 타일의 자식으로 배치
                 item.transform.SetParent(tiles[targetGridposition.x, targetGridposition.y].transform);
                 // 아이템의 위치 설정
-                item.itemRectT.localScale = Vector3.one;
-                item.itemRectT.anchoredPosition = Vector3.zero;
+                item.rectT.localScale = Vector3.one;
+                item.rectT.anchoredPosition = Vector3.zero;
 
                 Managers.Grid.CheckGuestsOrder();
                 // 트윈 애니메이션 제거
@@ -795,13 +795,13 @@ public class GridManager : BaseManager
     }
     public void DetatchItemFromGrid(MergeableItem item)
     {
-        if (IsValidPosition(item.GridPosition))
+        if (IsValidPosition(item.gridPosition))
         {
             if (item.Lv < item.itemData.items.Length && item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
             {
                 RemoveOwnedItemsCanBeMerged(item);
             }
-            grid[item.GridPosition.x, item.GridPosition.y] = null;
+            grid[item.gridPosition.x, item.gridPosition.y] = null;
         }
     }
     public void AttatchItemToGrid(MergeableItem item, Vector2Int position)
@@ -862,9 +862,9 @@ public class GridManager : BaseManager
         {
             ownedNormalItems[key] = new List<Vector2Int>();
         }
-        if (!ownedNormalItems[key].Contains(item.GridPosition))
+        if (!ownedNormalItems[key].Contains(item.gridPosition))
         {
-            ownedNormalItems[key].Add(item.GridPosition);
+            ownedNormalItems[key].Add(item.gridPosition);
         }
     }
 
@@ -874,7 +874,7 @@ public class GridManager : BaseManager
         var key = item.itemKey;
         if (ownedNormalItems.TryGetValue(key, out var positions))
         {
-            positions.Remove(item.GridPosition);
+            positions.Remove(item.gridPosition);
 
             if (positions.Count == 0)
             {
@@ -1219,11 +1219,11 @@ public class GridManager : BaseManager
     public DG.Tweening.Sequence RemoveItemFromGridToGuest(MergeableItem mergeableItem, Vector3 worldPosition)
     {
         DG.Tweening.Sequence sequence = DOTween.Sequence();
-        sequence.Append(mergeableItem.itemRectT.DOMove(worldPosition, 0.5f));
+        sequence.Append(mergeableItem.rectT.DOMove(worldPosition, 0.5f));
         sequence.OnComplete(() =>
         {
             // 이동이 끝난 후 DetatchItemFromGrid와 ReturnItemToPool을 실행합니다.
-            DetatchItemFromGrid(mergeableItem.GridPosition);
+            DetatchItemFromGrid(mergeableItem.gridPosition);
             Managers.Game.ReturnItemToPool(mergeableItem);
         });
         return sequence;
@@ -1241,18 +1241,18 @@ public class GridManager : BaseManager
 
         mergeableItem.transform.SetParent(mergeBoard.transform);
         DG.Tweening.Sequence sequence = DOTween.Sequence();
-        sequence.Append(mergeableItem.itemRectT.DOMove(worldPosition, 0.5f));
+        sequence.Append(mergeableItem.rectT.DOMove(worldPosition, 0.5f));
         sequence.OnComplete(() =>
         {
             // 이동이 끝난 후 DetatchItemFromGrid와 ReturnItemToPool을 실행합니다.
-            DetatchItemFromGrid(mergeableItem.GridPosition);
+            DetatchItemFromGrid(mergeableItem.gridPosition);
             Managers.Game.ReturnItemToPool(mergeableItem);
         });
         return sequence;
     }
     public void RemoveItemFromGridInstantly(MergeableItem mergeableItem)
     {
-        DetatchItemFromGrid(mergeableItem.GridPosition);
+        DetatchItemFromGrid(mergeableItem.gridPosition);
         Managers.Game.ReturnItemToPool(mergeableItem);
     }
     public void RemoveItemFromGridInstantly(Vector2Int gridPos)

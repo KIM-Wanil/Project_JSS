@@ -21,48 +21,35 @@ public class MergeableItem : MonoBehaviour
     [SerializeField] protected int lv = 1;
     private int lvIndex => Mathf.Clamp(lv - 1, 0, itemData.items.Length - 1);
     //[SerializeField] protected string itemId;
-    [SerializeField] protected Image itemImage;
-    public Image image;
-    public RectTransform itemImageRectT;
+    public Image itemImage { get; private set; }
+    public Image bubbleImage;
     public ItemSO itemData;
     public ItemKey itemKey;
     public int price => itemData.items[lvIndex].price;
     public DraggableItem draggableItem;
-    [Header("Events")]
-    public UnityEvent<int> onLevelChanged;
-    public UnityEvent onMerged;
-    public UnityEvent onSpawned;
 
-    protected Vector2Int gridPosition;
+    public Vector2Int gridPosition { get;  private set; }
     protected bool isInitialized = false;
 
     public ItemEffect itemEffect;
-    public RectTransform itemRectT;
+    public RectTransform rectT;
 
     public int Lv => lv;
-    public Vector2Int GridPosition => gridPosition;
-    public Image ItemImage => itemImage;
     
     private void Awake()
     {
-        if (image.IsUnityNull())
-        {
-            image = GetComponent<Image>();
-            
-        }
         if (itemImage.IsUnityNull())
         {
             itemImage = transform.GetChild(2).GetComponent<Image>();
 
         }
-        itemImageRectT = itemImage.rectTransform;
         if (itemEffect.IsUnityNull())
         {
             itemEffect = transform.GetComponentInChildren<ItemEffect>();
         }
-        if (itemRectT.IsUnityNull())
+        if (rectT.IsUnityNull())
         {
-            itemRectT = GetComponent<RectTransform>();
+            rectT = GetComponent<Image>().rectTransform;
         }
         if(draggableItem.IsUnityNull())
         {
@@ -138,35 +125,65 @@ public class MergeableItem : MonoBehaviour
        Managers.Grid.RemoveItemFromGridInstantly(gridPosition);
        Managers.Grid.CheckGuestsOrder();
     }
+
+    #region Bubble State
+    public void GiveUpBubbleItem()
+    {
+        Managers.Grid.RemoveItemFromGridInstantly(gridPosition);
+    }
+    public void PopBubbleItemByAd()
+    {
+        state = ItemState.Normal;
+        bubbleImage.gameObject.SetActive(false);
+        itemImage.rectTransform.localScale = Vector3.one;
+    }
+    public void SkipBubbleItem()
+    {
+        //이 아이템 자리에 골드 떨어지는거 구현 
+        Managers.Grid.RemoveItemFromGridInstantly(gridPosition);
+    }
+    public void PopBubbleItemByGem()
+    {
+        if (!Managers.Game.TrySpendGem(itemData.items[lvIndex].bubbleCost)) return;
+        state = ItemState.Normal;
+        bubbleImage.gameObject.SetActive(false);
+        itemImage.rectTransform.localScale = Vector3.one;
+    }
+
+    #endregion
+
     protected void UpdateVisuals()
     {
-        if (itemImage != null  && itemData.items.Length > 0)
+        if (itemImage != null && itemData.items.Length > 0)
         {
-            if (itemData.type == ItemType.Normal)
+            if (itemData.type == ItemType.Normal || itemData.type == ItemType.Usable)
             {
                 switch (state)
                 {
                     case ItemState.Normal:
+                        itemImage.rectTransform.localScale = 1.0f * Vector3.one;
                         itemImage.sprite = itemData.items[lvIndex].itemSprite;
                         break;
                     case ItemState.Locked:
                         itemImage.sprite = itemData.items[lvIndex].itemSprite;
-                        ItemImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+                        itemImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                         LockImageObj.SetActive(true);
                         //draggableItem.enabled = false;
                         break;
                     case ItemState.InBox:
-                        Debug.Log((GridPosition.x + GridPosition.y) % 2);
-                        if ((GridPosition.x + GridPosition.y) % 2 == 0)
-                        {
-                            itemImage.sprite = boxSprite[0];
-                        }
-                        else
-                        {
-                            itemImage.sprite = boxSprite[1];
-                        }
-                        ItemImage.color = new Color(1.0f, 1.0f, 1.0f, 1f);
+                        itemImage.sprite = gridPosition.x + gridPosition.y % 2 == 0 ? boxSprite[0] : boxSprite[1];
+                        itemImage.color = new Color(1.0f, 1.0f, 1.0f, 1f);
                         draggableItem.enabled = false;
+                        break;
+                    //방울에 광고모양 추가하기
+                    case ItemState.BubbleAd:
+                        //광고이미지 on 구현
+                        bubbleImage.gameObject.SetActive(true);
+                        itemImage.rectTransform.localScale = 0.8f * Vector3.one;
+                        break;
+                    case ItemState.BubbleGem:
+                        bubbleImage.gameObject.SetActive(true);
+                        itemImage.rectTransform.localScale = 0.8f * Vector3.one;
                         break;
                 }
             }
@@ -208,11 +225,10 @@ public class MergeableItem : MonoBehaviour
             {
                 state = ItemState.Normal;
                 LockImageObj.SetActive(false);
-                ItemImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                itemImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 draggableItem.enabled = true;
                 Managers.Grid.OpenNearBox(gridPosition);
             }            
-            onLevelChanged?.Invoke(lv);
             
 
             if (itemData.type == ItemType.Generatable)

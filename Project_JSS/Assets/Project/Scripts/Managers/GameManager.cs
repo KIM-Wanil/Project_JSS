@@ -64,6 +64,9 @@ public class GameManager : BaseManager
     public UnityEvent<ItemKey, int, UnityAction> onSellableItemSelected;
     public UnityEvent<ItemKey> onUnsellableItemSelected;
     public UnityEvent<ItemKey> onLockedItemSelected;
+
+    public UnityEvent<ItemKey, UnityAction, UnityAction> onAdBubbleItemSelected;
+    public UnityEvent<ItemKey, UnityAction, UnityAction> onGemBubbleItemSelected;
     public UnityEvent onItemDeSelected;
     public UnityEvent onRandomGuestCreated; 
     public UnityEvent<int, KeyValuePair<ItemKey, int>, KeyValuePair<ItemKey, int>?> onGuestCreated;
@@ -116,6 +119,14 @@ public class GameManager : BaseManager
     public void DeSelecItem()
     {
         onItemDeSelected.Invoke();
+    }
+    public void SelectAdBubbleItem(ItemKey inputKey, UnityAction onBubblePop = null, UnityAction onGiveUp = null)
+    {
+        onAdBubbleItemSelected.Invoke(inputKey, onBubblePop, onGiveUp);
+    }
+    public void SelectGemBubbleItem(ItemKey inputKey, UnityAction onBubblePop = null, UnityAction onGiveUp = null)
+    {
+        onGemBubbleItemSelected.Invoke(inputKey, onBubblePop, onGiveUp);
     }
     private void Awake()
     {
@@ -256,6 +267,16 @@ public class GameManager : BaseManager
         onGemChanged?.Invoke(currentGem);
     }
 
+    public bool TrySpendGem(int amount)
+    {
+        if (currentGem >= amount)
+        {
+            currentGem -= amount;
+            onGemChanged?.Invoke(currentGem);
+            return true;
+        }
+        return false;
+    }
     #endregion
 
     #region Score Management
@@ -297,7 +318,7 @@ public class GameManager : BaseManager
         item.itemData = itemDataDic[itemId];
         item.Initialize(level, targetGridposition, state);
         item.draggableItem.Initialize();
-        item.itemRectT.sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+        item.rectT.sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
         Managers.Grid.PlaceItem(item, targetGridposition);
             
         
@@ -378,11 +399,11 @@ public class GameManager : BaseManager
         if (draggingItem.CanMergeWith(targetItem))
         {
             
-            Managers.Grid.DetatchItemFromGrid(targetItem.GridPosition);
-            Managers.Grid.DetatchItemFromGrid(draggingItem.GridPosition);
+            Managers.Grid.DetatchItemFromGrid(targetItem.gridPosition);
+            Managers.Grid.DetatchItemFromGrid(draggingItem.gridPosition);
 
             targetItem.LevelUp();
-            Managers.Grid.AttatchItemToGrid(targetItem, targetItem.GridPosition);
+            Managers.Grid.AttatchItemToGrid(targetItem, targetItem.gridPosition);
             Managers.Grid.CheckGuestsOrder();
 
             ReturnItemToPool(draggingItem);

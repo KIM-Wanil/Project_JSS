@@ -31,6 +31,11 @@ public struct ItemDetails
     public string itemName;
     public string itemDesc;
     public int price;
+
+    public float bubbleChance;
+    public float adChance;
+    public int bubbleCost;
+    public float bubbleTime;
 }
 [System.Serializable]
 public struct ItemKey
@@ -53,7 +58,9 @@ public enum ItemState
 {
     Normal = 0,
     Locked,
-    InBox
+    InBox,
+    BubbleAd,
+    BubbleGem
 }
 public enum GoodsType
 {
