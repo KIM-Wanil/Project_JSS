@@ -129,6 +129,7 @@ public abstract class IsoGird : MonoBehaviour
 
     public abstract Vector2 GridToScreenPosition(float x, float y);
     public abstract Vector2Int WorldToGridPosition(Vector3 worldPosition);
+    public abstract Vector2Int WorldToGridPosition(Vector3 worldPosition, Vector2Int size);
     public abstract Vector3 GridPositionToWorld(Vector2Int gridPosition);
 
     public Vector3 SortGrid(Vector3 worldPosition)

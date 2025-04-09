@@ -24,6 +24,18 @@ public class IsoGridFloor : IsoGird
         if (gridY >= gridHeight) { gridY = gridHeight-1; }
         return new Vector2Int(gridX, gridY);
     }
+    public override Vector2Int WorldToGridPosition(Vector3 worldPosition, Vector2Int size)
+    {
+        Vector2 vector = new Vector2(worldPosition.x, worldPosition.y);
+        int gridX = Mathf.RoundToInt((vector.x / (tileOffsetX * 0.5f) + vector.y / (tileOffsetY * 0.5f)) * 0.5f);
+        int gridY = Mathf.RoundToInt((vector.y / (tileOffsetY * 0.5f) - vector.x / (tileOffsetX * 0.5f)) * 0.5f);
+        if (gridX < 0) { gridX = 0; }
+        if (gridY < 0) { gridY = 0; }
+
+        if (gridX >= gridWidth-size.x) { gridX = gridWidth - size.x; }
+        if (gridY >= gridHeight - size.y) { gridY = gridHeight - size.y; }
+        return new Vector2Int(gridX, gridY);
+    }
     public override Vector3 GridPositionToWorld(Vector2Int gridPosition)
     {
         float worldX = (gridPosition.x - gridPosition.y) * (tileOffsetX * 0.5f);

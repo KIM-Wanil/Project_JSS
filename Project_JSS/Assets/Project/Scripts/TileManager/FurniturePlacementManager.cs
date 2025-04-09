@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class FurniturePlacementManager : MonoBehaviour
 {
@@ -47,7 +48,6 @@ public class FurniturePlacementManager : MonoBehaviour
     [SerializeField] Button rotateButton;            // 회전 버튼
     [SerializeField] Button confirmButton;           // 확정 버튼
     [SerializeField] Button cancelButton;            // 취소 버튼
-
 
     private void Awake()
     {
@@ -238,8 +238,8 @@ public class FurniturePlacementManager : MonoBehaviour
                 currentGrid.CanPlaceFurniture(currentInfo.GridPosition);
                 
                 uiObject.SetActive(true);
-                uiObject.transform.SetParent(selectedFurniture.transform);
-                uiObject.transform.position = selectedFurniture.transform.position;
+                //uiObject.transform.SetParent(selectedFurniture.transform);
+                uiObject.transform.position = new Vector2( selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
                 isDragging = true;
             }
         }
@@ -260,9 +260,10 @@ public class FurniturePlacementManager : MonoBehaviour
                 gridNumbers = 1;
                 dragOffset = new Vector3(-dragOffset.x, dragOffset.y,0);
                 pos = pos - dragOffset;
-                gridPosition = currentGrid.WorldToGridPosition(pos);
+                gridPosition = currentGrid.WorldToGridPosition(pos, currentInfo.Size);
                 selectedFurniture.transform.position = currentGrid.GridPositionToWorld(gridPosition);
                 currentGrid.TileSetting(selectedFurniture.transform, currentInfo.Size, currentGrid.WorldToGridPosition(selectedFurniture.transform.position));
+                uiObject.transform.position = new Vector2(selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
                 return;
             }
             else if (pos.x < 0 && currentGrid != isometricGrids[2])
@@ -273,9 +274,10 @@ public class FurniturePlacementManager : MonoBehaviour
                 gridNumbers = 2;
                 dragOffset = new Vector3(-dragOffset.x, dragOffset.y, 0);
                 pos = pos - dragOffset;
-                gridPosition = currentGrid.WorldToGridPosition(pos);
+                gridPosition = currentGrid.WorldToGridPosition(pos, currentInfo.Size);
                 selectedFurniture.transform.position = currentGrid.GridPositionToWorld(gridPosition);
                 currentGrid.TileSetting(selectedFurniture.transform, currentInfo.Size, currentGrid.WorldToGridPosition(selectedFurniture.transform.position));
+                uiObject.transform.position = new Vector2(selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
                 return;
             }
             else
@@ -290,11 +292,12 @@ public class FurniturePlacementManager : MonoBehaviour
        
 
 
-        if (gridPosition != currentGrid.WorldToGridPosition(pos))
+        if (gridPosition != currentGrid.WorldToGridPosition(pos,currentInfo.Size))
         {
-            gridPosition = currentGrid.WorldToGridPosition(pos);
+            gridPosition = currentGrid.WorldToGridPosition(pos, currentInfo.Size);
             selectedFurniture.transform.position = currentGrid.GridPositionToWorld(gridPosition);
             currentGrid.CanPlaceFurniture(gridPosition);
+            uiObject.transform.position = new Vector2(selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
         }
 
     }

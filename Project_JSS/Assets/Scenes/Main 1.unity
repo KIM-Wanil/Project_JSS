@@ -813,6 +813,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10583bbe2da82424abe80bb1b42cf55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    furnitureName: 
+    gridPosition: {x: 0, y: 0}
+    size: []
+    tartgetPosition: []
+    rotation: 0
+    furnitureSprite: []
+    spriteNumber: 0
+    SorterPositionOffset: {x: 0, y: 0}
+    SorterPositionOffset2: {x: 0, y: 0}
+    isUnlocked: 0
   furnitureName: 
   isFloor: 1
   gridPosition: {x: 10, y: 2}
@@ -2142,6 +2153,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10583bbe2da82424abe80bb1b42cf55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    furnitureName: 
+    gridPosition: {x: 0, y: 0}
+    size: []
+    tartgetPosition: []
+    rotation: 0
+    furnitureSprite: []
+    spriteNumber: 0
+    SorterPositionOffset: {x: 0, y: 0}
+    SorterPositionOffset2: {x: 0, y: 0}
+    isUnlocked: 0
   furnitureName: 
   isFloor: 1
   gridPosition: {x: 4, y: 8}
@@ -2383,6 +2405,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10583bbe2da82424abe80bb1b42cf55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    furnitureName: 
+    gridPosition: {x: 0, y: 0}
+    size: []
+    tartgetPosition: []
+    rotation: 0
+    furnitureSprite: []
+    spriteNumber: 0
+    SorterPositionOffset: {x: 0, y: 0}
+    SorterPositionOffset2: {x: 0, y: 0}
+    isUnlocked: 0
   furnitureName: 
   isFloor: 1
   gridPosition: {x: 10, y: 0}
@@ -2625,6 +2658,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10583bbe2da82424abe80bb1b42cf55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    furnitureName: 
+    gridPosition: {x: 0, y: 0}
+    size: []
+    tartgetPosition: []
+    rotation: 0
+    furnitureSprite: []
+    spriteNumber: 0
+    SorterPositionOffset: {x: 0, y: 0}
+    SorterPositionOffset2: {x: 0, y: 0}
+    isUnlocked: 0
   furnitureName: 
   isFloor: 1
   gridPosition: {x: 10, y: 6}
@@ -2811,6 +2855,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10583bbe2da82424abe80bb1b42cf55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    furnitureName: 
+    gridPosition: {x: 0, y: 0}
+    size: []
+    tartgetPosition: []
+    rotation: 0
+    furnitureSprite: []
+    spriteNumber: 0
+    SorterPositionOffset: {x: 0, y: 0}
+    SorterPositionOffset2: {x: 0, y: 0}
+    isUnlocked: 0
   furnitureName: 
   isFloor: 1
   gridPosition: {x: 2, y: 2}
@@ -3174,6 +3229,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10583bbe2da82424abe80bb1b42cf55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    furnitureName: 
+    gridPosition: {x: 0, y: 0}
+    size: []
+    tartgetPosition: []
+    rotation: 0
+    furnitureSprite: []
+    spriteNumber: 0
+    SorterPositionOffset: {x: 0, y: 0}
+    SorterPositionOffset2: {x: 0, y: 0}
+    isUnlocked: 0
   furnitureName: 
   isFloor: 0
   gridPosition: {x: 8, y: 2}
@@ -3464,6 +3530,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10583bbe2da82424abe80bb1b42cf55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    furnitureName: 
+    gridPosition: {x: 0, y: 0}
+    size: []
+    tartgetPosition: []
+    rotation: 0
+    furnitureSprite: []
+    spriteNumber: 0
+    SorterPositionOffset: {x: 0, y: 0}
+    SorterPositionOffset2: {x: 0, y: 0}
+    isUnlocked: 0
   furnitureName: 
   isFloor: 0
   gridPosition: {x: 5, y: 4}
@@ -3696,6 +3773,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10583bbe2da82424abe80bb1b42cf55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    furnitureName: 
+    gridPosition: {x: 0, y: 0}
+    size: []
+    tartgetPosition: []
+    rotation: 0
+    furnitureSprite: []
+    spriteNumber: 0
+    SorterPositionOffset: {x: 0, y: 0}
+    SorterPositionOffset2: {x: 0, y: 0}
+    isUnlocked: 0
   furnitureName: 
   isFloor: 1
   gridPosition: {x: 3, y: 1}
