@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Events;
-using static SaveData;
+
+//using static SaveData;
 using System.Linq;
 using UnityEngine.SceneManagement;
-using System;
-using static UnityEngine.Tilemaps.Tilemap;
+using static UnityEditor.Progress;
+
+
 
 public class GameManager : BaseManager
 {
@@ -124,9 +126,9 @@ public class GameManager : BaseManager
     {
         onAdBubbleItemSelected.Invoke(inputKey, onBubblePop, onGiveUp);
     }
-    public void SelectGemBubbleItem(ItemKey inputKey, UnityAction onBubblePop = null, UnityAction onGiveUp = null)
+    public void SelectGemBubbleItem(ItemKey inputKey,UnityAction onBubblePop = null, UnityAction onGiveUp = null)
     {
-        onGemBubbleItemSelected.Invoke(inputKey, onBubblePop, onGiveUp);
+        onGemBubbleItemSelected.Invoke(inputKey,onBubblePop, onGiveUp);
     }
     private void Awake()
     {
@@ -296,11 +298,11 @@ public class GameManager : BaseManager
     }
     public Sprite GetItemSprite(ItemKey key)
     {
-        return itemDataDic[key.id].items[key.Lv-1].itemSprite;
+        return itemDataDic[key.id].items[key.lv-1].itemSprite;
     }
     public string GetItemName(ItemKey key)
     {
-        return itemDataDic[key.id].items[key.Lv - 1].itemName;
+        return itemDataDic[key.id].items[key.lv - 1].itemName;
     }
     public int GetItemMaxLevel(ItemKey key)
     {
@@ -325,7 +327,7 @@ public class GameManager : BaseManager
 
         return true;
     }
-    public bool SpawnMoveItem(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
+    public bool SpawnMoveItem(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
     {
         GameObject itemObj = itemPool.Get();
         if (!itemObj) return false;
@@ -336,7 +338,7 @@ public class GameManager : BaseManager
         item.transform.position = startWorldPosition;
         //item.itemRectT.anchoredPosition = startWorldPosition;
         item.itemData = itemDataDic[itemId];
-        item.Initialize(level, targetGridposition);
+        item.Initialize(level, targetGridposition, state);
         item.draggableItem.Initialize();
         item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
         Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
@@ -396,43 +398,58 @@ public class GameManager : BaseManager
     }
     public bool TryMergeItems(MergeableItem draggingItem, MergeableItem targetItem)
     {
-        if (draggingItem.CanMergeWith(targetItem))
-        {
+        if (!draggingItem.CanMergeWith(targetItem)) return false;
+
             
-            Managers.Grid.DetatchItemFromGrid(targetItem.gridPosition);
-            Managers.Grid.DetatchItemFromGrid(draggingItem.gridPosition);
+        Managers.Grid.DetatchItemFromGrid(targetItem.gridPosition);
+        Managers.Grid.DetatchItemFromGrid(draggingItem.gridPosition);
 
-            targetItem.LevelUp();
-            Managers.Grid.AttatchItemToGrid(targetItem, targetItem.gridPosition);
-            Managers.Grid.CheckGuestsOrder();
+        targetItem.LevelUp();
+        Managers.Grid.AttatchItemToGrid(targetItem, targetItem.gridPosition);
+        Managers.Grid.CheckGuestsOrder();
+        ReturnItemToPool(draggingItem);
 
-            ReturnItemToPool(draggingItem);
-          
+        ItemState bubbleState;
+        float randomBubbleValue = Random.value;
+        float bubbleChance = 0;
+        float[] bubbleChances = targetItem.itemData.items[targetItem.lvIndex].bubbleChance;
+        Debug.Log($"targetItem.lvIndex{targetItem.lvIndex}");
+        if (bubbleChances[0] == 0)
+        {
+            Debug.Log("버블스폰대상 아님");
             return true;
         }
+        for (int i =0; i< bubbleChances.Length; i++)
+        {
+            bubbleChance += bubbleChances[i];
+            {
+                if(randomBubbleValue <= bubbleChance)
+                {
+                    Debug.Log($"randomBubbleValue{randomBubbleValue} /bubbleChance{bubbleChance} /{i}");
+                    float randomAdValue = Random.value;
+                    float adChance = targetItem.itemData.items[targetItem.lvIndex].adChance[i];
+                    if (randomAdValue <= adChance)
+                    {
+                        bubbleState = ItemState.BubbleAd;
 
-        //// 크래프팅 체크
-        //else if(FindCraftingResult(draggingItem, targetItem) != null)
-        //{
-        //    ItemKey crftedItemKey = FindCraftingResult(draggingItem, targetItem).Value;
-        //    Vector2Int mergePosition = targetItem.GridPosition;
-        //    Managers.Grid.DetatchItemFromGrid(draggingItem.GridPosition);
-        //    ReturnItemToPool(draggingItem.gameObject);
-        //    Managers.Grid.DetatchItemFromGrid(targetItem.GridPosition);
-        //    ReturnItemToPool(targetItem.gameObject);
-        //    SpawnItem(crftedItemKey.id, crftedItemKey.lv, mergePosition);
-        //    return true;
-        //}
+                    }
+                    else
+                    {
+                        bubbleState = ItemState.BubbleGem;
+                    }
+                    Vector2Int? bubblePos = Managers.Grid.GetNearestPosition(targetItem.gridPosition);
+                    if (!bubblePos.HasValue) return true;
+                    Debug.Log($"bubbleLevel{targetItem.Lv - i}");
+                    if (SpawnMoveItem(targetItem.itemKey.id, targetItem.Lv - i , targetItem.transform.position, bubblePos.Value, bubbleState)) 
+                    {
+                        return true;
+                    }
+                }
+            }
+            
+        }
+        return true;
 
-
-
-
-
-        //AddScore(CalculateMergeScore(mergedItem.Lv));
-        //onItemMerged?.Invoke(mergedItem);
-
-
-        return false;
     }
     //public bool TryMergeItems(MergeableItem item1, MergeableItem neighbor)
     //{
@@ -594,7 +611,7 @@ public class GameManager : BaseManager
         SaveData saveData = new SaveData
         {
             energy = currentEnergy,
-            gold = currentGem,
+            gem = currentGem,
             rewardList = new List<ItemKey>(currentRewardQueue)
         };
 
@@ -627,6 +644,7 @@ public class GameManager : BaseManager
         SaveData saveData = Managers.Save.LoadGame();
         if (saveData != null)
         {
+            currentGem = saveData.gem;
             currentEnergy = saveData.energy;
             currentRewardQueue = new Queue<ItemKey>(saveData.rewardList);
             // 저장된 아이템들 복원

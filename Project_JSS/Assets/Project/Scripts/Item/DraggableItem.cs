@@ -221,7 +221,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
 
 
-        Vector2Int nearestEmpty = Managers.Grid.GetNearestEmptyPosition(gridPosition.Value);
+        Vector2Int? nearestEmpty = Managers.Grid.GetNearestPosition(gridPosition.Value);
 
         MergeableItem neighbor = Managers.Grid.FindMergeableNeighbor(gridPosition.Value, mergeableItem);
 
@@ -232,9 +232,12 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
         else
         {
-            SelectItem();
-            Managers.Grid.DetatchItemFromGrid(initialGridPos);
-            Managers.Grid.PlaceItem(mergeableItem, nearestEmpty);
+            if (nearestEmpty.HasValue)
+            {
+                SelectItem();
+                Managers.Grid.DetatchItemFromGrid(initialGridPos);
+                Managers.Grid.PlaceItem(mergeableItem, nearestEmpty.Value);
+            }
         }
 
         potentialMergeTarget = null;

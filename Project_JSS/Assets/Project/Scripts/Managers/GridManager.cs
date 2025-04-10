@@ -811,7 +811,7 @@ public class GridManager : BaseManager
             item.SetGridPosition(position);
             //지금 리스트에 넣는 조건 :제너레이터가 아니고, 상자상태가 아닌 경우     
             //추후 변동 가능
-            if (item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
+            if ((item.itemData.type == ItemType.Normal || item.itemData.type == ItemType.Usable) && (item.state ==ItemState.Normal))
             {
                 Debug.Log("AddOwnedItemsCanBeMerged");
                 AddOwnedItemsCanBeMerged(item);
@@ -1013,7 +1013,7 @@ public class GridManager : BaseManager
                 {
                     continue;
                 }
-                for(int i = item.key.Lv -1; i > 0; i--)
+                for(int i = item.key.lv -1; i > 0; i--)
                 {
                     ItemKey keyToFind = new ItemKey(item.key.id, i);
                     mergeblePosPair = FindNearestItemPairCanBeMerged(keyToFind);
@@ -1037,9 +1037,9 @@ public class GridManager : BaseManager
         {
             foreach (var item in itemsToCheck)
             {
-                Debug.Log($"{Managers.Game.GetItemName(item.Key)}/아이템 레벨 {item.Key.Lv}/최대 레벨{Managers.Game.GetItemMaxLevel(item.Key)}");
+                Debug.Log($"{Managers.Game.GetItemName(item.Key)}/아이템 레벨 {item.Key.lv}/최대 레벨{Managers.Game.GetItemMaxLevel(item.Key)}");
                 //아이템이 최대 레벨인 경우 제외
-                if(item.Key.Lv == Managers.Game.GetItemMaxLevel(item.Key))
+                if(item.Key.lv == Managers.Game.GetItemMaxLevel(item.Key))
                 {
                     continue;
                 }
@@ -1151,7 +1151,7 @@ public class GridManager : BaseManager
                 MergeableItem mergeableItem = grid[x, y];
                 if (mergeableItem != null &&
                     mergeableItem.itemData.id == item.id &&
-                    mergeableItem.Lv == item.Lv)
+                    mergeableItem.Lv == item.lv)
                 {
                     return true;
                 }
@@ -1167,7 +1167,7 @@ public class GridManager : BaseManager
         foreach (var pos in ownedNormalItems[item])
         {
             MergeableItem tempItem = GetItemAt(pos);
-            if (tempItem.state != ItemState.Locked)
+            if (tempItem.state == ItemState.Normal)
             {
                 tempItem.isCheck = true;
                 tempItem.OnChecked();

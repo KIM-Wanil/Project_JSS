@@ -32,8 +32,8 @@ public struct ItemDetails
     public string itemDesc;
     public int price;
 
-    public float bubbleChance;
-    public float adChance;
+    public float[] bubbleChance;
+    public float[] adChance;
     public int bubbleCost;
     public float bubbleTime;
 }
@@ -43,10 +43,10 @@ public struct ItemKey
     public ItemKey(string id, int lv)
     {
         this.id = id.ToString();
-        this.Lv = lv;
+        this.lv = lv;
     }
     public string id;
-    public int Lv;
+    public int lv;
 }
 public enum ItemType
 {

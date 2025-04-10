@@ -62,7 +62,7 @@ public class AddPanelController : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             tempItems[i].id = availableItems[UnityEngine.Random.Range(0, availableItems.Count)];
-            tempItems[i].Lv = UnityEngine.Random.Range(2, 4);
+            tempItems[i].lv = UnityEngine.Random.Range(2, 4);
 
             goalItems[tempItems[i]] = UnityEngine.Random.Range(1, 3);
         }
@@ -252,7 +252,7 @@ public class AddPanelController : MonoBehaviour
         ItemType RewardItemType = Managers.Game.GetItemData(Managers.Game.currentRewardQueue.Peek().id).type;
         if (RewardItemType == ItemType.Generatable)
         {
-            if(Managers.Game.SpawnMoveGenerator(Managers.Game.currentRewardQueue.Peek().id, Managers.Game.currentRewardQueue.Peek().Lv, rewardListButton.transform.position, (Vector2Int)Managers.Grid.GetEmptyPosition()))
+            if(Managers.Game.SpawnMoveGenerator(Managers.Game.currentRewardQueue.Peek().id, Managers.Game.currentRewardQueue.Peek().lv, rewardListButton.transform.position, (Vector2Int)Managers.Grid.GetEmptyPosition()))
             {
                 Managers.Game.DequeueReward();
             };
@@ -270,7 +270,7 @@ public class AddPanelController : MonoBehaviour
         {
             rewardList.SetActive(true);
             ItemKey rewardKey = rewardQueue.Peek();
-            rewardItmeImage.sprite = Managers.Game.GetItemData(rewardQueue.Peek().id).items[rewardQueue.Peek().Lv - 1].itemSprite;
+            rewardItmeImage.sprite = Managers.Game.GetItemData(rewardQueue.Peek().id).items[rewardQueue.Peek().lv - 1].itemSprite;
             if (rewardQueue.Count == 1)
             {
                 rewardCards[0].SetActive(true);

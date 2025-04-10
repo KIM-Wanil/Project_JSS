@@ -1,6 +1,8 @@
+using log4net.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
@@ -115,6 +117,58 @@ public class CSVParser : EditorWindow
             }
 
             string id = row[A];
+
+            string[] bubbleChanceArray;
+            float[] tempBubbleChance = new float[3];
+
+            string[] adChanceArray;
+            float[] tempAdChance = new float[3];
+
+            if (string.IsNullOrEmpty(row[H]))
+            {
+                bubbleChanceArray = null;
+            }
+            else
+            {
+                bubbleChanceArray = row[H].Split('/');
+                if (bubbleChanceArray.Length != 3)
+                {
+                    Debug.LogError($"{bubbleChanceArray.Length}Invalid bubble chance format in line {i + 1}");
+                    continue;
+                }
+
+                
+                if (string.IsNullOrEmpty(row[I]))
+                {
+                    adChanceArray = null;
+                }
+                else
+                {
+                    adChanceArray = row[I].Split('/');
+                    if (adChanceArray.Length != 3)
+                    {
+                        Debug.LogError($"Invalid ad chance format in line {i + 1}");
+                        continue;
+                    }
+                }
+                for (int level = 0; level < 3; level++)
+                {
+                    if (float.TryParse(bubbleChanceArray[level], out float bubbleChance) && bubbleChance >= 0)
+                    {
+                        tempBubbleChance[level] = bubbleChance * 0.01f;
+                    }
+                    if (float.TryParse(adChanceArray[level], out float adChance) && adChance >= 0)
+                    {
+                        tempAdChance[level] = adChance * 0.01f;
+                    }
+                }
+            }
+            
+
+            
+          
+
+            
             ItemDetails itemDetails = new ItemDetails
             {
                 level = int.Parse(row[C]),
@@ -122,9 +176,11 @@ public class CSVParser : EditorWindow
                 itemDesc = row[E],
                 price = string.IsNullOrEmpty(row[F]) ? -1 : int.Parse(row[F]),
                 itemSprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{itemSpritePath}/{row[G]}.png"),
-                
-                bubbleChance = string.IsNullOrEmpty(row[H]) ? 0 : float.Parse(row[H]) * 0.01f,
-                adChance = string.IsNullOrEmpty(row[I]) ? 0 : float.Parse(row[I]) * 0.01f,
+
+                bubbleChance = tempBubbleChance.ToArray(),
+                adChance = tempAdChance.ToArray(),
+                //bubbleChance = string.IsNullOrEmpty(row[H]) ? 0 : float.Parse(row[H]) * 0.01f,
+                //adChance = string.IsNullOrEmpty(row[I]) ? 0 : float.Parse(row[I]) * 0.01f,
                 bubbleCost = string.IsNullOrEmpty(row[J]) ? 0 : int.Parse(row[J]),
                 bubbleTime = string.IsNullOrEmpty(row[K]) ? 0 : float.Parse(row[K]),
             };

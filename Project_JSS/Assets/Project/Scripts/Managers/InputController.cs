@@ -107,20 +107,21 @@ public class InputController : MonoBehaviour
 
     void CheckInactivity()
     {
+        if (timer < inactivityTime) return;
+        if (isCoroutineRunning) return;
         // 설정된 비활성 시간이 지나고 코루틴이 실행 중이 아니면 코루틴 시작
-        if (timer >= inactivityTime && !isCoroutineRunning)
+
+        (Vector2Int, Vector2Int)? mergeablePosPair = Managers.Grid.FindMergeablePosPair();
+        if (mergeablePosPair.HasValue)
         {
-            (Vector2Int, Vector2Int)? mergeablePosPair = Managers.Grid.FindMergeablePosPair();
-            if (mergeablePosPair.HasValue)
+            StartCoroutine(InactivityCoroutine(mergeablePosPair.Value.Item1, mergeablePosPair.Value.Item2));
+            isCoroutineRunning = true;
+            if (showDebugLogs)
             {
-                StartCoroutine(InactivityCoroutine(mergeablePosPair.Value.Item1, mergeablePosPair.Value.Item2));
-                isCoroutineRunning = true;
-                if (showDebugLogs)
-                {
-                    Debug.Log($"{inactivityTime}초 동안 입력 비활성 감지: 코루틴 시작됨");
-                }
-            }            
-        }
+                Debug.Log($"{inactivityTime}초 동안 입력 비활성 감지: 코루틴 시작됨");
+            }
+        }            
+
     }
 
     void ResetTimer()

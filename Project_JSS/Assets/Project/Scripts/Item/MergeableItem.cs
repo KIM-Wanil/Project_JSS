@@ -9,6 +9,7 @@ public class MergeableItem : MonoBehaviour
 {
     [SerializeField] private Sprite[] boxSprite = new Sprite[2];
     public GameObject LockImageObj;
+    [SerializeField] public GameObject adIcon;
     public ItemState state { get; private set; }
     [SerializeField] public CanvasGroup selectIcon;
     [SerializeField] public CanvasGroup selectBackground;
@@ -19,7 +20,7 @@ public class MergeableItem : MonoBehaviour
     public bool isCheck = false;
     [Header("Item Settings")]
     [SerializeField] protected int lv = 1;
-    private int lvIndex => Mathf.Clamp(lv - 1, 0, itemData.items.Length - 1);
+    public int lvIndex => Mathf.Clamp(lv - 1, 0, itemData.items.Length - 1);
     //[SerializeField] protected string itemId;
     public Image itemImage { get; private set; }
     public Image bubbleImage;
@@ -35,7 +36,7 @@ public class MergeableItem : MonoBehaviour
     public RectTransform rectT;
 
     public int Lv => lv;
-    
+    public float gemCountRemainSec = 0f;
     private void Awake()
     {
         if (itemImage.IsUnityNull())
@@ -107,17 +108,22 @@ public class MergeableItem : MonoBehaviour
         isInitialized = true;
     }
 
-    //public void Initialize(SaveData.ItemData saveData)
+    //젬버블 시간지나면 사라지고, UI업데이트되게 구현하기
+    //public void StartGemBubbleCounting(int currentEnergy)
     //{
-    //    //itemId = saveData.itemId;
+    //    InvokeRepeating(nameof(DisappearGemBubble), 1f, 1f);
+    //    onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(gemCountRemainSec));
 
-
-    //    lv = saveData.level;
-    //    gridPosition = saveData.position;
-    //    UpdateVisuals();
-    //    isInitialized = true;
-
-
+    //}
+    //private void DisappearGemBubble()
+    //{
+    //    //Debug.Log(energyRegenRemainSec);
+    //    gemCountRemainSec -= 1f;
+    //    onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(gemCountRemainSec));
+    //    if (energyRegenRemainSec <= 0f)
+    //    {
+    //        AddEnergy(energyRegenAmount);
+    //    }
     //}
     public void SellThisItem()
     {
@@ -134,8 +140,11 @@ public class MergeableItem : MonoBehaviour
     public void PopBubbleItemByAd()
     {
         state = ItemState.Normal;
+        adIcon.SetActive(false);
         bubbleImage.gameObject.SetActive(false);
         itemImage.rectTransform.localScale = Vector3.one;
+        OnDeSelected();
+        //draggableItem.SelectItem();
     }
     public void SkipBubbleItem()
     {
@@ -148,6 +157,8 @@ public class MergeableItem : MonoBehaviour
         state = ItemState.Normal;
         bubbleImage.gameObject.SetActive(false);
         itemImage.rectTransform.localScale = Vector3.one;
+        OnDeSelected();
+        //draggableItem.SelectItem();
     }
 
     #endregion
@@ -158,6 +169,11 @@ public class MergeableItem : MonoBehaviour
         {
             if (itemData.type == ItemType.Normal || itemData.type == ItemType.Usable)
             {
+                itemImage.color = new Color(1.0f, 1.0f, 1.0f, 1f);
+                adIcon.SetActive(false);
+                bubbleImage.gameObject.SetActive(false);
+                draggableItem.enabled = true;
+
                 switch (state)
                 {
                     case ItemState.Normal:
@@ -178,12 +194,15 @@ public class MergeableItem : MonoBehaviour
                     //방울에 광고모양 추가하기
                     case ItemState.BubbleAd:
                         //광고이미지 on 구현
+                        adIcon.SetActive(true);
                         bubbleImage.gameObject.SetActive(true);
                         itemImage.rectTransform.localScale = 0.8f * Vector3.one;
+                        itemImage.sprite = itemData.items[lvIndex].itemSprite;
                         break;
                     case ItemState.BubbleGem:
                         bubbleImage.gameObject.SetActive(true);
                         itemImage.rectTransform.localScale = 0.8f * Vector3.one;
+                        itemImage.sprite = itemData.items[lvIndex].itemSprite;
                         break;
                 }
             }
@@ -198,7 +217,7 @@ public class MergeableItem : MonoBehaviour
     {
         return other != null &&
                other != this &&
-               other.state != ItemState.InBox &&
+               other.state == ItemState.Normal &&
                other.itemData.id == itemData.id &&
                other.Lv == lv &&
                lv < itemData.items.Length; // 최대 레벨 체크
@@ -217,7 +236,7 @@ public class MergeableItem : MonoBehaviour
 
             itemEffect.PlaySuccessMergeEffect();
             lv++;
-            itemKey.Lv = lv;
+            itemKey.lv = lv;
             string soundKey = lv.ToString();
             Managers.Asset.PlaySound(soundKey, SoundType.Effect);
             UpdateVisuals();

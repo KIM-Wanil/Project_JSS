@@ -76,7 +76,7 @@ public class InfoPanelController : MonoBehaviour
         if (data.type != ItemType.Normal) return; //현재 노말 아이템만 판매 가능
         descInfo.SetActive(true);
 
-        nameText.text = $"{data.items[inputKey.Lv - 1].itemName} (Lv {inputKey.Lv})";
+        nameText.text = $"{data.items[inputKey.lv - 1].itemName} (lv {inputKey.lv})";
         basicTextObj.SetActive(false);
 
         sellButton.onClick.AddListener(onItemSold);
@@ -86,7 +86,7 @@ public class InfoPanelController : MonoBehaviour
 
         //itemNameInfo.offsetMax = new Vector2(-119f, itemNameInfo.offsetMax.y);
         //descText.rectTransform.offsetMax = new Vector2(-119f, descText.rectTransform.offsetMax.y);
-        descText.text = data.items[inputKey.Lv - 1].itemDesc;
+        descText.text = data.items[inputKey.lv - 1].itemDesc;
 
     }
     public void PrintUnsellableItemDesc(ItemKey inputKey)
@@ -98,12 +98,12 @@ public class InfoPanelController : MonoBehaviour
         if (data.type == ItemType.Normal) return; //현재 노말 아이템만 판매 가능
         descInfo.SetActive(true);
 
-        nameText.text = $"{data.items[inputKey.Lv - 1].itemName} (Lv {inputKey.Lv})";
+        nameText.text = $"{data.items[inputKey.lv - 1].itemName} (lv {inputKey.lv})";
         basicTextObj.SetActive(false);
 
         //itemNameInfo.offsetMax = new Vector2(-25f, itemNameInfo.offsetMax.y);
         //descText.rectTransform.offsetMax = new Vector2(-25f, descText.rectTransform.offsetMax.y);
-        descText.text = data.items[inputKey.Lv - 1].itemDesc;
+        descText.text = data.items[inputKey.lv - 1].itemDesc;
     }
     public void PrintLockedItemDesc(ItemKey inputKey)
     {
@@ -114,7 +114,7 @@ public class InfoPanelController : MonoBehaviour
         if (data.type != ItemType.Normal) return; //현재 노말 아이템만 판매 가능
         descInfo.SetActive(true);
 
-        nameText.text = $"{data.items[inputKey.Lv - 1].itemName} (Lv {inputKey.Lv})";
+        nameText.text = $"{data.items[inputKey.lv - 1].itemName} (lv {inputKey.lv})";
         basicTextObj.SetActive(false);
 
 
@@ -135,7 +135,7 @@ public class InfoPanelController : MonoBehaviour
         if (data.type != ItemType.Normal) return; //현재 노말 아이템만 판매 가능
         descInfo.SetActive(true);
 
-        nameText.text = $"{data.items[inputKey.Lv - 1].itemName} (Lv {inputKey.Lv})";
+        nameText.text = $"{data.items[inputKey.lv - 1].itemName} (lv {inputKey.lv})";
         basicTextObj.SetActive(false);
 
 
@@ -147,7 +147,7 @@ public class InfoPanelController : MonoBehaviour
         //earnByAdButton.onClick.AddListener();
         earnByAdButton.onClick.AddListener(onBubblePop);
         earnByAdButton.onClick.AddListener(InitToBasicDesc);
-        adCountText.text = "0/1";// 
+        adCountText.text = "0/1";
         earnByAdButton.gameObject.SetActive(true);
 
 
@@ -163,7 +163,7 @@ public class InfoPanelController : MonoBehaviour
         if (data.type != ItemType.Normal) return; //현재 노말 아이템만 판매 가능
         descInfo.SetActive(true);
 
-        nameText.text = $"{data.items[inputKey.Lv - 1].itemName} (Lv {inputKey.Lv})";
+        nameText.text = $"{data.items[inputKey.lv - 1].itemName} (lv {inputKey.lv})";
         basicTextObj.SetActive(false);
 
 
@@ -175,8 +175,10 @@ public class InfoPanelController : MonoBehaviour
         //earnByAdButton.onClick.AddListener();
         earnByGemButton.onClick.AddListener(onBubblePop);
         earnByGemButton.onClick.AddListener(InitToBasicDesc);
-        adCountText.text = "0/1";// 
-        earnByAdButton.gameObject.SetActive(true);
+         
+        priceToBuyText.text = Managers.Game.GetItemData(inputKey.id).items[inputKey.lv - 1].bubbleCost.ToString();
+        timeToDisappearText.text = Managers.Game.GetItemData(inputKey.id).items[inputKey.lv - 1].bubbleTime.ToString();
+        earnByGemButton.gameObject.SetActive(true);
 
 
         descText.text = "젬을 사용해 어쩌고 저쩌고";

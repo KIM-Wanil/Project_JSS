@@ -31,7 +31,7 @@ public class ItemOrdered : MonoBehaviour//, IPointerClickHandler
 
         if (image != null && data.items.Length > 0)
         {
-            lvIndex = Mathf.Clamp(key.Lv - 1, 0, data.items.Length - 1);
+            lvIndex = Mathf.Clamp(key.lv - 1, 0, data.items.Length - 1);
             details = data.items[lvIndex];
             image.sprite = details.itemSprite;
         }
