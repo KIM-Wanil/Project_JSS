@@ -72,6 +72,7 @@ public class GameManager : BaseManager
     public UnityEvent onItemDeSelected;
     public UnityEvent onRandomGuestCreated; 
     public UnityEvent<int, KeyValuePair<ItemKey, int>, KeyValuePair<ItemKey, int>?> onGuestCreated;
+    public UnityEvent<int> onGemBubbleRemainSecUpdated; 
 
 
 
@@ -129,6 +130,10 @@ public class GameManager : BaseManager
     public void SelectGemBubbleItem(ItemKey inputKey,UnityAction onBubblePop = null, UnityAction onGiveUp = null)
     {
         onGemBubbleItemSelected.Invoke(inputKey,onBubblePop, onGiveUp);
+    }
+    public void UpdateGemBubbleRemainSeconds(int sec)
+    {
+        onGemBubbleRemainSecUpdated.Invoke(sec);
     }
     private void Awake()
     {

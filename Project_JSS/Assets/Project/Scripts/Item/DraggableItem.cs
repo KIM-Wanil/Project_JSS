@@ -33,7 +33,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private float lastClickTime;
     private float lastCheckTime;
 
-    private bool isSelected => currentlySelectedItem == this;
+    public bool isSelected => currentlySelectedItem == this;
     private bool isDragging;
     public bool isInteractionEnabled = true;
     private void Awake()

@@ -3396,7 +3396,7 @@ MonoBehaviour:
   skipButton: {fileID: 336038221}
   earnByGemButton: {fileID: 898356319}
   priceToBuyText: {fileID: 470598413}
-  timeToDisappearText: {fileID: 1687039896}
+  gemBubbleRemainSecondsText: {fileID: 1687039896}
   sellButton: {fileID: 4501207139508911238}
   priceToSellText: {fileID: 487357564}
 --- !u!1 &1005766893
@@ -5622,7 +5622,7 @@ GameObject:
   - component: {fileID: 1687039897}
   - component: {fileID: 1687039896}
   m_Layer: 5
-  m_Name: TimeText
+  m_Name: RemainTimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

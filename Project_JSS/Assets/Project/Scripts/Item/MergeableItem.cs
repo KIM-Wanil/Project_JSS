@@ -36,7 +36,7 @@ public class MergeableItem : MonoBehaviour
     public RectTransform rectT;
 
     public int Lv => lv;
-    public float gemCountRemainSec = 0f;
+    public float gemBubbleRemainSec = 0f;
     private void Awake()
     {
         if (itemImage.IsUnityNull())
@@ -108,23 +108,37 @@ public class MergeableItem : MonoBehaviour
         isInitialized = true;
     }
 
-    //젬버블 시간지나면 사라지고, UI업데이트되게 구현하기
-    //public void StartGemBubbleCounting(int currentEnergy)
-    //{
-    //    InvokeRepeating(nameof(DisappearGemBubble), 1f, 1f);
-    //    onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(gemCountRemainSec));
+    public void StartGemBubbleCounting()
+    {
+        gemBubbleRemainSec = itemData.items[lvIndex].bubbleTime;
+        InvokeRepeating(nameof(DisappearGemBubble), 1f, 1f);
+        if (draggableItem.isSelected)
+        {
+            Managers.Game.UpdateGemBubbleRemainSeconds((int)gemBubbleRemainSec);
+        }
+        //onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(gemCountRemainSec));
 
-    //}
-    //private void DisappearGemBubble()
-    //{
-    //    //Debug.Log(energyRegenRemainSec);
-    //    gemCountRemainSec -= 1f;
-    //    onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(gemCountRemainSec));
-    //    if (energyRegenRemainSec <= 0f)
-    //    {
-    //        AddEnergy(energyRegenAmount);
-    //    }
-    //}
+    }
+    private void DisappearGemBubble()
+    {
+        //Debug.Log(energyRegenRemainSec);
+        gemBubbleRemainSec -= 1f;
+        if (draggableItem.isSelected)
+        {
+            Managers.Game.UpdateGemBubbleRemainSeconds((int)gemBubbleRemainSec);
+        }
+        //onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(gemCountRemainSec));
+        if (gemBubbleRemainSec <= 0f)
+        {
+            Managers.Grid.RemoveItemFromGridInstantly(gridPosition);
+            CancelInvoke(nameof(DisappearGemBubble));
+            if (draggableItem.isSelected)
+            {
+                OnDeSelected();
+            }
+
+        }
+    }
     public void SellThisItem()
     {
        Managers.Game.AddGold(itemData.items[lvIndex].price);
@@ -200,6 +214,7 @@ public class MergeableItem : MonoBehaviour
                         itemImage.sprite = itemData.items[lvIndex].itemSprite;
                         break;
                     case ItemState.BubbleGem:
+                        StartGemBubbleCounting();
                         bubbleImage.gameObject.SetActive(true);
                         itemImage.rectTransform.localScale = 0.8f * Vector3.one;
                         itemImage.sprite = itemData.items[lvIndex].itemSprite;

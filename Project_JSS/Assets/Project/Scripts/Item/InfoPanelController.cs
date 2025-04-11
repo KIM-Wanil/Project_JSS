@@ -20,7 +20,7 @@ public class InfoPanelController : MonoBehaviour
     public Button skipButton;
     public Button earnByGemButton;
     public TextMeshProUGUI priceToBuyText;
-    public TextMeshProUGUI timeToDisappearText;
+    public TextMeshProUGUI gemBubbleRemainSecondsText;
     public Button sellButton;
     public TextMeshProUGUI priceToSellText;
 
@@ -35,6 +35,7 @@ public class InfoPanelController : MonoBehaviour
 
         Managers.Game.onAdBubbleItemSelected.AddListener(PrintAdBubbleItemDesc);
         Managers.Game.onGemBubbleItemSelected.AddListener(PrintGemBubbleItemDesc);
+        Managers.Game.onGemBubbleRemainSecUpdated.AddListener(UpdateGemBubbleRemainSeconds);
     }
 
     private void Update()
@@ -177,11 +178,15 @@ public class InfoPanelController : MonoBehaviour
         earnByGemButton.onClick.AddListener(InitToBasicDesc);
          
         priceToBuyText.text = Managers.Game.GetItemData(inputKey.id).items[inputKey.lv - 1].bubbleCost.ToString();
-        timeToDisappearText.text = Managers.Game.GetItemData(inputKey.id).items[inputKey.lv - 1].bubbleTime.ToString();
+        //gemBubbleRemainSecondsText.text = Managers.Game.GetItemData(inputKey.id).items[inputKey.lv - 1].bubbleTime.ToString();
         earnByGemButton.gameObject.SetActive(true);
 
 
         descText.text = "ÁªÀ» »ç¿ëÇØ ¾îÂ¼°í ÀúÂ¼°í";
+    }
+    public void UpdateGemBubbleRemainSeconds(int sec)
+    {
+        gemBubbleRemainSecondsText.text = $"{sec}s";
     }
     public void InitToBasicDesc()
     {
