@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class IsometricGrid : MonoBehaviour
 {
+    public Vector2 startPosition = Vector2.zero;
     public float tileOffsetX = 32f; // 타일 X 오프셋 (픽셀)
     public float tileOffsetY = 16f; // 타일 Y 오프셋 (픽셀)
     public int floorIndex;
@@ -15,14 +16,16 @@ public class IsometricGrid : MonoBehaviour
     public int gridHeight = 12;
     public Color gridLineColor = Color.red;
 
+    public bool isWall;
+
     public void Awake()
     {
         InitializeGrid(12, 12);
     }
-    public Vector2 GridToScreenPosition(int x, int y)
+    public Vector2 GridToScreenPosition(float x, float y)
     {
-        float screenX = (x - y) * tileOffsetX;
-        float screenY = (x + y) * tileOffsetY;
+        float screenX = (x - y) * tileOffsetX + startPosition.x;
+        float screenY = (x + y) * tileOffsetY + startPosition.y;
         return new Vector2(screenX, screenY);
     }
     public void InitializeGrid(int x, int y)
@@ -96,21 +99,42 @@ public class IsometricGrid : MonoBehaviour
         
 
         Gizmos.color = gridLineColor;
-
-        // Draw horizontal grid lines (left-to-right diagonals in isometric view)
-        for (int y = 0; y <= gridHeight; y++)
+        if (isWall != false)
         {
-            Vector2 startPos = GridToScreenPosition(0, y);
-            Vector2 endPos = GridToScreenPosition(gridWidth, y);
-            Gizmos.DrawLine(startPos, endPos);
+            // Draw horizontal grid lines (left-to-right diagonals in isometric view)
+            for (float y = 0; y <= gridHeight; y++)
+            {
+                Vector2 startPos = GridToScreenPosition(0, y / 2);
+                Vector2 endPos = GridToScreenPosition(gridWidth / 2, y / 2);
+                Gizmos.DrawLine(startPos, endPos);
+            }
+
+            // Draw vertical grid lines (right-to-left diagonals in isometric view)
+            for (float x = 0; x <= gridWidth; x++)
+            {
+                Vector2 startPos = GridToScreenPosition(x / 2, 0);
+                Vector2 endPos = GridToScreenPosition(x / 2, gridHeight / 2);
+                Gizmos.DrawLine(startPos, endPos);
+            }
+        }
+        else
+        {
+            // Draw horizontal grid lines (left-to-right diagonals in isometric view)
+            for (float y = 0; y <= gridHeight; y++)
+            {
+                Vector2 startPos = GridToScreenPosition(0, y / 2);
+                Vector2 endPos = GridToScreenPosition(gridWidth / 2, y / 2);
+                Gizmos.DrawLine(startPos, endPos);
+            }
+
+            // Draw vertical grid lines (right-to-left diagonals in isometric view)
+            for (float x = 0; x <= gridWidth; x++)
+            {
+                Vector2 startPos = GridToScreenPosition(x / 2, 0);
+                Vector2 endPos = GridToScreenPosition(x / 2, gridHeight / 2);
+                Gizmos.DrawLine(startPos, endPos);
+            }
         }
 
-        // Draw vertical grid lines (right-to-left diagonals in isometric view)
-        for (int x = 0; x <= gridWidth; x++)
-        {
-            Vector2 startPos = GridToScreenPosition(x, 0);
-            Vector2 endPos =GridToScreenPosition(x, gridHeight);
-            Gizmos.DrawLine(startPos, endPos);
-        }
     }
 }

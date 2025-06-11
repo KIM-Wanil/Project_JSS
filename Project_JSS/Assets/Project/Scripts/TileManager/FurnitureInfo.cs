@@ -11,8 +11,9 @@ public class FurnitureInfo : MonoBehaviour
     FurniturePlacementManager placementManager;
     SpriteRenderer spriteRenderer;
 
+    [SerializeField] FurnitureData data;
     [SerializeField] string furnitureName;
-    [SerializeField] int floor;
+    [SerializeField] bool isFloor;
 
     [SerializeField] Vector2Int gridPosition;
     [SerializeField] Vector2Int[] size;
@@ -34,20 +35,22 @@ public class FurnitureInfo : MonoBehaviour
 
     private Vector3 originalPosition;
 
-    public int Floor { get { return floor; } }
+    public bool IsFloor { get { return isFloor; } }
     public Vector2Int Size { get { return size[rotation]; } }
     public Vector2Int GridPosition { get { return gridPosition; } set => gridPosition = value; }
     public Vector2Int TartgetPosition { get { return tartgetPosition[rotation]; ; } }
     public int Rotation { get { return rotation; } }
     public void SettingData(FurnitureData data)
     {
-
+        this.data = data;
        this.furnitureName= data.furnitureName; // 가구 이름
-        gridPosition = data.gridPosition; // 가구 위치
+        
         size = data.size;
         tartgetPosition = data.tartgetPosition;
-        rotation = data.rotation;
         sprites = data.furnitureSprite;
+
+        gridPosition = data.gridPosition; // 가구 위치
+        rotation = data.rotation;
         spriteNumber = data.spriteNumber;
         isUnlocked = data.isUnlocked;
 
@@ -83,6 +86,8 @@ public class FurnitureInfo : MonoBehaviour
     }
     public void RotateSprites()
     {
+        if (!isFloor)
+            return;
         rotation++;
         if (rotation >= 4)
         {
@@ -90,11 +95,11 @@ public class FurnitureInfo : MonoBehaviour
         }
         if (rotation == 1 || rotation == 3)
         {
-            spriteRenderer.flipX = true;
+            this.gameObject.transform.localScale = new Vector3(-1, 1, 1);
         }
         else
         {
-            spriteRenderer.flipX = false;
+            this.gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
         spriteRenderer.sprite = sprites[spriteNumber].sprites[rotation / 2];
     }

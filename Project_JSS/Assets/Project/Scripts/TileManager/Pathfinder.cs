@@ -24,12 +24,12 @@ public class TileData
 
 public class Pathfinder : MonoBehaviour
 {
-    private IsometricGrid isometricGrid;
+    private IsoGridFloor isometricGrid;
     private TileData[,] tileDatas;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        isometricGrid = GetComponent<IsometricGrid>();
+        isometricGrid = GetComponent<IsoGridFloor>();
         tileDatas = new TileData[12,12];
         for (int x = 0; x < 12; x++)
         {
