@@ -1,14 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.AdaptivePerformance.Editor;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
+using UnityEngine.Events;
 
 public class Guest : MonoBehaviour
 {
+    public RectTransform rectT;
+    public RectTransform goldIconRectT;
+    public UnityEvent<Guest> OnGuestCompleted;
+
     public GameObject itemOrderedPrefab;
     public ItemOrdered[] itemsOrdered;
     public TextMeshProUGUI goldText;
@@ -16,8 +19,9 @@ public class Guest : MonoBehaviour
     public Button completeButton;
     public int gold;
 
-    public void Init(Dictionary<ItemKey, int> goalItems, int goldAmount)
+    public void Init(int goldAmount, Dictionary<ItemKey, int> goalItems)
     {
+        rectT = GetComponent<RectTransform>();
         if (goalItems == null)
         {
             throw new ArgumentNullException(nameof(goalItems), "goalItems cannot be null");
@@ -67,6 +71,11 @@ public class Guest : MonoBehaviour
             if (itemOrdered.IsFulfill)
             {
                 count++;
+                itemOrdered.OnCheckIcon();
+            }
+            else
+            {
+                itemOrdered.DeactivateCheckIcon();
             }
         }
 
@@ -77,6 +86,7 @@ public class Guest : MonoBehaviour
             {
                 itemOrdered.DeactivateAll();
             }
+            OnGuestCompleted?.Invoke(this);
             ActivateCompleteButton();
         }
         else
@@ -88,18 +98,30 @@ public class Guest : MonoBehaviour
     public void OnCompleteButtonClicked()
     {
         if (!isCompleted) return;
-        Managers.Game.AddGold(gold);
+        //Managers.Game.AddGold(gold);
         Debug.Log($"Add Gold: {gold}");
+        Sequence sequence = DOTween.Sequence();
+        sequence.AppendInterval(0.1f);
         foreach (ItemOrdered itemOrdered in itemsOrdered)
         {
-            for (int i = 0; i < itemOrdered.goalCount; i++)
+            List<Vector2Int> targetPositions = Managers.Grid.FindNormalItemsFromGrid(itemOrdered.key, itemOrdered.goalCount);
+            foreach (Vector2Int targetPos in targetPositions)
             {
-                Managers.Grid.FindAndRemoveItemFromGrid(itemOrdered.key);
+                sequence.Join(Managers.Grid.RemoveItemFromGridToGuest(targetPos, itemOrdered.rectT.position));
             }
+            Managers.Grid.UncheckNormalItem(itemOrdered.key);
         }
-        Managers.Grid.CheckGuestsOrder();
-        Managers.Grid.RemoveGuest(this);
-        Invoke("DestroyGuest", 0.2f);
+        //동전 짤랑거리면서 ui동전에 들어가는 거 sequence에 추가
+        sequence.AppendCallback( ()=> Managers.Game.SpawnGold(goldIconRectT.position ,gold ,GoodsType.Gold));
+        //
+        sequence.OnComplete(() =>
+        {
+            //Managers.Asset.PlaySound("", SoundType.Effect);
+            Managers.Grid.RemoveGuest(this);
+            Managers.Grid.CheckGuestsOrder();
+            DestroyGuest();
+        });
+        
     }
 
     public void ActivateCompleteButton()

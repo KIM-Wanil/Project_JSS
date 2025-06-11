@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ItemEffect : MonoBehaviour
 {
-    [SerializeField] private Image successParticleImage;
+    [SerializeField] public Image successParticleImage;
     private Animator successParticleAnimator;
     private void Awake()
     {

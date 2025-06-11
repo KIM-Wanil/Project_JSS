@@ -1,17 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Events;
-using static SaveData;
+
+//using static SaveData;
 using System.Linq;
-using static UnityEditor.Progress;
 using UnityEngine.SceneManagement;
-using System;
-using static UnityEngine.Tilemaps.Tilemap;
+using static UnityEditor.Progress;
+
+
 
 public class GameManager : BaseManager
 {
     //public static GameManager Instance { get; private set; }
-
+    [SerializeField] private GameObject rippleEffectPrefab;
+    [SerializeField] private Canvas cursorCanvas;
     public const int GRID_WIDTH = 7;
     public const int GRID_HEIGHT = 9;
     [Header("Script References")]
@@ -45,15 +47,14 @@ public class GameManager : BaseManager
     //[SerializeField] private GeneratorSO[] genDatas;
     [SerializeField] private string[] genIds = {"G001", "G002"};
 
-    [Header("Guest Referemces")]
-    [SerializeField] private GameObject guestBoard;
-    [SerializeField] private GameObject guestPrefab;
-    [SerializeField] private Sprite[] guestSprites;
+    
+
     
 
     [Header("Game Events")]
     public UnityEvent<int> onEnergyChanged;
     public UnityEvent<int> onEnergyRegenTimeChanged;
+    public UnityEvent<Vector2,int,GoodsType> onGoldSpawned;
     public UnityEvent<int> onGoldChanged;
     public UnityEvent<int> onGemChanged;
 
@@ -65,10 +66,17 @@ public class GameManager : BaseManager
     public UnityEvent<ItemKey, int, UnityAction> onSellableItemSelected;
     public UnityEvent<ItemKey> onUnsellableItemSelected;
     public UnityEvent<ItemKey> onLockedItemSelected;
-    public UnityEvent onItemDeSelected;
 
-    
-    
+    public UnityEvent<ItemKey, UnityAction, UnityAction> onAdBubbleItemSelected;
+    public UnityEvent<ItemKey, UnityAction, UnityAction> onGemBubbleItemSelected;
+    public UnityEvent onItemDeSelected;
+    public UnityEvent onRandomGuestCreated; 
+    public UnityEvent<int, KeyValuePair<ItemKey, int>, KeyValuePair<ItemKey, int>?> onGuestCreated;
+    public UnityEvent<int> onGemBubbleRemainSecUpdated; 
+
+
+
+
     private Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
     private Dictionary<string, GeneratorSO> genDataDic = new Dictionary<string, GeneratorSO>();
     [SerializeField] private ObjectPool<GameObject> itemPool;
@@ -77,13 +85,28 @@ public class GameManager : BaseManager
     [Header("Bool Values")]
     private bool isGamePaused;
     public bool IsDataLoaded { get; private set; } = false;
-
-
-    public void OnClickSetMergeBoardTest()
+    private void Start()
     {
-        SpawnMoveGenerator("G001", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
-        SpawnMoveGenerator("G002", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
+        
     }
+    public void Update()
+    {
+        generatorSyncTime = Time.time % 4f;
+        if (Input.GetMouseButtonUp(0))
+        {
+            CreateRippleEffect();
+        }
+    }
+    private void CreateRippleEffect()
+    {
+        GameObject ripple = Instantiate(rippleEffectPrefab, Input.mousePosition, Quaternion.identity, cursorCanvas.transform);
+        ripple.transform.SetSiblingIndex(0);
+    }
+    //public void OnClickSetMergeBoardTest()
+    //{
+    //    SpawnMoveGenerator("G001", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
+    //    SpawnMoveGenerator("G002", 1, new Vector2(-113f, 513f), (Vector2Int)Managers.Grid.GetEmptyPosition());
+    //}
     public void SelectSellableItem(ItemKey inputKey, int price = -1, UnityAction onItemSold = null)
     {
         onSellableItemSelected.Invoke(inputKey, price, onItemSold);
@@ -100,13 +123,34 @@ public class GameManager : BaseManager
     {
         onItemDeSelected.Invoke();
     }
+    public void SelectAdBubbleItem(ItemKey inputKey, UnityAction onBubblePop = null, UnityAction onGiveUp = null)
+    {
+        onAdBubbleItemSelected.Invoke(inputKey, onBubblePop, onGiveUp);
+    }
+    public void SelectGemBubbleItem(ItemKey inputKey,UnityAction onBubblePop = null, UnityAction onGiveUp = null)
+    {
+        onGemBubbleItemSelected.Invoke(inputKey,onBubblePop, onGiveUp);
+    }
+    public void UpdateGemBubbleRemainSeconds(int sec)
+    {
+        onGemBubbleRemainSecUpdated.Invoke(sec);
+    }
     private void Awake()
     {
     }
     public override void Init()
     {
+        if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
+            return;
         base.Init();
+        energyRegenRemainSec = energyRegenRate;
+        FlagRegenEnergy(currentEnergy);
+        onEnergyChanged.AddListener(FlagRegenEnergy);
+
         InitializeGame();
+
+
+        
     }
     private async void LoadData()
     {
@@ -132,15 +176,13 @@ public class GameManager : BaseManager
     }
     private void InitializeGame()
     {
-        if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
-            return;
+        
         // 아이템 오브젝트 풀 초기화
         itemPool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 50, 100);
 
         // 제너레이터 오브젝트 풀 초기화
         generatorPool = new ObjectPool<GameObject>(CreatePooledGenerator, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 10, 20);
         
-        guestBoard = GameObject.Find("GuestBoard");
         LoadData();
 
         generatorSyncTime = Time.time % 4f; // 4초 주기로 동기화
@@ -158,20 +200,7 @@ public class GameManager : BaseManager
         onRewardQueueChanged?.Invoke(currentRewardQueue);
     }
 
-    private void Start()
-    {
-        energyRegenRemainSec = energyRegenRate;
-        FlagRegenEnergy(currentEnergy);
-        onEnergyChanged.AddListener(FlagRegenEnergy);
-    }
-    public void Update()
-    {
-        generatorSyncTime = Time.time % 4f;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CreateRandomGuest();
-        }
-    }
+    
     #region Energy Management
     public void FlagRegenEnergy(int currentEnergy)
     {
@@ -223,12 +252,38 @@ public class GameManager : BaseManager
     #endregion
 
     #region Gold Management
+    public void GetGold(int amount)
+    {
+        onGoldChanged?.Invoke(currentGold);
+    }
+    public void SpawnGold(Vector2 point, int count, GoodsType type = GoodsType.Gold)
+    {
+        onGoldSpawned?.Invoke(point, count, type);
+    }
     public void AddGold(int amount)
     {
         currentGold += amount;
         onGoldChanged?.Invoke(currentGold);
     }
 
+    #endregion
+    #region Gem Management
+    public void AddGem(int amount)
+    {
+        currentGem += amount;
+        onGemChanged?.Invoke(currentGem);
+    }
+
+    public bool TrySpendGem(int amount)
+    {
+        if (currentGem >= amount)
+        {
+            currentGem -= amount;
+            onGemChanged?.Invoke(currentGem);
+            return true;
+        }
+        return false;
+    }
     #endregion
 
     #region Score Management
@@ -254,71 +309,89 @@ public class GameManager : BaseManager
     {
         return itemDataDic[key.id].items[key.lv - 1].itemName;
     }
+    public int GetItemMaxLevel(ItemKey key)
+    {
+        return itemDataDic[key.id].items.Length;
+    }
     //이 경우에만 잠겨있는 아이템 존재
-    public MergeableItem SpawnItem(string itemId, int level, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
+    public bool SpawnItem(string itemId, int level, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
     {
         GameObject itemObj = itemPool.Get();
+        if (!itemObj) return false;
+
         MergeableItem item = itemObj.GetComponent<MergeableItem>();
-        if (item != null)
-        {
-            item.itemData = itemDataDic[itemId];
-            item.Initialize(level, state);
-            item.itemRectT.sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-            Managers.Grid.PlaceItem(item, targetGridposition);
+        if (!item) return false;
+        
+        item.itemData = itemDataDic[itemId];
+        item.Initialize(level, targetGridposition, state);
+        item.draggableItem.Initialize();
+        item.rectT.sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+        Managers.Grid.PlaceItem(item, targetGridposition);
             
-        }
-        Managers.Grid.CheckGuestsOrder();
-        return item;
+        
+
+        return true;
     }
-    public MergeableItem SpawnMoveItem(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
+    public bool SpawnMoveItem(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
     {
         GameObject itemObj = itemPool.Get();
+        if (!itemObj) return false;
+
         MergeableItem item = itemObj.GetComponent<MergeableItem>();
-        if (item != null)
-        {
-            item.itemData = itemDataDic[itemId];
-            item.Initialize(level);
-            item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-            Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
-        }
-        Managers.Grid.CheckGuestsOrder();
-        return item;
+        if (!item) return false;
+        
+        item.transform.position = startWorldPosition;
+        //item.itemRectT.anchoredPosition = startWorldPosition;
+        item.itemData = itemDataDic[itemId];
+        item.Initialize(level, targetGridposition, state);
+        item.draggableItem.Initialize();
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+        Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
+        
+        
+        return true;
     }
-    public Generator SpawnGenerator(string itemId, int level, Vector2Int position)
+
+    public bool SpawnGenerator(string itemId, int level, Vector2Int position)
     {
         GameObject genObj = generatorPool.Get();
+        if (!genObj) return false;
+
         MergeableItem item = genObj.GetComponent<MergeableItem>();
-        if (item != null)
-        {
-            item.itemData = itemDataDic[itemId];
-            item.Initialize(level);
-            item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-            Managers.Grid.PlaceItem(item, position);
-            //onItemSpawned?.Invoke(item);
-        }
+        if (!item) return false;
+
+        item.itemData = itemDataDic[itemId];
+        item.Initialize(level, position);
+        item.draggableItem.Initialize();
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+        Managers.Grid.PlaceItem(item, position);
+        
         Generator tempGenerator = item.gameObject.GetComponent<Generator>();
         tempGenerator.genDB = genDataDic[itemId];
         tempGenerator.Initialize(generatorSyncTime);
 
-        return tempGenerator;
+        return true;
     }
-    public Generator SpawnMoveGenerator(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
+    public bool SpawnMoveGenerator(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
     {
         GameObject genObj = generatorPool.Get();
+        if (!genObj) return false;
+
         MergeableItem item = genObj.GetComponent<MergeableItem>();
-        if (item != null)
-        {
-            item.itemData = itemDataDic[itemId];
-            item.Initialize(level);
-            item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-            Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
-            //onItemSpawned?.Invoke(item);
-        }
+        if (!item) return false;
+
+        item.transform.position = startWorldPosition;
+        item.itemData = itemDataDic[itemId];
+        item.Initialize(level, targetGridposition);
+        item.draggableItem.Initialize();
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
+        Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
+
         Generator tempGenerator = item.gameObject.GetComponent<Generator>();
         tempGenerator.genDB = genDataDic[itemId];
         tempGenerator.Initialize(generatorSyncTime);
 
-        return tempGenerator;
+        return true;
     }
     public bool CanMerge(MergeableItem draggingItem, MergeableItem targetItem)
     {
@@ -330,43 +403,58 @@ public class GameManager : BaseManager
     }
     public bool TryMergeItems(MergeableItem draggingItem, MergeableItem targetItem)
     {
-        if (draggingItem.CanMergeWith(targetItem))
-        {
-            Managers.Grid.DetatchItemFromGrid(targetItem.GridPosition);
-            Managers.Grid.DetatchItemFromGrid(draggingItem.GridPosition);
+        if (!draggingItem.CanMergeWith(targetItem)) return false;
 
-            targetItem.LevelUp();
-            Managers.Grid.AttatchItemToGrid(targetItem, targetItem.GridPosition);
-            if (draggingItem.itemData.type == ItemType.Generatable)
-            {
-                draggingItem.GetComponent<Generator>().OnReuturnToItemPool();
-            }
-            ReturnItemToPool(draggingItem.gameObject);
+            
+        Managers.Grid.DetatchItemFromGrid(targetItem.gridPosition);
+        Managers.Grid.DetatchItemFromGrid(draggingItem.gridPosition);
+
+        targetItem.LevelUp();
+        Managers.Grid.AttatchItemToGrid(targetItem, targetItem.gridPosition);
+        Managers.Grid.CheckGuestsOrder();
+        ReturnItemToPool(draggingItem);
+
+        ItemState bubbleState;
+        float randomBubbleValue = Random.value;
+        float bubbleChance = 0;
+        float[] bubbleChances = targetItem.itemData.items[targetItem.lvIndex].bubbleChance;
+        Debug.Log($"targetItem.lvIndex{targetItem.lvIndex}");
+        if (bubbleChances[0] == 0)
+        {
+            Debug.Log("버블스폰대상 아님");
             return true;
         }
+        for (int i =0; i< bubbleChances.Length; i++)
+        {
+            bubbleChance += bubbleChances[i];
+            {
+                if(randomBubbleValue <= bubbleChance)
+                {
+                    Debug.Log($"randomBubbleValue{randomBubbleValue} /bubbleChance{bubbleChance} /{i}");
+                    float randomAdValue = Random.value;
+                    float adChance = targetItem.itemData.items[targetItem.lvIndex].adChance[i];
+                    if (randomAdValue <= adChance)
+                    {
+                        bubbleState = ItemState.BubbleAd;
 
-        //// 크래프팅 체크
-        //else if(FindCraftingResult(draggingItem, targetItem) != null)
-        //{
-        //    ItemKey crftedItemKey = FindCraftingResult(draggingItem, targetItem).Value;
-        //    Vector2Int mergePosition = targetItem.GridPosition;
-        //    Managers.Grid.DetatchItemFromGrid(draggingItem.GridPosition);
-        //    ReturnItemToPool(draggingItem.gameObject);
-        //    Managers.Grid.DetatchItemFromGrid(targetItem.GridPosition);
-        //    ReturnItemToPool(targetItem.gameObject);
-        //    SpawnItem(crftedItemKey.id, crftedItemKey.lv, mergePosition);
-        //    return true;
-        //}
+                    }
+                    else
+                    {
+                        bubbleState = ItemState.BubbleGem;
+                    }
+                    Vector2Int? bubblePos = Managers.Grid.GetNearestPosition(targetItem.gridPosition);
+                    if (!bubblePos.HasValue) return true;
+                    Debug.Log($"bubbleLevel{targetItem.Lv - i}");
+                    if (SpawnMoveItem(targetItem.itemKey.id, targetItem.Lv - i , targetItem.transform.position, bubblePos.Value, bubbleState)) 
+                    {
+                        return true;
+                    }
+                }
+            }
+            
+        }
+        return true;
 
-
-
-
-
-        //AddScore(CalculateMergeScore(mergedItem.Lv));
-        //onItemMerged?.Invoke(mergedItem);
-
-
-        return false;
     }
     //public bool TryMergeItems(MergeableItem item1, MergeableItem neighbor)
     //{
@@ -469,50 +557,19 @@ public class GameManager : BaseManager
 
     #endregion
 
-    #region Guest Management
-    public void CreateRandomGuest()
-    {
-        Guest guest = Instantiate(guestPrefab, guestBoard.transform).GetComponent<Guest>();
-        if (guest == null)
-        {
-            throw new InvalidOperationException("Failed to instantiate guestPrefab.");
-        }
-        int count = UnityEngine.Random.Range(1, 3);
-        ItemKey[] tempItems = new ItemKey[count];
-        List<string> availableItems = GetAvailableItemIds();
-        if(availableItems.Count <= 0)
-        {
-            Debug.LogError("제너레이터가 없음");
-            return;
-        }
-        Dictionary<ItemKey, int> goalItems = new Dictionary<ItemKey, int>();
-        for (int i = 0; i < count; i++)
-        {
-            tempItems[i].id = availableItems[UnityEngine.Random.Range(0, availableItems.Count)];
-            //tempItems[i].id = "N001";
-            tempItems[i].lv = UnityEngine.Random.Range(2, 4);
-
-            goalItems[tempItems[i]] = UnityEngine.Random.Range(1, 3);
-        }
-        int goldAmount = UnityEngine.Random.Range(1, 4);
-        goldAmount *= count;
-        Debug.Log("골아이템개수" + goalItems.Count());
-      
-        guest.Init(goalItems, goldAmount);
-    }
-    #endregion
+    
 
     #region Object Pooling
 
     private GameObject CreatePooledItem()
     {
-        GameObject obj = Instantiate(itemPrefab); // 기본 아이템 프리팹
+        GameObject obj = Instantiate(itemPrefab, Managers.Grid.MergeBoard.transform); // 기본 아이템 프리팹
         obj.SetActive(false);
         return obj;
     }
     private GameObject CreatePooledGenerator()
     {
-        GameObject obj = Instantiate(generatorPrefab); // 기본 제너레이터 프리팹
+        GameObject obj = Instantiate(generatorPrefab, Managers.Grid.MergeBoard.transform); // 기본 제너레이터 프리팹
         obj.SetActive(false);
         return obj;
     }
@@ -531,13 +588,24 @@ public class GameManager : BaseManager
         Destroy(obj);
     }
 
-    public void ReturnItemToPool(GameObject item)
+    public void ReturnItemToPool(MergeableItem item)
     {
-        itemPool.Release(item);
+        if (item.itemData.type == ItemType.Generatable)
+        {
+            ReturnGeneratorToPool(item.gameObject);
+        }
+        else
+        {
+            ReturnNormalItemToPool(item.gameObject);
+        }
     }
-    public void ReturnGeneratorToPool(GameObject generator)
+    public void ReturnNormalItemToPool(GameObject itemObj)
     {
-        generatorPool.Release(generator);
+        itemPool.Release(itemObj);
+    }
+    public void ReturnGeneratorToPool(GameObject genObj)
+    {
+        generatorPool.Release(genObj);
     }
     #endregion
 
@@ -548,7 +616,7 @@ public class GameManager : BaseManager
         SaveData saveData = new SaveData
         {
             energy = currentEnergy,
-            gold = currentGem,
+            gem = currentGem,
             rewardList = new List<ItemKey>(currentRewardQueue)
         };
 
@@ -581,6 +649,7 @@ public class GameManager : BaseManager
         SaveData saveData = Managers.Save.LoadGame();
         if (saveData != null)
         {
+            currentGem = saveData.gem;
             currentEnergy = saveData.energy;
             currentRewardQueue = new Queue<ItemKey>(saveData.rewardList);
             // 저장된 아이템들 복원
@@ -589,10 +658,10 @@ public class GameManager : BaseManager
                 switch(itemData.type)
                 {
                     case ItemType.Normal:
-                        SpawnItem(itemData.itemId, itemData.level, itemData.position, itemData.state);
+                        if(SpawnItem(itemData.itemId, itemData.level, itemData.position, itemData.state)) {}
                         break;
                     case ItemType.Generatable:
-                        SpawnGenerator(itemData.itemId, itemData.level, itemData.position);
+                        if (SpawnGenerator(itemData.itemId, itemData.level, itemData.position)) {}
                         break;
 
                 }
@@ -603,6 +672,25 @@ public class GameManager : BaseManager
             Debug.Log($"보상카드{currentRewardQueue.Count}개 불러옴");
             onRewardQueueChanged?.Invoke(currentRewardQueue);
         }
+        KeyValuePair<ItemKey, int>temp1 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 2), 1);
+        KeyValuePair<ItemKey, int>temp2 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 3), 1);
+        KeyValuePair<ItemKey, int>temp3 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 4), 1);
+
+        KeyValuePair<ItemKey, int>temp4 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 2), 1);
+        KeyValuePair<ItemKey, int>temp5 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 3), 1);
+        KeyValuePair<ItemKey, int>temp6 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 4), 1);
+
+        KeyValuePair<ItemKey, int>temp7 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 2), 2);
+        KeyValuePair<ItemKey, int>temp8 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 4), 2);
+
+        KeyValuePair<ItemKey, int>temp9 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 4), 2);
+        KeyValuePair<ItemKey, int>temp10 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 3), 2);
+
+        onGuestCreated?.Invoke(1, temp1, null);
+        onGuestCreated?.Invoke(1, temp4, null);
+        onGuestCreated?.Invoke(4, temp7, temp5);
+        onGuestCreated?.Invoke(4, temp10, null);
+        onGuestCreated?.Invoke(12, temp6, temp9);
     }
 
     #endregion
@@ -639,7 +727,7 @@ public class GameManager : BaseManager
 
     private void OnApplicationPause(bool pauseStatus)
     {
-        if (pauseStatus)
+        if (pauseStatus && !Managers.Save.isClear)
         {
             SaveGame();
         }
@@ -647,7 +735,7 @@ public class GameManager : BaseManager
 
     private void OnApplicationQuit()
     {
-        SaveGame();
+        if(!Managers.Save.isClear) SaveGame();
     }
 
     #endregion

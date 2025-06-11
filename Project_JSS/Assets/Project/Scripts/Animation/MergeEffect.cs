@@ -1,6 +1,6 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.AdaptivePerformance.Editor;
+using Unity.VisualScripting;//
+//using UnityEditor.AdaptivePerformance.Editor;
 using UnityEngine;
 using UnityEngine.UI;
 

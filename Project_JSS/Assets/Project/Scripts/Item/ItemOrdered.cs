@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using DG.Tweening;
 
 public class ItemOrdered : MonoBehaviour//, IPointerClickHandler
@@ -12,7 +11,7 @@ public class ItemOrdered : MonoBehaviour//, IPointerClickHandler
     [SerializeField] private GameObject checkIcon;
     [SerializeField] private Button infoButton;
     [SerializeField] private TextMeshProUGUI countText;
-
+    public RectTransform rectT;
     public ItemSO data;
     public ItemDetails details;
     public ItemKey key;
@@ -25,6 +24,7 @@ public class ItemOrdered : MonoBehaviour//, IPointerClickHandler
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Init(ItemKey inputKey, int inputGoalCount)
     {
+        rectT = GetComponent<RectTransform>();
         key = inputKey;
         goalCount = inputGoalCount;
         data = Managers.Game.GetItemData(inputKey.id);
@@ -39,7 +39,7 @@ public class ItemOrdered : MonoBehaviour//, IPointerClickHandler
     }
     public void UpdateCountText()
     {
-        currentCount = Managers.Grid.CountItem(key);
+        currentCount = Managers.Grid.CountNormalItem(key);
         countText.text = $"{currentCount}/{goalCount}";
         if(currentCount>= goalCount)
         {
@@ -96,6 +96,14 @@ public class ItemOrdered : MonoBehaviour//, IPointerClickHandler
                 .OnComplete(() =>
                 {
                 });
+    }
+    public void OnCheckIcon()
+    {
+        checkIcon.SetActive(true);
+        countText.enabled = false;
+        checkIcon.transform.localScale = Vector3.one * 0.5f; // 초기 크기를 0.5로 설정
+        IsFulfill = true;
+
     }
     // checkIcon 비활성화 메서드 추가
     public void DeactivateCheckIcon()

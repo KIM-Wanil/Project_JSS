@@ -14,6 +14,153 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprites: []
   effects: []
-  BGMSounds: []
-  UISounds: []
-  effectSounds: []
+  BGMSounds:
+  - key: MainBGM
+    assetReference:
+      m_AssetGUID: 6e847f7514c206c4ba86361bd0924e44
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  UISounds:
+  - key: Click_Close
+    assetReference:
+      m_AssetGUID: 8fc6cf5f43c1e3f48a8a7709507d8524
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Click_Open
+    assetReference:
+      m_AssetGUID: c80e3fb483521794da6446e92e29a944
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Click_Tab
+    assetReference:
+      m_AssetGUID: 8b5a4055bb9b8544a9e0dcacb79cb2b3
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Click_Transition
+    assetReference:
+      m_AssetGUID: 8ed58c2dbe4b14b43aa80f7f88373c26
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Click_Transition
+    assetReference:
+      m_AssetGUID: 8ed58c2dbe4b14b43aa80f7f88373c26
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Click_Success
+    assetReference:
+      m_AssetGUID: 8e8dfa0e343a385429f46a8af2fc082b
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  effectSounds:
+  - key: Box_Crash
+    assetReference:
+      m_AssetGUID: a078321fa7cf2e942a571299337ac8c9
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Coin_Donation
+    assetReference:
+      m_AssetGUID: d8d7337def640944fbcef5525d18f362
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Get_Furniture
+    assetReference:
+      m_AssetGUID: 6ddc78c8b439f1840be8691bbc81d619
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Level_Up
+    assetReference:
+      m_AssetGUID: 400cc91019fd98244af8c6ca5759887a
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: MoveIn_Penguin
+    assetReference:
+      m_AssetGUID: f39c19c490b693c41b193241b56df9a5
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Pop_Item
+    assetReference:
+      m_AssetGUID: 3d3f9c6668a486b4f80b67ddf008d3ac
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Click_Success
+    assetReference:
+      m_AssetGUID: 8e8dfa0e343a385429f46a8af2fc082b
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: 1
+    assetReference:
+      m_AssetGUID: 258cbb57206e3d84f8179ac80f8aa9ee
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: 2
+    assetReference:
+      m_AssetGUID: 57a9677691f5ec54cbe79d2791db57e4
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: 3
+    assetReference:
+      m_AssetGUID: b7018b965c7edb747802f95a5d7079ba
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: 4
+    assetReference:
+      m_AssetGUID: 6a658a17db52968469c7251a030f2da7
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: 5
+    assetReference:
+      m_AssetGUID: d1d1ef92a8edf0c47a419d87b51ae305
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: 6
+    assetReference:
+      m_AssetGUID: 0e40a5f1c30290643a24d8710ff8ca86
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: 7
+    assetReference:
+      m_AssetGUID: 5186e52b44323144e8843f40057b02cb
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

@@ -7,6 +7,6 @@ public class LobbyScenario : MonoBehaviour
     private void Awake()
     {
         Debug.Log("LobbyScenario Awake");
-        user.GetUseInfoFromBackend();
+        //user.GetUseInfoFromBackend();
     }
 }

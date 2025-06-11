@@ -14,7 +14,107 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: e45b939344d9101448a7a54d2cd14b8a
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 0e40a5f1c30290643a24d8710ff8ca86
+    m_Address: Assets/Project/Sound/SFX/Scale/6.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 258cbb57206e3d84f8179ac80f8aa9ee
+    m_Address: Assets/Project/Sound/SFX/Scale/1.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d3f9c6668a486b4f80b67ddf008d3ac
+    m_Address: Assets/Project/Sound/SFX/Pop_Item.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 400cc91019fd98244af8c6ca5759887a
+    m_Address: Assets/Project/Sound/SFX/Level_Up.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5186e52b44323144e8843f40057b02cb
+    m_Address: Assets/Project/Sound/SFX/Scale/7.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57a9677691f5ec54cbe79d2791db57e4
+    m_Address: Assets/Project/Sound/SFX/Scale/2.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a658a17db52968469c7251a030f2da7
+    m_Address: Assets/Project/Sound/SFX/Scale/4.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6ddc78c8b439f1840be8691bbc81d619
+    m_Address: Assets/Project/Sound/SFX/Get_Furniture.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e847f7514c206c4ba86361bd0924e44
+    m_Address: Assets/Project/Sound/BGM/Penguin, Penguin, Penguins forever!.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79ade151a6191864dbb6cb315055dfba
+    m_Address: Assets/Project/Sound/SFX/Scale/8.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b5a4055bb9b8544a9e0dcacb79cb2b3
+    m_Address: Assets/Project/Sound/SFX/Click_Tab.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e8dfa0e343a385429f46a8af2fc082b
+    m_Address: Assets/Project/Sound/SFX/Success.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ed58c2dbe4b14b43aa80f7f88373c26
+    m_Address: Assets/Project/Sound/SFX/Click_Transition.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8fc6cf5f43c1e3f48a8a7709507d8524
+    m_Address: Assets/Project/Sound/SFX/Click_Close.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a078321fa7cf2e942a571299337ac8c9
+    m_Address: Assets/Project/Sound/SFX/Box_Crash.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7018b965c7edb747802f95a5d7079ba
+    m_Address: Assets/Project/Sound/SFX/Scale/3.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c80e3fb483521794da6446e92e29a944
+    m_Address: Assets/Project/Sound/SFX/Click_Open.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1d1ef92a8edf0c47a419d87b51ae305
+    m_Address: Assets/Project/Sound/SFX/Scale/5.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8d7337def640944fbcef5525d18f362
+    m_Address: Assets/Project/Sound/SFX/Coin_Donation.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f39c19c490b693c41b193241b56df9a5
+    m_Address: Assets/Project/Sound/SFX/MoveIn_Penguin.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f0f3deebc6c12184db5f1594f8a2f6ba, type: 2}
   m_SchemaSet:

@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Progress;
+
 public class GridManager : BaseManager
 {
     private float boardWidth;
@@ -22,7 +21,7 @@ public class GridManager : BaseManager
     private Vector2 gridStartPosition = new Vector2(0f, 0f);
     private GameObject[,] tiles; // 타일 배열 추가
     private Vector2[,] tilePositions;
-    private GameObject mergeBoard; 
+    public GameObject mergeBoard; 
     private RectTransform mergeBoardRectT; 
     public GameObject MergeBoard => mergeBoard;
     public RectTransform MergeBoardRectT => mergeBoardRectT;
@@ -32,13 +31,18 @@ public class GridManager : BaseManager
     public int Height => GameManager.GRID_HEIGHT;
 
     
-    private Dictionary<ItemKey, List<Vector2Int>> ownedItemsCanBeMerged = new Dictionary<ItemKey, List<Vector2Int>>();
-    private Coroutine mouseCheckCoroutine;
-    private bool isMouseMoving;
-    private MergeableItem itemToAnnounce1;
-    private MergeableItem itemToAnnounce2;
+    public Dictionary<ItemKey, List<Vector2Int>> ownedNormalItems = new Dictionary<ItemKey, List<Vector2Int>>();
+    private Dictionary<MergeableItem, Tween> itemTweens = new Dictionary<MergeableItem, Tween>();
 
-    DG.Tweening.Sequence announceMovingSequence;
+    //private Coroutine mouseCheckCoroutine;
+    //private bool isMouseMoving;
+    //private MergeableItem itemToAnnounce1;
+    //private MergeableItem itemToAnnounce2;
+
+    //DG.Tweening.Sequence announceMovingSequence;
+    //private float mouseIdleTime = 0f;
+    //private const float idleThreshold = 2f;
+    // OnGUI 메서드 추가
 
     public override void Init()
     {
@@ -47,6 +51,7 @@ public class GridManager : BaseManager
         if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
             return;
         Debug.Log("GridManager initialized");
+        base.Init();
         InitializeGrid();
         GenerateTiles(); // 타일 생성 호출
                          //Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
@@ -145,117 +150,150 @@ public class GridManager : BaseManager
             }
         }
     }
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            isMouseMoving = true;
-            if (mouseCheckCoroutine != null)
-            {
-                StopCoroutine(mouseCheckCoroutine);
-                itemToAnnounce1 = null;
-                itemToAnnounce2 = null;
-                if (announceMovingSequence != null)
-                {
-                    announceMovingSequence.Kill();
-                }
-            }
-            ResetItemsPosition();
-            StartMouseCheck();
-        }
-    }
+    //private void Update()
+    //{
+    //    //if (Input.GetMouseButtonDown(0))
+    //    //{
+    //    //    isMouseMoving = true;
+    //    //    if (mouseCheckCoroutine != null)
+    //    //    {
+    //    //        StopCoroutine(mouseCheckCoroutine);
+    //    //        itemToAnnounce1 = null;
+    //    //        itemToAnnounce2 = null;
+    //    //        if (announceMovingSequence != null)
+    //    //        {
+    //    //            announceMovingSequence.Kill();
+    //    //        }
+    //    //    }
+    //    //    ResetItemsPosition();
+    //    //    StartMouseCheck();
+    //    //}
 
-    private void StartMouseCheck()
-    {
-        isMouseMoving = false;
-        mouseCheckCoroutine = StartCoroutine(CheckMouseMovement());
-    }
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        isMouseMoving = true;
+    //        if (mouseCheckCoroutine != null)
+    //        {
+    //            StopCoroutine(mouseCheckCoroutine);
+    //            itemToAnnounce1 = null;
+    //            itemToAnnounce2 = null;
+    //            if (announceMovingSequence != null)
+    //            {
+    //                announceMovingSequence.Kill();
+    //            }
+    //        }
+    //        ResetItemsPosition();
+    //        StartMouseCheck();
+    //        mouseIdleTime = 0f; // 마우스가 눌렸을 때 타이머 초기화
+    //    }
+    //    else if (Input.GetMouseButton(0))
+    //    {
+    //        mouseIdleTime = 0f; // 마우스가 눌린 상태일 때 타이머 초기화
+    //    }
+    //    else
+    //    {
+    //        mouseIdleTime += Time.deltaTime; // 마우스가 눌리지 않았을 때 타이머 증가
+    //        if (mouseIdleTime >= idleThreshold)
+    //        {
+    //            if (mouseCheckCoroutine == null)
+    //            {
+    //                StartMouseCheck();
+    //            }
+    //        }
+    //    }
+    //}
 
-    private IEnumerator CheckMouseMovement()
-    {
-        Debug.Log("CheckMouseMovement Start");
-        yield return new WaitForSeconds(2f);
-        if (!isMouseMoving)
-        {
-            (Vector2Int, Vector2Int)? mergeablePosPair = FindMergeablePosPair();
-            //foreach(var a in ownedItemsCanBeMerged)
-            //{
-            //   Debug.Log($"key:{a.Key.id} (LV:{a.Key.lv})");
-            //    foreach(var b in a.Value)
-            //    {
-            //        Debug.Log($"value:{b}");
-            //    }
-            //}
-            if (mergeablePosPair.HasValue)
-            {
-                Debug.Log("MergeablePosPair Found");
-                StartCoroutine(PerformMovementEffect(mergeablePosPair.Value.Item1, mergeablePosPair.Value.Item2));
-            }
-        }
-    }
+    //private void StartMouseCheck()
+    //{
+    //    isMouseMoving = false;
+    //    mouseCheckCoroutine = StartCoroutine(CheckMouseMovement());
+    //}
 
-    private IEnumerator PerformMovementEffect(Vector2Int pos1, Vector2Int pos2)
-    {
-        Debug.Log("PerformMovementEffect");
-        itemToAnnounce1 = GetItemAt(pos1);
-        if (itemToAnnounce1 == null)
-        {
-            Debug.LogError("itemToAnnounce1 is null");
-            yield break;
-        }
-        itemToAnnounce2 = GetItemAt(pos2);
-        if (itemToAnnounce2 == null)
-        {
-            Debug.LogError("itemToAnnounce2 is null");
-            yield break;
-        }
+    //private IEnumerator CheckMouseMovement()
+    //{
+    //    Debug.Log("CheckMouseMovement Start");
+    //    yield return new WaitForSeconds(idleThreshold);
+    //    if (!isMouseMoving)
+    //    {
+    //        (Vector2Int, Vector2Int)? mergeablePosPair = FindMergeablePosPair();
+    //        //foreach(var a in ownedItemsCanBeMerged)
+    //        //{
+    //        //   Debug.Log($"key:{a.Key.id} (LV:{a.Key.lv})");
+    //        //    foreach(var b in a.Value)
+    //        //    {
+    //        //        Debug.Log($"value:{b}");
+    //        //    }
+    //        //}
+    //        if (mergeablePosPair.HasValue)
+    //        {
+    //            Debug.Log("MergeablePosPair Found");
+    //            StartCoroutine(PerformMovementEffect(mergeablePosPair.Value.Item1, mergeablePosPair.Value.Item2));
+    //        }
+    //    }
+    //}
 
-        Vector2 tilePos1 = tilePositions[pos1.x, pos1.y];
-        Vector2 tilePos2 = tilePositions[pos2.x, pos2.y];
+    //private IEnumerator PerformMovementEffect(Vector2Int pos1, Vector2Int pos2)
+    //{
+    //    Debug.Log("PerformMovementEffect");
+    //    itemToAnnounce1 = GetItemAt(pos1);
+    //    if (itemToAnnounce1 == null)
+    //    {
+    //        Debug.LogError("itemToAnnounce1 is null");
+    //        yield break;
+    //    }
+    //    itemToAnnounce2 = GetItemAt(pos2);
+    //    if (itemToAnnounce2 == null)
+    //    {
+    //        Debug.LogError("itemToAnnounce2 is null");
+    //        yield break;
+    //    }
 
-        Vector2 direction1 = (tilePos2 - tilePos1).normalized * 10f;
-        Vector2 direction2 = (tilePos1 - tilePos2).normalized * 10f;
+    //    Vector2 tilePos1 = tilePositions[pos1.x, pos1.y];
+    //    Vector2 tilePos2 = tilePositions[pos2.x, pos2.y];
 
-        Debug.Log($"tilePos1:{tilePos1}/tilePos2:{tilePos2}/direction1:{direction1}/direction2:{direction2}");
-        if (announceMovingSequence != null)
-        {
-            announceMovingSequence.Kill();
-        }
-        announceMovingSequence = DG.Tweening.DOTween.Sequence();
+    //    Vector2 direction1 = (tilePos2 - tilePos1).normalized * 10f;
+    //    Vector2 direction2 = (tilePos1 - tilePos2).normalized * 10f;
 
-        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(direction1, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(direction2, 0.5f));
-        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
+    //    Debug.Log($"tilePos1:{tilePos1}/tilePos2:{tilePos2}/direction1:{direction1}/direction2:{direction2}");
+    //    if (announceMovingSequence != null)
+    //    {
+    //        announceMovingSequence.Kill();
+    //    }
+    //    announceMovingSequence = DG.Tweening.DOTween.Sequence();
 
-        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(direction1, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(direction2, 0.5f));
-        announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
-        announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
+    //    announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(direction1, 0.5f));
+    //    announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(direction2, 0.5f));
+    //    announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
+    //    announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
 
-        announceMovingSequence.AppendInterval(0.5f);
-        announceMovingSequence.SetLoops(-1);
-        announceMovingSequence.Play();
+    //    announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(direction1, 0.5f));
+    //    announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(direction2, 0.5f));
+    //    announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
+    //    announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
 
-        while (!isMouseMoving)
-        {
-            yield return null;
-        }
+    //    announceMovingSequence.AppendInterval(0.5f);
+    //    announceMovingSequence.SetLoops(-1);
+    //    announceMovingSequence.Play();
 
-        announceMovingSequence.Kill();
-        ResetItemsPosition();
-    }
+    //    while (!isMouseMoving)
+    //    {
+    //        yield return null;
+    //    }
 
-    private void ResetItemsPosition()
-    {
-        if (itemToAnnounce1 != null && itemToAnnounce2 != null)
-        {
-            itemToAnnounce1.itemRectT.anchoredPosition = Vector3.zero;
-            itemToAnnounce2.itemRectT.anchoredPosition = Vector3.zero;
-            itemToAnnounce1 = null;
-            itemToAnnounce2 = null;
-        }
-    }
+    //    announceMovingSequence.Kill();
+    //    ResetItemsPosition();
+    //}
+
+    //private void ResetItemsPosition()
+    //{
+    //    if (itemToAnnounce1 != null && itemToAnnounce2 != null)
+    //    {
+    //        itemToAnnounce1.itemRectT.anchoredPosition = Vector3.zero;
+    //        itemToAnnounce2.itemRectT.anchoredPosition = Vector3.zero;
+    //        itemToAnnounce1 = null;
+    //        itemToAnnounce2 = null;
+    //    }
+    //}
     public void PlayMergeEffect(Vector2Int position)
     {
         mergeTryEffect.PlayEffect();
@@ -286,7 +324,7 @@ public class GridManager : BaseManager
                 {
                     MergeableItem item = grid[x, y];
                     grid[x, y] = null;
-                    Managers.Game.ReturnItemToPool(item.gameObject);
+                    Managers.Game.ReturnItemToPool(item);
                 }
             }
         }
@@ -453,6 +491,7 @@ public class GridManager : BaseManager
             new Vector2Int(0, -1),  // 하
         };
 
+        int count = 0;
 
         // 인접한 모든 방향을 검사
         foreach (var direction in directions)
@@ -463,12 +502,18 @@ public class GridManager : BaseManager
                 MergeableItem item = grid[newPos.x, newPos.y];
                 if (item.state == ItemState.InBox)
                 {
-                    item.Initialize(item.Lv, ItemState.Locked);
-
+                    count++;
+                    item.Initialize(item.Lv, newPos, ItemState.Locked);
+                    AddOwnedItemsCanBeMerged(item);
                 }
             }
         }
 
+        if(count>0)
+        {
+            ////소리 별로여서 보류
+            //Managers.Asset.PlaySound("Box_Crash", SoundType.Effect);
+        }
         // 빈 위치를 찾지 못한 경우 null 반환
         return;
     }
@@ -480,6 +525,14 @@ public class GridManager : BaseManager
         //return new Vector3(x, y, 0);
 
         return tilePositions[gridPosition.x, gridPosition.y];
+    }
+    public Vector3 GetTileWorldPosition(Vector2Int gridPosition)
+    {
+        //float x = gridStartPosition.x + gridPosition.x * (TileSize + spacing);
+        //float y = gridStartPosition.y - gridPosition.y * (TileSize + spacing); // y 좌표를 반대로 계산
+        //return new Vector3(x, y, 0);
+
+        return tiles[gridPosition.x, gridPosition.y].transform.position;
     }
 
 
@@ -517,81 +570,198 @@ public class GridManager : BaseManager
     }
 
     // 아이템을 그리드에 배치
-    public bool PlaceMoveItem(MergeableItem item, Vector2 startTilePosition, Vector2Int targetGridposition)
+    //public bool PlaceMoveItem(MergeableItem item, Vector2 startWorldPosition, Vector2Int targetGridposition)
+    //{
+    //    // 기존 트윈 애니메이션 중지 및 제거
+    //    if (itemTweens == null)
+    //    {
+    //        itemTweens = new Dictionary<MergeableItem, Tween>();
+    //    }
+    //    if (itemTweens.ContainsKey(item))
+    //    {
+    //        itemTweens[item].Kill();
+    //        itemTweens.Remove(item);
+    //    }
+
+    //    // 애니메이션을 시작하기 전의 현재 실제 위치 저장
+    //    Vector2 actualStartPosition = item.itemRectT.anchoredPosition;
+
+    //    // 그리드에 아이템 논리적 배치 (중복 방지를 위해 필요)
+    //    AttatchItemToGrid(item, targetGridposition);
+
+    //    Vector2 targetTilePosition = GetTilePosition(targetGridposition);
+    //    Debug.Log($"startTilePosition:{actualStartPosition}/targetTilePosition:{targetTilePosition}");
+
+    //    // 실제 현재 위치와 목표 위치 간의 거리로 계산
+    //    float distance = Vector2.Distance(actualStartPosition, targetTilePosition);
+    //    float moveDuration = distance * 0.1f;
+    //    Debug.Log($"distance:{distance}/moveDuration:{moveDuration}");
+
+    //    // 저장된 실제 시작 위치로 아이템 위치 설정 (시각적으로만)
+    //    item.itemRectT.anchoredPosition = actualStartPosition;
+
+    //    // 직선 이동 트윈 생성
+    //    Tween moveTween = item.itemRectT.DOAnchorPos(targetTilePosition, moveDuration).SetEase(Ease.Linear);
+
+    //    // 트윈 완료 시 실행할 코드
+    //    moveTween.OnComplete(() =>
+    //    {
+    //        // 아이템을 타일의 자식으로 배치
+    //        item.transform.SetParent(tiles[targetGridposition.x, targetGridposition.y].transform);
+    //        // 아이템의 위치 설정
+    //        item.itemRectT.localScale = Vector3.one;
+    //        item.itemRectT.anchoredPosition = Vector3.zero;
+
+    //        Managers.Grid.CheckGuestsOrder();
+    //        // 트윈 애니메이션 제거
+    //        itemTweens.Remove(item);
+    //    });
+
+    //    // 트윈 애니메이션 저장
+    //    itemTweens[item] = moveTween;
+    //    moveTween.Play();
+
+    //    return true;
+    //}
+    public bool PlaceMoveItem(MergeableItem item, Vector2 startWorldPosition, Vector2Int targetGridposition)
     {
-        item.transform.SetParent(mergeBoard.transform);
-        item.itemRectT.anchoredPosition = startTilePosition;
+        if (item == null)
+        {
+            Debug.LogError("item is null in PlaceMoveItem method");
+            return false;
+        }
+        // 기존 트윈 애니메이션 중지 및 제거
+        if (itemTweens == null)
+        {
+            itemTweens = new Dictionary<MergeableItem, Tween>();
+        }
+        if (itemTweens.ContainsKey(item))
+        {
+            itemTweens[item].Kill();
+            itemTweens.Remove(item);
+        }
+        item.draggableItem.SetInteractionEnabled(false);
 
-        Vector2 targetTilePosition = GetTilePosition(targetGridposition);
+        // 현재 아이템의 실제 월드 위치 저장
+        Vector2 actualStartPosition = item.transform.position;
 
-        Debug.Log($"startTilePosition:{startTilePosition}/targetTilePosition:{targetTilePosition}");
+        // 그리드에 아이템 논리적 배치
+        AttatchItemToGrid(item, targetGridposition);
 
-        // 이동 시간 계산 (거리에 비례)
-        float distance = Vector2.Distance(startTilePosition, targetTilePosition);
-        float moveDuration = distance * 0.003f; // 속도 조절을 위해 5로 나눔
+        //Vector2 targetTilePosition = GetTilePosition(targetGridposition);
+        Vector2 targetTilePosition = GetTileWorldPosition(targetGridposition);
+        Debug.Log($"startTilePosition:{actualStartPosition}/targetTilePosition:{targetTilePosition}");
+
+        // 거리 계산 
+        float distance = Vector2.Distance(targetTilePosition, actualStartPosition);
+
+        // 해상도에 따른 정규화
+        float normalizedDistance = distance / Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
+        float moveDuration = normalizedDistance * 2.0f; // 0.5f는 기준 duration 시간
+
         Debug.Log($"distance:{distance}/moveDuration:{moveDuration}");
 
-        // 1. 직선 벡터 구하기
-        Vector2 direction = (targetTilePosition - startTilePosition).normalized;
-        Vector2 perpendicularVector = new Vector2();
-        if (direction.x > 0)
-        {
-            perpendicularVector = new Vector2(-direction.y, direction.x);
-        }
-        else
-        {
-            perpendicularVector = new Vector2(direction.y, -direction.x);
-        }
+        // DOMove를 사용 (DOAnchorPos 대신)
+        Tween moveTween = item.transform.DOMove(targetTilePosition, moveDuration)
+            .SetEase(Ease.OutQuad)
+            .SetAutoKill(false)
+            .OnComplete(() =>
+            {
+                item.draggableItem.SetInteractionEnabled(true);
+                // 아이템을 타일의 자식으로 배치
+                item.transform.SetParent(tiles[targetGridposition.x, targetGridposition.y].transform);
+                // 아이템의 위치 설정
+                item.rectT.localScale = Vector3.one;
+                item.rectT.anchoredPosition = Vector3.zero;
 
-        // 4. 벡터 정규화
-        perpendicularVector = perpendicularVector.normalized;
+                Managers.Grid.CheckGuestsOrder();
+                // 트윈 애니메이션 제거
+                itemTweens.Remove(item);
+                Debug.Log("스폰트윈종료");
+            }
+            );
 
+        // 트윈 애니메이션 저장
+        itemTweens[item] = moveTween;
+        moveTween.Play();
 
-        // 포물선 이동 시퀀스 생성
-        DG.Tweening.Sequence sequence = DOTween.Sequence();
-
-        // 포물선 경로 설정
-        Vector2 controlPoint = new Vector2();
-        if(Mathf.Abs(startTilePosition.x - targetTilePosition.x) < TileSize * 0.5f)
-        {
-            controlPoint = (startTilePosition + targetTilePosition) * 0.5f;
-        }
-        else
-        {
-            controlPoint = (startTilePosition + targetTilePosition) * 0.5f + perpendicularVector * distance * 0.2f;
-        } 
-        Debug.Log($"controlPoint:{controlPoint}");
-
-        // 반동 효과를 위한 추가 제어점 설정
-        Vector2 overshootPoint = targetTilePosition + (direction * 5f); // 
-        Debug.Log($"overshootPoint:{overshootPoint}");
-
-        sequence.Append(item.itemRectT.DOLocalPath(new Vector3[] { startTilePosition, controlPoint, overshootPoint, targetTilePosition }, moveDuration ,PathType.CatmullRom, PathMode.Ignore).SetEase(Ease.OutQuart));
-
-        // 시퀀스 완료 시 실행할 코드
-        sequence.OnComplete(() =>
-        {
-            // 아이템을 타일의 자식으로 배치
-            item.transform.SetParent(tiles[targetGridposition.x, targetGridposition.y].transform);
-
-            // 아이템의 위치 설정
-            //item.transform.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
-
-            item.itemRectT.localScale = Vector3.one;
-            item.itemRectT.anchoredPosition = Vector3.zero;
-
-            // 아이템의 Sibling Index를 타일보다 앞에 배치
-            item.transform.SetSiblingIndex(tiles[targetGridposition.x, targetGridposition.y].transform.GetSiblingIndex() + 1);
-
-               
-        });
-        sequence.Play();
-        // 그리드에 아이템 배치
-        AttatchItemToGrid(item, targetGridposition);
-        //grid[targetGridposition.x, targetGridposition.y] = item;
-        //item.SetGridPosition(targetGridposition);
         return true;
     }
+    //public bool PlaceMoveItem(MergeableItem item, Vector2 startTilePosition, Vector2Int targetGridposition)
+    //{
+    //    item.transform.SetParent(mergeBoard.transform);
+    //    item.itemRectT.anchoredPosition = startTilePosition;
+
+    //    Vector2 targetTilePosition = GetTilePosition(targetGridposition);
+
+    //    Debug.Log($"startTilePosition:{startTilePosition}/targetTilePosition:{targetTilePosition}");
+
+    //    // 이동 시간 계산 (거리에 비례)
+    //    float distance = Vector2.Distance(startTilePosition, targetTilePosition);
+    //    float moveDuration = distance * 0.003f; // 속도 조절을 위해 5로 나눔
+    //    Debug.Log($"distance:{distance}/moveDuration:{moveDuration}");
+
+    //    // 1. 직선 벡터 구하기
+    //    Vector2 direction = (targetTilePosition - startTilePosition).normalized;
+    //    Vector2 perpendicularVector = new Vector2();
+    //    if (direction.x > 0)
+    //    {
+    //        perpendicularVector = new Vector2(-direction.y, direction.x);
+    //    }
+    //    else
+    //    {
+    //        perpendicularVector = new Vector2(direction.y, -direction.x);
+    //    }
+
+    //    // 4. 벡터 정규화
+    //    perpendicularVector = perpendicularVector.normalized;
+
+
+    //    // 포물선 이동 시퀀스 생성
+    //    DG.Tweening.Sequence sequence = DOTween.Sequence();
+
+    //    // 포물선 경로 설정
+    //    Vector2 controlPoint = new Vector2();
+    //    if (Mathf.Abs(startTilePosition.x - targetTilePosition.x) < TileSize * 0.5f)
+    //    {
+    //        controlPoint = (startTilePosition + targetTilePosition) * 0.5f;
+    //    }
+    //    else
+    //    {
+    //        controlPoint = (startTilePosition + targetTilePosition) * 0.5f + perpendicularVector * distance * 0.2f;
+    //    }
+    //    Debug.Log($"controlPoint:{controlPoint}");
+
+    //    // 반동 효과를 위한 추가 제어점 설정
+    //    Vector2 overshootPoint = targetTilePosition + (direction * 5f); // 
+    //    Debug.Log($"overshootPoint:{overshootPoint}");
+
+    //    sequence.Append(item.itemRectT.DOLocalPath(new Vector3[] { startTilePosition, controlPoint, overshootPoint, targetTilePosition }, moveDuration, PathType.CatmullRom, PathMode.Ignore).SetEase(Ease.OutQuart));
+
+    //    // 시퀀스 완료 시 실행할 코드
+    //    sequence.OnComplete(() =>
+    //    {
+    //        // 아이템을 타일의 자식으로 배치
+    //        item.transform.SetParent(tiles[targetGridposition.x, targetGridposition.y].transform);
+
+    //        // 아이템의 위치 설정
+    //        //item.transform.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
+
+    //        item.itemRectT.localScale = Vector3.one;
+    //        item.itemRectT.anchoredPosition = Vector3.zero;
+
+    //        // 아이템의 Sibling Index를 타일보다 앞에 배치
+    //        item.transform.SetSiblingIndex(tiles[targetGridposition.x, targetGridposition.y].transform.GetSiblingIndex() + 1);
+
+
+    //    });
+    //    sequence.Play();
+    //    // 그리드에 아이템 배치
+    //    AttatchItemToGrid(item, targetGridposition);
+    //    //grid[targetGridposition.x, targetGridposition.y] = item;
+    //    //item.SetGridPosition(targetGridposition);
+    //    return true;
+    //}
     public bool PlaceItem(MergeableItem item, Vector2Int targetGridposition)
     {
 
@@ -616,7 +786,7 @@ public class GridManager : BaseManager
         if (IsValidPosition(position))
         {
             MergeableItem item = GetItemAt(position);
-            if (item.Lv < item.itemData.items.Length && item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
+            if (item.Lv <= item.itemData.items.Length && item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
             {
                 RemoveOwnedItemsCanBeMerged(item);
             }
@@ -625,13 +795,13 @@ public class GridManager : BaseManager
     }
     public void DetatchItemFromGrid(MergeableItem item)
     {
-        if (IsValidPosition(item.GridPosition))
+        if (IsValidPosition(item.gridPosition))
         {
             if (item.Lv < item.itemData.items.Length && item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
             {
                 RemoveOwnedItemsCanBeMerged(item);
             }
-            grid[item.GridPosition.x, item.GridPosition.y] = null;
+            grid[item.gridPosition.x, item.gridPosition.y] = null;
         }
     }
     public void AttatchItemToGrid(MergeableItem item, Vector2Int position)
@@ -639,9 +809,9 @@ public class GridManager : BaseManager
         if (IsValidPosition(position))
         {
             item.SetGridPosition(position);
-            //지금 합성 조건 : 레벨 최대 미만, 제너레이터가 아니고, 상자상태가 아닌 경우     
+            //지금 리스트에 넣는 조건 :제너레이터가 아니고, 상자상태가 아닌 경우     
             //추후 변동 가능
-            if (item.Lv < item.itemData.items.Length && item.itemData.type != ItemType.Generatable && item.state != ItemState.InBox)
+            if ((item.itemData.type == ItemType.Normal || item.itemData.type == ItemType.Usable) && (item.state ==ItemState.Normal))
             {
                 Debug.Log("AddOwnedItemsCanBeMerged");
                 AddOwnedItemsCanBeMerged(item);
@@ -688,30 +858,33 @@ public class GridManager : BaseManager
     public void AddOwnedItemsCanBeMerged(MergeableItem item)
     {
         var key = item.itemKey;
-        if (!ownedItemsCanBeMerged.ContainsKey(key))
+        if (!ownedNormalItems.ContainsKey(key))
         {
-            ownedItemsCanBeMerged[key] = new List<Vector2Int>();
+            ownedNormalItems[key] = new List<Vector2Int>();
         }
-        ownedItemsCanBeMerged[key].Add(item.GridPosition);
+        if (!ownedNormalItems[key].Contains(item.gridPosition))
+        {
+            ownedNormalItems[key].Add(item.gridPosition);
+        }
     }
 
-    // 아이템이 제거될 때 호출되는 메서드
-    public void RemoveOwnedItemsCanBeMerged(MergeableItem item)
+        // 아이템이 제거될 때 호출되는 메서드
+        public void RemoveOwnedItemsCanBeMerged(MergeableItem item)
     {
         var key = item.itemKey;
-        if (ownedItemsCanBeMerged.TryGetValue(key, out var positions))
+        if (ownedNormalItems.TryGetValue(key, out var positions))
         {
-            positions.Remove(item.GridPosition);
+            positions.Remove(item.gridPosition);
 
             if (positions.Count == 0)
             {
-                ownedItemsCanBeMerged.Remove(key);
+                ownedNormalItems.Remove(key);
             }
         }
     }
     public (Vector2Int, Vector2Int)? FindNearestItemPairCanBeMerged(ItemKey itemKey)
     {
-        if (ownedItemsCanBeMerged.TryGetValue(itemKey, out var positions) && positions.Count >= 2)
+        if (ownedNormalItems.TryGetValue(itemKey, out var positions) && positions.Count >= 2)
         {
             List<Vector2Int> lockedPositions = new List<Vector2Int>();
             List<Vector2Int> unlockedPositions = new List<Vector2Int>();
@@ -830,7 +1003,7 @@ public class GridManager : BaseManager
         (Vector2Int, Vector2Int)? mergeblePosPair = null;
 
         // ownedItemsCanBeMerged 딕셔너리 얕은 복사
-        var itemsToCheck = new Dictionary<ItemKey, List<Vector2Int>>(ownedItemsCanBeMerged);
+        var itemsToCheck = new Dictionary<ItemKey, List<Vector2Int>>(ownedNormalItems);
 
         foreach (var guest in currentGuests)
         {
@@ -840,17 +1013,23 @@ public class GridManager : BaseManager
                 {
                     continue;
                 }
-                mergeblePosPair = FindNearestItemPairCanBeMerged(item.key);
-                if (mergeblePosPair.HasValue)
+                for(int i = item.key.lv -1; i > 0; i--)
                 {
-                    Debug.Log("주문 아이템에 가까운 아이템 페어 찾음");
-                    return mergeblePosPair;
+                    ItemKey keyToFind = new ItemKey(item.key.id, i);
+                    mergeblePosPair = FindNearestItemPairCanBeMerged(keyToFind);
+                    if (mergeblePosPair.HasValue)
+                    {
+                        Debug.Log("주문 아이템에 가까운 아이템 페어 찾음");
+                        return mergeblePosPair;
+                    }
+                    else
+                    {
+                        // 복사한 딕셔너리에서 해당 아이템 제거
+                        itemsToCheck.Remove(keyToFind);
+                    }
                 }
-                else
-                {
-                    // 복사한 딕셔너리에서 해당 아이템 제거
-                    itemsToCheck.Remove(item.key);
-                }
+                
+                
             }
         }
 
@@ -858,6 +1037,12 @@ public class GridManager : BaseManager
         {
             foreach (var item in itemsToCheck)
             {
+                Debug.Log($"{Managers.Game.GetItemName(item.Key)}/아이템 레벨 {item.Key.lv}/최대 레벨{Managers.Game.GetItemMaxLevel(item.Key)}");
+                //아이템이 최대 레벨인 경우 제외
+                if(item.Key.lv == Managers.Game.GetItemMaxLevel(item.Key))
+                {
+                    continue;
+                }
                 mergeblePosPair = FindNearestItemPairCanBeMerged(item.Key);
                 if (mergeblePosPair.HasValue)
                 {
@@ -974,61 +1159,117 @@ public class GridManager : BaseManager
         }
         return false;
     }
-    public int CountItem(ItemKey item)
+    public int CountNormalItem(ItemKey item)
     {
+        if (!ownedNormalItems.ContainsKey(item)) return 0;
+  
         int count = 0;
-        for (int x = 0; x < Width; x++)
+        foreach (var pos in ownedNormalItems[item])
         {
-            for (int y = 0; y < Height; y++)
+            MergeableItem tempItem = GetItemAt(pos);
+            if (tempItem.state == ItemState.Normal)
             {
-                MergeableItem mergeableItem = grid[x, y];
-                if (mergeableItem != null &&
-                    mergeableItem.itemData.id == item.id &&
-                    mergeableItem.Lv == item.lv && mergeableItem.state == ItemState.Normal)
-                {
-                    count++;
-                }
+                tempItem.isCheck = true;
+                tempItem.OnChecked();
+                count++;
             }
         }
         return count;
     }
-    // 새로운 함수 추가
-    public void FindAndRemoveItemFromGrid(ItemKey item)
+    // 아이템키로 머지판에서 노말아이템 찾아서 삭제 (퀘스트 완료시)
+    public List<Vector2Int> FindNormalItemsFromGrid(ItemKey item, int goalCount)
     {
-        for (int x = 0; x < Width; x++)
+        List <Vector2Int> targetPositions = new List<Vector2Int>();
+        if (ownedNormalItems.ContainsKey(item))
         {
-            for (int y = 0; y < Height; y++)
+            foreach (var pos in ownedNormalItems[item])
             {
-                MergeableItem mergeableItem = grid[x, y];
-
-                if (mergeableItem != null &&
-                    mergeableItem.itemData.id == item.id &&
-                    mergeableItem.Lv == item.lv && mergeableItem.state == ItemState.Normal)
+                MergeableItem tempItem = GetItemAt(pos);
+                if (tempItem.state != ItemState.Locked)
                 {
-                    // 그리드에서 아이템 제거
-                    Vector2Int gridPos = new Vector2Int(x, y);
-                    DetatchItemFromGrid(gridPos);
-                    Managers.Game.ReturnItemToPool(mergeableItem.gameObject);
-                    return;
+                    targetPositions.Add(pos);
+                    if(targetPositions.Count == goalCount)
+                    {
+                        return targetPositions;
+                    }
+                }
+            }
+            if(targetPositions.Count < goalCount)
+            {
+                return null;
+            }
+        }
+        return null;
+    }
+    public void UncheckNormalItem(ItemKey item)
+    {
+        if (ownedNormalItems.ContainsKey(item))
+        {
+            foreach (var pos in ownedNormalItems[item])
+            {
+                MergeableItem tempItem = GetItemAt(pos);
+                if (tempItem.isCheck)
+                {
+                    tempItem.isCheck = false;
+                    tempItem.OnUnchecked();
                 }
             }
         }
     }
-    public void RemoveItemFromGrid(Vector2Int gridPos)
+    public DG.Tweening.Sequence RemoveItemFromGridToGuest(MergeableItem mergeableItem, Vector3 worldPosition)
     {
-        MergeableItem mergeableItem = grid[gridPos.x, gridPos.y];
+        DG.Tweening.Sequence sequence = DOTween.Sequence();
+        sequence.Append(mergeableItem.rectT.DOMove(worldPosition, 0.5f));
+        sequence.OnComplete(() =>
+        {
+            // 이동이 끝난 후 DetatchItemFromGrid와 ReturnItemToPool을 실행합니다.
+            DetatchItemFromGrid(mergeableItem.gridPosition);
+            Managers.Game.ReturnItemToPool(mergeableItem);
+        });
+        return sequence;
+    }
+    public DG.Tweening.Sequence RemoveItemFromGridToGuest(Vector2Int gridPos, Vector3 worldPosition)
+    {
+        MergeableItem mergeableItem = GetItemAt(gridPos);
+
+        if(mergeableItem.draggableItem = DraggableItem.currentlySelectedItem)
+        {
+            DraggableItem.currentlySelectedItem.mergeableItem.OnDeSelected();
+            DraggableItem.currentlySelectedItem = null;
+            Managers.Game.DeSelecItem();
+        }
+
+        mergeableItem.transform.SetParent(mergeBoard.transform);
+        DG.Tweening.Sequence sequence = DOTween.Sequence();
+        sequence.Append(mergeableItem.rectT.DOMove(worldPosition, 0.5f));
+        sequence.OnComplete(() =>
+        {
+            // 이동이 끝난 후 DetatchItemFromGrid와 ReturnItemToPool을 실행합니다.
+            DetatchItemFromGrid(mergeableItem.gridPosition);
+            Managers.Game.ReturnItemToPool(mergeableItem);
+        });
+        return sequence;
+    }
+    public void RemoveItemFromGridInstantly(MergeableItem mergeableItem)
+    {
+        DetatchItemFromGrid(mergeableItem.gridPosition);
+        Managers.Game.ReturnItemToPool(mergeableItem);
+    }
+    public void RemoveItemFromGridInstantly(Vector2Int gridPos)
+    {
+        MergeableItem mergeableItem = GetItemAt(gridPos);
         DetatchItemFromGrid(gridPos);
-        Managers.Game.ReturnItemToPool(mergeableItem.gameObject);
+        Managers.Game.ReturnItemToPool(mergeableItem);
     }
 
     public Vector2Int GetNearestEmptyPosition(Vector2Int targetGridPos)
     {
 
-        // 시작 위치가 빈 위치라면 바로 반환
-        if (IsEmptyPosition(targetGridPos))
-        {
-            return targetGridPos;
-        }
+        //// 시작 위치가 빈 위치라면 바로 반환
+        //if (IsEmptyPosition(targetGridPos))
+        //{
+        //    return targetGridPos;
+        //}
 
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();

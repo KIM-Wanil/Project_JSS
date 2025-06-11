@@ -8,66 +8,87 @@ using Unity.VisualScripting;
 using DG.Tweening;
 public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
-    private Vector2 dragOffset;
-    private Vector2Int initialGridPos;
-    private RectTransform rectTransform;
-    private Canvas canvas;
-    public MergeableItem mergeableItem;
-    public Generator generator;
-    private bool isDragging;
-    private float clickCooldown = 0.1f;
-    private bool isSelected => currentlySelectedItem == this;
     public static DraggableItem currentlySelectedItem;
 
-    private Vector2 pointerDownPosition;
+    [Header("고정 레퍼런스")]
+    public MergeableItem mergeableItem;
+    private RectTransform rectTransform;
+    private Canvas canvas;
+    public Generator generator;
+    private Coroutine mergeEffectCoroutine;
+
+    [Header("고정 값")]
     private const float dragThreshold = 10f;
+    private const float clickCooldown = 0.1f;
+    private const float mergeEffectDelay = 0.2f;
+    private const float checkInterval = 0.1f; // 머지 가능 여부를 확인하는 간격
+
+    [Header("변수")]
+    private Vector2 dragOffset;
+    private Vector2Int initialGridPos;
+    private Vector2 pointerDownPosition;
 
     private MergeableItem potentialMergeTarget;
-    private float mergeEffectDelay = 0.2f;
-    private Coroutine mergeEffectCoroutine;
-    private float checkInterval = 0.1f; // 머지 가능 여부를 확인하는 간격
+
+    private float lastClickTime;
     private float lastCheckTime;
 
-
-    private void Start()
+    public bool isSelected => currentlySelectedItem == this;
+    private bool isDragging;
+    public bool isInteractionEnabled = true;
+    private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-        if (mergeableItem.IsUnityNull())
+        if (!mergeableItem)
         {
             mergeableItem = GetComponent<MergeableItem>();
         }
+        rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
-        initialGridPos = mergeableItem.GridPosition;
-    }
 
+        //Initialize();
+    }
+    public void Initialize()
+    {
+        dragOffset = Vector2.zero;
+        initialGridPos = Vector2Int.zero;
+        pointerDownPosition = Vector2.zero;
+        lastClickTime = Time.time;
+        lastCheckTime = Time.time;
+
+        isDragging = false;
+        isInteractionEnabled = true;
+    }
+    public void SetInteractionEnabled(bool isEnabled)
+    {
+        isInteractionEnabled = isEnabled;
+        
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!isInteractionEnabled) return; // 상호작용이 비활성화된 경우 메서드 종료
+
         if (currentlySelectedItem != null && currentlySelectedItem != this)
         {
             currentlySelectedItem.mergeableItem.OnDeSelected();
             currentlySelectedItem = null;
         }
 
-        initialGridPos = mergeableItem.GridPosition;
-
-        
-        
-
+        initialGridPos = mergeableItem.gridPosition;
         pointerDownPosition = eventData.position;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!isInteractionEnabled) return; // 상호작용이 비활성화된 경우 메서드 종료
+
         if (mergeableItem.state == ItemState.Locked)
         {
             return;
         }
-        //////
+
         transform.SetParent(Managers.Grid.MergeBoard.transform);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(Managers.Grid.MergeBoardRectT, eventData.position, eventData.pressEventCamera, out dragOffset);
         dragOffset = rectTransform.anchoredPosition - dragOffset;
-        /////
-
 
         isDragging = true;
         mergeableItem.OnDeSelected();
@@ -75,6 +96,8 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isInteractionEnabled) return; // 상호작용이 비활성화된 경우 메서드 종료
+
         if (mergeableItem.state == ItemState.Locked)
         {
             return;
@@ -94,19 +117,21 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isInteractionEnabled) return; // 상호작용이 비활성화된 경우 메서드 종료
+
         if (mergeableItem.state == ItemState.Locked)
         {
             return;
         }
 
         isDragging = false;
-        //HandleDragEnd(eventData);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        float distance = Vector2.Distance(pointerDownPosition, eventData.position);
+        if (!isInteractionEnabled) return; // 상호작용이 비활성화된 경우 메서드 종료
 
+        float distance = Vector2.Distance(pointerDownPosition, eventData.position);
         if (distance < dragThreshold)
         {
             HandleClick();
@@ -119,20 +144,25 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void HandleClick()
     {
+        if (!isInteractionEnabled) return;
+
+        if (Time.time - lastClickTime < clickCooldown)
+        {
+            return;
+        }
+
+        lastClickTime = Time.time;
+
         Debug.Log("단순 클릭");
 
         Managers.Grid.PlaceItem(mergeableItem, initialGridPos);
         ItemType type = mergeableItem.itemData.type;
-        if (type == ItemType.Generatable && !isSelected)
+        if (type == ItemType.Generatable && isSelected)
         {
-            generator.TryGenerateItem();
-            DG.Tweening.Sequence sequence = DOTween.Sequence();
-            sequence.Append(mergeableItem.itemRectT.DOScale(new Vector3(1.08f, 0.8f, 1f), 13f / 60f).SetEase(Ease.OutQuad))
-                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(0.9f, 1.25f, 0.95f), 7f / 60f).SetEase(Ease.OutQuad))
-                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(1.1f, 0.94f, 1f), 12f / 60f).SetEase(Ease.OutQuad))
-                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(0.96f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad))
-                    .Append(mergeableItem.itemRectT.DOScale(new Vector3(1f, 1f, 1f), 10f / 60f).SetEase(Ease.OutQuad));
-            sequence.Play();
+            if (generator)
+            {
+                generator.TryGenerateItem();
+            }
         }
         else
         {
@@ -142,6 +172,8 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void SelectItem()
     {
+        if (!isInteractionEnabled) return; // 상호작용이 비활성화된 경우 메서드 종료
+
         switch (mergeableItem.itemData.type)
         {
             case ItemType.Normal:
@@ -149,8 +181,15 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 {
                     Managers.Game.SelectLockedItem(mergeableItem.itemKey);
                 }
+                if (mergeableItem.state == ItemState.BubbleAd)
+                {
+                    Managers.Game.SelectAdBubbleItem(mergeableItem.itemKey, mergeableItem.PopBubbleItemByAd, mergeableItem.GiveUpBubbleItem);
+                }
+                else if (mergeableItem.state == ItemState.BubbleGem)
+                {
+                    Managers.Game.SelectGemBubbleItem(mergeableItem.itemKey, mergeableItem.PopBubbleItemByGem, mergeableItem.SkipBubbleItem);
+                }
                 else
-
                 {
                     Managers.Game.SelectSellableItem(mergeableItem.itemKey, mergeableItem.price, mergeableItem.SellThisItem);
                 }
@@ -169,31 +208,36 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void HandleDragEnd(PointerEventData eventData)
     {
+        if (!isInteractionEnabled) return;
         Debug.Log("드래그 끝");
 
         Vector2Int? gridPosition = Managers.Grid.GetGridPosition(rectTransform.anchoredPosition);
-        if (gridPosition == null)
+        if (!gridPosition.HasValue || gridPosition.Value == initialGridPos)
         {
+            SelectItem();
             Managers.Grid.PlaceItem(mergeableItem, initialGridPos);
             return;
         }
-        
 
-        Vector2Int nearestEmpty = Managers.Grid.GetNearestEmptyPosition((Vector2Int)gridPosition);
 
-        MergeableItem neighbor = Managers.Grid.FindMergeableNeighbor((Vector2Int)gridPosition, mergeableItem);
+
+        Vector2Int? nearestEmpty = Managers.Grid.GetNearestPosition(gridPosition.Value);
+
+        MergeableItem neighbor = Managers.Grid.FindMergeableNeighbor(gridPosition.Value, mergeableItem);
 
         if (!neighbor.IsUnityNull() && Managers.Game.TryMergeItems(mergeableItem, neighbor))
         {
-            
             neighbor.draggableItem.SelectItem();
             Debug.Log("머지 실행");
         }
         else
         {
-            SelectItem();
-            Managers.Grid.DetatchItemFromGrid(mergeableItem.GridPosition);
-            Managers.Grid.PlaceItem(mergeableItem, nearestEmpty);
+            if (nearestEmpty.HasValue)
+            {
+                SelectItem();
+                Managers.Grid.DetatchItemFromGrid(initialGridPos);
+                Managers.Grid.PlaceItem(mergeableItem, nearestEmpty.Value);
+            }
         }
 
         potentialMergeTarget = null;
@@ -221,7 +265,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                         StopCoroutine(mergeEffectCoroutine);
                         Managers.Grid.StopMergeEffect();
                     }
-                    mergeEffectCoroutine = StartCoroutine(ShowMergeEffectAfterDelay(neighbor.GridPosition));
+                    mergeEffectCoroutine = StartCoroutine(ShowMergeEffectAfterDelay(neighbor.gridPosition));
                 }
             }
             else

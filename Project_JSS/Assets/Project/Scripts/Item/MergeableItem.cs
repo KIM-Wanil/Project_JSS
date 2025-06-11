@@ -7,47 +7,50 @@ using DG.Tweening;
 using Unity.VisualScripting;
 public class MergeableItem : MonoBehaviour
 {
-    [SerializeField] private Sprite boxSprite;
+    [SerializeField] private Sprite[] boxSprite = new Sprite[2];
     public GameObject LockImageObj;
+    [SerializeField] public GameObject adIcon;
     public ItemState state { get; private set; }
-    [SerializeField] public GameObject selectIcon;
+    [SerializeField] public CanvasGroup selectIcon;
+    [SerializeField] public CanvasGroup selectBackground;
+    public bool isSelect = true;
+
+    [SerializeField] public CanvasGroup checkIcon;
+    [SerializeField] public CanvasGroup checkBackground;
+    public bool isCheck = false;
     [Header("Item Settings")]
     [SerializeField] protected int lv = 1;
-    private int lvIndex => Mathf.Clamp(lv - 1, 0, itemData.items.Length - 1);
+    public int lvIndex => Mathf.Clamp(lv - 1, 0, itemData.items.Length - 1);
     //[SerializeField] protected string itemId;
-    [SerializeField] protected Image itemImage;
+    public Image itemImage { get; private set; }
+    public Image bubbleImage;
     public ItemSO itemData;
     public ItemKey itemKey;
     public int price => itemData.items[lvIndex].price;
     public DraggableItem draggableItem;
-    [Header("Events")]
-    public UnityEvent<int> onLevelChanged;
-    public UnityEvent onMerged;
-    public UnityEvent onSpawned;
 
-    protected Vector2Int gridPosition;
+    public Vector2Int gridPosition { get;  private set; }
     protected bool isInitialized = false;
 
     public ItemEffect itemEffect;
-    public RectTransform itemRectT;
+    public RectTransform rectT;
 
     public int Lv => lv;
-    public Vector2Int GridPosition => gridPosition;
-    public Image ItemImage => itemImage;
-    
+    public float gemBubbleRemainSec = 0f;
     private void Awake()
     {
         if (itemImage.IsUnityNull())
         {
-            itemImage = GetComponent<Image>();
+            itemImage = transform.GetChild(2).GetComponent<Image>();
+
         }
         if (itemEffect.IsUnityNull())
         {
             itemEffect = transform.GetComponentInChildren<ItemEffect>();
         }
-        if (itemRectT.IsUnityNull())
+        if (rectT.IsUnityNull())
         {
-            itemRectT = GetComponent<RectTransform>();
+            rectT = GetComponent<Image>().rectTransform;
         }
         if(draggableItem.IsUnityNull())
         {
@@ -55,11 +58,13 @@ public class MergeableItem : MonoBehaviour
         }
     }
 
-    public void Initialize(int inputLv, ItemState inputState = ItemState.Normal)
+    public void Initialize(int inputLv, Vector2Int pos, ItemState inputState = ItemState.Normal)
     {
-        state = inputState;
-        Debug.Log(state);
+        draggableItem = GetComponent<DraggableItem>();
         lv = Mathf.Clamp(inputLv, 1, itemData.items.Length);
+        SetGridPosition(pos);
+        state = inputState;
+
         UpdateVisuals();
         itemKey = new ItemKey(itemData.id, lv);
         //switch (itemData.type)
@@ -72,49 +77,147 @@ public class MergeableItem : MonoBehaviour
         //    default:
         //        break;
         //}
+        if (!itemEffect.IsUnityNull())
+        {
+            itemEffect.successParticleImage.enabled = false;
+        }
+        
+        isCheck = false;
+
+        if(checkIcon)
+        {
+            checkIcon.gameObject.SetActive(false);
+        }
+        if (checkBackground)
+        { 
+            checkBackground.gameObject.SetActive(false); 
+        }
+
+        isSelect = false;
+        if (selectIcon)
+        {
+            selectIcon.gameObject.SetActive(false);
+        }
+        if(selectBackground)
+        {
+            selectBackground.gameObject.SetActive(false);
+        }
+
+
 
         isInitialized = true;
     }
 
-    //public void Initialize(SaveData.ItemData saveData)
-    //{
-    //    //itemId = saveData.itemId;
+    public void StartGemBubbleCounting()
+    {
+        gemBubbleRemainSec = itemData.items[lvIndex].bubbleTime;
+        InvokeRepeating(nameof(DisappearGemBubble), 1f, 1f);
+        if (draggableItem.isSelected)
+        {
+            Managers.Game.UpdateGemBubbleRemainSeconds((int)gemBubbleRemainSec);
+        }
+        //onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(gemCountRemainSec));
 
+    }
+    private void DisappearGemBubble()
+    {
+        //Debug.Log(energyRegenRemainSec);
+        gemBubbleRemainSec -= 1f;
+        if (draggableItem.isSelected)
+        {
+            Managers.Game.UpdateGemBubbleRemainSeconds((int)gemBubbleRemainSec);
+        }
+        //onEnergyRegenTimeChanged.Invoke(Mathf.RoundToInt(gemCountRemainSec));
+        if (gemBubbleRemainSec <= 0f)
+        {
+            Managers.Grid.RemoveItemFromGridInstantly(gridPosition);
+            CancelInvoke(nameof(DisappearGemBubble));
+            if (draggableItem.isSelected)
+            {
+                OnDeSelected();
+            }
 
-    //    lv = saveData.level;
-    //    gridPosition = saveData.position;
-    //    UpdateVisuals();
-    //    isInitialized = true;
-
-
-    //}
+        }
+    }
     public void SellThisItem()
     {
        Managers.Game.AddGold(itemData.items[lvIndex].price);
-       Managers.Grid.RemoveItemFromGrid(gridPosition);
-        Debug.Log(gridPosition);
+       Managers.Grid.RemoveItemFromGridInstantly(gridPosition);
+       Managers.Grid.CheckGuestsOrder();
     }
+
+    #region Bubble State
+    public void GiveUpBubbleItem()
+    {
+        Managers.Grid.RemoveItemFromGridInstantly(gridPosition);
+    }
+    public void PopBubbleItemByAd()
+    {
+        state = ItemState.Normal;
+        adIcon.SetActive(false);
+        bubbleImage.gameObject.SetActive(false);
+        itemImage.rectTransform.localScale = Vector3.one;
+        OnDeSelected();
+        //draggableItem.SelectItem();
+    }
+    public void SkipBubbleItem()
+    {
+        //이 아이템 자리에 골드 떨어지는거 구현 
+        Managers.Grid.RemoveItemFromGridInstantly(gridPosition);
+    }
+    public void PopBubbleItemByGem()
+    {
+        if (!Managers.Game.TrySpendGem(itemData.items[lvIndex].bubbleCost)) return;
+        state = ItemState.Normal;
+        bubbleImage.gameObject.SetActive(false);
+        itemImage.rectTransform.localScale = Vector3.one;
+        OnDeSelected();
+        //draggableItem.SelectItem();
+    }
+
+    #endregion
+
     protected void UpdateVisuals()
     {
-        if (itemImage != null  && itemData.items.Length > 0)
+        if (itemImage != null && itemData.items.Length > 0)
         {
-            if (itemData.type == ItemType.Normal)
+            if (itemData.type == ItemType.Normal || itemData.type == ItemType.Usable)
             {
+                itemImage.color = new Color(1.0f, 1.0f, 1.0f, 1f);
+                adIcon.SetActive(false);
+                bubbleImage.gameObject.SetActive(false);
+                draggableItem.enabled = true;
+
                 switch (state)
                 {
                     case ItemState.Normal:
+                        itemImage.rectTransform.localScale = 1.0f * Vector3.one;
                         itemImage.sprite = itemData.items[lvIndex].itemSprite;
                         break;
                     case ItemState.Locked:
                         itemImage.sprite = itemData.items[lvIndex].itemSprite;
-                        ItemImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+                        itemImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                         LockImageObj.SetActive(true);
                         //draggableItem.enabled = false;
                         break;
                     case ItemState.InBox:
-                        itemImage.sprite = boxSprite;
-                        ItemImage.color = new Color(1.0f, 1.0f, 1.0f, 1f);
+                        itemImage.sprite = gridPosition.x + gridPosition.y % 2 == 0 ? boxSprite[0] : boxSprite[1];
+                        itemImage.color = new Color(1.0f, 1.0f, 1.0f, 1f);
                         draggableItem.enabled = false;
+                        break;
+                    //방울에 광고모양 추가하기
+                    case ItemState.BubbleAd:
+                        //광고이미지 on 구현
+                        adIcon.SetActive(true);
+                        bubbleImage.gameObject.SetActive(true);
+                        itemImage.rectTransform.localScale = 0.8f * Vector3.one;
+                        itemImage.sprite = itemData.items[lvIndex].itemSprite;
+                        break;
+                    case ItemState.BubbleGem:
+                        StartGemBubbleCounting();
+                        bubbleImage.gameObject.SetActive(true);
+                        itemImage.rectTransform.localScale = 0.8f * Vector3.one;
+                        itemImage.sprite = itemData.items[lvIndex].itemSprite;
                         break;
                 }
             }
@@ -129,8 +232,9 @@ public class MergeableItem : MonoBehaviour
     {
         return other != null &&
                other != this &&
+               other.state == ItemState.Normal &&
                other.itemData.id == itemData.id &&
-               other.lv == lv &&
+               other.Lv == lv &&
                lv < itemData.items.Length; // 최대 레벨 체크
     }
 
@@ -143,21 +247,23 @@ public class MergeableItem : MonoBehaviour
     public void LevelUp()
     {
         if (lv < itemData.items.Length)
-        {          
+        {
+
             itemEffect.PlaySuccessMergeEffect();
             lv++;
             itemKey.lv = lv;
+            string soundKey = lv.ToString();
+            Managers.Asset.PlaySound(soundKey, SoundType.Effect);
             UpdateVisuals();
             if (state == ItemState.Locked)
             {
                 state = ItemState.Normal;
                 LockImageObj.SetActive(false);
-                ItemImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                itemImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 draggableItem.enabled = true;
                 Managers.Grid.OpenNearBox(gridPosition);
             }            
-            onLevelChanged?.Invoke(lv);
-            Managers.Grid.CheckGuestsOrder();
+            
 
             if (itemData.type == ItemType.Generatable)
             {
@@ -176,15 +282,82 @@ public class MergeableItem : MonoBehaviour
     }
     public void OnSelected()
     {
-        selectIcon.SetActive(true);
+        
+        if(isCheck && !isSelect)
+        {
+            checkBackground.DOFade(0f, 0.1f).SetEase(Ease.InOutQuad).OnComplete(() =>
+            {
+                checkBackground.gameObject.SetActive(false);
+            });
+        }
+        isSelect = true;
+        selectIcon.gameObject.SetActive(true);
+        selectBackground.gameObject.SetActive(true);
+
+        // 아이콘의 스케일 애니메이션
+        selectIcon.alpha = 1.0f;
+        selectIcon.transform.localScale = 0.5f * Vector3.one;
+        selectIcon.transform.DOScale(1.0f, 0.2f).SetEase(Ease.OutBack);
+
+        // 배경의 알파 애니메이션
+        selectBackground.alpha = 0f;
+        selectBackground.DOFade(1f, 0.2f).SetEase(Ease.InOutQuad);
 
     }
     public void OnDeSelected()
     {
-        selectIcon.SetActive(false);
-
+        
+        if (isCheck && isSelect)
+        {
+            checkBackground.gameObject.SetActive(true);
+            checkBackground.alpha = 0f;
+            checkBackground.DOFade(1f, 0.2f).SetEase(Ease.InOutQuad);
+        }
+        isSelect = false;
+        selectIcon.DOFade(0f, 0.1f).SetEase(Ease.InOutQuad).OnComplete(() =>
+        {
+            selectIcon.gameObject.SetActive(false);
+        });
+        selectBackground.DOFade(0f, 0.1f).SetEase(Ease.InOutQuad).OnComplete(()=>
+        {
+            selectBackground.gameObject.SetActive(false);
+        });
     }
 
+    public void OnChecked()
+    {
+        if (itemData.type != ItemType.Normal) return;
+
+
+        checkIcon.gameObject.SetActive(true);
+        checkBackground.gameObject.SetActive(true);
+
+        //// 아이콘의 스케일 애니메이션
+        //checkIcon.alpha = 1.0f;
+        //checkIcon.transform.localScale = 0.1f * Vector3.one;
+        //checkIcon.transform.DOScale(0.3f, 0.2f).SetEase(Ease.OutBack);
+
+        //// 배경의 알파 애니메이션
+        //checkBackground.alpha = 0f;
+        //checkBackground.DOFade(1f, 0.2f).SetEase(Ease.InOutQuad);
+
+    }
+    public void OnUnchecked()
+    {
+        if (itemData.type != ItemType.Normal) return;
+        checkIcon.gameObject.SetActive(false);
+        checkBackground.gameObject.SetActive(false);
+        
+
+        //checkIcon.DOFade(0f, 0.1f).SetEase(Ease.InOutQuad).OnComplete(() =>
+        //{
+        //    checkIcon.gameObject.SetActive(false);
+        //});
+        //checkBackground.DOFade(0f, 0.1f).SetEase(Ease.InOutQuad).OnComplete(() =>
+        //{
+        //    checkBackground.gameObject.SetActive(false);
+        //});
+    }
     // 아이템 타입별 특수 효과를 위한 가상 메서드들
     protected virtual void OnItemPlaced() { }
     protected virtual void OnItemRemoved() { }
