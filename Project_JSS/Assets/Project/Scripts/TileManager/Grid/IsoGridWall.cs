@@ -19,12 +19,12 @@ public class IsoGridWall : IsoGird
     public override Vector2 GridToScreenPosition(float x, float y)
     {
         float screenX = x * tileOffsetX + startPosition.x;
-        float screenY =  (y + x * 0.5f) * tileOffsetY + startPosition.y;
+        float screenY =  (y + x * 0.5f) * tileOffsetY + startPosition.y + floorHeight;
         return new Vector2(screenX, screenY);
     }
     public override Vector2Int WorldToGridPosition(Vector3 worldPosition )
     {
-        Vector2 vector = new Vector2(worldPosition.x, worldPosition.y);
+        Vector2 vector = new Vector2(worldPosition.x, worldPosition.y- floorHeight);
         int gridX = Mathf.RoundToInt((vector.x - startPosition.x) / (tileOffsetX));
         int gridY = Mathf.RoundToInt((vector.y-(gridX* tileOffsetY*0.5f + startPosition.y ) ) / tileOffsetY);
 
@@ -36,7 +36,7 @@ public class IsoGridWall : IsoGird
     }
     public override Vector2Int WorldToGridPosition(Vector3 worldPosition, Vector2Int size)
     {
-        Vector2 vector = new Vector2(worldPosition.x, worldPosition.y);
+        Vector2 vector = new Vector2(worldPosition.x, worldPosition.y- floorHeight);
         int gridX = Mathf.RoundToInt((vector.x - startPosition.x) / (tileOffsetX));
         int gridY = Mathf.RoundToInt((vector.y - (gridX * tileOffsetY * 0.5f + startPosition.y)) / tileOffsetY);
 
@@ -49,7 +49,7 @@ public class IsoGridWall : IsoGird
     public override Vector3 GridPositionToWorld(Vector2Int gridPosition)
     {
         float worldX =  gridPosition.x * tileOffsetX + startPosition.x;
-        float worldY = (gridPosition.y + gridPosition.x * 0.5f) * tileOffsetY + startPosition.y;
+        float worldY = (gridPosition.y + gridPosition.x * 0.5f) * tileOffsetY + startPosition.y + floorHeight;
         return new Vector3(worldX, worldY, 0);
     }
 

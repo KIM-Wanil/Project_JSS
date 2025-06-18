@@ -17,9 +17,14 @@ public class FurnitureData
     public int rotation; // 회전 각도
     public Sprites[] furnitureSprite; // 가구 스프라이트
     public int spriteNumber; // 가구 스프라이트 번호
+    public bool isFloor; // 바닥용 가구
+    public bool isLeft; // 바닥용 가구
 
     public Vector2 SorterPositionOffset;
     public Vector2 SorterPositionOffset2;
+
+    public Vector2 colliderOffset;
+    public Vector2 colliderSize;
 
     public bool isUnlocked; // 가구 해금 상태
 }

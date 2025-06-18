@@ -4,16 +4,19 @@ using DG.Tweening;
 [System.Serializable]
 public class Sprites
 {
-    public Sprite[] sprites;
+    public bool isUnlocked;
+    public Sprite[] sprites;    
+    public Sprite lockSprite;    
+
 }
 public class FurnitureInfo : MonoBehaviour
 {
-    FurniturePlacementManager placementManager;
     SpriteRenderer spriteRenderer;
 
     [SerializeField] FurnitureData data;
     [SerializeField] string furnitureName;
     [SerializeField] bool isFloor;
+    [SerializeField] int floorIndex;
 
     [SerializeField] Vector2Int gridPosition;
     [SerializeField] Vector2Int[] size;
@@ -36,14 +39,18 @@ public class FurnitureInfo : MonoBehaviour
     private Vector3 originalPosition;
 
     public bool IsFloor { get { return isFloor; } }
+    public int FloorIndex { get { return floorIndex; } }
     public Vector2Int Size { get { return size[rotation]; } }
     public Vector2Int GridPosition { get { return gridPosition; } set => gridPosition = value; }
     public Vector2Int TartgetPosition { get { return tartgetPosition[rotation]; ; } }
     public int Rotation { get { return rotation; } }
+    public Sprites[] MySprites { get { return sprites; } }
+    public int SpriteNumber { get { return spriteNumber; }  }
     public void SettingData(FurnitureData data)
     {
+        this.name = data.furnitureName;
         this.data = data;
-       this.furnitureName= data.furnitureName; // 가구 이름
+        this.furnitureName= data.furnitureName; // 가구 이름
         
         size = data.size;
         tartgetPosition = data.tartgetPosition;
@@ -54,6 +61,13 @@ public class FurnitureInfo : MonoBehaviour
         spriteNumber = data.spriteNumber;
         isUnlocked = data.isUnlocked;
 
+        isFloor  = data.isFloor;
+
+        this.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset;
+        this.GetComponent<IsoSpriteSorting>().SorterPositionOffset2 = data.SorterPositionOffset2;
+
+        this.GetComponent<BoxCollider2D>().offset = data.colliderOffset;
+        this.GetComponent<BoxCollider2D>().size = data.colliderSize;
         if (data.isUnlocked)
         {
             if (rotation == 1 || rotation == 3)
@@ -65,10 +79,36 @@ public class FurnitureInfo : MonoBehaviour
                 spriteRenderer.flipX = false;
             }
             spriteRenderer.sprite = sprites[spriteNumber].sprites[rotation / 2];
-            placementManager.Placement(this.gameObject);
-            SpawnFurniture();
+           // SpawnFurniture();
         }
     }
+    public FurnitureData saveInfo()
+    {
+        FurnitureData data = new FurnitureData();
+        data.furnitureName = this.furnitureName;
+
+        data.size = size;
+        data.tartgetPosition = tartgetPosition;
+        data.furnitureSprite = sprites;
+
+        data.gridPosition = gridPosition; // 가구 위치
+        data.rotation = rotation;
+        data.spriteNumber = spriteNumber;
+        data.isUnlocked = isUnlocked;
+
+        data.isFloor = isFloor;
+        data.SorterPositionOffset = this.GetComponent<IsoSpriteSorting>().SorterPositionOffset;
+        data.SorterPositionOffset2 = this.GetComponent<IsoSpriteSorting>().SorterPositionOffset2;
+
+        data.colliderOffset = this.GetComponent<BoxCollider2D>().offset;
+        data.colliderSize = this.GetComponent<BoxCollider2D>().size;
+        return data;
+    }
+
+
+
+
+
     public void SetSpriterenderColor()
     {
         Color startColor = spriteRenderer.color;
@@ -76,8 +116,12 @@ public class FurnitureInfo : MonoBehaviour
     }
     public void SettingSprites(int spriteNumber)
     {
+        if (!sprites[spriteNumber].isUnlocked)
+        {
+            return;
+        }
         this.spriteNumber = spriteNumber;
-        spriteRenderer.sprite = sprites[rotation].sprites[spriteNumber];
+        spriteRenderer.sprite = sprites[spriteNumber].sprites[rotation / 2];
     }
     public void SettingRotate(int rotationNumber)
     {
@@ -116,28 +160,32 @@ public class FurnitureInfo : MonoBehaviour
     {
         // 현재 위치 저장
         originalPosition = transform.position;
-
-        // 초기 위치를 위로 올림
-        Vector3 startPosition = originalPosition + Vector3.up * fallDistance;
-        transform.position = startPosition;
-
         // 투명도 초기화
         if (spriteRenderer != null)
         {
             Color startColor = spriteRenderer.color;
             spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
         }
-
-        // 위치 애니메이션
-        transform.DOMove(originalPosition, fallDuration)
-            .SetEase(fallEase);
-
         // 페이드 인 애니메이션
         if (spriteRenderer != null)
         {
             spriteRenderer.DOFade(1f, fadeDuration)
                 .SetEase(Ease.Linear);
         }
+        if (isFloor)
+        {
+
+            // 초기 위치를 위로 올림
+            Vector3 startPosition = originalPosition + Vector3.up * fallDistance;
+            transform.position = startPosition;
+
+
+
+            // 위치 애니메이션
+            transform.DOMove(originalPosition, fallDuration)
+                .SetEase(fallEase);
+        }
+
     }
     // Update is called once per frame
     void Update()
