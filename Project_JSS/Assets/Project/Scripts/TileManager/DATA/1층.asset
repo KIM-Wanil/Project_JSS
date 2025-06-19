@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: "1\uCE35"
   m_EditorClassIdentifier: 
   floorNum: 0
+  isUnlock: 1
   furnitureInfos:
-  - furnitureName: darklord_bed_back
+  - floorNum: 0
+    furnitureName: darklord_bed_back
     gridPosition: {x: 4, y: 8}
     size:
     - {x: 4, y: 4}
@@ -47,7 +49,9 @@ MonoBehaviour:
     colliderOffset: {x: -0.005213499, y: 2.1392348}
     colliderSize: {x: 4.509928, y: 2.5684319}
     isUnlocked: 1
-  - furnitureName: darklord_throne_back
+    price: 3
+  - floorNum: 0
+    furnitureName: darklord_throne_back
     gridPosition: {x: 10, y: 6}
     size:
     - {x: 2, y: 2}
@@ -80,7 +84,9 @@ MonoBehaviour:
     colliderOffset: {x: 0, y: 2.12}
     colliderSize: {x: 2.4, y: 4.24}
     isUnlocked: 1
-  - furnitureName: crystal_ball
+    price: 3
+  - floorNum: 0
+    furnitureName: crystal_ball
     gridPosition: {x: 3, y: 3}
     size:
     - {x: 1, y: 1}
@@ -114,7 +120,9 @@ MonoBehaviour:
     colliderOffset: {x: 0, y: 1.34}
     colliderSize: {x: 1.08, y: 2.68}
     isUnlocked: 1
-  - furnitureName: "\uC5BC\uC74C\uD638\uC218"
+    price: 3
+  - floorNum: 0
+    furnitureName: "\uC5BC\uC74C\uD638\uC218"
     gridPosition: {x: 3, y: 1}
     size:
     - {x: 1, y: 1}
@@ -148,7 +156,9 @@ MonoBehaviour:
     colliderOffset: {x: 0, y: 0.015118301}
     colliderSize: {x: 1.08, y: 0.4510814}
     isUnlocked: 1
-  - furnitureName: stonestatue_front
+    price: 3
+  - floorNum: 0
+    furnitureName: stonestatue_front
     gridPosition: {x: 10, y: 2}
     size:
     - {x: 1, y: 1}
@@ -181,7 +191,9 @@ MonoBehaviour:
     colliderOffset: {x: 0, y: 1.78}
     colliderSize: {x: 1.96, y: 3.56}
     isUnlocked: 1
-  - furnitureName: firelight_floor
+    price: 3
+  - floorNum: 0
+    furnitureName: firelight_floor
     gridPosition: {x: 10, y: 0}
     size:
     - {x: 1, y: 1}
@@ -214,7 +226,9 @@ MonoBehaviour:
     colliderOffset: {x: 0, y: 1.46}
     colliderSize: {x: 0.88, y: 2.92}
     isUnlocked: 1
-  - furnitureName: firelight_wall
+    price: 3
+  - floorNum: 0
+    furnitureName: firelight_wall
     gridPosition: {x: 5, y: 4}
     size:
     - {x: 1, y: 3}
@@ -247,7 +261,9 @@ MonoBehaviour:
     colliderOffset: {x: 0.404989, y: 0.9}
     colliderSize: {x: 0.7710724, y: 1.8}
     isUnlocked: 1
-  - furnitureName: tapestry
+    price: 3
+  - floorNum: 0
+    furnitureName: tapestry
     gridPosition: {x: 8, y: 2}
     size:
     - {x: 3, y: 5}
@@ -280,3 +296,4 @@ MonoBehaviour:
     colliderOffset: {x: 1.04, y: 2.14}
     colliderSize: {x: 2.08, y: 4.28}
     isUnlocked: 1
+    price: 3

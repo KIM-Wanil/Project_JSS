@@ -176,6 +176,10 @@ public class FurniturePlacementManager : MonoBehaviour
             {
                 isLongPress = true;
                 // 길게 눌러서 가구 선택
+                if (StateManager.instance.ButItem)
+                {
+                    return;
+                }
                 SelectFurnitureAtPosition(Input.mousePosition);
             }
             else if (selectedFurniture != null && isDragging)
@@ -261,7 +265,7 @@ public class FurniturePlacementManager : MonoBehaviour
                 lastValidPosition = selectedFurniture.transform.position;
                 currentGrid.TileSetting(hitObject.transform, currentInfo.Size, currentInfo.GridPosition);
                 currentGrid.CanPlaceFurniture(currentInfo.GridPosition);
-                
+                CancelButtonUIOn(true);
                 uiObject.SetActive(true);
                 //uiObject.transform.SetParent(selectedFurniture.transform);
                 uiObject.transform.position = new Vector2( selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
@@ -350,6 +354,10 @@ public class FurniturePlacementManager : MonoBehaviour
             DeselectFurniture();
 
             skinObject.SetActive(false);
+            if (StateManager.instance.ButItem)
+            {
+                StateManager.instance.ButItem = false;
+            }
         }
     }
     public void Placement(GameObject gameObject)
@@ -399,8 +407,9 @@ public class FurniturePlacementManager : MonoBehaviour
     // 층 변경
     public void SwitchFloor(int floorNumber)
     {
-        if (floorNumber < 0 || floorNumber >= floorData.Length)
+        if (floorNumber < 0 || floorNumber >= floorData.Length || floorManagers[floorNumber].floorData.isUnlock == false)
             return;
+        
         mainCamera.transform.DOMove(new Vector3(0, 7.5f + 5.15f * floorNumber, -10f),0.5f);
         for (int i = floorNumber +1; i<floorManagers.Length;i++)
         {
@@ -429,32 +438,73 @@ public class FurniturePlacementManager : MonoBehaviour
    
 
     // 가구 추가
-    public void AddFurnitureToFloor(GameObject furniture, int floor)
+    public void AddFurnitureToFloor(FurnitureData data, int floor)
     {
-        if (floor >= 0 && floor < furnitureByFloor.Count)
+        SwitchFloor(floor);
+        GameObject obj = floorManagers[floor].AddFurniture(data);
+        if (obj != null)
         {
-            furnitureByFloor[floor].Add(furniture);
-
-            // 현재 층이 아니면 비활성화
-            if (floor != currentFloor)
+            // 이미 선택된 가구가 있으면 해제
+            if (selectedFurniture != null)
             {
-                furniture.SetActive(false);
+                currentInfo.SettingSprites(spriteIndex);
+                DeselectFurniture();
             }
 
-            // 가구의 레이어 설정 (층에 따라)
-            furniture.layer = 8 + floor; // 8부터 시작 가정
+            // 새 가구 선택
+            selectedFurniture = obj;
+            //selectedFurniture.GetComponent<SpriteRenderer>().sortingOrder =23;
+            currentInfo = obj.GetComponent<FurnitureInfo>();
+            spriteIndex = currentInfo.SpriteNumber;
+            tempIndex = currentInfo.SpriteNumber;
+            setButtonImage();
+            skinObject.SetActive(true);
+            if (currentInfo.IsFloor)
+            {
+                currentGrid = isometricGrids[0];
+                gridNumbers = 0;
+            }
+            else
+            {
+                if (!data.isLeft)
+                {
+                    currentGrid = isometricGrids[1];
+                }
+                else
+                {
+                    currentGrid = isometricGrids[2];
+                }
+            }
+
+            originalPosition = selectedFurniture.transform.position;
+            originalRotation = currentInfo.Rotation;
+
+            gridPosition = currentGrid.WorldToGridPosition(originalPosition.Value);
+
+            dragOffset = Vector3.zero;
+
+            currentGrid.TileSetting(obj.transform, currentInfo.Size, currentInfo.GridPosition);
+            currentGrid.CanPlaceFurniture(currentInfo.GridPosition);
+            CancelButtonUIOn(false);
+            uiObject.SetActive(true);
+
+            uiObject.transform.position = new Vector2(selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
+            isDragging = true;
         }
     }
 
     // UI 업데이트 (층 표시)
-    private void UpdateFloorUI()
+    private void CancelButtonUIOn(bool b)
     {
-        // 층 표시 UI 업데이트 구현
-        // 예: 현재 층 번호를 텍스트로 표시
+        cancelButton.gameObject.SetActive(b);
     }
 
     public void SwitchFloor(bool Up)
     {
+        if (StateManager.instance.ButItem)
+        {
+            return;
+        }
         if (Up)
         {
             SwitchFloor(floor + 1);

@@ -5,11 +5,14 @@ using UnityEngine;
 public class FloorData : ScriptableObject
 {
     public int floorNum;
+    public bool isUnlock;
+
     public FurnitureData[] furnitureInfos;
 }
 [Serializable]
 public class FurnitureData
 {
+    public int floorNum;
     public string furnitureName; // 가구 이름
     public Vector2Int gridPosition; // 가구 위치
     public Vector2Int[] size; // 가구 크기
@@ -27,4 +30,5 @@ public class FurnitureData
     public Vector2 colliderSize;
 
     public bool isUnlocked; // 가구 해금 상태
+    public int price;
 }
