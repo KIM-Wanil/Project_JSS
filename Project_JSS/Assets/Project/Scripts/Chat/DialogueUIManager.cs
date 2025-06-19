@@ -105,8 +105,8 @@ public class DialogueUIManager : MonoBehaviour
         // 이전 메시지들의 버튼 비활성화
         foreach (var item in messageItems)
         {
-            if (item.actionButton != null)
-                item.actionButton.gameObject.SetActive(false);
+            if (item.nextArrow != null)
+                item.nextArrow.gameObject.SetActive(false);
         }
 
         // 새 메시지 생성
@@ -133,10 +133,10 @@ public class DialogueUIManager : MonoBehaviour
             messageItem.SetupMessage(dialogue, isLatest);
 
             // 버튼 이벤트 설정
-            if (messageItem.actionButton != null && isLatest)
+            if (messageItem.nextArrow != null && isLatest)
             {
-                messageItem.actionButton.onClick.RemoveAllListeners();
-                messageItem.actionButton.onClick.AddListener(() => OnContinueButtonClick(messageItem));
+                messageItem.nextArrow.onClick.RemoveAllListeners();
+                messageItem.nextArrow.onClick.AddListener(() => OnContinueButtonClick(messageItem));
             }
 
             messageItems.Add(messageItem);
@@ -225,7 +225,7 @@ public class DialogueUIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isDialogueActive && messageItems.Count > 0)
         {
             var lastMessage = messageItems[messageItems.Count - 1];
-            if (lastMessage.actionButton != null && lastMessage.actionButton.gameObject.activeInHierarchy)
+            if (lastMessage.nextArrow != null && lastMessage.nextArrow.gameObject.activeInHierarchy)
             {
                 OnContinueButtonClick(lastMessage);
             }

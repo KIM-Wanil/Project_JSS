@@ -10,8 +10,7 @@ public class DialogueMessageItem : MonoBehaviour
     public Image npcImage;
     public TextMeshProUGUI npcNameText;
     public TextMeshProUGUI dialogueText;
-    public Button actionButton;
-    public TextMeshProUGUI buttonText;
+    public GameObject nextArrow;
 
     [Header("색상 설정")]
     public Color npcMessageColor = new Color(1f, 1f, 1f, 0.9f);
@@ -41,11 +40,9 @@ public class DialogueMessageItem : MonoBehaviour
         }
 
         // 버튼 설정 (최신 메시지에만 표시)
-        if (actionButton != null)
+        if (nextArrow != null)
         {
-            actionButton.gameObject.SetActive(isLatest && dialogue.nextDialogueId != -1);
-            if (buttonText != null)
-                buttonText.text = string.IsNullOrEmpty(dialogue.buttonText) ? "계속" : dialogue.buttonText;
+            nextArrow.SetActive(isLatest && dialogue.nextDialogueId != -1);
         }
 
         // 텍스트 애니메이션
@@ -84,9 +81,7 @@ public class DialogueMessageItem : MonoBehaviour
         isTyping = true;
         dialogueText.text = "";
 
-        // 버튼 비활성화
-        if (actionButton != null)
-            actionButton.interactable = false;
+
 
         // DOTween으로 타이핑 효과
         typingTween = DOTween.To(() => 0, value => {
@@ -100,8 +95,8 @@ public class DialogueMessageItem : MonoBehaviour
         .OnComplete(() => {
             isTyping = false;
             dialogueText.text = text;
-            if (actionButton != null)
-                actionButton.interactable = true;
+            if (nextArrow != null)
+                nextArrow.SetActive(true);
         });
     }
 
@@ -112,8 +107,8 @@ public class DialogueMessageItem : MonoBehaviour
             typingTween.Kill();
             dialogueText.text = dialogueData.dialogueText;
             isTyping = false;
-            if (actionButton != null)
-                actionButton.interactable = true;
+            if (nextArrow != null)
+                nextArrow.SetActive(true);
         }
     }
 
