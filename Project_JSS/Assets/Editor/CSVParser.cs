@@ -13,10 +13,14 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class CSVParser : EditorWindow
 {
     public TextAsset itemCsvFile;
-    private const string itemAdressablePath = "Assets/Project/ScriptableObjects/Item/";
+    private const string itemAssetPath = "Assets/Project/ScriptableObjects/Item/";
     private const string itemSpritePath = "Assets/Project/Sprites/Item/";
     public TextAsset generatorCsvFile;
-    private const string generatorAdressablePath = "Assets/Project/ScriptableObjects/Generator/";
+    private const string generatorAssetPath = "Assets/Project/ScriptableObjects/Generator/";
+
+    public TextAsset dialogueCsvFile;
+    private const string dialogueAssetPath = "Assets/Project/ScriptableObjects/Dialogue/";
+    private const string npcSpritePath = "Assets/Project/Sprites/Guest/";
     const int A = 0, B = 1, C = 2, D = 3, E = 4,
               F = 5, G = 6, H = 7, I = 8, J = 9,
               K = 10, L = 11, M = 12, N = 13, O = 14;
@@ -35,6 +39,7 @@ public class CSVParser : EditorWindow
 
         itemCsvFile = EditorGUILayout.ObjectField("Item CSV", itemCsvFile, typeof(TextAsset), false) as TextAsset;
         generatorCsvFile = EditorGUILayout.ObjectField("Generator CSV", generatorCsvFile, typeof(TextAsset), false) as TextAsset;
+        dialogueCsvFile = EditorGUILayout.ObjectField("Dialgoue CSV", dialogueCsvFile, typeof(TextAsset), false) as TextAsset;
 
         EditorGUILayout.Space(20f);
         EditorGUILayout.LabelField("Parsing", EditorStyles.boldLabel);
@@ -49,6 +54,12 @@ public class CSVParser : EditorWindow
         if (GUILayout.Button("Parse Generator CSV"))
         {
             ParseGeneratorCSV();
+        }
+
+        EditorGUILayout.Space(10f);
+        if (GUILayout.Button("Parse Dialogue CSV"))
+        {
+            ParseDialogueCSV();
         }
     }
 
@@ -207,7 +218,7 @@ public class CSVParser : EditorWindow
         // 모든 ItemSO를 저장
         foreach (var itemSO in itemSOs)
         {
-            SaveScriptableObject(itemSO, $"{itemAdressablePath}{itemSO.id}.asset");
+            SaveScriptableObject(itemSO, $"{itemAssetPath}{itemSO.id}.asset");
         }
 
         return itemSOs;
@@ -271,6 +282,95 @@ public class CSVParser : EditorWindow
                 });
             }
         }
+    }
+
+    public void ParseDialogueCSV()
+    {
+#if UNITY_EDITOR
+        if (dialogueCsvFile == null)
+        {
+            Debug.LogError("CSV 파일이 할당되지 않았습니다.");
+            return;
+        }
+
+        string[] lines = dialogueCsvFile.text.Split('\n');
+        List<DialogueEvent> events = new List<DialogueEvent>();
+        DialogueEvent currentEvent = null;
+
+        for (int i = 1; i < lines.Length; i++)
+        {
+            string line = lines[i].Trim();
+            if (string.IsNullOrEmpty(line)) continue;
+
+            string[] row = line.Split(',');
+
+            // 새 이벤트 시작
+            if (!string.IsNullOrEmpty(row[A]))
+            {
+                if (currentEvent != null)
+                    events.Add(currentEvent);
+
+                currentEvent = new DialogueEvent
+                {
+                    eventId = row[A],
+                    dialogues = new List<DialogueData>()
+                };
+            }
+
+            if (currentEvent == null) continue;
+
+            DialogueData data = new DialogueData
+            {
+                dialogueId = int.Parse(row[B]),
+                speakerName = row[C],
+                dialogueText = row[D],
+                nextDialogueId = int.Parse(row[E])
+            };
+            currentEvent.dialogues.Add(data);
+        }
+
+        // 마지막 이벤트 추가
+        if (currentEvent != null)
+            events.Add(currentEvent);
+
+        // ScriptableObject 생성 및 저장
+        DialogueDatabase db = ScriptableObject.CreateInstance<DialogueDatabase>();
+        db.dialogueEvents = events;
+        db.npcSprites = new List<NPCSpriteData>();
+        // NPC 스프라이트 로드
+        string[] npcSpriteFiles = Directory.GetFiles(npcSpritePath, "*.png");
+        foreach (string file in npcSpriteFiles)
+        {
+            string spriteName = Path.GetFileNameWithoutExtension(file);
+            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(file);
+            if (sprite != null)
+            {
+                db.npcSprites.Add(new NPCSpriteData { spriteName = spriteName, sprite = sprite });
+            }
+            else
+            {
+                Debug.LogWarning($"Failed to load sprite: {file}");
+            }
+        }
+        // ScriptableObject 저장
+        if (db.dialogueEvents.Count == 0)
+        {
+            Debug.LogError("No dialogue events found in the CSV file.");
+            return;
+        }
+        if (db.npcSprites.Count == 0)
+        {
+            Debug.LogWarning("No NPC sprites found. Ensure sprites are in the correct path.");
+        }
+        // ScriptableObject 저장 경로
+        string assetPath = $"{dialogueAssetPath}대화이벤트SO.asset";
+        SaveScriptableObject(db, assetPath);
+
+        // Addressable 등록
+        SetAsAddressable(assetPath, "DialogueDatabase");
+
+        Debug.Log("Dialogue CSV 파싱 및 저장 완료!");
+#endif
     }
 
     private static void SaveScriptableObject(ScriptableObject so, string path)

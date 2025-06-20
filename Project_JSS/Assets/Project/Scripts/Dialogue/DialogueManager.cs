@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class DialogueUIManager : MonoBehaviour
+public class DialogueManager : BaseManager
 {
     [Header("UI 컴포넌트")]
     public GameObject dialoguePanel;
+    public Image npcImage;
     public ScrollRect scrollRect;
-    public Transform messageContainer;
-    public GameObject messageItemPrefab;
-    public Button closeButton;
+    public Transform messageContent;
+    public GameObject playerMessageItemPrefab;
+    public GameObject npcMessageItemPrefab;
     public Image backgroundDimmer;
 
     [Header("애니메이션 설정")]
     public float panelAnimationDuration = 0.5f;
-    public float dimmerAlpha = 0.7f;
+    public float dimmerAlpha = 0.8f;
 
     [Header("스크롤 설정")]
     public float scrollToBottomDuration = 0.3f;
@@ -24,17 +25,13 @@ public class DialogueUIManager : MonoBehaviour
     public DialogueDatabase dialogueDatabase;
 
     private List<DialogueMessageItem> messageItems = new List<DialogueMessageItem>();
-    private DialogueData currentDialogue;
+    private DialogueEvent currentDialogueEvent;
     private bool isDialogueActive = false;
 
-    private void Start()
+    public override void Init()
     {
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
-
-        if (closeButton != null)
-            closeButton.onClick.AddListener(EndDialogue);
-
         // 배경 딤머 초기화
         if (backgroundDimmer != null)
         {
@@ -43,34 +40,45 @@ public class DialogueUIManager : MonoBehaviour
         }
     }
 
-    public void StartDialogue(int dialogueId)
+    public void StartDialogue(string eventId)
     {
-        DialogueData dialogue = dialogueDatabase.GetDialogue(dialogueId);
-        if (dialogue != null)
+        Debug.Log("StartDialogue");
+        DialogueEvent dialogueEvent = dialogueDatabase.GetDialogueEvent(eventId);
+        currentDialogueEvent = dialogueEvent;
+        if (currentDialogueEvent != null)
         {
-            ShowDialogue(dialogue);
+            ShowDialogue();
+        }
+        else
+        {
+            Debug.LogError($"Dialogue event with ID '{eventId}' not found.");
         }
     }
 
-    public void StartDialogue(string npcName)
+    private void ShowDialogue()
     {
-        var dialogues = dialogueDatabase.GetNPCDialogues(npcName);
-        if (dialogues.Count > 0)
-        {
-            ShowDialogue(dialogues[0]);
-        }
-    }
-
-    private void ShowDialogue(DialogueData dialogue)
-    {
+        Debug.Log("ShowDialogue");
         if (!isDialogueActive)
         {
             OpenDialoguePanel();
             ClearMessages();
         }
 
-        currentDialogue = dialogue;
-        AddMessage(dialogue, true);
+        
+        if (npcImage != null)
+        {
+           Sprite npcSprite = dialogueDatabase.GetNPCSprite(currentDialogueEvent.dialogues[0].speakerName);
+            if (npcSprite != null)
+            {
+                npcImage.sprite = npcSprite;
+                npcImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                npcImage.gameObject.SetActive(false);
+            }
+        }
+        AddMessage(currentDialogueEvent.dialogues[0], true);
     }
 
     private void OpenDialoguePanel()
@@ -89,18 +97,21 @@ public class DialogueUIManager : MonoBehaviour
             panelRect.DOAnchorPosY(originalPos.y, panelAnimationDuration)
                 .SetEase(Ease.OutQuart);
         }
-
-        // 배경 딤머 페이드 인
         if (backgroundDimmer != null)
         {
             backgroundDimmer.gameObject.SetActive(true);
             backgroundDimmer.DOFade(dimmerAlpha, panelAnimationDuration);
+
         }
+        // 배경 딤머 페이드 인
+
+
+
     }
 
     private void AddMessage(DialogueData dialogue, bool isLatest)
     {
-        if (messageItemPrefab == null || messageContainer == null) return;
+        if (playerMessageItemPrefab == null || messageContent == null) return;
 
         // 이전 메시지들의 버튼 비활성화
         foreach (var item in messageItems)
@@ -110,35 +121,18 @@ public class DialogueUIManager : MonoBehaviour
         }
 
         // 새 메시지 생성
-        GameObject newMessageObj = Instantiate(messageItemPrefab, messageContainer);
+        GameObject newMessageObj;
+        if( dialogue.speakerName == "ME")
+            newMessageObj = Instantiate(playerMessageItemPrefab, messageContent);
+        else
+        {
+            newMessageObj = Instantiate(npcMessageItemPrefab, messageContent);
+        }
         DialogueMessageItem messageItem = newMessageObj.GetComponent<DialogueMessageItem>();
 
         if (messageItem != null)
         {
-            // NPC 스프라이트 설정
-            if (messageItem.npcImage != null)
-            {
-                Sprite npcSprite = dialogueDatabase.GetNPCSprite(dialogue.npcSprite);
-                if (npcSprite != null)
-                {
-                    messageItem.npcImage.sprite = npcSprite;
-                    messageItem.npcImage.gameObject.SetActive(true);
-                }
-                else
-                {
-                    messageItem.npcImage.gameObject.SetActive(false);
-                }
-            }
-
             messageItem.SetupMessage(dialogue, isLatest);
-
-            // 버튼 이벤트 설정
-            if (messageItem.nextArrow != null && isLatest)
-            {
-                messageItem.nextArrow.onClick.RemoveAllListeners();
-                messageItem.nextArrow.onClick.AddListener(() => OnContinueButtonClick(messageItem));
-            }
-
             messageItems.Add(messageItem);
         }
 
@@ -162,10 +156,10 @@ public class DialogueUIManager : MonoBehaviour
         }
         else
         {
-            DialogueData nextDialogue = dialogueDatabase.GetDialogue(dialogueData.nextDialogueId);
+            DialogueData nextDialogue = currentDialogueEvent.GetDialogue(dialogueData.nextDialogueId);
             if (nextDialogue != null)
             {
-                ShowDialogue(nextDialogue);
+                AddMessage(nextDialogue, true);
             }
             else
             {
@@ -207,6 +201,7 @@ public class DialogueUIManager : MonoBehaviour
                 .SetEase(Ease.InQuart)
                 .OnComplete(() => {
                     dialoguePanel.SetActive(false);
+                    panelRect.anchoredPosition = new Vector2(panelRect.anchoredPosition.x, 0); // 초기 위치로 되돌리기
                     ClearMessages();
                 });
         }
@@ -221,8 +216,16 @@ public class DialogueUIManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F1) && !isDialogueActive)
+        {
+            StartDialogue("CH1_EVENT0");
+        }
+        if (Input.GetKeyDown(KeyCode.F2) && !isDialogueActive)
+        {
+            StartDialogue("CH1_EVENT1");
+        }
         // 스페이스바로도 대화 진행 가능
-        if (Input.GetKeyDown(KeyCode.Space) && isDialogueActive && messageItems.Count > 0)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) && isDialogueActive && messageItems.Count > 0)
         {
             var lastMessage = messageItems[messageItems.Count - 1];
             if (lastMessage.nextArrow != null && lastMessage.nextArrow.gameObject.activeInHierarchy)
@@ -231,10 +234,10 @@ public class DialogueUIManager : MonoBehaviour
             }
         }
 
-        // ESC로 대화 종료
-        if (Input.GetKeyDown(KeyCode.Escape) && isDialogueActive)
-        {
-            EndDialogue();
-        }
+        //// ESC로 대화 종료
+        //if (Input.GetKeyDown(KeyCode.Escape) && isDialogueActive)
+        //{
+        //    EndDialogue();
+        //}
     }
 }

@@ -10,12 +10,12 @@ using System.Collections.Generic;
 public class DialogueData
 {
     public int dialogueId;
-    public string npcName;
-    public string npcSprite;
+    public string speakerName;
+    //public string npcSprite;
     public string dialogueText;
     public int nextDialogueId; // -1이면 대화 종료
-    public string buttonText;
-    public DialogueType dialogueType;
+    //public string buttonText;
+    //public DialogueType dialogueType;
 }
 
 public enum DialogueType
@@ -25,25 +25,30 @@ public enum DialogueType
     Answer,     // 답변
     System      // 시스템 메시지
 }
-
-
-[CreateAssetMenu(fileName = "DialogueDatabase", menuName = "Game/Dialogue Database")]
-public class DialogueDatabase : ScriptableObject
+[System.Serializable]
+public class DialogueEvent
 {
+    public string eventId;
     [Header("대화 데이터")]
     public List<DialogueData> dialogues = new List<DialogueData>();
-
-    [Header("NPC 스프라이트")]
-    public List<NPCSpriteData> npcSprites = new List<NPCSpriteData>();
-
     public DialogueData GetDialogue(int dialogueId)
     {
         return dialogues.Find(d => d.dialogueId == dialogueId);
     }
 
-    public List<DialogueData> GetNPCDialogues(string npcName)
+}
+
+[CreateAssetMenu(fileName = "DialogueDatabase", menuName = "Game/Dialogue Database")]
+public class DialogueDatabase : ScriptableObject
+{
+    public List<DialogueEvent> dialogueEvents = new List<DialogueEvent>();
+
+    [Header("NPC 스프라이트")]
+    public List<NPCSpriteData> npcSprites = new List<NPCSpriteData>();
+
+    public DialogueEvent GetDialogueEvent(string eventId)
     {
-        return dialogues.FindAll(d => d.npcName == npcName);
+        return dialogueEvents.Find(d => d.eventId == eventId);
     }
 
     public Sprite GetNPCSprite(string spriteName)

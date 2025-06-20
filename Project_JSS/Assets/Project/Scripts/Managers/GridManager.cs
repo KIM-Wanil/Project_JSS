@@ -50,7 +50,7 @@ public class GridManager : BaseManager
         //Debug.Log(SceneManager.GetSceneByName("Main").name);
         if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
             return;
-        Debug.Log("GridManager initialized");
+        //Debug.Log("GridManager initialized");
         base.Init();
         InitializeGrid();
         GenerateTiles(); // 타일 생성 호출
@@ -650,7 +650,7 @@ public class GridManager : BaseManager
 
         //Vector2 targetTilePosition = GetTilePosition(targetGridposition);
         Vector2 targetTilePosition = GetTileWorldPosition(targetGridposition);
-        Debug.Log($"startTilePosition:{actualStartPosition}/targetTilePosition:{targetTilePosition}");
+        //Debug.Log($"startTilePosition:{actualStartPosition}/targetTilePosition:{targetTilePosition}");
 
         // 거리 계산 
         float distance = Vector2.Distance(targetTilePosition, actualStartPosition);
@@ -659,7 +659,7 @@ public class GridManager : BaseManager
         float normalizedDistance = distance / Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
         float moveDuration = normalizedDistance * 2.0f; // 0.5f는 기준 duration 시간
 
-        Debug.Log($"distance:{distance}/moveDuration:{moveDuration}");
+        //Debug.Log($"distance:{distance}/moveDuration:{moveDuration}");
 
         // DOMove를 사용 (DOAnchorPos 대신)
         Tween moveTween = item.transform.DOMove(targetTilePosition, moveDuration)
@@ -677,7 +677,7 @@ public class GridManager : BaseManager
                 Managers.Grid.CheckGuestsOrder();
                 // 트윈 애니메이션 제거
                 itemTweens.Remove(item);
-                Debug.Log("스폰트윈종료");
+                //Debug.Log("스폰트윈종료");
             }
             );
 
@@ -813,7 +813,7 @@ public class GridManager : BaseManager
             //추후 변동 가능
             if ((item.itemData.type == ItemType.Normal || item.itemData.type == ItemType.Usable) && (item.state ==ItemState.Normal))
             {
-                Debug.Log("AddOwnedItemsCanBeMerged");
+                //Debug.Log("AddOwnedItemsCanBeMerged");
                 AddOwnedItemsCanBeMerged(item);
             }
             grid[position.x, position.y] = item;
@@ -922,7 +922,7 @@ public class GridManager : BaseManager
             {
                 if (positions.Count == 2)
                 {
-                    Debug.Log($"{itemName} : {positions[0]}, {positions[1]} - 모든 아이템이 잠겨있지않고, 아이템이 두 개 뿐.");
+                    //Debug.Log($"{itemName} : {positions[0]}, {positions[1]} - 모든 아이템이 잠겨있지않고, 아이템이 두 개 뿐.");
                     return (positions[0], positions[1]);
                 }
                 else if (positions.Count > 2)
@@ -940,7 +940,7 @@ public class GridManager : BaseManager
                             // 거리가 1이거나 대각선 1칸인 경우 바로 반환
                             if (distance == 1 || distance == Mathf.Sqrt(2))
                             {
-                                Debug.Log($"{itemName} : {positions[i]}, {positions[j]} - 모든 아이템이 잠겨있지않고, 거리가 1칸차이.");
+                                //Debug.Log($"{itemName} : {positions[i]}, {positions[j]} - 모든 아이템이 잠겨있지않고, 거리가 1칸차이.");
                                 return (positions[i], positions[j]);
                             }
 
@@ -955,7 +955,7 @@ public class GridManager : BaseManager
 
                     if (closestPos1.HasValue && closestPos2.HasValue)
                     {
-                        Debug.Log($"{itemName}: {closestPos1.Value}, {closestPos2.Value} - 모든 아이템이 잠겨있지않고, 최소 거리 반환");
+                        //Debug.Log($"{itemName}: {closestPos1.Value}, {closestPos2.Value} - 모든 아이템이 잠겨있지않고, 최소 거리 반환");
                         return (closestPos1.Value, closestPos2.Value);
                     }
                 }
@@ -975,7 +975,7 @@ public class GridManager : BaseManager
                     // 거리가 1이거나 대각선 1칸인 경우 바로 반환
                     if (distance == 1 || distance == Mathf.Sqrt(2))
                     {
-                        Debug.Log($"{itemName}: {lockedPos}, {unlockedPos} - 잠긴 아이템과 잠기지않은 아이템 중 거리가 1칸차이.");
+                        //Debug.Log($"{itemName}: {lockedPos}, {unlockedPos} - 잠긴 아이템과 잠기지않은 아이템 중 거리가 1칸차이.");
                         return (lockedPos, unlockedPos);
                     }
 
@@ -990,7 +990,7 @@ public class GridManager : BaseManager
 
             if (closestLockedPos.HasValue && closestUnlockedPos.HasValue)
             {
-                Debug.Log($"{itemName}: {closestLockedPos.Value}, {closestUnlockedPos.Value} - 잠긴 아이템과 잠기지않은 아이템 중 최소 거리 반환");
+                //Debug.Log($"{itemName}: {closestLockedPos.Value}, {closestUnlockedPos.Value} - 잠긴 아이템과 잠기지않은 아이템 중 최소 거리 반환");
                 return (closestLockedPos.Value, closestUnlockedPos.Value);
             }
         }
@@ -999,7 +999,7 @@ public class GridManager : BaseManager
 
     public (Vector2Int, Vector2Int)? FindMergeablePosPair()
     {
-        Debug.Log("FindMergeablePosPair");
+        //Debug.Log("FindMergeablePosPair");
         (Vector2Int, Vector2Int)? mergeblePosPair = null;
 
         // ownedItemsCanBeMerged 딕셔너리 얕은 복사
@@ -1019,7 +1019,7 @@ public class GridManager : BaseManager
                     mergeblePosPair = FindNearestItemPairCanBeMerged(keyToFind);
                     if (mergeblePosPair.HasValue)
                     {
-                        Debug.Log("주문 아이템에 가까운 아이템 페어 찾음");
+                        //Debug.Log("주문 아이템에 가까운 아이템 페어 찾음");
                         return mergeblePosPair;
                     }
                     else
@@ -1037,7 +1037,7 @@ public class GridManager : BaseManager
         {
             foreach (var item in itemsToCheck)
             {
-                Debug.Log($"{Managers.Game.GetItemName(item.Key)}/아이템 레벨 {item.Key.lv}/최대 레벨{Managers.Game.GetItemMaxLevel(item.Key)}");
+                //Debug.Log($"{Managers.Game.GetItemName(item.Key)}/아이템 레벨 {item.Key.lv}/최대 레벨{Managers.Game.GetItemMaxLevel(item.Key)}");
                 //아이템이 최대 레벨인 경우 제외
                 if(item.Key.lv == Managers.Game.GetItemMaxLevel(item.Key))
                 {
@@ -1046,7 +1046,7 @@ public class GridManager : BaseManager
                 mergeblePosPair = FindNearestItemPairCanBeMerged(item.Key);
                 if (mergeblePosPair.HasValue)
                 {
-                    Debug.Log("주문 아이템에 가까운 아이템 존재X 그냥 머지 가능한 아이템 페어 찾음");
+                    //Debug.Log("주문 아이템에 가까운 아이템 존재X 그냥 머지 가능한 아이템 페어 찾음");
                     return mergeblePosPair;
                 }
             }
