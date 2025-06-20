@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,9 @@ public class BuyFurnitureButton : MonoBehaviour
     FurnitureData data;
 
    [SerializeField] Image image;
+    [SerializeField] TextMeshProUGUI furnitureNmae;
+    [SerializeField] TextMeshProUGUI furnitureDescription;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,6 +37,10 @@ public class BuyFurnitureButton : MonoBehaviour
         this.furniturePlacementManager = furniturePlacementManager;
         this.data = data;
         image.sprite = data.furnitureSprite[0].sprites[0];
+
+        int floor = data.floorNum + 1;
+        furnitureNmae.text = "" + floor + "F : " + data.furnitureName;
+        furnitureDescription.text = data.furnitureDescription;
 
     }
 }

@@ -17,6 +17,7 @@ MonoBehaviour:
   furnitureInfos:
   - floorNum: 0
     furnitureName: darklord_bed_back
+    furnitureDescription: 
     gridPosition: {x: 4, y: 8}
     size:
     - {x: 4, y: 4}
@@ -52,6 +53,7 @@ MonoBehaviour:
     price: 3
   - floorNum: 0
     furnitureName: darklord_throne_back
+    furnitureDescription: 
     gridPosition: {x: 10, y: 6}
     size:
     - {x: 2, y: 2}
@@ -87,6 +89,7 @@ MonoBehaviour:
     price: 3
   - floorNum: 0
     furnitureName: crystal_ball
+    furnitureDescription: 
     gridPosition: {x: 3, y: 3}
     size:
     - {x: 1, y: 1}
@@ -123,6 +126,7 @@ MonoBehaviour:
     price: 3
   - floorNum: 0
     furnitureName: "\uC5BC\uC74C\uD638\uC218"
+    furnitureDescription: 
     gridPosition: {x: 3, y: 1}
     size:
     - {x: 1, y: 1}
@@ -159,6 +163,7 @@ MonoBehaviour:
     price: 3
   - floorNum: 0
     furnitureName: stonestatue_front
+    furnitureDescription: 
     gridPosition: {x: 10, y: 2}
     size:
     - {x: 1, y: 1}
@@ -194,6 +199,7 @@ MonoBehaviour:
     price: 3
   - floorNum: 0
     furnitureName: firelight_floor
+    furnitureDescription: 
     gridPosition: {x: 10, y: 0}
     size:
     - {x: 1, y: 1}
@@ -229,6 +235,7 @@ MonoBehaviour:
     price: 3
   - floorNum: 0
     furnitureName: firelight_wall
+    furnitureDescription: 
     gridPosition: {x: 5, y: 4}
     size:
     - {x: 1, y: 3}
@@ -264,6 +271,7 @@ MonoBehaviour:
     price: 3
   - floorNum: 0
     furnitureName: tapestry
+    furnitureDescription: 
     gridPosition: {x: 8, y: 2}
     size:
     - {x: 3, y: 5}
@@ -297,3 +305,5 @@ MonoBehaviour:
     colliderSize: {x: 2.08, y: 4.28}
     isUnlocked: 0
     price: 3
+  floorNmae: "1F : \uAE30\uBCF8 \uAC1D\uC2E4"
+  floorDescription: "\uCE90\uC8FC\uC5BC\uD55C \uAC1D\uC2E4\uC774 \uC88B\uC544"

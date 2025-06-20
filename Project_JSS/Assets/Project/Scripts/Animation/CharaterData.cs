@@ -9,5 +9,9 @@ public class CharacterData : ScriptableObject
     public Sprite[] skins;
     public Sprite[] deco1;
     public Sprite[] deco2;
+
+    public int skinIndex;
+    public int decorationIndex1;
+    public int decorationIndex2;
 }
 

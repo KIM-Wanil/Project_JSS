@@ -10,9 +10,10 @@ using UnityEngine.TextCore.Text;
 
 public class FurniturePlacementManager : MonoBehaviour
 {
-    [SerializeField] FloorData[] floorData;
+    public FloorData[] floorData;
     [SerializeField] FloorManager[] floorManagers;
     FloorManager floorManager;
+    [SerializeField] Collection collection;
     [Header("Settings")]
     public float longPressDuration = 0.5f;
     public float gridSize = 1.0f;
@@ -74,6 +75,8 @@ public class FurniturePlacementManager : MonoBehaviour
         confirmButton.onClick.AddListener(ConfirmPlacement);
         cancelButton.onClick.AddListener(CancelPlacement);
    
+
+
     }
     private void Start()
     {
@@ -409,14 +412,17 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         if (floorNumber < 0 || floorNumber >= floorData.Length || floorManagers[floorNumber].floorData.isUnlock == false)
             return;
-        
+        floorManager = floorManagers[floorNumber];
         mainCamera.transform.DOMove(new Vector3(0, 7.5f + 5.15f * floorNumber, -10f),0.5f);
+        for (int i = 0; i <= floorNumber; i++)
+        {
+            floorManagers[i].gameObject.SetActive(true);
+        }
         for (int i = floorNumber +1; i<floorManagers.Length;i++)
         {
             floorManagers[i].gameObject.SetActive(false);
         }
-        floorManager = floorManagers[floorNumber];
-        floorManager.gameObject.SetActive(true);
+      //  floorManager.gameObject.SetActive(true);
         floor = floorNumber;
 
         isometricGrids = floorManager.grids;
@@ -441,6 +447,7 @@ public class FurniturePlacementManager : MonoBehaviour
     public void AddFurnitureToFloor(FurnitureData data, int floor)
     {
         SwitchFloor(floor);
+
         GameObject obj = floorManagers[floor].AddFurniture(data);
         if (obj != null)
         {
@@ -469,10 +476,12 @@ public class FurniturePlacementManager : MonoBehaviour
                 if (!data.isLeft)
                 {
                     currentGrid = isometricGrids[1];
+                    gridNumbers = 1;
                 }
                 else
                 {
                     currentGrid = isometricGrids[2];
+                    gridNumbers = 2;
                 }
             }
 
@@ -490,6 +499,8 @@ public class FurniturePlacementManager : MonoBehaviour
 
             uiObject.transform.position = new Vector2(selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
             isDragging = true;
+
+            collection.UpdateSlider(floor);
         }
     }
 

@@ -8,39 +8,45 @@ public class Customizing : MonoBehaviour
 {
     enum WhatIndex { skin, deco1, deco2 }
 
-    [SerializeField] SpriteLibrary library;
+    [SerializeField] FurniturePlacementManager furniturePlacementManager;
+    [SerializeField] SpriteLibrary[] library;
+    [SerializeField] CharacterData[] charaterData;
     [SerializeField] SpriteLibraryAsset[] assets;
     [SerializeField] Image character;
-    [SerializeField] CharacterData charaterData;
 
-    int skinIndex;
-    int decorationIndex1;
-    int decorationIndex2;
+    int floorIndex;
 
     int tempIndex;
     WhatIndex whatIndex;
 
+    [SerializeField] GameObject ui;
 
     [SerializeField] Button[] buttons;
     [SerializeField] Image[] buttonsItemImage;
 
     [SerializeField] Sprite[] buttonSprite;
     [SerializeField] int[] buttonsIndex;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        assets = charaterData.assets;
+    
         whatIndex = WhatIndex.skin;
-        skinIndex = 0;
-        decorationIndex1 = 0;
-        decorationIndex2 = 0;
-        setButtonImage();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    public void SetUI(bool onoff , int index)
+    {    
+        floorIndex = index;
+        assets = charaterData[floorIndex].assets;
+        whatIndex = WhatIndex.skin;
+        setButtonImage();
+        ui.SetActive(onoff);
     }
     public void SelectPart(int index)
     {
@@ -48,16 +54,16 @@ public class Customizing : MonoBehaviour
         switch (whatIndex)
         {
             case WhatIndex.skin:
-                tempIndex = skinIndex;
+                tempIndex = charaterData[floorIndex].skinIndex;
                 break;
             case WhatIndex.deco1:
-                tempIndex = decorationIndex1;
+                tempIndex = charaterData[floorIndex].decorationIndex1;
                 break;
             case WhatIndex.deco2:
-                tempIndex = decorationIndex2;
+                tempIndex = charaterData[floorIndex].decorationIndex2;
                 break;
             default:
-                tempIndex = skinIndex;
+                tempIndex = charaterData[floorIndex].skinIndex;
                 break;
         }
         setButtonImage();
@@ -69,20 +75,20 @@ public class Customizing : MonoBehaviour
         switch (whatIndex)
         {
             case WhatIndex.skin:
-                sprites = charaterData.skins;
-                index = skinIndex;
+                sprites = charaterData[floorIndex].skins;
+                index = charaterData[floorIndex].skinIndex;
                 break;
             case WhatIndex.deco1:
-                sprites = charaterData.deco1;
-                index = decorationIndex1;
+                sprites = charaterData[floorIndex].deco1;
+                index = charaterData[floorIndex].decorationIndex1;
                 break;
             case WhatIndex.deco2:
-                sprites = charaterData.deco2;
-                index = decorationIndex2;
+                sprites = charaterData[floorIndex].deco2;
+                index = charaterData[floorIndex].decorationIndex2;
                 break;
             default:
-                sprites = charaterData.skins;
-                index = skinIndex;
+                sprites = charaterData[floorIndex].skins;
+                index = charaterData[floorIndex].skinIndex;
                 break;
         }
         if (tempIndex == 0)
@@ -129,13 +135,13 @@ public class Customizing : MonoBehaviour
         switch (whatIndex)
         {
             case WhatIndex.skin:
-                    ChangeIndex(ref tempIndex, charaterData.skins.Length,isLeft);
+                    ChangeIndex(ref tempIndex, charaterData[floorIndex].skins.Length,isLeft);
                     break;
             case WhatIndex.deco1:
-                    ChangeIndex(ref tempIndex, charaterData.deco1.Length, isLeft);
+                    ChangeIndex(ref tempIndex, charaterData[floorIndex].deco1.Length, isLeft);
                     break;
             case WhatIndex.deco2:
-                    ChangeIndex(ref tempIndex, charaterData.deco2.Length, isLeft);
+                    ChangeIndex(ref tempIndex, charaterData[floorIndex].deco2.Length, isLeft);
                     break;
             default:
                     break;
@@ -167,13 +173,13 @@ public class Customizing : MonoBehaviour
         switch (whatIndex)
         {
             case WhatIndex.skin:
-                skinIndex = buttonsIndex[num];
+                charaterData[floorIndex].skinIndex = buttonsIndex[num];
                 break; 
             case WhatIndex.deco1:
-                decorationIndex1 = buttonsIndex[num];
+                charaterData[floorIndex].decorationIndex1 = buttonsIndex[num];
                 break;  
             case WhatIndex.deco2:
-                decorationIndex2 = buttonsIndex[num];
+                charaterData[floorIndex].decorationIndex2 = buttonsIndex[num];
                 break;
             default:
                 break;
@@ -181,8 +187,8 @@ public class Customizing : MonoBehaviour
         SetSkin();
     }
     public void SetSkin() {
-        library.spriteLibraryAsset = assets[skinIndex * 4 + decorationIndex1* 4 + decorationIndex2];
-        character.sprite = library.spriteLibraryAsset.GetSprite("아이들", "앞연금술사idle_0");
+        library[floorIndex].spriteLibraryAsset = assets[charaterData[floorIndex].skinIndex * 4 + charaterData[floorIndex].decorationIndex1 * 4 + charaterData[floorIndex].decorationIndex2];
+        character.sprite = library[floorIndex].spriteLibraryAsset.GetSprite("아이들", "앞연금술사idle_0");
     }
 
 }

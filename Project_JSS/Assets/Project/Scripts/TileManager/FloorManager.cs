@@ -73,6 +73,10 @@ public class FloorManager : MonoBehaviour
                     }
 
                 }
+                if (availableFurniturePrefabs.Find(x => x.name == data.furnitureName))
+                {
+                    continue;
+                }
                 currentGrid.OccupiedCell(data.gridPosition, data.size[data.rotation], true);
 
                 GameObject newObj = Object.Instantiate(furniturePrefab, currentGrid.transform);
