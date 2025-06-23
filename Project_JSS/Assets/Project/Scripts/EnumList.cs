@@ -83,6 +83,26 @@ public enum Direction
     Left,
     Right
 }
+public enum FingerAnimationType
+{
+    None = 0,
+    Zoom,
+    SwipeX,
+    SwipeY
+}
+public enum TutorialCondition
+{
+    None = 0,
+    머지화면이동클릭,
+    제작목록클릭,
+    제작목록닫기버튼클릭,
+    스패너합성,
+    제너레이터클릭,
+    망치합성,
+    하우징화면이동클릭
+}
+
+
 public class EnumList : MonoBehaviour
 {
 

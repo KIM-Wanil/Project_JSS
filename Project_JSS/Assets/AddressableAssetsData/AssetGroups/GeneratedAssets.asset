@@ -35,13 +35,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b85a6ef70232d7743855637e7c1d561d
-    m_Address: Items/N002
+  - m_GUID: a0305832d2a976648b9fef0e8ba009d3
+    m_Address: TutorialDatabase
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bd15b613a94c43d49aa46c7d42e47519
-    m_Address: DialogueDatabase
+  - m_GUID: b85a6ef70232d7743855637e7c1d561d
+    m_Address: Items/N002
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -21,6 +21,9 @@ public class CSVParser : EditorWindow
     public TextAsset dialogueCsvFile;
     private const string dialogueAssetPath = "Assets/Project/ScriptableObjects/Dialogue/";
     private const string npcSpritePath = "Assets/Project/Sprites/Guest/";
+
+    public TextAsset tutorialCsvFile;
+    private const string tutorialAssetPath = "Assets/Project/ScriptableObjects/Tutorial/";
     const int A = 0, B = 1, C = 2, D = 3, E = 4,
               F = 5, G = 6, H = 7, I = 8, J = 9,
               K = 10, L = 11, M = 12, N = 13, O = 14;
@@ -40,6 +43,7 @@ public class CSVParser : EditorWindow
         itemCsvFile = EditorGUILayout.ObjectField("Item CSV", itemCsvFile, typeof(TextAsset), false) as TextAsset;
         generatorCsvFile = EditorGUILayout.ObjectField("Generator CSV", generatorCsvFile, typeof(TextAsset), false) as TextAsset;
         dialogueCsvFile = EditorGUILayout.ObjectField("Dialgoue CSV", dialogueCsvFile, typeof(TextAsset), false) as TextAsset;
+        tutorialCsvFile = EditorGUILayout.ObjectField("Tutorial CSV", tutorialCsvFile, typeof(TextAsset), false) as TextAsset;
 
         EditorGUILayout.Space(20f);
         EditorGUILayout.LabelField("Parsing", EditorStyles.boldLabel);
@@ -60,6 +64,12 @@ public class CSVParser : EditorWindow
         if (GUILayout.Button("Parse Dialogue CSV"))
         {
             ParseDialogueCSV();
+        }
+
+        EditorGUILayout.Space(10f);
+        if (GUILayout.Button("Parse Tutorial CSV"))
+        {
+            ParseTutorialCSV();
         }
     }
 
@@ -371,6 +381,121 @@ public class CSVParser : EditorWindow
 
         Debug.Log("Dialogue CSV 파싱 및 저장 완료!");
 #endif
+    }
+
+    public void ParseTutorialCSV()
+    {
+#if UNITY_EDITOR
+        if (tutorialCsvFile == null)
+        {
+            Debug.LogError("튜토리얼 CSV 파일이 할당되지 않았습니다.");
+            return;
+        }
+
+        string[] lines = tutorialCsvFile.text.Split('\n');
+        List<TutorialEvent> events = new List<TutorialEvent>();
+        TutorialEvent currentEvent = null;
+
+        for (int i = 1; i < lines.Length; i++)
+        {
+            string line = lines[i].Trim();
+            if (string.IsNullOrEmpty(line)) continue;
+            Debug.Log($"Parsing line {i}: {line}");
+
+            string[] row = line.Split(',');
+            // 새 이벤트 시작
+            if (!string.IsNullOrEmpty(row[A]))
+            {
+                if (currentEvent != null)
+                    events.Add(currentEvent);
+
+                currentEvent = new TutorialEvent
+                {
+                    eventId = row[A],
+                    dialogues = new List<TutorialStep>()
+                };
+            }
+
+            if (currentEvent == null) continue;
+
+            TutorialStep step = new TutorialStep();
+
+            // dialogue
+            step.dialogue = row[D];
+
+            // characterPosition
+            step.characterPosition = ParseVector2(row[E]);
+
+            // characterName
+            step.characterName = row[C];
+
+            // highlightPosition
+            step.highlightPosition = ParseVector2(row[F]);
+
+            // highlightSize
+            step.highlightSize = ParseVector2(row[G]);
+
+            // fingerAnimType
+            step.fingerAnimType = ParseFingerAnimType(row[H]);
+
+            // fingerPosition
+            step.fingerPosition = ParseVector2(row[I]);
+
+            // fingerRotation
+            step.fingerRotation = ParseFloat(row[J]);
+
+            // fingerAnimationAmount
+            step.fingerAnimationAmount = ParseFloat(row[K]);
+
+            // completionCondition
+            step.completionCondition = row[L];
+
+            currentEvent.dialogues.Add(step);
+        }
+
+        // 마지막 이벤트 추가
+        if (currentEvent != null)
+            events.Add(currentEvent);
+
+        // ScriptableObject 생성 및 저장
+        TutorialDatabase db = ScriptableObject.CreateInstance<TutorialDatabase>();
+        db.tutorialEvents = events;
+
+        string assetPath = $"{tutorialAssetPath}튜토리얼SO.asset";
+        SaveScriptableObject(db, assetPath);
+
+        SetAsAddressable(assetPath, "TutorialDatabase");
+
+        Debug.Log("튜토리얼 CSV 파싱 및 저장 완료!");
+#endif
+    }
+
+    // Vector2 파싱 유틸
+    private static Vector2 ParseVector2(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return Vector2.zero;
+        var parts = value.Split('/');
+        if (parts.Length != 2) return Vector2.zero;
+        float.TryParse(parts[0], out float x);
+        float.TryParse(parts[1], out float y);
+        return new Vector2(x, y);
+    }
+
+    // float 파싱 유틸
+    private static float ParseFloat(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return 0f;
+        float.TryParse(value, out float result);
+        return result;
+    }
+
+    // FingerAnimationType 파싱 유틸
+    private static FingerAnimationType ParseFingerAnimType(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return FingerAnimationType.None;
+        if (System.Enum.TryParse<FingerAnimationType>(value, out var result))
+            return result;
+        return FingerAnimationType.None;
     }
 
     private static void SaveScriptableObject(ScriptableObject so, string path)
