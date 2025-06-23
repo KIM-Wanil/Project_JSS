@@ -126,10 +126,10 @@ TextureImporter:
       name: "\uC55E\uC720\uCE58\uC6D0idle_0"
       rect:
         serializedVersion: 2
-        x: 61
-        y: 265
-        width: 137
-        height: 195
+        x: 0
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,10 +148,10 @@ TextureImporter:
       name: "\uC55E\uC720\uCE58\uC6D0idle_1"
       rect:
         serializedVersion: 2
-        x: 317
-        y: 267
-        width: 135
-        height: 194
+        x: 256
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +170,10 @@ TextureImporter:
       name: "\uC55E\uC720\uCE58\uC6D0idle_3"
       rect:
         serializedVersion: 2
-        x: 565
-        y: 268
-        width: 144
-        height: 194
+        x: 0
+        y: 0
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: "\uC55E\uC720\uCE58\uC6D0idle_4"
       rect:
         serializedVersion: 2
-        x: 61
-        y: 11
-        width: 134
-        height: 199
+        x: 256
+        y: 0
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +214,10 @@ TextureImporter:
       name: "\uC55E\uC720\uCE58\uC6D0idle_5"
       rect:
         serializedVersion: 2
-        x: 317
-        y: 9
-        width: 133
-        height: 195
+        x: 512
+        y: 0
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,6 +228,28 @@ TextureImporter:
       bones: []
       spriteID: 2a4cfd45387613340bb6bce46495b88c
       internalID: 1127339415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC55E\uC720\uCE58\uC6D0idle_2"
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac339b1f2f9082f4e86e728eb2117408
+      internalID: -1285912727
       vertices: []
       indices: 
       edges: []
@@ -252,7 +274,6 @@ TextureImporter:
       "\uC55E\uC720\uCE58\uC6D0idle_3": 710137609
       "\uC55E\uC720\uCE58\uC6D0idle_4": -1961262035
       "\uC55E\uC720\uCE58\uC6D0idle_5": 1127339415
-      "\uC55E\uC720\uCE58\uC6D0idle_6": -1614857420
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

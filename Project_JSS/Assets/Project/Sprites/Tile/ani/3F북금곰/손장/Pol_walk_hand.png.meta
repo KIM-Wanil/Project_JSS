@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 81cde7c0ecb7f674e8177f8fd5a6850a
+guid: 1774e45c3c3eeb248bf17a088961817c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,177 +123,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_0"
+      name: Pol_walk_hand_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 527
-        width: 150
-        height: 191
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ffe4c28aad873064da732acf52b6f5cd
-      internalID: -1802116483
+      spriteID: 27f932aebfdd2934d8beabe0f23ec4ac
+      internalID: -1015219041
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_1"
+      name: Pol_walk_hand_1
       rect:
         serializedVersion: 2
-        x: 313
-        y: 528
-        width: 153
-        height: 191
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8bb967c72b1cc246b4c41857605b43a
-      internalID: -314392345
+      spriteID: 9c2a3dc4ef32797429bbee2ede1f27b0
+      internalID: 312559188
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_2"
+      name: Pol_walk_hand_2
       rect:
         serializedVersion: 2
-        x: 567
-        y: 527
-        width: 150
-        height: 191
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6cff153d1be109149a1790b3ec3fc881
-      internalID: -126592996
+      spriteID: e2f9e2f955ab58943926146a952cc58f
+      internalID: -1184572163
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_3"
+      name: Pol_walk_hand_3
       rect:
         serializedVersion: 2
-        x: 52
-        y: 269
-        width: 148
-        height: 190
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a4fa45722d9d3740b53a40b888c4085
-      internalID: -1141322654
+      spriteID: 6ac212a42503b044589cfc7b626b2fc2
+      internalID: 1452007763
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_4"
+      name: Pol_walk_hand_4
       rect:
         serializedVersion: 2
-        x: 306
-        y: 270
-        width: 148
-        height: 192
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2eedefa50ef08f04abc3048090277b90
-      internalID: -1729905599
+      spriteID: edf882471eab8fb49b4d050c47c8e230
+      internalID: -1646876370
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_5"
+      name: Pol_walk_hand_5
       rect:
         serializedVersion: 2
-        x: 553
-        y: 272
-        width: 152
-        height: 198
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 350e0014dd2e45a4689c5ca8c09946e2
-      internalID: -1232833128
+      spriteID: fba8ce5504e4d264281a65064c3b137e
+      internalID: 910014101
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_6"
+      name: Pol_walk_hand_6
       rect:
         serializedVersion: 2
-        x: 50
-        y: 14
-        width: 148
-        height: 192
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 596af331535dc2a458782b7f4f1299d7
-      internalID: 1958136937
+      spriteID: 2b71fc7970a727548ba36348bc48e898
+      internalID: -566573290
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_7"
+      name: Pol_walk_hand_7
       rect:
         serializedVersion: 2
-        x: 308
-        y: 13
-        width: 148
-        height: 190
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 532cb03b7a80d524db0b6f50ac358de8
-      internalID: 236028301
+      spriteID: 1bb84e66939daae42a1cf5346a5accc0
+      internalID: -800903560
       vertices: []
       indices: 
       edges: []
@@ -312,14 +312,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_0": -1802116483
-      "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_1": -314392345
-      "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_2": -126592996
-      "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_3": -1141322654
-      "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_4": -1729905599
-      "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_5": -1232833128
-      "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_6": 1958136937
-      "\uB4A4\uBD81\uADF9\uACF0\uAC77\uAE30_7": 236028301
+      Pol_walk_hand_0: -1015219041
+      Pol_walk_hand_1: 312559188
+      Pol_walk_hand_2: -1184572163
+      Pol_walk_hand_3: 1452007763
+      Pol_walk_hand_4: -1646876370
+      Pol_walk_hand_5: 910014101
+      Pol_walk_hand_6: -566573290
+      Pol_walk_hand_7: -800903560
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

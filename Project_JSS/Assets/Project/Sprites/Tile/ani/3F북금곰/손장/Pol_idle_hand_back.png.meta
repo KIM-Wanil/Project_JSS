@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e95408390692c2b4a942fdc17d6f5106
+guid: 3bafa79c7e4a8244a9d36a5ba3fbe9fa
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,177 +123,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_0"
+      name: Pol_idle_hand_back_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 516
-        width: 151
-        height: 201
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1e3be253dda91c408ea10b6fe928b0b
-      internalID: -244557649
+      spriteID: 297dac403e1dde24ba84b38a707cb5c1
+      internalID: -815823039
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_1"
+      name: Pol_idle_hand_back_1
       rect:
         serializedVersion: 2
-        x: 315
-        y: 516
-        width: 159
-        height: 205
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 401c645d39c1a104db06b00d094e440a
-      internalID: 702310686
+      spriteID: 4d94af126a52dfb4f8624caae5d9dc2d
+      internalID: -1672489169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_2"
+      name: Pol_idle_hand_back_2
       rect:
         serializedVersion: 2
-        x: 567
-        y: 516
-        width: 151
-        height: 201
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51a5849f345fac5459044f7972c0a05e
-      internalID: 857214356
+      spriteID: 36ba427e9d14e42499461c659157efc5
+      internalID: -2092959670
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_3"
+      name: Pol_idle_hand_back_3
       rect:
         serializedVersion: 2
-        x: 52
-        y: 261
-        width: 148
-        height: 198
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: be130df254ab30e468604792ffb32e4b
-      internalID: 1527472043
+      spriteID: c11dda8c0177e1545a025844bc24e6d9
+      internalID: 2025874078
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_4"
+      name: Pol_idle_hand_back_4
       rect:
         serializedVersion: 2
-        x: 306
-        y: 263
-        width: 148
-        height: 195
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26f83ab1b905f3041910eb0489c4077b
-      internalID: -677116076
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_5"
-      rect:
-        serializedVersion: 2
-        x: 558
-        y: 267
-        width: 150
-        height: 193
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f49e925f8a01bf4a99dbad5a51dfdd3
-      internalID: -913137526
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_6"
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 7
-        width: 148
-        height: 195
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 64c1113f2ef4a45419a1dbf51b9b5754
-      internalID: 933834296
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_7"
-      rect:
-        serializedVersion: 2
-        x: 308
-        y: 5
-        width: 148
-        height: 198
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0a568410447fc41429044ee2edbecaa8
-      internalID: 76080912
+      spriteID: a31e3d0ec79f4f741a80b1f1551da6f4
+      internalID: 1184830590
       vertices: []
       indices: 
       edges: []
@@ -312,14 +246,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_0": -244557649
-      "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_1": 702310686
-      "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_2": 857214356
-      "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_3": 1527472043
-      "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_4": -677116076
-      "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_5": -913137526
-      "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_6": 933834296
-      "\uC55E\uBD81\uADF9\uACF0\uAC77\uAE30_7": 76080912
+      Pol_idle_hand_back_0: -815823039
+      Pol_idle_hand_back_1: -1672489169
+      Pol_idle_hand_back_2: -2092959670
+      Pol_idle_hand_back_3: 2025874078
+      Pol_idle_hand_back_4: 1184830590
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

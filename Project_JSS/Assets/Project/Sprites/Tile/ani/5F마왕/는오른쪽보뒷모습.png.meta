@@ -126,10 +126,10 @@ TextureImporter:
       name: "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_0"
       rect:
         serializedVersion: 2
-        x: 39
-        y: 536
-        width: 191
-        height: 175
+        x: 0
+        y: 512
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,10 +148,10 @@ TextureImporter:
       name: "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_1"
       rect:
         serializedVersion: 2
-        x: 290
-        y: 538
-        width: 191
-        height: 175
+        x: 256
+        y: 512
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +170,10 @@ TextureImporter:
       name: "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_2"
       rect:
         serializedVersion: 2
-        x: 546
-        y: 536
-        width: 193
-        height: 175
+        x: 512
+        y: 512
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_3"
       rect:
         serializedVersion: 2
-        x: 34
-        y: 279
-        width: 194
-        height: 177
+        x: 0
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +214,10 @@ TextureImporter:
       name: "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_4"
       rect:
         serializedVersion: 2
-        x: 290
-        y: 282
-        width: 194
-        height: 175
+        x: 256
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +236,10 @@ TextureImporter:
       name: "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_5"
       rect:
         serializedVersion: 2
-        x: 557
-        y: 286
-        width: 193
-        height: 173
+        x: 512
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,10 +258,10 @@ TextureImporter:
       name: "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_6"
       rect:
         serializedVersion: 2
-        x: 42
-        y: 26
-        width: 191
-        height: 175
+        x: 0
+        y: 0
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,10 +280,10 @@ TextureImporter:
       name: "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_7"
       rect:
         serializedVersion: 2
-        x: 295
-        y: 23
-        width: 191
-        height: 177
+        x: 256
+        y: 0
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -294,6 +294,28 @@ TextureImporter:
       bones: []
       spriteID: 34d514eadf6df0341b706070ae537f25
       internalID: -459753235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_8"
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fcd70a53fdac594fb695abc5e27b288
+      internalID: 1880884228
       vertices: []
       indices: 
       edges: []
@@ -320,6 +342,7 @@ TextureImporter:
       "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_5": 431091681
       "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_6": 936132594
       "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_7": -459753235
+      "\uB294\uC624\uB978\uCABD\uBCF4\uB4B7\uBAA8\uC2B5_8": 1880884228
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

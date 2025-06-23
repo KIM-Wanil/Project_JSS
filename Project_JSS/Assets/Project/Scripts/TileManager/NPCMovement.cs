@@ -9,8 +9,8 @@ public class NPCMovement : MonoBehaviour
     public float moveSpeed = 2f;
     public float idleTime = 3f;  // 한 위치에서 머무는 시간
     public float randomMoveProbability = 0.7f;  // 랜덤 이동 확률
-    IsoGridFloor isometricGrid;
-    private Pathfinder pathfinder;
+    [SerializeField] IsoGridFloor isometricGrid;
+    [SerializeField] Pathfinder pathfinder;
     private List<Vector3> currentPath;
     private int currentWaypointIndex;
     private bool isMoving = false;
@@ -23,13 +23,14 @@ public class NPCMovement : MonoBehaviour
     private const string VERTICAL = "Vertical";
     private const string IS_MOVING = "IsMoving";
     private const string IS_SPECIAL = "Special";
+    private const string IS_SPECIAL2 = "Special2";
+    public bool ChangeSpecial;
+    private bool ChangeBool;
     private Animator animator;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        pathfinder = FindFirstObjectByType<Pathfinder>();
-        isometricGrid = FindFirstObjectByType<IsoGridFloor>();
         lastDirection = Vector2.down;
     }
     void Update()
@@ -145,7 +146,21 @@ public class NPCMovement : MonoBehaviour
                 if (isSpecial)
                 {
                     this.GetComponent<SpriteRenderer>().flipX = false;
-                    animator.SetTrigger(IS_SPECIAL);
+                    if (ChangeSpecial)
+                    {
+                        if (ChangeBool)
+                        {
+                            animator.SetTrigger(IS_SPECIAL);
+                        }
+                        else
+                        {
+                            animator.SetTrigger(IS_SPECIAL2);
+                        }
+                        ChangeBool = !ChangeBool;
+                    }
+                    else
+                        animator.SetTrigger(IS_SPECIAL);
+
                     isSpecial = false;
                     idleTime = 9.0f;
                 }

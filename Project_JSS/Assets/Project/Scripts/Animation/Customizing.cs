@@ -40,13 +40,17 @@ public class Customizing : MonoBehaviour
     {
 
     }
-    public void SetUI(bool onoff , int index)
-    {    
+    public void SetUI( int index)
+    {
         floorIndex = index;
         assets = charaterData[floorIndex].assets;
         whatIndex = WhatIndex.skin;
         setButtonImage();
-        ui.SetActive(onoff);
+        ui.SetActive(true);
+    }
+    public void SetUI_false()
+    {    
+        ui.SetActive(false);
     }
     public void SelectPart(int index)
     {
