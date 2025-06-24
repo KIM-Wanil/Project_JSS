@@ -10,6 +10,10 @@ public class UiController : MonoBehaviour
     [SerializeField] private Button shopButton;
     [SerializeField] private Button listButton;
     [SerializeField] private TextMeshProUGUI[] starTexts;
+
+    [SerializeField] private GameObject hotelCanvas;
+    [SerializeField] private GameObject hotelUiCanvas;
+    [SerializeField] private CanvasGroup mergeCanvas;
     void Start()
     {
 
@@ -23,21 +27,32 @@ public class UiController : MonoBehaviour
     {
         // UI 초기화
         toHotelButton.onClick.AddListener(onClickToHotelButton);
-        toHotelButton.onClick.AddListener(onClickToHotelButton);
+        toMergeButton.onClick.AddListener(onClickToMergeButton);
         shopButton.onClick.AddListener(onClickShopButton);
         listButton.onClick.AddListener(onClickListButton);
 
     }
-    
+
     public void onClickToHotelButton()
     {
-        TutorialManager.TriggerCondition(TutorialCondition.머지이동클릭);
-        TutorialManager.TriggerCondition(TutorialCondition.가구설치클릭);
+        hotelCanvas.SetActive(true);
+        hotelUiCanvas.SetActive(true);
+        mergeCanvas.gameObject.SetActive(false);
+        //mergeCanvas.alpha = 0f;
+        //mergeCanvas.interactable = false;
+        //mergeCanvas.blocksRaycasts = false;
     }
     public void onClickToMergeButton()
     {
         TutorialManager.TriggerCondition(TutorialCondition.머지이동클릭);
-        TutorialManager.TriggerCondition(TutorialCondition.가구설치클릭);
+        hotelCanvas.SetActive(false);
+        hotelUiCanvas.SetActive(false);
+        Managers.Grid.Init();
+        Managers.Game.Init();
+        mergeCanvas.gameObject.SetActive(true);
+        //mergeCanvas.alpha = 1f;
+        //mergeCanvas.interactable = true;
+        //mergeCanvas.blocksRaycasts = true;
     }
     public void onClickShopButton()
     {

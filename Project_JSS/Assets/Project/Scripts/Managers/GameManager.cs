@@ -49,8 +49,8 @@ public class GameManager : BaseManager
     //[SerializeField] private GeneratorSO[] genDatas;
     [SerializeField] private string[] genIds = {"G001", "G002"};
 
-    
 
+    private bool isInit = false;
     
 
     [Header("Game Events")]
@@ -144,8 +144,7 @@ public class GameManager : BaseManager
     }
     public override void Init()
     {
-        if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
-            return;
+        if (isInit) return;
         base.Init();
         energyRegenRemainSec = energyRegenRate;
         FlagRegenEnergy(currentEnergy);
@@ -153,7 +152,7 @@ public class GameManager : BaseManager
 
         InitializeGame();
 
-
+        isInit = true;
         
     }
     private async void LoadData()
@@ -269,7 +268,16 @@ public class GameManager : BaseManager
         currentStar += amount;
         onStarChanged?.Invoke(currentStar);
     }
-
+    public bool TrySpendStar(int amount)
+    {
+        if (currentStar >= amount)
+        {
+            currentStar -= amount;
+            onStarChanged?.Invoke(currentStar);
+            return true;
+        }
+        return false;
+    }
     #endregion
     #region Gem Management
     public void AddGem(int amount)

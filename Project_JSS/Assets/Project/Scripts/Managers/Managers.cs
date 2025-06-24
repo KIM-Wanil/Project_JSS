@@ -68,6 +68,8 @@ public class Managers : MonoBehaviour
         //_settings.Init();
         _save.Init();
         _backend.Init();
+        //_grid.Init();
+        //_game.Init();
         //_game.Init();
         //_grid.Init();
     }
@@ -75,9 +77,8 @@ public class Managers : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("¾À ·Îµå");
-        _grid.Init();
-        _game.Init();
-        _backend.Init();
+        
+        //_backend.Init();
         //_ui.UpdateLetterbox();
         //_settings.Init();
 
