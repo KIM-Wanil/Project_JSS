@@ -4,10 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using System.Linq;
+using UnityEditor.U2D.Animation;
+using UnityEngine.TextCore.Text;
 
 public class FurniturePlacementManager : MonoBehaviour
 {
-    [SerializeField] FloorData[] floorData;
+    public FloorData[] floorData;
+    [SerializeField] FloorManager[] floorManagers;
+    FloorManager floorManager;
+    [SerializeField] Collection collection;
     [Header("Settings")]
     public float longPressDuration = 0.5f;
     public float gridSize = 1.0f;
@@ -18,6 +24,7 @@ public class FurniturePlacementManager : MonoBehaviour
     [SerializeField] IsoGird[] isometricGrids;
     IsoGird currentGrid;
     int gridNumbers;
+    int floor;
     FurnitureInfo currentInfo;
 
     private GameObject selectedFurniture;
@@ -29,10 +36,8 @@ public class FurniturePlacementManager : MonoBehaviour
     private bool isLongPress = false;
     private int currentFloor = 0;
 
-    public Transform furnitureParent; // 가구들을 담을 부모 객체
     public GameObject furniturePrefab;
     public List<GameObject> availableFurnitureObject;
-    Queue<GameObject> furnitureObjectQueue;
     private Dictionary<int, List<GameObject>> furnitureByFloor = new Dictionary<int, List<GameObject>>();
     private Camera mainCamera;
     private bool isDragging = false;
@@ -40,14 +45,23 @@ public class FurniturePlacementManager : MonoBehaviour
 
     private Vector3 dragOffset;
 
-    [SerializeField] GameObject tile;
-    List<GameObject> tiles;
-
     [Header("UI")]
     [SerializeField] GameObject uiObject;
     [SerializeField] Button rotateButton;            // 회전 버튼
     [SerializeField] Button confirmButton;           // 확정 버튼
     [SerializeField] Button cancelButton;            // 취소 버튼
+
+
+    [SerializeField] GameObject skinObject;
+    int spriteIndex;
+    int tempIndex;
+    [SerializeField] Button[] buttons;
+    [SerializeField] Image[] buttonsItemImage;
+
+    [SerializeField] Sprite[] buttonSprite;
+    [SerializeField] int[] buttonsIndex;
+
+    Coroutine settinCoroutine;
 
     private void Awake()
     {
@@ -57,11 +71,22 @@ public class FurniturePlacementManager : MonoBehaviour
         {
             furnitureByFloor[i] = new List<GameObject>();
         }
-        tiles = new List<GameObject>();
         rotateButton.onClick.AddListener(RotateFurniture);
         confirmButton.onClick.AddListener(ConfirmPlacement);
         cancelButton.onClick.AddListener(CancelPlacement);
-        SwitchFloor(0);
+   
+
+
+    }
+    private void Start()
+    {
+        for (int i = 0; i< floorData.Length;i++)
+        {
+            if (floorData[i].isUnlock)
+                floor = i;
+        }
+        SwitchFloor(floor);
+        //SwitchFloor(0);
     }
 
     private void Update()
@@ -159,6 +184,10 @@ public class FurniturePlacementManager : MonoBehaviour
             {
                 isLongPress = true;
                 // 길게 눌러서 가구 선택
+                if (StateManager.instance.ButItem)
+                {
+                    return;
+                }
                 SelectFurnitureAtPosition(Input.mousePosition);
             }
             else if (selectedFurniture != null && isDragging)
@@ -188,10 +217,14 @@ public class FurniturePlacementManager : MonoBehaviour
             // 가구인지 확인 (태그로 구분하거나 컴포넌트로 확인)
             if (hitObject.CompareTag("Furniture"))
             {
-                
+                if (hitObject.GetComponent<FurnitureInfo>().FloorIndex != currentFloor)
+                {
+                    return;
+                }
                 // 이미 선택된 가구가 있으면 해제
                 if (selectedFurniture != null)
                 {
+                    currentInfo.SettingSprites(spriteIndex);
                     DeselectFurniture();
                 }
 
@@ -199,6 +232,10 @@ public class FurniturePlacementManager : MonoBehaviour
                 selectedFurniture = hitObject;
                 //selectedFurniture.GetComponent<SpriteRenderer>().sortingOrder =23;
                 currentInfo = hitObject.GetComponent<FurnitureInfo>();
+                spriteIndex = currentInfo.SpriteNumber;
+                tempIndex = currentInfo.SpriteNumber;
+                setButtonImage();
+                skinObject.SetActive(true);
                 if (currentInfo.IsFloor)
                 {
                     currentGrid = isometricGrids[0];
@@ -236,7 +273,7 @@ public class FurniturePlacementManager : MonoBehaviour
                 lastValidPosition = selectedFurniture.transform.position;
                 currentGrid.TileSetting(hitObject.transform, currentInfo.Size, currentInfo.GridPosition);
                 currentGrid.CanPlaceFurniture(currentInfo.GridPosition);
-                
+                CancelButtonUIOn(true);
                 uiObject.SetActive(true);
                 //uiObject.transform.SetParent(selectedFurniture.transform);
                 uiObject.transform.position = new Vector2( selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
@@ -323,6 +360,12 @@ public class FurniturePlacementManager : MonoBehaviour
             currentGrid.OccupiedCell(selectedFurniture.transform.position, currentInfo.Size, true);
             // 선택 상태 해제
             DeselectFurniture();
+
+            skinObject.SetActive(false);
+            if (StateManager.instance.ButItem)
+            {
+                StateManager.instance.ButItem = false;
+            }
         }
     }
     public void Placement(GameObject gameObject)
@@ -346,8 +389,10 @@ public class FurniturePlacementManager : MonoBehaviour
             selectedFurniture.GetComponent<SpriteRenderer>().sortingOrder =0;
             currentInfo.SettingRotate(originalRotation);
             currentGrid.OccupiedCell(originalPosition.Value, currentInfo.Size, true);
+            currentInfo.SettingSprites(spriteIndex);
             // 선택 상태 해제
             DeselectFurniture();
+            skinObject.SetActive(false);
         }
     }
 
@@ -370,77 +415,212 @@ public class FurniturePlacementManager : MonoBehaviour
     // 층 변경
     public void SwitchFloor(int floorNumber)
     {
-        if (floorNumber < 0 || floorNumber >= floorData.Length)
+        if (floorNumber < 0 || floorNumber >= floorData.Length || floorManagers[floorNumber].floorData.isUnlock == false)
             return;
+        floorManager = floorManagers[floorNumber];
+        mainCamera.transform.DOMove(new Vector3(0, 7.5f + 5.15f * floorNumber, -10f),0.5f);
+        for (int i = 0; i <= floorNumber; i++)
+        {
+            floorManagers[i].gameObject.SetActive(true);
+        }
+        for (int i = floorNumber +1; i<floorManagers.Length;i++)
+        {
+            floorManagers[i].gameObject.SetActive(false);
+        }
+      //  floorManager.gameObject.SetActive(true);
+        floor = floorNumber;
 
+        isometricGrids = floorManager.grids;
+        furniturePrefab = floorManager.furniturePrefab;
+
+        if (settinCoroutine != null)
+        {
+            StopCoroutine(settinCoroutine);
+        }
         // 선택된 가구가 있으면 선택 해제
         if (selectedFurniture != null)
         {
+            currentInfo.SettingSprites(spriteIndex);
             DeselectFurniture();
         }
-
-        // 현재 층 가구 비활성화
-        foreach (GameObject furniture in availableFurnitureObject)
-        {
-            furniture.GetComponent<FurnitureInfo>().SetSpriterenderColor();
-            furniture.gameObject.SetActive(false);
-            furnitureObjectQueue.Enqueue(furniture);
-        }
-
-        // 새 층으로 변경
         currentFloor = floorNumber;
-        FurnitureData[] furnitureInfos= floorData[currentFloor].furnitureInfos;
+        skinObject.SetActive(false);
+    }
+   
 
-        foreach (FurnitureData data in furnitureInfos)
+    // 가구 추가
+    public void AddFurnitureToFloor(FurnitureData data, int floor)
+    {
+        SwitchFloor(floor);
+
+        GameObject obj = floorManagers[floor].AddFurniture(data);
+        if (obj != null)
         {
-            if (data.isUnlocked)
+            // 이미 선택된 가구가 있으면 해제
+            if (selectedFurniture != null)
             {
-                if (furnitureObjectQueue.Count == 0)
-                {
-                    GameObject newObj = Object.Instantiate(furniturePrefab, furnitureParent);
-                    newObj.GetComponent<FurnitureInfo>().SettingData(data);
-                    newObj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset;
-                    newObj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset2;
-                    availableFurnitureObject.Add(newObj);
+                currentInfo.SettingSprites(spriteIndex);
+                DeselectFurniture();
+            }
 
+            // 새 가구 선택
+            selectedFurniture = obj;
+            //selectedFurniture.GetComponent<SpriteRenderer>().sortingOrder =23;
+            currentInfo = obj.GetComponent<FurnitureInfo>();
+            spriteIndex = currentInfo.SpriteNumber;
+            tempIndex = currentInfo.SpriteNumber;
+            setButtonImage();
+            skinObject.SetActive(true);
+            if (currentInfo.IsFloor)
+            {
+                currentGrid = isometricGrids[0];
+                gridNumbers = 0;
+            }
+            else
+            {
+                if (!data.isLeft)
+                {
+                    currentGrid = isometricGrids[1];
+                    gridNumbers = 1;
                 }
                 else
                 {
-                    GameObject obj = furnitureObjectQueue.Dequeue();
-                    obj.SetActive(true);
-                    obj.GetComponent<FurnitureInfo>().SettingData(data);
-                    obj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset;
-                    obj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset2;
-                    availableFurnitureObject.Add(obj);
+                    currentGrid = isometricGrids[2];
+                    gridNumbers = 2;
                 }
             }
-        }
-        // UI 업데이트 (필요하다면)
-        UpdateFloorUI();
-    }
 
-    // 가구 추가
-    public void AddFurnitureToFloor(GameObject furniture, int floor)
-    {
-        if (floor >= 0 && floor < furnitureByFloor.Count)
-        {
-            furnitureByFloor[floor].Add(furniture);
+            originalPosition = selectedFurniture.transform.position;
+            originalRotation = currentInfo.Rotation;
 
-            // 현재 층이 아니면 비활성화
-            if (floor != currentFloor)
-            {
-                furniture.SetActive(false);
-            }
+            gridPosition = currentGrid.WorldToGridPosition(originalPosition.Value);
 
-            // 가구의 레이어 설정 (층에 따라)
-            furniture.layer = 8 + floor; // 8부터 시작 가정
+            dragOffset = Vector3.zero;
+
+            currentGrid.TileSetting(obj.transform, currentInfo.Size, currentInfo.GridPosition);
+            currentGrid.CanPlaceFurniture(currentInfo.GridPosition);
+            CancelButtonUIOn(false);
+            uiObject.SetActive(true);
+
+            uiObject.transform.position = new Vector2(selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
+            isDragging = true;
+
+            collection.UpdateSlider(floor);
         }
     }
 
     // UI 업데이트 (층 표시)
-    private void UpdateFloorUI()
+    private void CancelButtonUIOn(bool b)
     {
-        // 층 표시 UI 업데이트 구현
-        // 예: 현재 층 번호를 텍스트로 표시
+        cancelButton.gameObject.SetActive(b);
     }
+
+    public void SwitchFloor(bool Up)
+    {
+        if (StateManager.instance.ButItem)
+        {
+            return;
+        }
+        if (Up)
+        {
+            SwitchFloor(floor + 1);
+        }
+        else
+        {
+            SwitchFloor(floor - 1);
+        }
+    }
+
+    void setButtonImage()
+    {
+        Sprites[] sprites = selectedFurniture.GetComponent<FurnitureInfo>().MySprites;
+        int index = selectedFurniture.GetComponent<FurnitureInfo>().SpriteNumber;
+        if (tempIndex == 0)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                buttonsItemImage[i].sprite = sprites[tempIndex + i].sprites[0];
+                if (sprites[tempIndex + i].isUnlocked)
+                {
+                    buttonsItemImage[i].color = new Color(1, 1, 1, 1);
+                }
+                else
+                {
+                    buttonsItemImage[i].color = new Color(0, 0, 0, 1);
+                }
+                buttonsIndex[i] = tempIndex + i;
+
+                if (tempIndex + i == index)
+                    buttons[i].GetComponent<Image>().sprite = buttonSprite[0];
+                else
+                    buttons[i].GetComponent<Image>().sprite = buttonSprite[1];
+            }
+        }
+        else if (tempIndex == sprites.Length - 1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                buttonsItemImage[i].sprite = sprites[tempIndex + i - 2].sprites[0];
+                if (sprites[tempIndex + i - 2].isUnlocked)
+                    buttonsItemImage[i].color = new Color(1, 1, 1, 1);
+                else
+                    buttonsItemImage[i].color = new Color(0, 0, 0, 1);
+                buttonsIndex[i] = tempIndex + i;
+                if (tempIndex + i - 2 == index)
+                    buttons[i].GetComponent<Image>().sprite = buttonSprite[0];
+                else
+                    buttons[i].GetComponent<Image>().sprite = buttonSprite[1];
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                buttonsItemImage[i].sprite = sprites[tempIndex + i - 1].sprites[0];
+                if (sprites[tempIndex + i - 1].isUnlocked)
+                    buttonsItemImage[i].color = new Color(1, 1, 1, 1);
+                else
+                    buttonsItemImage[i].color = new Color(0, 0, 0, 1);
+                buttonsIndex[i] = tempIndex + i - 1;
+                if (tempIndex + i - 1 == index)
+                    buttons[i].GetComponent<Image>().sprite = buttonSprite[0];
+                else
+                    buttons[i].GetComponent<Image>().sprite = buttonSprite[1];
+            }
+        }
+    }
+
+    public void MoveButton(bool isLeft)
+    {
+        ChangeIndex(ref tempIndex, selectedFurniture.GetComponent<FurnitureInfo>().MySprites.Length, isLeft);
+        setButtonImage();
+        currentInfo.SettingSprites(tempIndex);
+    }
+    void ChangeIndex(ref int index, int maxValue, bool isLeft)
+    {
+        if (isLeft)
+        {
+            index--;
+            if (index < 0)
+            {
+                index = 0;
+            }
+        }
+        else
+        {
+            index++;
+            if (index >= maxValue)
+            {
+                index = maxValue - 1;
+            }
+        }
+
+    }
+    public void SetSkin(int index)
+    {
+
+        currentInfo.SettingSprites(buttonsIndex[index]);
+        setButtonImage();
+    }
+
 }

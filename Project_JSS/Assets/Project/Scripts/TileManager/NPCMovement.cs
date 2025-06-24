@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class NPCMovement : MonoBehaviour
 {
+    [SerializeField] FloorManager floorManager;
     public float moveSpeed = 2f;
     public float idleTime = 3f;  // 한 위치에서 머무는 시간
     public float randomMoveProbability = 0.7f;  // 랜덤 이동 확률
-    IsometricGrid isometricGrid;
-    private Pathfinder pathfinder;
+    [SerializeField] IsoGridFloor isometricGrid;
+    [SerializeField] Pathfinder pathfinder;
     private List<Vector3> currentPath;
     private int currentWaypointIndex;
     private bool isMoving = false;
@@ -16,20 +18,21 @@ public class NPCMovement : MonoBehaviour
 
     private Vector2 lastDirection;
     [SerializeField] FurnitureInfo[] specialObject;
+    [SerializeField] string specialObjectName;
     private bool isSpecial;
     private const string VERTICAL = "Vertical";
     private const string IS_MOVING = "IsMoving";
     private const string IS_SPECIAL = "Special";
+    private const string IS_SPECIAL2 = "Special2";
+    public bool ChangeSpecial;
+    private bool ChangeBool;
     private Animator animator;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        pathfinder = FindFirstObjectByType<Pathfinder>();
-        isometricGrid = FindFirstObjectByType<IsometricGrid>();
         lastDirection = Vector2.down;
     }
-
     void Update()
     {
         if (isMoving)
@@ -75,18 +78,17 @@ public class NPCMovement : MonoBehaviour
     public bool MoveToRandomObject()
     {
         // 최대 10번 시도
-        for (int i = 0; i < 10; i++)
+        foreach (GameObject obj in floorManager.availableFurniturePrefabs)
         {
-            int num = Random.Range(0, specialObject.Length);
-          
-            if (isometricGrid.CanPlaceFurniture(specialObject[num].GetTargetPosition(0)))
-            {
-                Vector3 targetPos = isometricGrid.GridPositionToWorld(specialObject[num].GetTargetPosition(0));
-                isSpecial = true;
-                return MoveTo(targetPos);
+            if (specialObjectName == obj.GetComponent<FurnitureInfo>().name) {
+                if (isometricGrid.CanPlaceTile(obj.GetComponent<FurnitureInfo>().GetTargetPosition(0)))
+                {
+                    Vector3 targetPos = isometricGrid.GridPositionToWorld(obj.GetComponent<FurnitureInfo>().GetTargetPosition(0));
+                    isSpecial = true;
+                    return MoveTo(targetPos);
+                }
             }
         }
-
         Debug.Log("랜덤 위치를 찾을 수 없습니다!");
         return false;
     }
@@ -100,9 +102,8 @@ public class NPCMovement : MonoBehaviour
             int x = Random.Range(0, 12);
             int y = Random.Range(0, 12);
 
-       
-
-            if (isometricGrid.CanPlaceFurniture(new Vector2Int(x,y)))
+            
+            if (isometricGrid.CanPlaceTile(new Vector2Int(x,y)))
             {
                 Vector3 targetPos = isometricGrid.GridPositionToWorld(new Vector2Int( x, y));
                 return MoveTo(targetPos);
@@ -145,7 +146,21 @@ public class NPCMovement : MonoBehaviour
                 if (isSpecial)
                 {
                     this.GetComponent<SpriteRenderer>().flipX = false;
-                    animator.SetTrigger(IS_SPECIAL);
+                    if (ChangeSpecial)
+                    {
+                        if (ChangeBool)
+                        {
+                            animator.SetTrigger(IS_SPECIAL);
+                        }
+                        else
+                        {
+                            animator.SetTrigger(IS_SPECIAL2);
+                        }
+                        ChangeBool = !ChangeBool;
+                    }
+                    else
+                        animator.SetTrigger(IS_SPECIAL);
+
                     isSpecial = false;
                     idleTime = 9.0f;
                 }
