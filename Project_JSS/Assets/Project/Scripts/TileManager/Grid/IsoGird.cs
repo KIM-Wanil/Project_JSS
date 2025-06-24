@@ -7,6 +7,7 @@ public abstract class IsoGird : MonoBehaviour
     public Vector2 startPosition = Vector2.zero;
     public float tileOffsetX = 32f; // 타일 X 오프셋 (픽셀)
     public float tileOffsetY = 16f; // 타일 Y 오프셋 (픽셀)
+    public float floorHeight;
     public int floorIndex;
     private bool[,] occupiedCells; // 점유된 셀 추적
                                    // 그리드 좌표를 화면 좌표로 변환
