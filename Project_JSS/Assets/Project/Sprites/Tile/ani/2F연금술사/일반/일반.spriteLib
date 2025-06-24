@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Library:
-  - m_Name: "\uC544\uC774\uB4E4"
-    m_Hash: 357724889
+  - m_Name: idle
+    m_Hash: 472167701
     m_CategoryList: []
     m_OverrideEntries:
-    - m_Name: "\uC55E\uC5F0\uAE08\uC220\uC0ACidle_0"
-      m_Hash: 645648168
+    - m_Name: idle_0
+      m_Hash: 379395835
       m_Sprite: {fileID: -1921166012, guid: 972e6f7dddf694b4d9df23ffa81445d8, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -1921166012, guid: 972e6f7dddf694b4d9df23ffa81445d8, type: 3}
@@ -234,5 +234,5 @@ MonoBehaviour:
     m_FromMain: 0
     m_EntryOverrideCount: 12
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 638856822200046850
+  m_ModificationHash: 638863635668815420
   m_Version: 1

@@ -4,6 +4,7 @@ using UnityEngine.U2D.Animation;
 public class CharacterData : ScriptableObject
 {
     public string CharaterName;
+    public string CharacterDescription;
     public SpriteLibraryAsset[] assets;
 
     public Sprite[] skins;

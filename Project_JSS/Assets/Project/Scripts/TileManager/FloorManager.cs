@@ -84,7 +84,7 @@ public class FloorManager : MonoBehaviour
                 newObj.transform.position = currentGrid.GridPositionToWorld(data.gridPosition);
                 newObj.GetComponent<FurnitureInfo>().SettingData(data);
                 newObj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset;
-                newObj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset2;
+                newObj.GetComponent<IsoSpriteSorting>().SorterPositionOffset2 = data.SorterPositionOffset2;
 
             }
         }

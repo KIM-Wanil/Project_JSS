@@ -80,8 +80,13 @@ public class FurniturePlacementManager : MonoBehaviour
     }
     private void Start()
     {
-        floor = 0;
-        SwitchFloor(0);
+        for (int i = 0; i< floorData.Length;i++)
+        {
+            if (floorData[i].isUnlock)
+                floor = i;
+        }
+        SwitchFloor(floor);
+        //SwitchFloor(0);
     }
 
     private void Update()
