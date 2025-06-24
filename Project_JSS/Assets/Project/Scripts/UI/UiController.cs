@@ -5,7 +5,8 @@ using System.Data;
 public class UiController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private Button hotelButton;
+    [SerializeField] private Button toHotelButton;
+    [SerializeField] private Button toMergeButton;
     [SerializeField] private Button shopButton;
     [SerializeField] private Button listButton;
     [SerializeField] private TextMeshProUGUI starText;
@@ -24,13 +25,19 @@ public class UiController : MonoBehaviour
     public void SetupButtonListeners()
     {
         // UI 초기화
-        hotelButton.onClick.AddListener(onClickHotelButton);
+        toHotelButton.onClick.AddListener(onClickToHotelButton);
+        toHotelButton.onClick.AddListener(onClickToHotelButton);
         shopButton.onClick.AddListener(onClickShopButton);
         listButton.onClick.AddListener(onClickListButton);
 
     }
     
-    public void onClickHotelButton()
+    public void onClickToHotelButton()
+    {
+        TutorialManager.TriggerCondition(TutorialCondition.머지이동클릭);
+        TutorialManager.TriggerCondition(TutorialCondition.가구설치클릭);
+    }
+    public void onClickToMergeButton()
     {
         TutorialManager.TriggerCondition(TutorialCondition.머지이동클릭);
         TutorialManager.TriggerCondition(TutorialCondition.가구설치클릭);
