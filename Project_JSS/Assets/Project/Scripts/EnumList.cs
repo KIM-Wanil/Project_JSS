@@ -65,9 +65,11 @@ public enum ItemState
 public enum GoodsType
 {
     None = 0,
-    Gold,
+    Star,
     Energy,
-    Gem
+    Gem,
+    Gold
+
 }
 public enum SoundType
 {
@@ -93,13 +95,15 @@ public enum FingerAnimationType
 public enum TutorialCondition
 {
     None = 0,
-    머지화면이동클릭,
+    머지이동클릭,
     제작목록클릭,
     제작목록닫기버튼클릭,
     스패너합성,
     제너레이터클릭,
     망치합성,
-    하우징화면이동클릭
+    가구설치클릭,
+    퀘스트완료클릭,
+
 }
 
 

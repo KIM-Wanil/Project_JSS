@@ -45,8 +45,7 @@ public class Managers : MonoBehaviour
 
     [SerializeField] private BackendManager _backend;
     public static BackendManager Backend => Instance._backend;
-    [SerializeField] private DialogueManager _dialogue;
-    public static DialogueManager Dialogue => Instance._dialogue;
+
 
     void Awake()
     {
@@ -69,7 +68,6 @@ public class Managers : MonoBehaviour
         //_settings.Init();
         _save.Init();
         _backend.Init();
-        _dialogue.Init();
         //_game.Init();
         //_grid.Init();
     }

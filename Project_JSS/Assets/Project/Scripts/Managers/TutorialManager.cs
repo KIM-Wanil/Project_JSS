@@ -6,6 +6,7 @@ using System;
 using TMPro;
 using DG.Tweening;
 using UnityEditor;
+using static UnityEngine.Rendering.DebugUI;
 
 
 
@@ -13,16 +14,18 @@ using UnityEditor;
 public class TutorialManager : MonoBehaviour
 {
     [Header("UI 요소들")]
-    [SerializeField] public GameObject tutorialCanvas;
-    [SerializeField] public Image overlayImage; // 검은색 오버레이
-    [SerializeField] public RectTransform highlightRect; // 강조영역
+    //[SerializeField] private GameObject tutorialCanvas;
+    [SerializeField] private CanvasGroup tutorialPanel;
+    [SerializeField] private Image overlayImage; // 검은색 오버레이
+    [SerializeField] private RectTransform highlightRect; // 강조영역
     //public RectTransform characterDialogPrefab; // 캐릭터+대화상자 프리팹
-    [SerializeField] public RectTransform fingerImage; // 손가락 이미지
+    [SerializeField] private RectTransform fingerImage; // 손가락 이미지
     private Tween fingerTween;
-    
+
 
     [Header("튜토리얼 단계들")]
-    [SerializeField] public TutorialStep[] tutorialSteps;
+    [SerializeField] private TutorialDatabase tutorialDatabase;
+    private TutorialStep[] currentTutorial;
 
     private int currentStepIndex = 0;
     private TutorialStep currentStep;
@@ -31,7 +34,7 @@ public class TutorialManager : MonoBehaviour
     private bool isTutorialActive = false;
 
     // 완료 조건 체크를 위한 이벤트
-    public static event Action<string> OnConditionMet;
+    public static event Action<TutorialCondition> OnConditionMet;
 
     private void Start()
     {
@@ -39,27 +42,56 @@ public class TutorialManager : MonoBehaviour
         OnConditionMet += CheckCondition;
 
         // 처음에는 튜토리얼 비활성화
-        tutorialCanvas.SetActive(false);
+        tutorialPanel.gameObject.SetActive(false);
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F3) && !isTutorialActive)
+        {
+            StartTutorial("TUTORIAL1");
+        }
+        //if (Input.GetKeyDown(KeyCode.F2) && !isTutorialActive)
+        //{
+        //    StartTutorial("EVENT1");
+        //}
+        // 스페이스바로도 대화 진행 가능
+        if (!isTutorialActive) return;
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (currentStep.completionCondition == TutorialCondition.None && currentStepIndex < currentTutorial.Length)
+            {
+                NextTutorialStep();
+            }
+        }
+
+    }
+
 
     private void OnDestroy()
     {
         OnConditionMet -= CheckCondition;
     }
 
-    public void StartTutorial()
+    public void StartTutorial(string tutorialId)
     {
-        if (tutorialSteps.Length == 0) return;
+        Debug.Log("StartTutorial");
+        currentTutorial = tutorialDatabase.GetTutorialEvent(tutorialId)?.dialogues.ToArray();
+        if (currentTutorial.Length == 0) return;
+        Debug.Log(tutorialId + " 튜토리얼 시작");
 
         currentStepIndex = 0;
-        tutorialCanvas.SetActive(true);
-        ShowTutorialStep(tutorialSteps[currentStepIndex]);
+        tutorialPanel.gameObject.SetActive(true);
+        ShowTutorialStep(currentTutorial[currentStepIndex]);
+        tutorialPanel.DOFade(1f, 0.5f).SetEase(Ease.InOutQuad).OnComplete(() => 
+        {
+            isTutorialActive = true;
+        });
     }
 
     public void ShowTutorialStep(TutorialStep step)
     {
         currentStep = step;
-        isTutorialActive = true;
+        
 
    
 
@@ -112,18 +144,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    public void Update()
-    {
-        if (!isTutorialActive) return;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (string.IsNullOrEmpty(currentStep.completionCondition))
-            {
-                NextTutorialStep();
-            }
-        }
-    }
+    
 
 
     private void AnimateFinger(FingerAnimationType inputFingerAnimType, float inputFingerAnimAmount)
@@ -175,10 +196,13 @@ public class TutorialManager : MonoBehaviour
         OnConditionMet?.Invoke(currentStep.completionCondition);
     }
 
-    private void CheckCondition(string condition)
+    private void CheckCondition(TutorialCondition condition)
     {
         if (!isTutorialActive) return;
+
         if (condition != currentStep.completionCondition) return;
+
+            
 
         // 조건 완료, 다음 단계로 진행
         NextTutorialStep();
@@ -188,7 +212,7 @@ public class TutorialManager : MonoBehaviour
     {
         currentStepIndex++;
 
-        if (currentStepIndex >= tutorialSteps.Length)
+        if (currentStepIndex >= currentTutorial.Length)
         {
             // 튜토리얼 완료
             EndTutorial();
@@ -196,28 +220,23 @@ public class TutorialManager : MonoBehaviour
         else
         {
             // 다음 단계 표시
-            ShowTutorialStep(tutorialSteps[currentStepIndex]);
+            ShowTutorialStep(currentTutorial[currentStepIndex]);
         }
     }
 
     private void EndTutorial()
-    {
-        tutorialCanvas.SetActive(false);
-
-        // 정리 작업
-        if (characterDialog != null)
+    {   
+        tutorialPanel.DOFade(0f, 0.5f).SetEase(Ease.OutQuad).OnComplete(() =>
         {
-            Destroy(characterDialog.gameObject);
-        }
-
-        fingerImage.gameObject.SetActive(false);
-
+            isTutorialActive = false;
+            tutorialPanel.gameObject.SetActive(false);
+        });
         Debug.Log("튜토리얼 완료!");
     }
 
     // 다른 스크립트에서 조건 완료를 알릴 때 사용
-    public static void TriggerCondition(string conditionId)
+    public static void TriggerCondition(TutorialCondition condition)
     {
-        OnConditionMet?.Invoke(conditionId);
+        OnConditionMet?.Invoke(condition);
     }
 }

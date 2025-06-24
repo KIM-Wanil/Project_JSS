@@ -225,7 +225,7 @@ public class DialogueManager : BaseManager
             StartDialogue("CH1_EVENT1");
         }
         // 스페이스바로도 대화 진행 가능
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) && isDialogueActive && messageItems.Count > 0)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && isDialogueActive && messageItems.Count > 0)
         {
             var lastMessage = messageItems[messageItems.Count - 1];
             if (lastMessage.nextArrow != null && lastMessage.nextArrow.gameObject.activeInHierarchy)

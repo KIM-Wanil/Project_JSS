@@ -333,7 +333,7 @@ public class CSVParser : EditorWindow
             {
                 dialogueId = int.Parse(row[B]),
                 speakerName = row[C],
-                dialogueText = row[D],
+                dialogueText = row[D].Replace("<c>", ","),
                 nextDialogueId = int.Parse(row[E])
             };
             currentEvent.dialogues.Add(data);
@@ -421,7 +421,7 @@ public class CSVParser : EditorWindow
             TutorialStep step = new TutorialStep();
 
             // dialogue
-            step.dialogue = row[D];
+            step.dialogue = row[D].Replace("<c>", ",");
 
             // characterPosition
             step.characterPosition = ParseVector2(row[E]);
@@ -448,7 +448,7 @@ public class CSVParser : EditorWindow
             step.fingerAnimationAmount = ParseFloat(row[K]);
 
             // completionCondition
-            step.completionCondition = row[L];
+            step.completionCondition = ParseTutorialCondition(row[L]);
 
             currentEvent.dialogues.Add(step);
         }
@@ -496,6 +496,14 @@ public class CSVParser : EditorWindow
         if (System.Enum.TryParse<FingerAnimationType>(value, out var result))
             return result;
         return FingerAnimationType.None;
+    }
+    // FingerAnimationType ÆÄ½Ì À¯Æ¿
+    private static TutorialCondition ParseTutorialCondition(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return TutorialCondition.None;
+        if (System.Enum.TryParse<TutorialCondition>(value, out var result))
+            return result;
+        return TutorialCondition.None;
     }
 
     private static void SaveScriptableObject(ScriptableObject so, string path)

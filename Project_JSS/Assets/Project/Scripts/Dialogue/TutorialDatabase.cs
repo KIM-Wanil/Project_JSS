@@ -26,7 +26,7 @@ public class TutorialStep
     public float fingerAnimationAmount; // 손가락 애니메이션 이동 거리
 
     [Header("완료 조건")]
-    public string completionCondition; // 완료 조건 식별자
+    public TutorialCondition completionCondition; // 완료 조건 식별자
 }
 [System.Serializable]
 public class TutorialEvent
@@ -35,10 +35,16 @@ public class TutorialEvent
     [Header("대화 데이터")]
     public List<TutorialStep> dialogues = new List<TutorialStep>();
 
+
 }
 
 [CreateAssetMenu(fileName = "TutorialDatabase", menuName = "Game/Tutorial Database")]
 public class TutorialDatabase : ScriptableObject
 {
     public List<TutorialEvent> tutorialEvents = new List<TutorialEvent>();
+
+    public TutorialEvent GetTutorialEvent(string eventId)
+    {
+        return tutorialEvents.Find(d => d.eventId == eventId);
+    }
 }

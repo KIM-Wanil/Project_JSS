@@ -8,7 +8,7 @@ MonoImporter:
   - itemCsvFile: {fileID: 4900000, guid: 6b4f0fc37621ba143a6eaaad7b92c088, type: 3}
   - generatorCsvFile: {fileID: 4900000, guid: c5b974ce1a917d34790fa71788222bdc, type: 3}
   - dialogueCsvFile: {fileID: 4900000, guid: 2d2acfa1c34ace249b6601d34c57a03d, type: 3}
-  - tutorialCsvFile: {fileID: 4900000, guid: 250f26d5447ca6d4285ab57ea7d61784, type: 3}
+  - tutorialCsvFile: {fileID: 4900000, guid: 13d8cd7b7e219644cb262c0d77b8206e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
