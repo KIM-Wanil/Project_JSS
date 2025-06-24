@@ -10,7 +10,7 @@ public class DBManager : BaseManager
 {
     private ItemDB itemDB = new ItemDB();
     private GeneratorDB generatorDB = new GeneratorDB();
-
+    
     public override void Init()
     {
         Debug.Log("DBManager initialized");

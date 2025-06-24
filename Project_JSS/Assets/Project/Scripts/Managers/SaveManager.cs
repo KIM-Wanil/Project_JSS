@@ -11,8 +11,9 @@ public class SaveData
     public List<GeneratorSO> generators = new List<GeneratorSO>();
     public List<ItemKey> rewardList = new List<ItemKey>();
     public int energy;
-    public int gold;
+    public int star;
     public int gem;
+    public int gold;
     public string playerName;
 
     [System.Serializable]
@@ -77,8 +78,9 @@ public class SaveManager : BaseManager
         SaveData initialData = new SaveData
         {
             energy = 100, // 초기 에너지 값 설정
-            gold = 0,    // 초기 점수 값 설정
-            gem = 777,    // 초기 점수 값 설정
+            star = 0,    // 초기 별 값 설정
+            gem = 777,    // 초기 젬 값 설정
+            gold = 1234, // 초기 골드 값 설정
             playerName = "Player" // 초기 플레이어 이름 설정
         };
 

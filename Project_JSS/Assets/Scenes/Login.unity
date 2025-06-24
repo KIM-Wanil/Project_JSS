@@ -543,8 +543,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 00e0e311f755f9d4189b2a0a57947d31, type: 2}
-  m_sharedMaterial: {fileID: -3183156396043747314, guid: 00e0e311f755f9d4189b2a0a57947d31, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5318d1786fce05c43a6eeac67ced4eff, type: 2}
+  m_sharedMaterial: {fileID: -7159097896683511941, guid: 5318d1786fce05c43a6eeac67ced4eff, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -628,6 +628,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 196937194068524782, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692714181317646816, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 866548827159182340, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1265
@@ -668,9 +676,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1592639001647570796, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2533439342083198485, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
       propertyPath: m_Name
       value: '@Managers'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469142109409548895, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993009758714342102, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5775976710438919639, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6259495272451959871, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702259625183404785, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757768657442203170, guid: eeb2343c509be874cb8ade20dd587743, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

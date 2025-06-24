@@ -141,7 +141,7 @@ public class MergeableItem : MonoBehaviour
     }
     public void SellThisItem()
     {
-       Managers.Game.AddGold(itemData.items[lvIndex].price);
+       Managers.Game.AddStar(itemData.items[lvIndex].price);
        Managers.Grid.RemoveItemFromGridInstantly(gridPosition);
        Managers.Grid.CheckGuestsOrder();
     }

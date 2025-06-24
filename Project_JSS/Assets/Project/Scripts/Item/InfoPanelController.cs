@@ -24,6 +24,8 @@ public class InfoPanelController : MonoBehaviour
     public Button sellButton;
     public TextMeshProUGUI priceToSellText;
 
+    
+
     void Start()
     {
         InitToBasicDesc();
@@ -45,6 +47,7 @@ public class InfoPanelController : MonoBehaviour
         //    Invoke("HandlePointerUp",0.1f);
         //}
     }
+    
 
     //public void HandlePointerUp()
     //{
@@ -61,7 +64,7 @@ public class InfoPanelController : MonoBehaviour
     //    Debug.Log($"isDraggableItemClicked : {isDraggableItemClicked}");
     //    if (!isDraggableItemClicked && DraggableItem.currentlySelectedItem != null)
     //    {
-            
+
     //        DraggableItem.currentlySelectedItem.mergeableItem.OnDeSelected();
     //        DraggableItem.currentlySelectedItem = null;
     //        InitToBasicDesc();

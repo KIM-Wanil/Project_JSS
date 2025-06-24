@@ -7,11 +7,11 @@ public class UserInfo : MonoBehaviour
 {
     [System.Serializable]
     public class UserInfoEvent : UnityEngine.Events.UnityEvent { }
-    public UserInfoEvent onUserInfoEvent = new UserInfoEvent();
-    public static UserInfoData data = new UserInfoData();
-    public static UserInfoData Data => data;
+    //public UserInfoEvent onUserInfoEvent = new UserInfoEvent();
+    public  UserInfoData data = new UserInfoData();
+    public  UserInfoData Data => data;
 
-    public void GetUseInfoFromBackend()
+    public void GetUserInfoFromBackend()
     {
         //현재 로그인한 사용자 정보 불러오기
         Backend.BMember.GetUserInfo(callback =>
@@ -72,12 +72,14 @@ public class UserInfo : MonoBehaviour
 
             }
             //유저 정보 불러오기가 완료되었을 때 onUSerInfoEvent에 등록되어 있는 이벤트 메소드 호출
-            onUserInfoEvent?.Invoke();
+            //onUserInfoEvent?.Invoke();
+            //Debug.Log(data.nickname + " 닉네임 불러오기 완료");
         }
         );
     }
 
 }
+[System.Serializable]
 public class UserInfoData
 {
     public string gamerId;                  //유저의 gamerId

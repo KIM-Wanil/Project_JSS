@@ -2,11 +2,14 @@ using UnityEngine;
 using BackEnd;
 public class BackendManager : BaseManager
 {
+    [SerializeField]
+    public UserInfo user;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Init()
     {
         base.Init();
         BackendSetup();
+        GetUserInfoFromBackend();
     }
     private void Update()
     {
@@ -19,7 +22,6 @@ public class BackendManager : BaseManager
     private void BackendSetup()
     {
         var bro = Backend.Initialize();
-
         if(bro.IsSuccess())
         {
             Debug.Log($"초기화 성공 : {bro}");
@@ -28,5 +30,9 @@ public class BackendManager : BaseManager
         {
             Debug.Log($"초기화 실패 : {bro}");
         }
+    }
+    public void GetUserInfoFromBackend()
+    {
+        user.GetUserInfoFromBackend();
     }
 }

@@ -27,13 +27,15 @@ public class GameManager : BaseManager
     private bool isEnergyRegening = false;
     public bool IsEnergyRegening => isEnergyRegening;
     [SerializeField] private int energyRegenAmount = 1;
-    [Header("Gold Settings")]
+    [Header("Star Settings")]
     private int currentEnergy;
     public int CurrentEnergy => currentEnergy;
-    private int currentGold;
-    public int CurrentGold => currentGold;
+    private int currentStar;
+    public int CurrentStar => currentStar;
     private int currentGem;
     public int CurrentGem => currentGem;
+    private int currentGold;
+    public int CurrentGold => currentGold;
     public Queue<ItemKey> currentRewardQueue = new Queue<ItemKey>();
     [Header("Prefab References")]
     [SerializeField] private GameObject itemPrefab;
@@ -54,9 +56,11 @@ public class GameManager : BaseManager
     [Header("Game Events")]
     public UnityEvent<int> onEnergyChanged;
     public UnityEvent<int> onEnergyRegenTimeChanged;
-    public UnityEvent<Vector2,int,GoodsType> onGoldSpawned;
-    public UnityEvent<int> onGoldChanged;
+    public UnityEvent<Vector2,int,GoodsType> onStarSpawned;
+    public UnityEvent<int> onStarChanged;
     public UnityEvent<int> onGemChanged;
+    public UnityEvent<Vector2, int, GoodsType> onGoldSpawned;
+    public UnityEvent<int> onGoldChanged;
 
     public UnityEvent<Queue<ItemKey>> onRewardQueueChanged;
 
@@ -251,19 +255,19 @@ public class GameManager : BaseManager
 
     #endregion
 
-    #region Gold Management
-    public void GetGold(int amount)
+    #region Star Management
+    public void GetStar(int amount)
     {
-        onGoldChanged?.Invoke(currentGold);
+        onStarChanged?.Invoke(currentStar);
     }
-    public void SpawnGold(Vector2 point, int count, GoodsType type = GoodsType.Gold)
+    public void SpawnStar(Vector2 point, int count, GoodsType type = GoodsType.Star)
     {
-        onGoldSpawned?.Invoke(point, count, type);
+        onStarSpawned?.Invoke(point, count, type);
     }
-    public void AddGold(int amount)
+    public void AddStar(int amount)
     {
-        currentGold += amount;
-        onGoldChanged?.Invoke(currentGold);
+        currentStar += amount;
+        onStarChanged?.Invoke(currentStar);
     }
 
     #endregion
@@ -285,13 +289,25 @@ public class GameManager : BaseManager
         return false;
     }
     #endregion
+    #region Star Management
+
+    public void SpawnGold(Vector2 point, int count, GoodsType type = GoodsType.Gold)
+    {
+        onGoldSpawned?.Invoke(point, count, type);
+    }
+    public void AddGold(int amount)
+    {
+        currentGold += amount;
+        onGoldChanged?.Invoke(currentGold);
+    }
+
+    #endregion
 
     #region Score Management
 
     public void AddScore(int amount)
     {
-        currentGem += amount;
-        onGemChanged?.Invoke(currentGem);
+
     }
 
     #endregion
@@ -411,6 +427,18 @@ public class GameManager : BaseManager
 
         targetItem.LevelUp();
         Managers.Grid.AttatchItemToGrid(targetItem, targetItem.gridPosition);
+        if (targetItem.itemKey.id == "N001")
+        {
+            if (targetItem.itemKey.lv == 2)
+            {
+                TutorialManager.TriggerCondition(TutorialCondition.스패너합성);
+            }
+            else if (targetItem.itemKey.lv == 3)
+            {
+                TutorialManager.TriggerCondition(TutorialCondition.망치합성);
+            }
+        }
+        
         Managers.Grid.CheckGuestsOrder();
         ReturnItemToPool(draggingItem);
 
@@ -615,6 +643,8 @@ public class GameManager : BaseManager
     {
         SaveData saveData = new SaveData
         {
+            star = currentEnergy,
+            gold = currentGold,
             energy = currentEnergy,
             gem = currentGem,
             rewardList = new List<ItemKey>(currentRewardQueue)
@@ -651,6 +681,8 @@ public class GameManager : BaseManager
         {
             currentGem = saveData.gem;
             currentEnergy = saveData.energy;
+            currentStar = saveData.star;
+            currentGold = saveData.gold;
             currentRewardQueue = new Queue<ItemKey>(saveData.rewardList);
             // 저장된 아이템들 복원
             foreach (var itemData in saveData.items)
@@ -667,8 +699,10 @@ public class GameManager : BaseManager
                 }
             }
 
-            onEnergyChanged?.Invoke(Mathf.RoundToInt(currentEnergy));
+            onEnergyChanged?.Invoke(currentEnergy);
             onGemChanged?.Invoke(currentGem);
+            onGoldChanged?.Invoke(currentGold);
+            onStarChanged?.Invoke(currentStar);
             Debug.Log($"보상카드{currentRewardQueue.Count}개 불러옴");
             onRewardQueueChanged?.Invoke(currentRewardQueue);
         }

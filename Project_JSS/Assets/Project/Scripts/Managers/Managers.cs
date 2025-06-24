@@ -46,6 +46,7 @@ public class Managers : MonoBehaviour
     [SerializeField] private BackendManager _backend;
     public static BackendManager Backend => Instance._backend;
 
+
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -76,6 +77,7 @@ public class Managers : MonoBehaviour
         Debug.Log("¾À ·Îµå");
         _grid.Init();
         _game.Init();
+        _backend.Init();
         //_ui.UpdateLetterbox();
         //_settings.Init();
 

@@ -17,7 +17,7 @@ public class Guest : MonoBehaviour
     public TextMeshProUGUI goldText;
     public bool isCompleted = false;
     public Button completeButton;
-    public int gold;
+    public int star;
 
     public void Init(int goldAmount, Dictionary<ItemKey, int> goalItems)
     {
@@ -53,8 +53,8 @@ public class Guest : MonoBehaviour
             i++;
         }
 
-        gold = goldAmount;
-        goldText.text = $"+{gold}";
+        star = goldAmount;
+        goldText.text = $"+{star}";
         completeButton.onClick.AddListener(OnCompleteButtonClicked);
         completeButton.transform.SetAsLastSibling();
         Managers.Grid.AddGuest(this);
@@ -99,11 +99,15 @@ public class Guest : MonoBehaviour
     {
         if (!isCompleted) return;
         //Managers.Game.AddGold(gold);
-        Debug.Log($"Add Gold: {gold}");
+        Debug.Log($"Add Star: {star}");
         Sequence sequence = DOTween.Sequence();
         sequence.AppendInterval(0.1f);
         foreach (ItemOrdered itemOrdered in itemsOrdered)
         {
+            if(itemOrdered.key.id == "N001")
+            {
+                TutorialManager.TriggerCondition(TutorialCondition.퀘스트완료클릭);
+            }
             List<Vector2Int> targetPositions = Managers.Grid.FindNormalItemsFromGrid(itemOrdered.key, itemOrdered.goalCount);
             foreach (Vector2Int targetPos in targetPositions)
             {
@@ -112,7 +116,7 @@ public class Guest : MonoBehaviour
             Managers.Grid.UncheckNormalItem(itemOrdered.key);
         }
         //동전 짤랑거리면서 ui동전에 들어가는 거 sequence에 추가
-        sequence.AppendCallback( ()=> Managers.Game.SpawnGold(goldIconRectT.position ,gold ,GoodsType.Gold));
+        sequence.AppendCallback( ()=> Managers.Game.SpawnStar(goldIconRectT.position ,star ,GoodsType.Star));
         //
         sequence.OnComplete(() =>
         {

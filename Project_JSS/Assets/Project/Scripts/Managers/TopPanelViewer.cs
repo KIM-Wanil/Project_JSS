@@ -8,8 +8,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Text;
 using TMPro;
-using Unity.VisualScripting;
+
 using System.Buffers;
+
 [Serializable]
 public class TopPanelViewer : MonoBehaviour
 {
@@ -17,8 +18,9 @@ public class TopPanelViewer : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI energyText; 
     [SerializeField] private TextMeshProUGUI energyRegenTimeText; 
-    [SerializeField] private TextMeshProUGUI goldText; 
+    
     [SerializeField] private TextMeshProUGUI gemText; 
+    [SerializeField] private TextMeshProUGUI goldText; 
     [SerializeField] private TextMeshProUGUI nickNameText; 
     // private TextMeshProUGUI maxEnergyText; 
 
@@ -35,14 +37,16 @@ public class TopPanelViewer : MonoBehaviour
             energyText = GameObject.Find("EnergyRegenTimeText").GetComponent<TextMeshProUGUI>();
         }
         // goldText가 null일 때만 Find 수행
-        if (!goldText)
-        {
-            goldText = GameObject.Find("GoldAmountText").GetComponent<TextMeshProUGUI>();
-        }
+        
         // goldText가 null일 때만 Find 수행
         if (!gemText)
         {
             gemText = GameObject.Find("GemAmountText").GetComponent<TextMeshProUGUI>();
+        }
+        // goldText가 null일 때만 Find 수행
+        if (!goldText)
+        {
+            goldText = GameObject.Find("GoldAmountText").GetComponent<TextMeshProUGUI>();
         }
         // nickNameText가 null일 때만 Find 수행
         if (!nickNameText)
@@ -65,17 +69,20 @@ public class TopPanelViewer : MonoBehaviour
         // 초기 에너지 리젠 타임 UI 설정
         UpdateEnergyRegenTimeUI(Mathf.RoundToInt(Managers.Game.EnergyRegenRemainSec));
 
-        // GameManager의 골드 변경 이벤트 구독
-        Managers.Game.onGoldChanged.AddListener(UpdateGoldUI);
-        // 초기 골드 UI 설정
-        UpdateGoldUI(Managers.Game.CurrentGold);
+        
 
         // GameManager의 골드 변경 이벤트 구독
         Managers.Game.onGemChanged.AddListener(UpdateGemUI);
         // 초기 골드 UI 설정
         UpdateGemUI(Managers.Game.CurrentGem);
-    }
 
+        // GameManager의 골드 변경 이벤트 구독
+        Managers.Game.onGoldChanged.AddListener(UpdateGoldUI);
+        // 초기 골드 UI 설정
+        UpdateGoldUI(Managers.Game.CurrentGold);
+
+    }
+  
     //private void OnDestroy()
     //{
     //    // GameManager의 에너지 변경 이벤트 구독 해제
@@ -89,8 +96,8 @@ public class TopPanelViewer : MonoBehaviour
     {
         Debug.Log("update nickname");
         //닉네임이 없으면 gamer_id를 출력하고, 닉네임이 있으면 닉네임 출력
-        nickNameText.text = UserInfo.Data.nickname == null ?
-                            UserInfo.Data.gamerId : UserInfo.Data.nickname;
+        nickNameText.text = Managers.Backend.user.Data == null ?
+                            Managers.Backend.user.Data.gamerId : Managers.Backend.user.Data.nickname;
     }
     // 에너지 UI 업데이트 메서드
     private void UpdateEnergyUI(int currentEnergy)
@@ -102,7 +109,7 @@ public class TopPanelViewer : MonoBehaviour
     }
     private void UpdateEnergyRegenTimeUI(int currentEnergyRegenTime)
     {
-        if (energyRegenTimeText.IsUnityNull())
+        if (energyRegenTimeText == null)
         {
             Debug.LogError("에너지 회복 시간 텍스트가 없습니다.");
             return;
@@ -121,18 +128,19 @@ public class TopPanelViewer : MonoBehaviour
         }
         
     }
-    private void UpdateGoldUI(int currentEnergy)
-    {
-        if (goldText)
-        {
-            goldText.text = $"{currentEnergy}";
-        }
-    }
+    
     private void UpdateGemUI(int currentGem)
     {
         if (gemText)
         {
             gemText.text = $"{currentGem}";
+        }
+    }
+    private void UpdateGoldUI(int currentGold)
+    {
+        if (goldText)
+        {
+            goldText.text = $"{currentGold}";
         }
     }
 
