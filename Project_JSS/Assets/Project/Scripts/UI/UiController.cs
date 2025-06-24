@@ -9,18 +9,15 @@ public class UiController : MonoBehaviour
     [SerializeField] private Button toMergeButton;
     [SerializeField] private Button shopButton;
     [SerializeField] private Button listButton;
-    [SerializeField] private TextMeshProUGUI starText;
+    [SerializeField] private TextMeshProUGUI[] starTexts;
     void Start()
     {
-        if (!starText)
-        {
-            starText = GameObject.Find("StarAmountText").GetComponent<TextMeshProUGUI>();
-        }
+
         SetupButtonListeners();
         // GameManager의 골드 변경 이벤트 구독
-        Managers.Game.onStarChanged.AddListener(UpdateStarUI);
+        Managers.Game.onStarChanged.AddListener(UpdateStarUIs);
         // 초기 골드 UI 설정
-        UpdateStarUI(Managers.Game.CurrentStar);
+        UpdateStarUIs(Managers.Game.CurrentStar);
     }
     public void SetupButtonListeners()
     {
@@ -50,11 +47,14 @@ public class UiController : MonoBehaviour
     {
         TutorialManager.TriggerCondition(TutorialCondition.제작목록클릭);
     }
-    private void UpdateStarUI(int currentStar)
+    private void UpdateStarUIs(int currentStar)
     {
-        if (starText)
+        foreach (var starText in starTexts)
         {
-            starText.text = $"{currentStar}";
+            if (starText != null)
+            {
+                starText.text = $"{currentStar}";
+            }
         }
     }
 }
