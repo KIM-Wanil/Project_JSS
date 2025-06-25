@@ -21,19 +21,20 @@ public class GridManager : BaseManager
     private Vector2 gridStartPosition = new Vector2(0f, 0f);
     private GameObject[,] tiles; // 타일 배열 추가
     private Vector2[,] tilePositions;
-    public GameObject mergeBoard; 
-    private RectTransform mergeBoardRectT; 
+    public GameObject mergeBoard;
+    private RectTransform mergeBoardRectT;
     public GameObject MergeBoard => mergeBoard;
     public RectTransform MergeBoardRectT => mergeBoardRectT;
-    private MergeEffect mergeTryEffect; 
+    public MergeEffect mergeTryEffect;
 
     public int Width => GameManager.GRID_WIDTH;
     public int Height => GameManager.GRID_HEIGHT;
 
-    
+
     public Dictionary<ItemKey, List<Vector2Int>> ownedNormalItems = new Dictionary<ItemKey, List<Vector2Int>>();
     private Dictionary<MergeableItem, Tween> itemTweens = new Dictionary<MergeableItem, Tween>();
 
+    public bool isInit = false;
     //private Coroutine mouseCheckCoroutine;
     //private bool isMouseMoving;
     //private MergeableItem itemToAnnounce1;
@@ -48,9 +49,11 @@ public class GridManager : BaseManager
     {
         //Debug.Log(SceneManager.GetActiveScene().name);
         //Debug.Log(SceneManager.GetSceneByName("Main").name);
-        if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
-            return;
+        //if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
+        //    return;
         //Debug.Log("GridManager initialized");
+        if (isInit) return; // 이미 초기화된 경우 중복 초기화 방지
+        Debug.Log("GridManager initialized");
         base.Init();
         InitializeGrid();
         GenerateTiles(); // 타일 생성 호출
@@ -59,18 +62,19 @@ public class GridManager : BaseManager
                          //Managers.Game.SpawnGenerator("gen_orb", 1, (Vector2Int)GetEmptyPosition());
                          //Managers.Game.SpawnGenerator("gen_pot", 1, (Vector2Int)GetEmptyPosition());
 
-        mergeTryEffect = GameObject.Find("MergeTryEffect").GetComponent<MergeEffect>();
+        //mergeTryEffect = GameObject.Find("MergeTryEffect").GetComponent<MergeEffect>();
         if (mergeTryEffect.IsUnityNull())
         {
             Debug.LogError("MergeEffect not found!");
             return;
         }
         mergeTryEffect.transform.SetAsLastSibling();
+        isInit = true;
 
         //Managers.Game.SpawnItem("N001", 2, new Vector2Int(0,0), true);
         //Managers.Game.SpawnItem("N002", 2, new Vector2Int(1,0), true);
-
     }
+
     private void InitializeGrid()
     {
         grid = new MergeableItem[Width, Height];
@@ -78,9 +82,9 @@ public class GridManager : BaseManager
 
     private void GenerateTiles()
     {
-        
 
-        mergeBoard = GameObject.Find("MergeBoard");
+
+        //mergeBoard = GameObject.Find("MergeBoard");
         mergeBoardRectT = mergeBoard.GetComponent<RectTransform>();
         if (mergeBoard.IsUnityNull())
         {
@@ -93,8 +97,9 @@ public class GridManager : BaseManager
         // mergeBoard의 크기 가져오기
         RectTransform mergeBoardRect = mergeBoard.GetComponent<RectTransform>();
         boardWidth = mergeBoardRect.rect.width;
-        boardHeight = mergeBoardRect.rect.height;
-
+        //boardHeight = mergeBoardRect.rect.height;
+        boardHeight = boardWidth * 9 / 7;
+        Debug.Log($"Board Size: {boardWidth} x {boardHeight}");
         // 타일 크기 계산
         float totalSpacingX = (Width + 1) * spacing;
         float totalSpacingY = (Height + 1) * spacing;
@@ -509,7 +514,7 @@ public class GridManager : BaseManager
             }
         }
 
-        if(count>0)
+        if (count > 0)
         {
             ////소리 별로여서 보류
             //Managers.Asset.PlaySound("Box_Crash", SoundType.Effect);
@@ -546,7 +551,7 @@ public class GridManager : BaseManager
             Mathf.RoundToInt(-localPosition.y / (TileSize + spacing)) // y 좌표를 반대로 계산
         );
 
-        if(IsValidPosition(gridPos))
+        if (IsValidPosition(gridPos))
         {
             return gridPos;
         }
@@ -776,7 +781,7 @@ public class GridManager : BaseManager
         item.GetComponent<RectTransform>().localScale = Vector3.one;
         //grid[targetGridposition.x, targetGridposition.y] = item;
         AttatchItemToGrid(item, targetGridposition);
-        
+
         return true;
     }
 
@@ -811,7 +816,7 @@ public class GridManager : BaseManager
             item.SetGridPosition(position);
             //지금 리스트에 넣는 조건 :제너레이터가 아니고, 상자상태가 아닌 경우     
             //추후 변동 가능
-            if ((item.itemData.type == ItemType.Normal || item.itemData.type == ItemType.Usable) && (item.state ==ItemState.Normal))
+            if ((item.itemData.type == ItemType.Normal || item.itemData.type == ItemType.Usable) && (item.state == ItemState.Normal))
             {
                 //Debug.Log("AddOwnedItemsCanBeMerged");
                 AddOwnedItemsCanBeMerged(item);
@@ -868,8 +873,8 @@ public class GridManager : BaseManager
         }
     }
 
-        // 아이템이 제거될 때 호출되는 메서드
-        public void RemoveOwnedItemsCanBeMerged(MergeableItem item)
+    // 아이템이 제거될 때 호출되는 메서드
+    public void RemoveOwnedItemsCanBeMerged(MergeableItem item)
     {
         var key = item.itemKey;
         if (ownedNormalItems.TryGetValue(key, out var positions))
@@ -894,7 +899,7 @@ public class GridManager : BaseManager
             foreach (var pos in positions)
             {
                 MergeableItem item = GetItemAt(pos);
-                if(item == null)
+                if (item == null)
                 {
                     Debug.Log($"{itemName} : ({pos.x},{pos.y})에 아이템이 없음");
                     continue;
@@ -912,7 +917,7 @@ public class GridManager : BaseManager
             // 모든 벡터가 Locked 상태인 경우 null 반환
             if (lockedPositions.Count == positions.Count)
             {
-                
+
                 Debug.Log($"{itemName}은 모두 잠겨있어서 합성 불가");
                 return null;
             }
@@ -1013,7 +1018,7 @@ public class GridManager : BaseManager
                 {
                     continue;
                 }
-                for(int i = item.key.lv -1; i > 0; i--)
+                for (int i = item.key.lv - 1; i > 0; i--)
                 {
                     ItemKey keyToFind = new ItemKey(item.key.id, i);
                     mergeblePosPair = FindNearestItemPairCanBeMerged(keyToFind);
@@ -1028,8 +1033,8 @@ public class GridManager : BaseManager
                         itemsToCheck.Remove(keyToFind);
                     }
                 }
-                
-                
+
+
             }
         }
 
@@ -1039,7 +1044,7 @@ public class GridManager : BaseManager
             {
                 //Debug.Log($"{Managers.Game.GetItemName(item.Key)}/아이템 레벨 {item.Key.lv}/최대 레벨{Managers.Game.GetItemMaxLevel(item.Key)}");
                 //아이템이 최대 레벨인 경우 제외
-                if(item.Key.lv == Managers.Game.GetItemMaxLevel(item.Key))
+                if (item.Key.lv == Managers.Game.GetItemMaxLevel(item.Key))
                 {
                     continue;
                 }
@@ -1053,8 +1058,8 @@ public class GridManager : BaseManager
         }
         return null;
     }
-    
-    
+
+
     // 특정 위치 주변의 머지 가능한 아이템 찾기
     public MergeableItem FindMergeableNeighbor(Vector2Int position, MergeableItem item)
     {
@@ -1089,7 +1094,7 @@ public class GridManager : BaseManager
         //        }
         //    }
         //}
-        
+
         return null;
     }
     // 모든 제너레이터 찾기
@@ -1120,7 +1125,7 @@ public class GridManager : BaseManager
     public void CheckGuestsOrder()
     {
 
-       foreach (var guest in currentGuests)
+        foreach (var guest in currentGuests)
         {
             guest.CheckItemsIsExist();
         }
@@ -1162,7 +1167,7 @@ public class GridManager : BaseManager
     public int CountNormalItem(ItemKey item)
     {
         if (!ownedNormalItems.ContainsKey(item)) return 0;
-  
+
         int count = 0;
         foreach (var pos in ownedNormalItems[item])
         {
@@ -1179,7 +1184,7 @@ public class GridManager : BaseManager
     // 아이템키로 머지판에서 노말아이템 찾아서 삭제 (퀘스트 완료시)
     public List<Vector2Int> FindNormalItemsFromGrid(ItemKey item, int goalCount)
     {
-        List <Vector2Int> targetPositions = new List<Vector2Int>();
+        List<Vector2Int> targetPositions = new List<Vector2Int>();
         if (ownedNormalItems.ContainsKey(item))
         {
             foreach (var pos in ownedNormalItems[item])
@@ -1188,13 +1193,13 @@ public class GridManager : BaseManager
                 if (tempItem.state != ItemState.Locked)
                 {
                     targetPositions.Add(pos);
-                    if(targetPositions.Count == goalCount)
+                    if (targetPositions.Count == goalCount)
                     {
                         return targetPositions;
                     }
                 }
             }
-            if(targetPositions.Count < goalCount)
+            if (targetPositions.Count < goalCount)
             {
                 return null;
             }
@@ -1232,7 +1237,7 @@ public class GridManager : BaseManager
     {
         MergeableItem mergeableItem = GetItemAt(gridPos);
 
-        if(mergeableItem.draggableItem = DraggableItem.currentlySelectedItem)
+        if (mergeableItem.draggableItem = DraggableItem.currentlySelectedItem)
         {
             DraggableItem.currentlySelectedItem.mergeableItem.OnDeSelected();
             DraggableItem.currentlySelectedItem = null;
