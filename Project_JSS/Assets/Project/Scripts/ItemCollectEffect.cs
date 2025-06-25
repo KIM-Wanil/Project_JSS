@@ -29,7 +29,7 @@ public class ItemCollectEffect : MonoBehaviour
         Vector3 targetWorldPos = uiElement.position;
 
         // 곡선 제어점 계산
-        point1 = Utils.GetNewPoint(start, Random.Range(0, 360), 50f);
+        point1 = Utils.GetNewPoint(start, Random.Range(0, 360), 10f);
 
         // 3점(시작, 제어점, 끝점)으로 경로 배열 생성
         Vector3[] path = new Vector3[] { start, point1, targetWorldPos };

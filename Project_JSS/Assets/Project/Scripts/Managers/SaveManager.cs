@@ -32,24 +32,24 @@ public class SaveManager : BaseManager
 {
     public bool isClear = false;
     private const string SAVE_KEY = "MergeGameSave";
-    private const int A = 0; 
-    private const int B = 1; 
-    private const int C = 2; 
-    private const int D = 3; 
-    private const int E = 4; 
-    private const int F = 5; 
-    private const int G = 6; 
+    private const int A = 0;
+    private const int B = 1;
+    private const int C = 2;
+    private const int D = 3;
+    private const int E = 4;
+    private const int F = 5;
+    private const int G = 6;
     private const int H = 7;
 
     public void Update()
     {
-       if(Input.GetKeyDown(KeyCode.F5))
+        if (Input.GetKeyDown(KeyCode.F5))
         {
             ClearPlayerPrefs();
             isClear = true;
         }
     }
-    
+
     public void SaveGame(SaveData saveData)
     {
         string json = JsonUtility.ToJson(saveData);
@@ -85,64 +85,91 @@ public class SaveManager : BaseManager
         };
 
         //// 초기 박스 설정
-        ////가장 외곽
-        //initialData.items.Add(SetItemData(new Vector2Int(A, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(A, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(A, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(A, 3), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(A, 4), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(A, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(A, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(A, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(A, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
+        ////0열
+        initialData.items.Add(SetItemData(new Vector2Int(A, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(B, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(E, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(F, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(G, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
 
-        //initialData.items.Add(SetItemData(new Vector2Int(B, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(C, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(D, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(E, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(F, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
+        ////1열
+        initialData.items.Add(SetItemData(new Vector2Int(A, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(B, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(E, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(F, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(G, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
 
-        //initialData.items.Add(SetItemData(new Vector2Int(G, 0), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(G, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(G, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(G, 3), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(G, 4), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(G, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(G, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(G, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(G, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
+        ////2열
+        initialData.items.Add(SetItemData(new Vector2Int(A, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(B, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(E, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(F, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(G, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
 
-        //initialData.items.Add(SetItemData(new Vector2Int(B, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(C, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(D, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(E, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(F, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
+        ////3열
+        initialData.items.Add(SetItemData(new Vector2Int(A, 3), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(B, 3), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 3), "G001", 1, ItemType.Generatable, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 3), "N001", 2, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(E, 3), "N001", 2, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(F, 3), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(G, 3), "N001", 1, ItemType.Normal, ItemState.InBox));
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ////두번째 외곽
-        //initialData.items.Add(SetItemData(new Vector2Int(B, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(B, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(B, 4), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(B, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(B, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(B, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
+        ////4열
+        initialData.items.Add(SetItemData(new Vector2Int(A, 4), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(B, 4), "N002", 3, ItemType.Normal, ItemState.Locked));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 4), "N001", 1, ItemType.Normal, ItemState.Normal));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 4), "N001", 1, ItemType.Normal, ItemState.Locked));
+        initialData.items.Add(SetItemData(new Vector2Int(E, 4), "N002", 3, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(F, 4), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(G, 4), "N001", 1, ItemType.Normal, ItemState.InBox));
 
-        //initialData.items.Add(SetItemData(new Vector2Int(D, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(E, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
+        ////5열
+        initialData.items.Add(SetItemData(new Vector2Int(A, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(B, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 5), "N002", 4, ItemType.Normal, ItemState.Locked));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 5), "N001", 4, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(E, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(F, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(G, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
 
-        //initialData.items.Add(SetItemData(new Vector2Int(F, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(F, 2), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(F, 3), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(F, 4), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(F, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(F, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
+        ////6열
+        initialData.items.Add(SetItemData(new Vector2Int(A, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(B, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(E, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(F, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(G, 6), "N001", 1, ItemType.Normal, ItemState.InBox));
 
-        //initialData.items.Add(SetItemData(new Vector2Int(C, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
-        //initialData.items.Add(SetItemData(new Vector2Int(D, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
+        ////7열
+        initialData.items.Add(SetItemData(new Vector2Int(A, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(B, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(E, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(F, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(G, 7), "N001", 1, ItemType.Normal, ItemState.InBox));
+
+        ////8열
+        initialData.items.Add(SetItemData(new Vector2Int(A, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(B, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(E, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(F, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(G, 8), "N001", 1, ItemType.Normal, ItemState.InBox));
 
 
 
-        ////잠긴 아이템 설정 
+
+        //잠긴 아이템 설정 
         //initialData.items.Add(SetItemData(new Vector2Int(B, 3), "N002", 2, ItemType.Normal, ItemState.Locked));
         //initialData.items.Add(SetItemData(new Vector2Int(F, 5), "N002", 3, ItemType.Normal, ItemState.Locked));
 
@@ -153,11 +180,12 @@ public class SaveManager : BaseManager
         //initialData.items.Add(SetItemData(new Vector2Int(C, 2), "G001", 1, ItemType.Generatable, ItemState.Normal));
         //initialData.items.Add(SetItemData(new Vector2Int(D, 2), "G002", 1, ItemType.Generatable, ItemState.Normal));
 
-        initialData.items.Add(SetItemData(new Vector2Int(A, 0), "G001", 1, ItemType.Generatable, ItemState.Normal));
-        initialData.items.Add(SetItemData(new Vector2Int(B, 0), "G002", 1, ItemType.Generatable, ItemState.Normal));
+        ////일반
+        //initialData.items.Add(SetItemData(new Vector2Int(A, 0), "G001", 1, ItemType.Generatable, ItemState.Normal));
+        //initialData.items.Add(SetItemData(new Vector2Int(B, 0), "G002", 1, ItemType.Generatable, ItemState.Normal));
 
-        initialData.rewardList.Add(new ItemKey("G001", 1));
-        initialData.rewardList.Add(new ItemKey("G002", 1));
+        //initialData.rewardList.Add(new ItemKey("G001", 1));
+        //initialData.rewardList.Add(new ItemKey("G002", 1));
 
         return initialData;
     }

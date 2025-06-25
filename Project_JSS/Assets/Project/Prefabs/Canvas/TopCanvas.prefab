@@ -583,7 +583,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 825603244598394358}
-  - component: {fileID: 6422513427248699964}
   m_Layer: 5
   m_Name: SafeArea
   m_TagString: Untagged
@@ -609,7 +608,6 @@ RectTransform:
   - {fileID: 5665340024161741664}
   - {fileID: 3659428261998233391}
   - {fileID: 5467502075517136758}
-  - {fileID: 3929140888656783991}
   m_Father: {fileID: 3957612075597837777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -617,21 +615,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 82}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &6422513427248699964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3496978370292752870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c97afc556caea1c44969477eb7ddec74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConformX: 1
-  ConformY: 1
-  Logging: 0
 --- !u!1 &3829823735174091786
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,41 +690,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &3936893054200961773
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3929140888656783991}
-  m_Layer: 5
-  m_Name: "\uBCF4\uC720Star\uC704\uCE58"
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &3929140888656783991
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3936893054200961773}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 825603244598394358}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 144.5, y: -119}
-  m_SizeDelta: {x: 36.857483, y: 35.9682}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4726737787893922835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,7 +1863,7 @@ MonoBehaviour:
   energyEffectPrefab: {fileID: 3871781815619966886, guid: 5ac14558f33f1cd4d8bc589c14c240b0, type: 3}
   gemEffectPrefab: {fileID: 3871781815619966886, guid: 5ac14558f33f1cd4d8bc589c14c240b0, type: 3}
   goldEffectPrefab: {fileID: 3871781815619966886, guid: 5ac14558f33f1cd4d8bc589c14c240b0, type: 3}
-  starUiElement: {fileID: 3929140888656783991}
+  starUiElement: {fileID: 0}
   energyUiElement: {fileID: 178018064532971615}
   gemUiElement: {fileID: 3132737603394296763}
   goldUiElement: {fileID: 3572225126731450534}

@@ -62,7 +62,7 @@ public class AddPanelController : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             tempItems[i].id = availableItems[UnityEngine.Random.Range(0, availableItems.Count)];
-            tempItems[i].lv = UnityEngine.Random.Range(2, 4);
+            tempItems[i].lv = UnityEngine.Random.Range(2, 5);
 
             goalItems[tempItems[i]] = UnityEngine.Random.Range(1, 3);
         }

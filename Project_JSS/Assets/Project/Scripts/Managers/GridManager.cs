@@ -508,8 +508,20 @@ public class GridManager : BaseManager
                 if (item.state == ItemState.InBox)
                 {
                     count++;
-                    item.Initialize(item.Lv, newPos, ItemState.Locked);
-                    AddOwnedItemsCanBeMerged(item);
+                    if (item.itemData.type == ItemType.Generatable)
+                    {
+                        //Debug.Log($"제너레이터 : pos{newPos}, 박스->일반");
+                        item.Initialize(item.Lv, newPos, ItemState.Normal);
+                        Generator tempGenerator = item.gameObject.GetComponent<Generator>();
+                        tempGenerator.Initialize(Managers.Game.GeneratorSyncTime, ItemState.Normal);
+                    }
+                    else
+                    {
+                        //Debug.Log($"일반 : pos{newPos}, 박스->거미줄");
+                        item.Initialize(item.Lv, newPos, ItemState.Locked);
+                        AddOwnedItemsCanBeMerged(item);
+                    }
+                    
                 }
             }
         }

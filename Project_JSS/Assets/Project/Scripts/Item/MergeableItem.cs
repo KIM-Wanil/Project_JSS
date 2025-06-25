@@ -181,11 +181,17 @@ public class MergeableItem : MonoBehaviour
     {
         if (itemImage != null && itemData.items.Length > 0)
         {
-            if (itemData.type == ItemType.Normal || itemData.type == ItemType.Usable)
+            if (itemData.type == ItemType.Normal || itemData.type == ItemType.Usable || itemData.type == ItemType.Generatable)
             {
                 itemImage.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                adIcon.SetActive(false);
-                bubbleImage.gameObject.SetActive(false);
+                if (adIcon != null)
+                {
+                    adIcon.SetActive(false);
+                }
+                if (bubbleImage)
+                {
+                    bubbleImage.gameObject.SetActive(false);
+                }
                 draggableItem.enabled = true;
 
                 switch (state)
@@ -201,7 +207,7 @@ public class MergeableItem : MonoBehaviour
                         //draggableItem.enabled = false;
                         break;
                     case ItemState.InBox:
-                        itemImage.sprite = gridPosition.x + gridPosition.y % 2 == 0 ? boxSprite[0] : boxSprite[1];
+                        itemImage.sprite = (gridPosition.x + gridPosition.y) % 2 == 0 ? boxSprite[0] : boxSprite[1];
                         itemImage.color = new Color(1.0f, 1.0f, 1.0f, 1f);
                         draggableItem.enabled = false;
                         break;
@@ -221,9 +227,10 @@ public class MergeableItem : MonoBehaviour
                         break;
                 }
             }
+
             else
             {
-               itemImage.sprite = itemData.items[lvIndex].itemSprite;
+                itemImage.sprite = itemData.items[lvIndex].itemSprite;
             }
         }
     }
@@ -232,7 +239,7 @@ public class MergeableItem : MonoBehaviour
     {
         return other != null &&
                other != this &&
-               other.state == ItemState.Normal &&
+               (other.state == ItemState.Normal || other.state == ItemState.Locked) &&
                other.itemData.id == itemData.id &&
                other.Lv == lv &&
                lv < itemData.items.Length; // 최대 레벨 체크
