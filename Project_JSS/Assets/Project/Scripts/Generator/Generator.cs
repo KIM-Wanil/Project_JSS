@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using static GeneratorSO;
 using Unity.VisualScripting;
 using DG.Tweening;
+using System.Linq;
 
 public class Generator : MonoBehaviour
 {
@@ -61,6 +62,16 @@ public class Generator : MonoBehaviour
         //    canGenerate = true;
         //    mergeEffect.PlayMerge();
         //}
+        if (genDB == null || mergeableItem == null || genDB.generatorDatas == null || genEffect == null)
+        {
+            Debug.LogError("필수 컴포넌트가 null입니다.");
+            return;
+        }
+        if (mergeableItem.Lv < 1 || mergeableItem.Lv > genDB.generatorDatas.Length)
+        {
+            Debug.LogError("mergeableItem.Lv 값이 잘못되었습니다.");
+            return;
+        }
         genEffect.PlayEffectAtTime(syncTime);
         genData = genDB.generatorDatas[mergeableItem.Lv - 1];
         maxDurability = genData.maxDurability;
