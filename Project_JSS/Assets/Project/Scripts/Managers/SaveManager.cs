@@ -15,6 +15,8 @@ public class SaveData
     public int gem;
     public int gold;
     public string playerName;
+    public int level;
+    public int exp;
 
     [System.Serializable]
     public class ItemData
@@ -81,7 +83,9 @@ public class SaveManager : BaseManager
             star = 0,    // 초기 별 값 설정
             gem = 777,    // 초기 젬 값 설정
             gold = 1234, // 초기 골드 값 설정
-            playerName = "Player" // 초기 플레이어 이름 설정
+            playerName = "Player", // 초기 플레이어 이름 설정
+            level = 1,
+            exp = 0 // 초기 경험치 설정
         };
 
         //// 초기 박스 설정

@@ -172,13 +172,14 @@ public class TutorialManager : MonoBehaviour
         // 기존 트윈 중지
         if (fingerTween != null && fingerTween.IsActive())
         {
+            fingerImage.localScale = Vector3.one; // 초기화
             fingerTween.Kill();
             fingerTween = null;
         }
         switch (inputFingerAnimType)
         {
             case FingerAnimationType.Zoom:
-                fingerTween = fingerImage.DOScale(1.2f, 0.5f)
+                fingerTween = fingerImage.DOScale(0.8f, 0.5f)
                     .SetLoops(-1, LoopType.Yoyo);
                 break;
             case FingerAnimationType.SwipeX:

@@ -97,7 +97,7 @@ MonoBehaviour:
       highlightSize: {x: 190, y: 100}
       fingerPosition: {x: 345, y: 615}
       fingerRotation: -150
-      fingerAnimType: 0
+      fingerAnimType: 2
       fingerAnimationAmount: 100
       completionCondition: 4
     - dialogue: "\uC544\uC8FC \uC798\uD558\uC168\uC5B4\uC694!"
@@ -129,7 +129,7 @@ MonoBehaviour:
       highlightSize: {x: 100, y: 200}
       fingerPosition: {x: 455, y: 615}
       fingerRotation: -150
-      fingerAnimType: 0
+      fingerAnimType: 3
       fingerAnimationAmount: 100
       completionCondition: 5
     - dialogue: "\uC0C8\uB85C\uC6B4 \uC544\uC774\uD15C\uC774 \uB098\uC654\uAD70\uC694."

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -35,6 +36,14 @@ public class GridManager : BaseManager
     private Dictionary<MergeableItem, Tween> itemTweens = new Dictionary<MergeableItem, Tween>();
 
     public bool isInit = false;
+
+    [Header("Prefab References")]
+    [SerializeField] private GameObject itemPrefab;
+    [SerializeField] private GameObject generatorPrefab;
+    private float generatorSyncTime;
+    public float GeneratorSyncTime => generatorSyncTime;
+    [SerializeField] private ObjectPool<GameObject> itemPool;
+    [SerializeField] private ObjectPool<GameObject> generatorPool;
     //private Coroutine mouseCheckCoroutine;
     //private bool isMouseMoving;
     //private MergeableItem itemToAnnounce1;
@@ -44,25 +53,24 @@ public class GridManager : BaseManager
     //private float mouseIdleTime = 0f;
     //private const float idleThreshold = 2f;
     // OnGUI 메서드 추가
-
+    private void Update()
+    {
+        generatorSyncTime = Time.time % 4f;
+    }
     public override void Init()
     {
-        //Debug.Log(SceneManager.GetActiveScene().name);
-        //Debug.Log(SceneManager.GetSceneByName("Main").name);
-        //if (!SceneManager.GetActiveScene().name.Equals(SceneManager.GetSceneByName("Main").name))
-        //    return;
-        //Debug.Log("GridManager initialized");
         if (isInit) return; // 이미 초기화된 경우 중복 초기화 방지
         Debug.Log("GridManager initialized");
         base.Init();
+        generatorSyncTime = Time.time % 4f;
         InitializeGrid();
-        GenerateTiles(); // 타일 생성 호출
-                         //Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
-                         //Managers.Game.SpawnGenerator("gen_anvil", 1, (Vector2Int)GetEmptyPosition());
-                         //Managers.Game.SpawnGenerator("gen_orb", 1, (Vector2Int)GetEmptyPosition());
-                         //Managers.Game.SpawnGenerator("gen_pot", 1, (Vector2Int)GetEmptyPosition());
+        // 아이템 오브젝트 풀 초기화
+        itemPool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 50, 100);
 
-        //mergeTryEffect = GameObject.Find("MergeTryEffect").GetComponent<MergeEffect>();
+        // 제너레이터 오브젝트 풀 초기화
+        generatorPool = new ObjectPool<GameObject>(CreatePooledGenerator, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 10, 20);
+        GenerateTiles(); 
+        LoadBoardItems();
         if (mergeTryEffect.IsUnityNull())
         {
             Debug.LogError("MergeEffect not found!");
@@ -70,14 +78,46 @@ public class GridManager : BaseManager
         }
         mergeTryEffect.transform.SetAsLastSibling();
         isInit = true;
-
-        //Managers.Game.SpawnItem("N001", 2, new Vector2Int(0,0), true);
-        //Managers.Game.SpawnItem("N002", 2, new Vector2Int(1,0), true);
     }
 
     private void InitializeGrid()
     {
         grid = new MergeableItem[Width, Height];
+    }
+    private void LoadBoardItems()
+    {
+        Debug.Log($"LoadBoardItems{Managers.Game.currentBoardItems.Count}");
+        // 저장된 아이템들 복원
+        foreach (var itemData in Managers.Game.currentBoardItems)
+        {
+            switch (itemData.type)
+            {
+                case ItemType.Normal:
+                    if (SpawnItem(itemData.itemId, itemData.level, itemData.position, itemData.state)) { }
+                    break;
+                case ItemType.Generatable:
+                    if (SpawnGenerator(itemData.itemId, itemData.level, itemData.position, itemData.state)) { }
+                    break;
+
+            }
+        }
+        Managers.Game.onRewardQueueChanged?.Invoke(Managers.Game.currentRewardQueue);
+
+        KeyValuePair<ItemKey, int> temp1 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 2), 1);
+        KeyValuePair<ItemKey, int> temp2 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 3), 1);
+        KeyValuePair<ItemKey, int> temp3 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 4), 1);
+
+        KeyValuePair<ItemKey, int> temp4 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 2), 1);
+        KeyValuePair<ItemKey, int> temp5 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 3), 1);
+        KeyValuePair<ItemKey, int> temp6 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 4), 1);
+
+        KeyValuePair<ItemKey, int> temp7 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 2), 2);
+        KeyValuePair<ItemKey, int> temp8 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 4), 2);
+
+        KeyValuePair<ItemKey, int> temp9 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 4), 2);
+        KeyValuePair<ItemKey, int> temp10 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 3), 2);
+
+        Managers.Game.onGuestCreated?.Invoke(3, temp3, null);
     }
 
     private void GenerateTiles()
@@ -155,150 +195,168 @@ public class GridManager : BaseManager
             }
         }
     }
-    //private void Update()
-    //{
-    //    //if (Input.GetMouseButtonDown(0))
-    //    //{
-    //    //    isMouseMoving = true;
-    //    //    if (mouseCheckCoroutine != null)
-    //    //    {
-    //    //        StopCoroutine(mouseCheckCoroutine);
-    //    //        itemToAnnounce1 = null;
-    //    //        itemToAnnounce2 = null;
-    //    //        if (announceMovingSequence != null)
-    //    //        {
-    //    //            announceMovingSequence.Kill();
-    //    //        }
-    //    //    }
-    //    //    ResetItemsPosition();
-    //    //    StartMouseCheck();
-    //    //}
 
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        isMouseMoving = true;
-    //        if (mouseCheckCoroutine != null)
-    //        {
-    //            StopCoroutine(mouseCheckCoroutine);
-    //            itemToAnnounce1 = null;
-    //            itemToAnnounce2 = null;
-    //            if (announceMovingSequence != null)
-    //            {
-    //                announceMovingSequence.Kill();
-    //            }
-    //        }
-    //        ResetItemsPosition();
-    //        StartMouseCheck();
-    //        mouseIdleTime = 0f; // 마우스가 눌렸을 때 타이머 초기화
-    //    }
-    //    else if (Input.GetMouseButton(0))
-    //    {
-    //        mouseIdleTime = 0f; // 마우스가 눌린 상태일 때 타이머 초기화
-    //    }
-    //    else
-    //    {
-    //        mouseIdleTime += Time.deltaTime; // 마우스가 눌리지 않았을 때 타이머 증가
-    //        if (mouseIdleTime >= idleThreshold)
-    //        {
-    //            if (mouseCheckCoroutine == null)
-    //            {
-    //                StartMouseCheck();
-    //            }
-    //        }
-    //    }
-    //}
+    //이 경우에만 잠겨있는 아이템 존재
+    public bool SpawnItem(string itemId, int level, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
+    {
+        GameObject itemObj = itemPool.Get();
+        if (!itemObj) return false;
 
-    //private void StartMouseCheck()
-    //{
-    //    isMouseMoving = false;
-    //    mouseCheckCoroutine = StartCoroutine(CheckMouseMovement());
-    //}
+        MergeableItem item = itemObj.GetComponent<MergeableItem>();
+        if (!item) return false;
 
-    //private IEnumerator CheckMouseMovement()
-    //{
-    //    Debug.Log("CheckMouseMovement Start");
-    //    yield return new WaitForSeconds(idleThreshold);
-    //    if (!isMouseMoving)
-    //    {
-    //        (Vector2Int, Vector2Int)? mergeablePosPair = FindMergeablePosPair();
-    //        //foreach(var a in ownedItemsCanBeMerged)
-    //        //{
-    //        //   Debug.Log($"key:{a.Key.id} (LV:{a.Key.lv})");
-    //        //    foreach(var b in a.Value)
-    //        //    {
-    //        //        Debug.Log($"value:{b}");
-    //        //    }
-    //        //}
-    //        if (mergeablePosPair.HasValue)
-    //        {
-    //            Debug.Log("MergeablePosPair Found");
-    //            StartCoroutine(PerformMovementEffect(mergeablePosPair.Value.Item1, mergeablePosPair.Value.Item2));
-    //        }
-    //    }
-    //}
+        item.itemData = Managers.Game.itemDataDic[itemId];
+        item.Initialize(level, targetGridposition, state);
+        item.draggableItem.Initialize();
+        item.rectT.sizeDelta = new Vector2(TileSize * 0.9f, TileSize * 0.9f);
+        PlaceItem(item, targetGridposition);
 
-    //private IEnumerator PerformMovementEffect(Vector2Int pos1, Vector2Int pos2)
-    //{
-    //    Debug.Log("PerformMovementEffect");
-    //    itemToAnnounce1 = GetItemAt(pos1);
-    //    if (itemToAnnounce1 == null)
-    //    {
-    //        Debug.LogError("itemToAnnounce1 is null");
-    //        yield break;
-    //    }
-    //    itemToAnnounce2 = GetItemAt(pos2);
-    //    if (itemToAnnounce2 == null)
-    //    {
-    //        Debug.LogError("itemToAnnounce2 is null");
-    //        yield break;
-    //    }
 
-    //    Vector2 tilePos1 = tilePositions[pos1.x, pos1.y];
-    //    Vector2 tilePos2 = tilePositions[pos2.x, pos2.y];
 
-    //    Vector2 direction1 = (tilePos2 - tilePos1).normalized * 10f;
-    //    Vector2 direction2 = (tilePos1 - tilePos2).normalized * 10f;
+        return true;
+    }
+    public bool SpawnMoveItem(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
+    {
+        GameObject itemObj = itemPool.Get();
+        if (!itemObj) return false;
 
-    //    Debug.Log($"tilePos1:{tilePos1}/tilePos2:{tilePos2}/direction1:{direction1}/direction2:{direction2}");
-    //    if (announceMovingSequence != null)
-    //    {
-    //        announceMovingSequence.Kill();
-    //    }
-    //    announceMovingSequence = DG.Tweening.DOTween.Sequence();
+        MergeableItem item = itemObj.GetComponent<MergeableItem>();
+        if (!item) return false;
 
-    //    announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(direction1, 0.5f));
-    //    announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(direction2, 0.5f));
-    //    announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
-    //    announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
+        item.transform.position = startWorldPosition;
+        //item.itemRectT.anchoredPosition = startWorldPosition;
+        item.itemData = Managers.Game.itemDataDic[itemId];
+        item.Initialize(level, targetGridposition, state);
+        item.draggableItem.Initialize();
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(TileSize * 0.9f, TileSize * 0.9f);
+        PlaceMoveItem(item, startWorldPosition, targetGridposition);
 
-    //    announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(direction1, 0.5f));
-    //    announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(direction2, 0.5f));
-    //    announceMovingSequence.Append(itemToAnnounce1.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
-    //    announceMovingSequence.Join(itemToAnnounce2.itemRectT.DOAnchorPos(Vector2.one, 0.5f));
 
-    //    announceMovingSequence.AppendInterval(0.5f);
-    //    announceMovingSequence.SetLoops(-1);
-    //    announceMovingSequence.Play();
+        return true;
+    }
 
-    //    while (!isMouseMoving)
-    //    {
-    //        yield return null;
-    //    }
+    public bool SpawnGenerator(string itemId, int level, Vector2Int position, ItemState state = ItemState.Normal)
+    {
+        GameObject genObj = generatorPool.Get();
+        if (!genObj) return false;
 
-    //    announceMovingSequence.Kill();
-    //    ResetItemsPosition();
-    //}
+        MergeableItem item = genObj.GetComponent<MergeableItem>();
+        if (!item) return false;
 
-    //private void ResetItemsPosition()
-    //{
-    //    if (itemToAnnounce1 != null && itemToAnnounce2 != null)
-    //    {
-    //        itemToAnnounce1.itemRectT.anchoredPosition = Vector3.zero;
-    //        itemToAnnounce2.itemRectT.anchoredPosition = Vector3.zero;
-    //        itemToAnnounce1 = null;
-    //        itemToAnnounce2 = null;
-    //    }
-    //}
+        item.itemData = Managers.Game.itemDataDic[itemId];
+        item.Initialize(level, position, state);
+        item.draggableItem.Initialize();
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(TileSize * 0.9f, TileSize * 0.9f);
+        PlaceItem(item, position);
+
+        Generator tempGenerator = item.gameObject.GetComponent<Generator>();
+        tempGenerator.genDB = Managers.Game.genDataDic[itemId];
+        tempGenerator.Initialize(generatorSyncTime, state);
+
+        return true;
+    }
+    public bool SpawnMoveGenerator(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
+    {
+        GameObject genObj = generatorPool.Get();
+        if (!genObj) return false;
+
+        MergeableItem item = genObj.GetComponent<MergeableItem>();
+        if (!item) return false;
+
+        item.transform.position = startWorldPosition;
+        item.itemData = Managers.Game.itemDataDic[itemId];
+        item.Initialize(level, targetGridposition);
+        item.draggableItem.Initialize();
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(TileSize * 0.9f, TileSize * 0.9f);
+        PlaceMoveItem(item, startWorldPosition, targetGridposition);
+
+        Generator tempGenerator = item.gameObject.GetComponent<Generator>();
+        tempGenerator.genDB = Managers.Game.genDataDic[itemId];
+        tempGenerator.Initialize(generatorSyncTime);
+
+        return true;
+    }
+    public bool CanMerge(MergeableItem draggingItem, MergeableItem targetItem)
+    {
+        if (draggingItem.CanMergeWith(targetItem))
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool TryMergeItems(MergeableItem draggingItem, MergeableItem targetItem)
+    {
+        if (!draggingItem.CanMergeWith(targetItem)) return false;
+
+        //임시 경험치 확인
+        Managers.Game.AddExp(20);
+
+        DetatchItemFromGrid(targetItem.gridPosition);
+        DetatchItemFromGrid(draggingItem.gridPosition);
+
+        targetItem.LevelUp();
+        AttatchItemToGrid(targetItem, targetItem.gridPosition);
+        if (targetItem.itemKey.id == "N001")
+        {
+            if (targetItem.itemKey.lv == 2)
+            {
+                TutorialManager.TriggerCondition(TutorialCondition.펜치합성);
+            }
+            else if (targetItem.itemKey.lv == 3)
+            {
+                TutorialManager.TriggerCondition(TutorialCondition.스패너합성);
+            }
+            else if (targetItem.itemKey.lv == 4)
+            {
+                TutorialManager.TriggerCondition(TutorialCondition.망치합성);
+            }
+        }
+
+        CheckGuestsOrder();
+        ReturnItemToPool(draggingItem);
+
+        ItemState bubbleState;
+        float randomBubbleValue = Random.value;
+        float bubbleChance = 0;
+        float[] bubbleChances = targetItem.itemData.items[targetItem.lvIndex].bubbleChance;
+        Debug.Log($"targetItem.lvIndex{targetItem.lvIndex}");
+        if (bubbleChances[0] == 0)
+        {
+            Debug.Log("버블스폰대상 아님");
+            return true;
+        }
+        for (int i = 0; i < bubbleChances.Length; i++)
+        {
+            bubbleChance += bubbleChances[i];
+            {
+                if (randomBubbleValue <= bubbleChance)
+                {
+                    Debug.Log($"randomBubbleValue{randomBubbleValue} /bubbleChance{bubbleChance} /{i}");
+                    float randomAdValue = Random.value;
+                    float adChance = targetItem.itemData.items[targetItem.lvIndex].adChance[i];
+                    if (randomAdValue <= adChance)
+                    {
+                        bubbleState = ItemState.BubbleAd;
+
+                    }
+                    else
+                    {
+                        bubbleState = ItemState.BubbleGem;
+                    }
+                    Vector2Int? bubblePos = GetNearestPosition(targetItem.gridPosition);
+                    if (!bubblePos.HasValue) return true;
+                    Debug.Log($"bubbleLevel{targetItem.Lv - i}");
+                    if (SpawnMoveItem(targetItem.itemKey.id, targetItem.Lv - i, targetItem.transform.position, bubblePos.Value, bubbleState))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+        }
+        return true;
+
+    }
     public void PlayMergeEffect(Vector2Int position)
     {
         mergeTryEffect.PlayEffect();
@@ -329,7 +387,7 @@ public class GridManager : BaseManager
                 {
                     MergeableItem item = grid[x, y];
                     grid[x, y] = null;
-                    Managers.Game.ReturnItemToPool(item);
+                    ReturnItemToPool(item);
                 }
             }
         }
@@ -513,7 +571,7 @@ public class GridManager : BaseManager
                         //Debug.Log($"제너레이터 : pos{newPos}, 박스->일반");
                         item.Initialize(item.Lv, newPos, ItemState.Normal);
                         Generator tempGenerator = item.gameObject.GetComponent<Generator>();
-                        tempGenerator.Initialize(Managers.Game.GeneratorSyncTime, ItemState.Normal);
+                        tempGenerator.Initialize(GeneratorSyncTime, ItemState.Normal);
                     }
                     else
                     {
@@ -691,7 +749,7 @@ public class GridManager : BaseManager
                 item.rectT.localScale = Vector3.one;
                 item.rectT.anchoredPosition = Vector3.zero;
 
-                Managers.Grid.CheckGuestsOrder();
+                CheckGuestsOrder();
                 // 트윈 애니메이션 제거
                 itemTweens.Remove(item);
                 //Debug.Log("스폰트윈종료");
@@ -1241,7 +1299,7 @@ public class GridManager : BaseManager
         {
             // 이동이 끝난 후 DetatchItemFromGrid와 ReturnItemToPool을 실행합니다.
             DetatchItemFromGrid(mergeableItem.gridPosition);
-            Managers.Game.ReturnItemToPool(mergeableItem);
+            ReturnItemToPool(mergeableItem);
         });
         return sequence;
     }
@@ -1263,20 +1321,20 @@ public class GridManager : BaseManager
         {
             // 이동이 끝난 후 DetatchItemFromGrid와 ReturnItemToPool을 실행합니다.
             DetatchItemFromGrid(mergeableItem.gridPosition);
-            Managers.Game.ReturnItemToPool(mergeableItem);
+            ReturnItemToPool(mergeableItem);
         });
         return sequence;
     }
     public void RemoveItemFromGridInstantly(MergeableItem mergeableItem)
     {
         DetatchItemFromGrid(mergeableItem.gridPosition);
-        Managers.Game.ReturnItemToPool(mergeableItem);
+        ReturnItemToPool(mergeableItem);
     }
     public void RemoveItemFromGridInstantly(Vector2Int gridPos)
     {
         MergeableItem mergeableItem = GetItemAt(gridPos);
         DetatchItemFromGrid(gridPos);
-        Managers.Game.ReturnItemToPool(mergeableItem);
+        ReturnItemToPool(mergeableItem);
     }
 
     public Vector2Int GetNearestEmptyPosition(Vector2Int targetGridPos)
@@ -1324,6 +1382,57 @@ public class GridManager : BaseManager
         // 빈 위치를 찾지 못한 경우, 기본값 반환 (이 경우는 거의 발생하지 않음)
         return targetGridPos;
     }
+
+    #region Object Pooling
+
+    private GameObject CreatePooledItem()
+    {
+        GameObject obj = Instantiate(itemPrefab, MergeBoard.transform); // 기본 아이템 프리팹
+        obj.SetActive(false);
+        return obj;
+    }
+    private GameObject CreatePooledGenerator()
+    {
+        GameObject obj = Instantiate(generatorPrefab, MergeBoard.transform); // 기본 제너레이터 프리팹
+        obj.SetActive(false);
+        return obj;
+    }
+    private void OnTakeFromPool(GameObject obj)
+    {
+        obj.SetActive(true);
+    }
+
+    private void OnReturnToPool(GameObject obj)
+    {
+        obj.SetActive(false);
+    }
+
+    private void OnDestroyPoolObject(GameObject obj)
+    {
+        Destroy(obj);
+    }
+
+    public void ReturnItemToPool(MergeableItem item)
+    {
+        if (item.itemData.type == ItemType.Generatable)
+        {
+            ReturnGeneratorToPool(item.gameObject);
+        }
+        else
+        {
+            ReturnNormalItemToPool(item.gameObject);
+        }
+    }
+    public void ReturnNormalItemToPool(GameObject itemObj)
+    {
+        itemPool.Release(itemObj);
+    }
+    public void ReturnGeneratorToPool(GameObject genObj)
+    {
+        generatorPool.Release(genObj);
+    }
+    #endregion
+
     private void OnDrawGizmos()
     {
         if (tiles == null || mergeBoard == null) return;

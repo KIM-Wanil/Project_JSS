@@ -252,7 +252,7 @@ public class AddPanelController : MonoBehaviour
         ItemType RewardItemType = Managers.Game.GetItemData(Managers.Game.currentRewardQueue.Peek().id).type;
         if (RewardItemType == ItemType.Generatable)
         {
-            if(Managers.Game.SpawnMoveGenerator(Managers.Game.currentRewardQueue.Peek().id, Managers.Game.currentRewardQueue.Peek().lv, rewardListButton.transform.position, (Vector2Int)Managers.Grid.GetEmptyPosition()))
+            if(Managers.Grid.SpawnMoveGenerator(Managers.Game.currentRewardQueue.Peek().id, Managers.Game.currentRewardQueue.Peek().lv, rewardListButton.transform.position, (Vector2Int)Managers.Grid.GetEmptyPosition()))
             {
                 Managers.Game.DequeueReward();
             };

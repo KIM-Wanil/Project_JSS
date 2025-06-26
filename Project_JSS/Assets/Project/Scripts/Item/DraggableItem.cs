@@ -225,7 +225,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         MergeableItem neighbor = Managers.Grid.FindMergeableNeighbor(gridPosition.Value, mergeableItem);
 
-        if (!neighbor.IsUnityNull() && Managers.Game.TryMergeItems(mergeableItem, neighbor))
+        if (!neighbor.IsUnityNull() && Managers.Grid.TryMergeItems(mergeableItem, neighbor))
         {
             neighbor.draggableItem.SelectItem();
             Debug.Log("머지 실행");
@@ -255,7 +255,7 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (gridPosition != null)
         {
             MergeableItem neighbor = Managers.Grid.FindMergeableNeighbor((Vector2Int)gridPosition, mergeableItem);
-            if (!neighbor.IsUnityNull() && Managers.Game.CanMerge(mergeableItem, neighbor))
+            if (!neighbor.IsUnityNull() && Managers.Grid.CanMerge(mergeableItem, neighbor))
             {
                 if (potentialMergeTarget != neighbor)
                 {

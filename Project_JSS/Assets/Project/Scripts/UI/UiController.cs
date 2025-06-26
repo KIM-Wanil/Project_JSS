@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Data;
+using DG.Tweening;
+using System.Collections;
 public class UiController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -14,6 +16,8 @@ public class UiController : MonoBehaviour
     [SerializeField] private GameObject hotelCanvas;
     [SerializeField] private GameObject hotelUiCanvas;
     [SerializeField] private CanvasGroup mergeCanvas;
+    [SerializeField] private RectTransform transitionScreen;
+    [SerializeField] private float transitionDuration = 0.5f;
     void Start()
     {
 
@@ -35,24 +39,52 @@ public class UiController : MonoBehaviour
 
     public void onClickToHotelButton()
     {
-        hotelCanvas.SetActive(true);
-        hotelUiCanvas.SetActive(true);
-        mergeCanvas.gameObject.SetActive(false);
+        //hotelCanvas.SetActive(true);
+        //hotelUiCanvas.SetActive(true);
+        //mergeCanvas.gameObject.SetActive(false);
         //mergeCanvas.alpha = 0f;
         //mergeCanvas.interactable = false;
         //mergeCanvas.blocksRaycasts = false;
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(transitionScreen.DOAnchorPos(new Vector2(0, -1280f), transitionDuration).SetEase(Ease.OutCubic));
+        sequence.AppendCallback(() =>
+        {
+            hotelCanvas.SetActive(true);
+            hotelUiCanvas.SetActive(true);
+            mergeCanvas.gameObject.SetActive(false);
+        });
+        sequence.Append(transitionScreen.DOAnchorPos(new Vector2(0, 0f), transitionDuration).SetEase(Ease.Linear));
     }
     public void onClickToMergeButton()
     {
-        TutorialManager.TriggerCondition(TutorialCondition.머지이동클릭);
-        hotelCanvas.SetActive(false);
-        hotelUiCanvas.SetActive(false);
-        Managers.Grid.Init();
-        Managers.Game.Init();
-        mergeCanvas.gameObject.SetActive(true);
-        //mergeCanvas.alpha = 1f;
-        //mergeCanvas.interactable = true;
-        //mergeCanvas.blocksRaycasts = true;
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(transitionScreen.DOAnchorPos(new Vector2(0, -1280f), transitionDuration).SetEase(Ease.OutCubic));
+        sequence.JoinCallback(() =>
+        {
+            TutorialManager.TriggerCondition(TutorialCondition.머지이동클릭);
+            mergeCanvas.gameObject.SetActive(true);
+            mergeCanvas.alpha = 0f;
+            mergeCanvas.interactable = false;
+            Managers.Grid.Init();
+            //Managers.Game.Init();
+            // 코루틴으로 대기 시작
+            StartCoroutine(WaitForDataLoadedAndContinue(sequence));
+        }).WaitForCompletion();
+        sequence.AppendCallback(() =>
+        {
+            mergeCanvas.alpha = 1f;
+            mergeCanvas.interactable = true;
+            hotelCanvas.SetActive(false);
+            hotelUiCanvas.SetActive(false);
+        });
+        sequence.Append(transitionScreen.DOAnchorPos(new Vector2(0, 0f), transitionDuration).SetEase(Ease.Linear));
+    }
+    private IEnumerator WaitForDataLoadedAndContinue(Sequence sequence)
+    {
+        // isDataLoaded가 true가 될 때까지 대기
+        Debug.Log($"isInit:{Managers.Grid.isInit}");
+        yield return new WaitUntil(() => Managers.Grid.isInit);
+
     }
     public void onClickShopButton()
     {

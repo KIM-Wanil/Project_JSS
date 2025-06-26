@@ -30,18 +30,26 @@ public class GameManager : BaseManager
     [Header("Star Settings")]
     private int currentEnergy;
     public int CurrentEnergy => currentEnergy;
+
     private int currentStar;
     public int CurrentStar => currentStar;
+
     private int currentGem;
     public int CurrentGem => currentGem;
+
     private int currentGold;
     public int CurrentGold => currentGold;
+
+    private int currentLevel;
+    public int CurrentLevel => currentLevel;
+    private int currentExp;
+    public int CurrentExp => currentExp;
+    public int[] MaxExp => new int[] { 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000 }; // 레벨별 최대 경험치
+    public int MaxLevel => MaxExp.Length;
+
     public Queue<ItemKey> currentRewardQueue = new Queue<ItemKey>();
-    [Header("Prefab References")]
-    [SerializeField] private GameObject itemPrefab;
-    [SerializeField] private GameObject generatorPrefab;
-    private float generatorSyncTime;
-    public float GeneratorSyncTime => generatorSyncTime;
+    public List<SaveData.ItemData> currentBoardItems = new List<SaveData.ItemData>();
+    
 
     [Header("SO References")]
     //[SerializeField] private ItemSO[] itemDatas;
@@ -61,6 +69,8 @@ public class GameManager : BaseManager
     public UnityEvent<int> onGemChanged;
     public UnityEvent<Vector2, int, GoodsType> onGoldSpawned;
     public UnityEvent<int> onGoldChanged;
+    public UnityEvent<int> onLevelChanged;
+    public UnityEvent<int,int> onExpChanged;
 
     public UnityEvent<Queue<ItemKey>> onRewardQueueChanged;
 
@@ -81,10 +91,10 @@ public class GameManager : BaseManager
 
 
 
-    private Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
-    private Dictionary<string, GeneratorSO> genDataDic = new Dictionary<string, GeneratorSO>();
-    [SerializeField] private ObjectPool<GameObject> itemPool;
-    [SerializeField] private ObjectPool<GameObject> generatorPool;
+    public Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
+    public Dictionary<string, GeneratorSO> genDataDic = new Dictionary<string, GeneratorSO>();
+    //[SerializeField] private ObjectPool<GameObject> itemPool;
+    //[SerializeField] private ObjectPool<GameObject> generatorPool;
 
     [Header("Bool Values")]
     private bool isGamePaused;
@@ -95,7 +105,7 @@ public class GameManager : BaseManager
     }
     public void Update()
     {
-        generatorSyncTime = Time.time % 4f;
+        
         if (Input.GetMouseButtonUp(0))
         {
             CreateRippleEffect();
@@ -145,19 +155,28 @@ public class GameManager : BaseManager
     public override void Init()
     {
         if (isInit) return;
+        Debug.Log("GameManager Init called");
         base.Init();
         energyRegenRemainSec = energyRegenRate;
         FlagRegenEnergy(currentEnergy);
         onEnergyChanged.AddListener(FlagRegenEnergy);
 
-        InitializeGame();
+        
+        LoadData(() =>
+        {
+            // 데이터 로드 완료 후 실행할 코드
+            isInit = true;
+            // 추가로 필요한 작업이 있으면 여기에 작성
+        });
 
-        isInit = true;
+        //generatorSyncTime = Time.time % 4f; // 4초 주기로 동기화
+
+        //isInit = true;
 
     }
-    private async void LoadData()
+    private async void LoadData(System.Action onLoaded = null)
     {
-        IsDataLoaded = false; // 데이터 로드 시작 시 false로 설정
+        //IsDataLoaded = false; // 데이터 로드 시작 시 false로 설정
 
         string[] allItemIds = itemIds.Concat(genIds).ToArray();
         foreach (string id in allItemIds)
@@ -173,24 +192,11 @@ public class GameManager : BaseManager
             Debug.Log($"{id} : {genDataDic[id]} ");
         }
 
-        IsDataLoaded = true; // 데이터 로드 완료 시 true로 설정
         LoadGame();
-
+        IsDataLoaded = true; // 데이터 로드 완료 시 true로 설정
+        onLoaded?.Invoke(); // 데이터 로드 완료 후 콜백 실행
     }
-    private void InitializeGame()
-    {
 
-        // 아이템 오브젝트 풀 초기화
-        itemPool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 50, 100);
-
-        // 제너레이터 오브젝트 풀 초기화
-        generatorPool = new ObjectPool<GameObject>(CreatePooledGenerator, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject, true, 10, 20);
-
-        LoadData();
-
-        generatorSyncTime = Time.time % 4f; // 4초 주기로 동기화
-        //LoadGame();
-    }
 
     public void EnqueueReward(ItemKey rewardKey)
     {
@@ -311,11 +317,27 @@ public class GameManager : BaseManager
 
     #endregion
 
-    #region Score Management
+    #region Level Management
 
-    public void AddScore(int amount)
+    public void AddExp(int amount)
     {
-
+        currentExp += amount;
+        CheckLevelUp();
+    }
+    private void CheckLevelUp()
+    {
+        if (currentExp >= MaxExp[currentLevel - 1])
+        {
+            currentExp -= MaxExp[currentLevel - 1];
+            currentLevel++;
+            if (currentLevel > MaxLevel) currentLevel = MaxLevel; // 최대 레벨 제한
+            onLevelChanged?.Invoke(currentLevel);
+            onExpChanged?.Invoke(currentExp, MaxExp[currentLevel - 1]);
+        }
+        else
+        {
+            onExpChanged?.Invoke(currentExp, MaxExp[currentLevel - 1]);
+        }
     }
 
     #endregion
@@ -337,165 +359,7 @@ public class GameManager : BaseManager
     {
         return itemDataDic[key.id].items.Length;
     }
-    //이 경우에만 잠겨있는 아이템 존재
-    public bool SpawnItem(string itemId, int level, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
-    {
-        GameObject itemObj = itemPool.Get();
-        if (!itemObj) return false;
-
-        MergeableItem item = itemObj.GetComponent<MergeableItem>();
-        if (!item) return false;
-
-        item.itemData = itemDataDic[itemId];
-        item.Initialize(level, targetGridposition, state);
-        item.draggableItem.Initialize();
-        item.rectT.sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-        Managers.Grid.PlaceItem(item, targetGridposition);
-
-
-
-        return true;
-    }
-    public bool SpawnMoveItem(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition, ItemState state = ItemState.Normal)
-    {
-        GameObject itemObj = itemPool.Get();
-        if (!itemObj) return false;
-
-        MergeableItem item = itemObj.GetComponent<MergeableItem>();
-        if (!item) return false;
-
-        item.transform.position = startWorldPosition;
-        //item.itemRectT.anchoredPosition = startWorldPosition;
-        item.itemData = itemDataDic[itemId];
-        item.Initialize(level, targetGridposition, state);
-        item.draggableItem.Initialize();
-        item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-        Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
-
-
-        return true;
-    }
-
-    public bool SpawnGenerator(string itemId, int level, Vector2Int position, ItemState state = ItemState.Normal)
-    {
-        GameObject genObj = generatorPool.Get();
-        if (!genObj) return false;
-
-        MergeableItem item = genObj.GetComponent<MergeableItem>();
-        if (!item) return false;
-
-        item.itemData = itemDataDic[itemId];
-        item.Initialize(level, position, state);
-        item.draggableItem.Initialize();
-        item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-        Managers.Grid.PlaceItem(item, position);
-
-        Generator tempGenerator = item.gameObject.GetComponent<Generator>();
-        tempGenerator.genDB = genDataDic[itemId];
-        tempGenerator.Initialize(generatorSyncTime, state);
-
-        return true;
-    }
-    public bool SpawnMoveGenerator(string itemId, int level, Vector2 startWorldPosition, Vector2Int targetGridposition)
-    {
-        GameObject genObj = generatorPool.Get();
-        if (!genObj) return false;
-
-        MergeableItem item = genObj.GetComponent<MergeableItem>();
-        if (!item) return false;
-
-        item.transform.position = startWorldPosition;
-        item.itemData = itemDataDic[itemId];
-        item.Initialize(level, targetGridposition);
-        item.draggableItem.Initialize();
-        item.GetComponent<RectTransform>().sizeDelta = new Vector2(Managers.Grid.TileSize * 0.9f, Managers.Grid.TileSize * 0.9f);
-        Managers.Grid.PlaceMoveItem(item, startWorldPosition, targetGridposition);
-
-        Generator tempGenerator = item.gameObject.GetComponent<Generator>();
-        tempGenerator.genDB = genDataDic[itemId];
-        tempGenerator.Initialize(generatorSyncTime);
-
-        return true;
-    }
-    public bool CanMerge(MergeableItem draggingItem, MergeableItem targetItem)
-    {
-        if (draggingItem.CanMergeWith(targetItem))
-        {
-            return true;
-        }
-        return false;
-    }
-    public bool TryMergeItems(MergeableItem draggingItem, MergeableItem targetItem)
-    {
-        if (!draggingItem.CanMergeWith(targetItem)) return false;
-
-
-        Managers.Grid.DetatchItemFromGrid(targetItem.gridPosition);
-        Managers.Grid.DetatchItemFromGrid(draggingItem.gridPosition);
-
-        targetItem.LevelUp();
-        Managers.Grid.AttatchItemToGrid(targetItem, targetItem.gridPosition);
-        if (targetItem.itemKey.id == "N001")
-        {
-            if (targetItem.itemKey.lv == 2)
-            {
-                TutorialManager.TriggerCondition(TutorialCondition.펜치합성);
-            }
-            else if (targetItem.itemKey.lv == 3)
-            {
-                TutorialManager.TriggerCondition(TutorialCondition.스패너합성);
-            }
-            else if (targetItem.itemKey.lv == 4)
-            {
-                TutorialManager.TriggerCondition(TutorialCondition.망치합성);
-            }
-        }
-
-        Managers.Grid.CheckGuestsOrder();
-        ReturnItemToPool(draggingItem);
-
-        ItemState bubbleState;
-        float randomBubbleValue = Random.value;
-        float bubbleChance = 0;
-        float[] bubbleChances = targetItem.itemData.items[targetItem.lvIndex].bubbleChance;
-        Debug.Log($"targetItem.lvIndex{targetItem.lvIndex}");
-        if (bubbleChances[0] == 0)
-        {
-            Debug.Log("버블스폰대상 아님");
-            return true;
-        }
-        for (int i = 0; i < bubbleChances.Length; i++)
-        {
-            bubbleChance += bubbleChances[i];
-            {
-                if (randomBubbleValue <= bubbleChance)
-                {
-                    Debug.Log($"randomBubbleValue{randomBubbleValue} /bubbleChance{bubbleChance} /{i}");
-                    float randomAdValue = Random.value;
-                    float adChance = targetItem.itemData.items[targetItem.lvIndex].adChance[i];
-                    if (randomAdValue <= adChance)
-                    {
-                        bubbleState = ItemState.BubbleAd;
-
-                    }
-                    else
-                    {
-                        bubbleState = ItemState.BubbleGem;
-                    }
-                    Vector2Int? bubblePos = Managers.Grid.GetNearestPosition(targetItem.gridPosition);
-                    if (!bubblePos.HasValue) return true;
-                    Debug.Log($"bubbleLevel{targetItem.Lv - i}");
-                    if (SpawnMoveItem(targetItem.itemKey.id, targetItem.Lv - i, targetItem.transform.position, bubblePos.Value, bubbleState))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-        }
-        return true;
-
-    }
+    
     //public bool TryMergeItems(MergeableItem item1, MergeableItem neighbor)
     //{
     //    if (!item1.CanMergeWith(neighbor))
@@ -599,55 +463,7 @@ public class GameManager : BaseManager
 
 
 
-    #region Object Pooling
-
-    private GameObject CreatePooledItem()
-    {
-        GameObject obj = Instantiate(itemPrefab, Managers.Grid.MergeBoard.transform); // 기본 아이템 프리팹
-        obj.SetActive(false);
-        return obj;
-    }
-    private GameObject CreatePooledGenerator()
-    {
-        GameObject obj = Instantiate(generatorPrefab, Managers.Grid.MergeBoard.transform); // 기본 제너레이터 프리팹
-        obj.SetActive(false);
-        return obj;
-    }
-    private void OnTakeFromPool(GameObject obj)
-    {
-        obj.SetActive(true);
-    }
-
-    private void OnReturnToPool(GameObject obj)
-    {
-        obj.SetActive(false);
-    }
-
-    private void OnDestroyPoolObject(GameObject obj)
-    {
-        Destroy(obj);
-    }
-
-    public void ReturnItemToPool(MergeableItem item)
-    {
-        if (item.itemData.type == ItemType.Generatable)
-        {
-            ReturnGeneratorToPool(item.gameObject);
-        }
-        else
-        {
-            ReturnNormalItemToPool(item.gameObject);
-        }
-    }
-    public void ReturnNormalItemToPool(GameObject itemObj)
-    {
-        itemPool.Release(itemObj);
-    }
-    public void ReturnGeneratorToPool(GameObject genObj)
-    {
-        generatorPool.Release(genObj);
-    }
-    #endregion
+    
 
     #region Save/Load System
 
@@ -659,6 +475,8 @@ public class GameManager : BaseManager
             gold = currentGold,
             energy = currentEnergy,
             gem = currentGem,
+            level = currentLevel,
+            exp = currentExp,
             rewardList = new List<ItemKey>(currentRewardQueue)
         };
 
@@ -696,43 +514,36 @@ public class GameManager : BaseManager
             currentStar = saveData.star;
             currentGold = saveData.gold;
             currentRewardQueue = new Queue<ItemKey>(saveData.rewardList);
-            // 저장된 아이템들 복원
-            foreach (var itemData in saveData.items)
-            {
-                switch (itemData.type)
-                {
-                    case ItemType.Normal:
-                        if (SpawnItem(itemData.itemId, itemData.level, itemData.position, itemData.state)) { }
-                        break;
-                    case ItemType.Generatable:
-                        if (SpawnGenerator(itemData.itemId, itemData.level, itemData.position, itemData.state)) { }
-                        break;
+            currentBoardItems = saveData.items;
+            currentLevel = saveData.level;
+            currentExp = saveData.exp;
 
-                }
-            }
+            //// 저장된 아이템들 복원
+            //foreach (var itemData in saveData.items)
+            //{
+            //    switch (itemData.type)
+            //    {
+            //        case ItemType.Normal:
+            //            if (SpawnItem(itemData.itemId, itemData.level, itemData.position, itemData.state)) { }
+            //            break;
+            //        case ItemType.Generatable:
+            //            if (SpawnGenerator(itemData.itemId, itemData.level, itemData.position, itemData.state)) { }
+            //            break;
+
+            //    }
+            //}
+            //onRewardQueueChanged?.Invoke(currentRewardQueue);
 
             onEnergyChanged?.Invoke(currentEnergy);
             onGemChanged?.Invoke(currentGem);
             onGoldChanged?.Invoke(currentGold);
             onStarChanged?.Invoke(currentStar);
+            onLevelChanged?.Invoke(currentLevel);
+            onExpChanged?.Invoke(currentExp, MaxExp[currentLevel - 1]);
+
             Debug.Log($"보상카드{currentRewardQueue.Count}개 불러옴");
-            onRewardQueueChanged?.Invoke(currentRewardQueue);
         }
-        KeyValuePair<ItemKey, int> temp1 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 2), 1);
-        KeyValuePair<ItemKey, int> temp2 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 3), 1);
-        KeyValuePair<ItemKey, int> temp3 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 4), 1);
-
-        KeyValuePair<ItemKey, int> temp4 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 2), 1);
-        KeyValuePair<ItemKey, int> temp5 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 3), 1);
-        KeyValuePair<ItemKey, int> temp6 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 4), 1);
-
-        KeyValuePair<ItemKey, int> temp7 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 2), 2);
-        KeyValuePair<ItemKey, int> temp8 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 4), 2);
-
-        KeyValuePair<ItemKey, int> temp9 = new KeyValuePair<ItemKey, int>(new ItemKey("N001", 4), 2);
-        KeyValuePair<ItemKey, int> temp10 = new KeyValuePair<ItemKey, int>(new ItemKey("N002", 3), 2);
-
-        onGuestCreated?.Invoke(3, temp3, null);
+        
         //onGuestCreated?.Invoke(1, temp4, null);
         //onGuestCreated?.Invoke(4, temp7, temp5);
         //onGuestCreated?.Invoke(4, temp10, null);
@@ -787,81 +598,81 @@ public class GameManager : BaseManager
     #endregion
 }
 
-// ObjectPool.cs - 제네릭 오브젝트 풀 클래스
-public class ObjectPool<T>
-{
-    private readonly System.Func<T> createFunc;
-    private readonly System.Action<T> actionOnGet;
-    private readonly System.Action<T> actionOnRelease;
-    private readonly System.Action<T> actionOnDestroy;
-    private readonly int maxSize;
+//// ObjectPool.cs - 제네릭 오브젝트 풀 클래스
+//public class ObjectPool<T>
+//{
+//    private readonly System.Func<T> createFunc;
+//    private readonly System.Action<T> actionOnGet;
+//    private readonly System.Action<T> actionOnRelease;
+//    private readonly System.Action<T> actionOnDestroy;
+//    private readonly int maxSize;
 
-    private readonly Stack<T> pool;
-    private readonly bool collectionCheck;
+//    private readonly Stack<T> pool;
+//    private readonly bool collectionCheck;
 
-    public ObjectPool(System.Func<T> createFunc,
-        System.Action<T> actionOnGet = null,
-        System.Action<T> actionOnRelease = null,
-        System.Action<T> actionOnDestroy = null,
-        bool collectionCheck = true,
-        int defaultCapacity = 10,
-        int maxSize = 10000)
-    {
-        this.createFunc = createFunc;
-        this.actionOnGet = actionOnGet;
-        this.actionOnRelease = actionOnRelease;
-        this.actionOnDestroy = actionOnDestroy;
-        this.maxSize = maxSize;
-        this.collectionCheck = collectionCheck;
+//    public ObjectPool(System.Func<T> createFunc,
+//        System.Action<T> actionOnGet = null,
+//        System.Action<T> actionOnRelease = null,
+//        System.Action<T> actionOnDestroy = null,
+//        bool collectionCheck = true,
+//        int defaultCapacity = 10,
+//        int maxSize = 10000)
+//    {
+//        this.createFunc = createFunc;
+//        this.actionOnGet = actionOnGet;
+//        this.actionOnRelease = actionOnRelease;
+//        this.actionOnDestroy = actionOnDestroy;
+//        this.maxSize = maxSize;
+//        this.collectionCheck = collectionCheck;
 
-        pool = new Stack<T>(defaultCapacity);
-    }
+//        pool = new Stack<T>(defaultCapacity);
+//    }
 
-    public T Get()
-    {
-        T item;
-        if (pool.Count == 0)
-        {
-            item = createFunc();
-        }
-        else
-        {
-            item = pool.Pop();
-        }
+//    public T Get()
+//    {
+//        T item;
+//        if (pool.Count == 0)
+//        {
+//            item = createFunc();
+//        }
+//        else
+//        {
+//            item = pool.Pop();
+//        }
 
-        actionOnGet?.Invoke(item);
-        return item;
-    }
+//        actionOnGet?.Invoke(item);
+//        return item;
+//    }
 
-    public void Release(T item)
-    {
-        if (collectionCheck && pool.Count > 0 && pool.Contains(item))
-        {
-            throw new System.InvalidOperationException("Trying to release an item that has already been released to the pool.");
-        }
+//    public void Release(T item)
+//    {
+//        if (collectionCheck && pool.Count > 0 && pool.Contains(item))
+//        {
+//            throw new System.InvalidOperationException("Trying to release an item that has already been released to the pool.");
+//        }
 
-        actionOnRelease?.Invoke(item);
+//        actionOnRelease?.Invoke(item);
 
-        if (pool.Count < maxSize)
-        {
-            pool.Push(item);
-        }
-        else
-        {
-            actionOnDestroy?.Invoke(item);
-        }
-    }
+//        if (pool.Count < maxSize)
+//        {
+//            pool.Push(item);
+//        }
+//        else
+//        {
+//            actionOnDestroy?.Invoke(item);
+//        }
+//    }
 
-    public void Clear()
-    {
-        if (actionOnDestroy != null)
-        {
-            foreach (T item in pool)
-            {
-                actionOnDestroy(item);
-            }
-        }
+//    public void Clear()
+//    {
+//        if (actionOnDestroy != null)
+//        {
+//            foreach (T item in pool)
+//            {
+//                actionOnDestroy(item);
+//            }
+//        }
 
-        pool.Clear();
-    }
-}
+//        pool.Clear();
+//    }
+//}

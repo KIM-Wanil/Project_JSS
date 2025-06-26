@@ -274,7 +274,7 @@ public class MergeableItem : MonoBehaviour
 
             if (itemData.type == ItemType.Generatable)
             {
-                GetComponent<Generator>().Initialize(Managers.Game.GeneratorSyncTime);
+                GetComponent<Generator>().Initialize(Managers.Grid.GeneratorSyncTime);
             }
 
             // DoTween을 사용하여 아이템 이미지의 크기 변화를 애니메이션으로 추가
