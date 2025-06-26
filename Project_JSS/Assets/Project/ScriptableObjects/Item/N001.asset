@@ -32,33 +32,33 @@ MonoBehaviour:
     bubbleTime: 10
   - itemSprite: {fileID: 21300000, guid: edfce6837b702664bafe1c1e6e1dcca3, type: 3}
     level: 2
-    itemName: "\uC2A4\uD328\uB108"
+    itemName: "\uD39C\uCE58"
     itemDesc: "\uB0A0\uAC1C \uD798\uC774 \uBD80\uC871\uD560 \uB54C \uD39C\uCE58\uB85C
       \uAC15\uB825\uD558\uAC8C \uC7A1\uACE0 \uBE44\uD2C0 \uC218 \uC788\uC5B4\uC694."
     price: 2
     bubbleChance:
-    - 0.3
-    - 0.7
+    - 0
+    - 0
     - 0
     adChance:
-    - 0.5
-    - 0.5
+    - 0
+    - 0
     - 0
     bubbleCost: 2
     bubbleTime: 20
   - itemSprite: {fileID: 21300000, guid: 9fa1eac524a2d1e4a96518f59208aa86, type: 3}
     level: 3
-    itemName: "\uD50C\uB77C\uC774\uC5B4"
+    itemName: "\uC2A4\uD328\uB108"
     itemDesc: "\uB108\uD2B8\uB97C \uAC15\uB825\uD558\uAC8C \uC870\uC774\uB294 \uB3C4\uAD6C\uC785\uB2C8\uB2E4."
     price: 3
     bubbleChance:
-    - 0.19999999
-    - 0.29999998
-    - 0.39999998
+    - 0
+    - 0
+    - 0
     adChance:
-    - 0.5
-    - 0.5
-    - 0.5
+    - 0
+    - 0
+    - 0
     bubbleCost: 4
     bubbleTime: 30
   - itemSprite: {fileID: 21300000, guid: fb22d60f01a3cc343b37d320693f4492, type: 3}
@@ -67,12 +67,12 @@ MonoBehaviour:
     itemDesc: "\uC774\uAE00\uB8E8\uC5D0 \uBABB\uC744 \uBC15\uC744 \uC77C\uC740 \uC5C6\uB2F5\uB2C8\uB2E4."
     price: 4
     bubbleChance:
-    - 0.09999999
-    - 0.19999999
-    - 0.5
+    - 0
+    - 0
+    - 0
     adChance:
-    - 0.5
-    - 0.5
-    - 0.5
+    - 0
+    - 0
+    - 0
     bubbleCost: 8
     bubbleTime: 60

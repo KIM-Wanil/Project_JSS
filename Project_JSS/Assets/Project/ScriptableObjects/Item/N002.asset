@@ -36,12 +36,12 @@ MonoBehaviour:
     itemDesc: "\uBA3C\uC9C0\uC57C \uB0A0\uC544\uAC00\uB77C!"
     price: 2
     bubbleChance:
-    - 1
+    - 0
     - 0
     - 0
     adChance:
-    - 0.5
-    - 0.5
+    - 0
+    - 0
     - 0
     bubbleCost: 1
     bubbleTime: 10
@@ -51,13 +51,13 @@ MonoBehaviour:
     itemDesc: "\uD0C0\uACE0 \uB0A0\uC544\uAC08 \uC21C \uC5C6\uC5B4\uC694."
     price: 3
     bubbleChance:
-    - 0.19999999
-    - 0.29999998
-    - 0.39999998
+    - 0
+    - 0
+    - 0
     adChance:
-    - 0.5
-    - 0.5
-    - 0.5
+    - 0
+    - 0
+    - 0
     bubbleCost: 2
     bubbleTime: 30
   - itemSprite: {fileID: 21300000, guid: 068ddcee734d277468fa935c82f06f10, type: 3}
@@ -66,12 +66,12 @@ MonoBehaviour:
     itemDesc: "\uAC78\uB808\uB97C \uC0E4\uC6CC\uC2DC\uCF1C\uC694."
     price: 4
     bubbleChance:
-    - 0.099999994
-    - 0.19999999
-    - 0.5
+    - 0
+    - 0
+    - 0
     adChance:
-    - 0.5
-    - 0.5
-    - 0.5
+    - 0
+    - 0
+    - 0
     bubbleCost: 4
     bubbleTime: 60

@@ -28,10 +28,10 @@ MonoBehaviour:
     - dialogue: "\uC774\uCABD\uC73C\uB85C \uC548\uB0B4\uD574\uB4DC\uB9B4\uAC8C\uC694."
       characterPosition: {x: 290, y: 0}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 20, y: 10}
-      highlightSize: {x: 160, y: 160}
-      fingerPosition: {x: 90, y: 190}
-      fingerRotation: -30
+      highlightPosition: {x: 555, y: 40}
+      highlightSize: {x: 150, y: 150}
+      fingerPosition: {x: 527, y: 155}
+      fingerRotation: 30
       fingerAnimType: 1
       fingerAnimationAmount: 0
       completionCondition: 1
@@ -39,204 +39,193 @@ MonoBehaviour:
         \uD568\uAED8 \uBCFC\uAE4C\uC694?"
       characterPosition: {x: 290, y: 0}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 10, y: 1040}
-      highlightSize: {x: 160, y: 160}
-      fingerPosition: {x: 80, y: 1170}
-      fingerRotation: -30
+      highlightPosition: {x: 15, y: 1045}
+      highlightSize: {x: 150, y: 150}
+      fingerPosition: {x: 227, y: 1090}
+      fingerRotation: -150
       fingerAnimType: 1
       fingerAnimationAmount: 0
       completionCondition: 2
     - dialogue: "\uD544\uC694\uD55C \uBB3C\uAC74\uC744 \uB9CC\uB4E4\uC5B4 \uAC1D\uC2E4\uC744
         \uC900\uBE44\uD558\uB294 \uAC83\uC774 \uC800\uD76C\uC758 \uC77C\uC785\uB2C8\uB2E4."
-      characterPosition: {x: 1, y: 1}
+      characterPosition: {x: 290, y: -370}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 85, y: 164}
+      highlightSize: {x: 550, y: 900}
+      fingerPosition: {x: 0, y: 0}
+      fingerRotation: 0
       fingerAnimType: 0
-      fingerAnimationAmount: 10
+      fingerAnimationAmount: 0
       completionCondition: 0
     - dialogue: "\uBB3C\uAC74\uC744 \uB9CC\uB4DC\uB294 \uBC29\uBC95\uC744 \uC54C\uB824\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4."
-      characterPosition: {x: 1, y: 1}
+      characterPosition: {x: 290, y: -370}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 485, y: 845}
+      highlightSize: {x: 120, y: 120}
+      fingerPosition: {x: 547, y: 827}
+      fingerRotation: 150
       fingerAnimType: 1
-      fingerAnimationAmount: 10
+      fingerAnimationAmount: 0
       completionCondition: 0
     - dialogue: "\uAC1D\uC2E4 \uC900\uBE44\uC758 \uAE30\uBCF8\uC740 \u2018\uD569\uC131\u2019\uC785\uB2C8\uB2E4."
-      characterPosition: {x: 1, y: 1}
+      characterPosition: {x: 290, y: 330}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 20, y: 175}
+      highlightSize: {x: 680, y: 865}
+      fingerPosition: {x: 0, y: 0}
+      fingerRotation: 0
       fingerAnimType: 0
-      fingerAnimationAmount: 10
+      fingerAnimationAmount: 0
       completionCondition: 0
     - dialogue: "\uAC19\uC740 \uBB3C\uAC74 \uB450 \uAC1C\uB97C \uB4DC\uB798\uADF8\uD558\uC5EC
         \uD569\uCE58\uBA74, \uB354 \uB192\uC740 \uB4F1\uAE09\uC758 \uC624\uBE0C\uC81D\uD2B8\uB85C
         \uBCC0\uD569\uB2C8\uB2E4."
-      characterPosition: {x: 1, y: 1}
+      characterPosition: {x: 290, y: 330}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 20, y: 175}
+      highlightSize: {x: 680, y: 865}
+      fingerPosition: {x: 0, y: 0}
+      fingerRotation: 0
       fingerAnimType: 0
-      fingerAnimationAmount: 10
+      fingerAnimationAmount: 0
       completionCondition: 0
     - dialogue: "\uC790, \uB4DC\uB77C\uC774\uBC84 \uB450 \uAC1C\uB97C \uD569\uC131\uD574
-        \uC2A4\uD328\uB108\uB97C \uB9CC\uB4E4\uC5B4\uBCFC\uAE4C\uC694?"
-      characterPosition: {x: 1, y: 1}
+        \uD39C\uCE58\uB97C \uB9CC\uB4E4\uC5B4\uBCFC\uAE4C\uC694?"
+      characterPosition: {x: 290, y: 330}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
-      fingerAnimType: 0
-      fingerAnimationAmount: 10
+      highlightPosition: {x: 220, y: 560}
+      highlightSize: {x: 190, y: 100}
+      fingerPosition: {x: 345, y: 615}
+      fingerRotation: -150
+      fingerAnimType: 2
+      fingerAnimationAmount: 100
       completionCondition: 4
     - dialogue: "\uC544\uC8FC \uC798\uD558\uC168\uC5B4\uC694!"
-      characterPosition: {x: 1, y: 1}
+      characterPosition: {x: 290, y: 330}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 0, y: 0}
+      highlightSize: {x: 0, y: 0}
+      fingerPosition: {x: 0, y: 0}
+      fingerRotation: 0
       fingerAnimType: 0
-      fingerAnimationAmount: 10
+      fingerAnimationAmount: 0
       completionCondition: 0
-    - dialogue: "\uC774\uB807\uAC8C \uB300\uBD80\uBD84\uC758 \uC624\uBE0C\uC81D\uD2B8\uB294
-        \uD569\uC131\uC774 \uAC00\uB2A5\uD569\uB2C8\uB2E4."
-      characterPosition: {x: 1, y: 1}
-      characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
-      fingerAnimType: 0
-      fingerAnimationAmount: 10
-      completionCondition: 0
-    - dialogue: "\uCC38\uACE0\uB85C \uC790\uBB3C\uC1E0\uAC00 \uC788\uB294 \uC624\uBE0C\uC81D\uD2B8\uB294
+    - dialogue: "\uC790\uBB3C\uC1E0\uB85C \uC7A0\uACA8\uC788\uB294 \uBB3C\uAC74\uC740
         \uC774\uB3D9\uC740 \uB418\uC9C0 \uC54A\uC9C0\uB9CC, \uD569\uC131\uC740 \uAC00\uB2A5\uD569\uB2C8\uB2E4."
-      characterPosition: {x: 1, y: 1}
+      characterPosition: {x: 290, y: 330}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 310, y: 650}
+      highlightSize: {x: 100, y: 100}
+      fingerPosition: {x: 0, y: 0}
+      fingerRotation: 0
       fingerAnimType: 0
-      fingerAnimationAmount: 10
+      fingerAnimationAmount: 0
       completionCondition: 0
-    - dialogue: "\uC7A0\uC2DC\uB9CC\uC694, \uC81C\uB108\uB808\uC774\uD130\uC5D0 \uB300\uD574
-        \uC124\uBA85\uC744 \uBE7C\uBA39\uC5C8\uAD70\uC694."
-      characterPosition: {x: 1, y: 1}
+    - dialogue: "\uD39C\uCE58\uB97C \uC7A0\uAE34 \uD39C\uCE58\uC640 \uD569\uC131\uD574
+        \uD50C\uB77C\uC774\uC5B4\uB97C \uB9CC\uB4E4\uC5B4\uBCF4\uC2DC\uC8E0."
+      characterPosition: {x: 290, y: 330}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
-      fingerAnimType: 0
-      fingerAnimationAmount: 10
-      completionCondition: 0
-    - dialogue: "\uBC88\uAC1C \uBAA8\uC591\uC774 \uC788\uB294 \uAC83\uC774 \uC81C\uB108\uB808\uC774\uD130\uC785\uB2C8\uB2E4."
-      characterPosition: {x: 1, y: 1}
-      characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
-      fingerAnimType: 0
-      fingerAnimationAmount: 10
-      completionCondition: 0
-    - dialogue: "\uD130\uCE58\uD560 \uB54C\uB9C8\uB2E4 \uC624\uBE0C\uC81D\uD2B8\uB97C
-        \uACC4\uC18D \uC0DD\uC131\uD574\uC900\uB2F5\uB2C8\uB2E4."
-      characterPosition: {x: 1, y: 1}
-      characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
-      fingerAnimType: 1
-      fingerAnimationAmount: 10
+      highlightPosition: {x: 310, y: 550}
+      highlightSize: {x: 100, y: 200}
+      fingerPosition: {x: 455, y: 615}
+      fingerRotation: -150
+      fingerAnimType: 3
+      fingerAnimationAmount: 100
       completionCondition: 5
-    - dialogue: "\uC774\uC81C \uACC4\uC18D \uD569\uC131\uD574\uC11C \uB9DD\uCE58\uB97C
-        \uB9CC\uB4E4\uC5B4\uBCFC\uAE4C\uC694?"
-      characterPosition: {x: 1, y: 1}
+    - dialogue: "\uC0C8\uB85C\uC6B4 \uC544\uC774\uD15C\uC774 \uB098\uC654\uAD70\uC694."
+      characterPosition: {x: 290, y: 330}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 217, y: 650}
+      highlightSize: {x: 100, y: 100}
+      fingerPosition: {x: 0, y: 0}
+      fingerRotation: 0
       fingerAnimType: 0
-      fingerAnimationAmount: 10
-      completionCondition: 4
-    - dialogue: "\uC774\uC81C \uACC4\uC18D \uD569\uC131\uD574\uC11C \uB9DD\uCE58\uB97C
-        \uB9CC\uB4E4\uC5B4\uBCFC\uAE4C\uC694?"
-      characterPosition: {x: 1, y: 1}
+      fingerAnimationAmount: 0
+      completionCondition: 0
+    - dialogue: "\uBC88\uAC1C \uBAA8\uC591\uC774 \uC788\uB294 \uC544\uC774\uD15C\uC740
+        \uC81C\uB108\uB808\uC774\uD130\uC785\uB2C8\uB2E4."
+      characterPosition: {x: 290, y: 330}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 217, y: 650}
+      highlightSize: {x: 100, y: 100}
+      fingerPosition: {x: 0, y: 0}
+      fingerRotation: 0
       fingerAnimType: 0
-      fingerAnimationAmount: 10
+      fingerAnimationAmount: 0
+      completionCondition: 0
+    - dialogue: "\uD130\uCE58\uD560 \uB54C\uB9C8\uB2E4 \uC544\uC774\uD15C\uC744 \uACC4\uC18D
+        \uC0DD\uC131\uD574\uC900\uB2F5\uB2C8\uB2E4."
+      characterPosition: {x: 290, y: 330}
+      characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      highlightPosition: {x: 217, y: 650}
+      highlightSize: {x: 100, y: 100}
+      fingerPosition: {x: 355, y: 715}
+      fingerRotation: -150
+      fingerAnimType: 1
+      fingerAnimationAmount: 0
       completionCondition: 6
-    - dialogue: "\uC624, \uD544\uC694\uD558\uB358 \uB9DD\uCE58\uB97C \uC644\uC131\uD558\uC168\uAD70\uC694!"
-      characterPosition: {x: 1, y: 1}
+    - dialogue: "\uC774\uC81C \uACC4\uC18D \uD569\uC131\uD574\uC11C \uB9DD\uCE58\uB97C
+        \uB9CC\uB4E4\uC5B4\uBCFC\uAE4C\uC694?"
+      characterPosition: {x: 290, y: 330}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 215, y: 555}
+      highlightSize: {x: 290, y: 290}
+      fingerPosition: {x: 0, y: 0}
+      fingerRotation: 0
       fingerAnimType: 0
-      fingerAnimationAmount: 10
+      fingerAnimationAmount: 0
+      completionCondition: 7
+    - dialogue: "\uC624, \uD544\uC694\uD558\uB358 \uB9DD\uCE58\uB97C \uC644\uC131\uD558\uC168\uAD70\uC694!"
+      characterPosition: {x: 290, y: 330}
+      characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      highlightPosition: {x: 215, y: 555}
+      highlightSize: {x: 290, y: 290}
+      fingerPosition: {x: 0, y: 0}
+      fingerRotation: 0
+      fingerAnimType: 0
+      fingerAnimationAmount: 0
       completionCondition: 0
     - dialogue: "\uC774\uC81C \uC758\uB8B0\uC11C\uC758 \u2018\uC644\uB8CC\u2019 \uBC84\uD2BC\uC744
         \uB20C\uB7EC\uC8FC\uC138\uC694."
-      characterPosition: {x: 1, y: 1}
+      characterPosition: {x: 290, y: -240}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
-      fingerAnimType: 0
-      fingerAnimationAmount: 10
-      completionCondition: 8
-    - dialogue: "\uAC00\uAD6C \uBE44\uCE58\uC5D0 \uD544\uC694\uD55C \uBCC4\uC774
-        \uBAA8\uB450 \uBAA8\uC600\uAD70\uC694."
-      characterPosition: {x: 1, y: 1}
-      characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 175, y: 1050}
+      highlightSize: {x: 140, y: 145}
+      fingerPosition: {x: 335, y: 1105}
+      fingerRotation: -150
       fingerAnimType: 1
-      fingerAnimationAmount: 10
-      completionCondition: 2
-    - dialogue: "\uAC1D\uC2E4 \uC900\uBE44\uC5D0 \uD544\uC694\uD55C \uAC00\uAD6C\uB4E4\uC785\uB2C8\uB2E4."
-      characterPosition: {x: 1, y: 1}
+      fingerAnimationAmount: 0
+      completionCondition: 9
+    - dialogue: "\uAC00\uAD6C \uBE44\uCE58\uC5D0 \uD544\uC694\uD55C \uBCC4\uC774
+        \uBAA8\uB450 \uBAA8\uC600\uAD70\uC694. \uC81C\uC791 \uBAA9\uB85D\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694."
+      characterPosition: {x: 290, y: -240}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 15, y: 1050}
+      highlightSize: {x: 155, y: 145}
+      fingerPosition: {x: 200, y: 1105}
+      fingerRotation: -150
+      fingerAnimType: 1
+      fingerAnimationAmount: 0
+      completionCondition: 2
+    - dialogue: "\uAC1D\uC2E4 \uC900\uBE44\uC5D0 \uD544\uC694\uD55C \uAC00\uAD6C\uC785\uB2C8\uB2E4."
+      characterPosition: {x: 290, y: -440}
+      characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      highlightPosition: {x: 75, y: 165}
+      highlightSize: {x: 570, y: 960}
+      fingerPosition: {x: 0, y: 0}
+      fingerRotation: 0
       fingerAnimType: 0
-      fingerAnimationAmount: 10
+      fingerAnimationAmount: 0
       completionCondition: 0
     - dialogue: "\uC774\uB3D9\uC744 \uB20C\uB7EC \uAC00\uAD6C\uB97C \uBE44\uCE58\uD558\uB7EC
         \uAC00\uC2DC\uC8E0. \uC774\uC820 \uC800 \uB300\uC2E0, \uBA54\uC774\uB4DC
         \uD3AD\uADC4\uC774 \uC124\uBA85\uC744 \uB3C4\uC640\uC904 \uAC83\uC785\uB2C8\uB2E4."
-      characterPosition: {x: 1, y: 1}
+      characterPosition: {x: 290, y: -440}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 1, y: 1}
-      highlightSize: {x: 1, y: 1}
-      fingerPosition: {x: 1, y: 1}
-      fingerRotation: 50
+      highlightPosition: {x: 400, y: 500}
+      highlightSize: {x: 200, y: 100}
+      fingerPosition: {x: 600, y: 600}
+      fingerRotation: -150
       fingerAnimType: 1
-      fingerAnimationAmount: 10
-      completionCondition: 7
+      fingerAnimationAmount: 0
+      completionCondition: 8

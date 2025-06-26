@@ -207,8 +207,7 @@ MonoBehaviour:
   maxEnergy: 100
   energyRegenRate: 600
   energyRegenAmount: 1
-  itemPrefab: {fileID: 6021443315596796148, guid: 59e5fb6f619816d49ab58350bb61c497, type: 3}
-  generatorPrefab: {fileID: 6021443315596796148, guid: f6bd98f188776e64da381a3131e8e8ac, type: 3}
+  currentBoardItems: []
   itemIds:
   - N001
   - N002
@@ -234,6 +233,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onGoldChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onLevelChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onExpChanged:
     m_PersistentCalls:
       m_Calls: []
   onRewardQueueChanged:
@@ -300,6 +305,10 @@ MonoBehaviour:
   tilePrefab: {fileID: 4253818419915719359, guid: b387dc1f416c7214c8b831c932489608, type: 3}
   currentGuests: []
   mergeBoard: {fileID: 0}
+  mergeTryEffect: {fileID: 0}
+  isInit: 0
+  itemPrefab: {fileID: 6021443315596796148, guid: 59e5fb6f619816d49ab58350bb61c497, type: 3}
+  generatorPrefab: {fileID: 6021443315596796148, guid: f6bd98f188776e64da381a3131e8e8ac, type: 3}
 --- !u!114 &2947720400472812918
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -963,6 +963,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mergeableItem: {fileID: 5746979386195296834}
   generator: {fileID: 421800617940241200}
+  isInteractionEnabled: 1
 --- !u!114 &5746979386195296834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -976,8 +977,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxSprite:
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 114fa3bc57b3658448cb385cf02466a1, type: 3}
+  - {fileID: 21300000, guid: 85be07f6b020c2a4f9c45102fc460148, type: 3}
   LockImageObj: {fileID: 0}
+  adIcon: {fileID: 0}
   selectIcon: {fileID: 5844489609547445306}
   selectBackground: {fileID: 8657600016492247857}
   isSelect: 1
@@ -985,23 +988,15 @@ MonoBehaviour:
   checkBackground: {fileID: 0}
   isCheck: 0
   lv: 1
-  itemImage: {fileID: 958410809469896933}
+  bubbleImage: {fileID: 0}
   itemData: {fileID: 0}
   itemKey:
     id: 
     lv: 0
   draggableItem: {fileID: 3266896830765384063}
-  onLevelChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onMerged:
-    m_PersistentCalls:
-      m_Calls: []
-  onSpawned:
-    m_PersistentCalls:
-      m_Calls: []
   itemEffect: {fileID: 5792934868652750699}
-  itemRectT: {fileID: 0}
+  rectT: {fileID: 0}
+  gemBubbleRemainSec: 0
 --- !u!114 &421800617940241200
 MonoBehaviour:
   m_ObjectHideFlags: 0

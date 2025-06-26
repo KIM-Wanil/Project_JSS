@@ -31,6 +31,9 @@ public class TutorialManager : MonoBehaviour
     private TutorialStep currentStep;
     [SerializeField] private RectTransform characterDialog;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private GameObject deaconPeng;
+    [SerializeField] private GameObject maidPeng;
+
     private bool isTutorialActive = false;
 
     // 완료 조건 체크를 위한 이벤트
@@ -95,9 +98,26 @@ public class TutorialManager : MonoBehaviour
 
    
 
-        // 새 캐릭터 대화상자 생성
-        //characterDialog = Instantiate(characterDialogPrefab, tutorialCanvas.transform);
+        // 대화상자 위치 조정
         characterDialog.anchoredPosition = step.characterPosition;
+
+        // 캐릭터 이미지 선택
+        if (step.characterName == "집사 펭귄")
+        {
+            deaconPeng.SetActive(true);
+            maidPeng.SetActive(false);
+        }
+        else if (step.characterName == "메이드 펭귄")
+        {
+            deaconPeng.SetActive(false);
+            maidPeng.SetActive(true);
+        }
+        else
+        {
+            deaconPeng.SetActive(false);
+            maidPeng.SetActive(false);
+        }
+
 
         // 대화 텍스트 컴포넌트 찾기
         dialogueText = characterDialog.GetComponentInChildren<TextMeshProUGUI>();
@@ -152,13 +172,14 @@ public class TutorialManager : MonoBehaviour
         // 기존 트윈 중지
         if (fingerTween != null && fingerTween.IsActive())
         {
+            fingerImage.localScale = Vector3.one; // 초기화
             fingerTween.Kill();
             fingerTween = null;
         }
         switch (inputFingerAnimType)
         {
             case FingerAnimationType.Zoom:
-                fingerTween = fingerImage.DOScale(1.2f, 0.5f)
+                fingerTween = fingerImage.DOScale(0.8f, 0.5f)
                     .SetLoops(-1, LoopType.Yoyo);
                 break;
             case FingerAnimationType.SwipeX:
