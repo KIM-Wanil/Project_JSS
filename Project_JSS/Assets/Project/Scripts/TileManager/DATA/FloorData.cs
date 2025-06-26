@@ -5,13 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewFloorData", menuName = "Scriptable Objects/FloorData")]
 public class FloorData : ScriptableObject
 {
+    public string floorNmae;
+    public string floorDescription;
     public int floorNum;
     public bool isUnlock;
 
     public FurnitureData[] furnitureInfos;
-
-    public string floorNmae;
-    public string floorDescription;
 
     public int UnlockCounting()
     { 
@@ -29,14 +28,16 @@ public class FloorData : ScriptableObject
 [Serializable]
 public class FurnitureData
 {
-    public int floorNum;
     public string furnitureName; // 가구 이름
     public string furnitureDescription; // 가구 설명
+    public int floorNum;
     public Vector2Int gridPosition; // 가구 위치
     public Vector2Int[] size; // 가구 크기
     public Vector2Int[] tartgetPosition; //특수 가구
     public int rotation; // 회전 각도
     public Sprites[] furnitureSprite; // 가구 스프라이트
+
+    public int heightLimit;
     public int spriteNumber; // 가구 스프라이트 번호
     public bool isFloor; // 바닥용 가구
     public bool isLeft; // 바닥용 가구

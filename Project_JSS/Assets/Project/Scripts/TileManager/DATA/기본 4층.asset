@@ -12,298 +12,237 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af5cc798930607499415a7fc21313db, type: 3}
   m_Name: "\uAE30\uBCF8 4\uCE35"
   m_EditorClassIdentifier: 
+  floorNmae: "4F : \uC170\uD504\uC758 \uC8FC\uBC29"
+  floorDescription: "\uC5B4\uC11C \uC0DD\uC120\uC744 \uAD7D\uACE0 \uCC0C\uACE0 \uD280\uACA8\uC57C
+    \uD574\uC694."
   floorNum: 3
-  isUnlock: 1
+  isUnlock: 0
   furnitureInfos:
-  - floorNum: 1
-    furnitureName: darklord_bed_back
+  - furnitureName: "\uB0C9\uC7A5\uACE0"
     furnitureDescription: 
-    gridPosition: {x: 4, y: 8}
+    floorNum: 3
+    gridPosition: {x: 0, y: 10}
     size:
-    - {x: 4, y: 4}
-    - {x: 4, y: 4}
-    - {x: 4, y: 4}
-    - {x: 4, y: 4}
+    - {x: 2, y: 2}
+    - {x: 2, y: 2}
+    - {x: 2, y: 2}
+    - {x: 4, y: 2}
     tartgetPosition: []
     rotation: 0
     furnitureSprite:
     - isUnlocked: 1
       sprites:
-      - {fileID: 21300000, guid: 9b2cc95ec6808ab49b9fa8c673b18542, type: 3}
-      - {fileID: 21300000, guid: 84579da02842f5f4baef55828b953a54, type: 3}
-      lockSprite: {fileID: 0}
-    - isUnlocked: 1
-      sprites:
-      - {fileID: 21300000, guid: 5fe4adfee47b8b9408a18c8bf048b277, type: 3}
-      - {fileID: 21300000, guid: 8c5a24b474ca6b848a078079deb8efc6, type: 3}
+      - {fileID: 21300000, guid: f5f0ec1a6dc23da4fa9e366424f4dafc, type: 3}
+      - {fileID: 21300000, guid: 2e2947fc3fd13244bbfc5f4efcddba3d, type: 3}
       lockSprite: {fileID: 0}
     - isUnlocked: 0
       sprites:
-      - {fileID: 21300000, guid: 9b2cc95ec6808ab49b9fa8c673b18542, type: 3}
-      - {fileID: 21300000, guid: 84579da02842f5f4baef55828b953a54, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: f5f0ec1a6dc23da4fa9e366424f4dafc, type: 3}
+      - {fileID: 21300000, guid: 2e2947fc3fd13244bbfc5f4efcddba3d, type: 3}
+      lockSprite: {fileID: 21300000, guid: f5f0ec1a6dc23da4fa9e366424f4dafc, type: 3}
+    - isUnlocked: 0
+      sprites:
+      - {fileID: 21300000, guid: f5f0ec1a6dc23da4fa9e366424f4dafc, type: 3}
+      - {fileID: 21300000, guid: 2e2947fc3fd13244bbfc5f4efcddba3d, type: 3}
+      lockSprite: {fileID: 21300000, guid: f5f0ec1a6dc23da4fa9e366424f4dafc, type: 3}
+    heightLimit: 0
     spriteNumber: 0
     isFloor: 1
     isLeft: 0
-    SorterPositionOffset: {x: -2.4999983, y: 1.2654331}
-    SorterPositionOffset2: {x: 2.4382727, y: 1.2962978}
-    colliderOffset: {x: -0.005213499, y: 2.1392348}
-    colliderSize: {x: 4.509928, y: 2.5684319}
+    SorterPositionOffset: {x: -1.1323595, y: 0.5388746}
+    SorterPositionOffset2: {x: 1.1703577, y: 0.56973934}
+    colliderOffset: {x: 0.02327895, y: 1.7759556}
+    colliderSize: {x: 2.3445, y: 3.5799153}
     isUnlocked: 0
     price: 3
-  - floorNum: 1
-    furnitureName: darklord_throne_back
+  - furnitureName: "\uC870\uB9AC\uB300"
     furnitureDescription: 
+    floorNum: 3
+    gridPosition: {x: 10, y: 8}
+    size:
+    - {x: 2, y: 4}
+    - {x: 4, y: 2}
+    - {x: 2, y: 4}
+    - {x: 4, y: 2}
+    tartgetPosition:
+    - {x: 2, y: 3}
+    - {x: 2, y: 3}
+    - {x: 2, y: 3}
+    - {x: 2, y: 3}
+    rotation: 0
+    furnitureSprite:
+    - isUnlocked: 1
+      sprites:
+      - {fileID: 21300000, guid: e9b3c7c2294b79243976b2c809e9ec04, type: 3}
+      - {fileID: 21300000, guid: ea46291e87ada3845930f02370f0cb2a, type: 3}
+      lockSprite: {fileID: 21300000, guid: e9b3c7c2294b79243976b2c809e9ec04, type: 3}
+    - isUnlocked: 0
+      sprites:
+      - {fileID: 21300000, guid: e9b3c7c2294b79243976b2c809e9ec04, type: 3}
+      - {fileID: 21300000, guid: ea46291e87ada3845930f02370f0cb2a, type: 3}
+      lockSprite: {fileID: 21300000, guid: e9b3c7c2294b79243976b2c809e9ec04, type: 3}
+    - isUnlocked: 0
+      sprites:
+      - {fileID: 21300000, guid: e9b3c7c2294b79243976b2c809e9ec04, type: 3}
+      - {fileID: 21300000, guid: ea46291e87ada3845930f02370f0cb2a, type: 3}
+      lockSprite: {fileID: 21300000, guid: e9b3c7c2294b79243976b2c809e9ec04, type: 3}
+    heightLimit: 0
+    spriteNumber: 0
+    isFloor: 1
+    isLeft: 0
+    SorterPositionOffset: {x: -2.499999, y: 1.1942015}
+    SorterPositionOffset2: {x: 1.1703577, y: 0.56973934}
+    colliderOffset: {x: -0.6605406, y: 1.4767846}
+    colliderSize: {x: 3.7121391, y: 2.9815733}
+    isUnlocked: 0
+    price: 3
+  - furnitureName: "\uC2F1\uD06C\uB300"
+    furnitureDescription: 
+    floorNum: 3
     gridPosition: {x: 10, y: 6}
     size:
     - {x: 2, y: 2}
     - {x: 2, y: 2}
     - {x: 2, y: 2}
     - {x: 2, y: 2}
-    tartgetPosition: []
-    rotation: 0
-    furnitureSprite:
-    - isUnlocked: 1
-      sprites:
-      - {fileID: 21300000, guid: 5fe4adfee47b8b9408a18c8bf048b277, type: 3}
-      - {fileID: 21300000, guid: 8c5a24b474ca6b848a078079deb8efc6, type: 3}
-      lockSprite: {fileID: 0}
-    - isUnlocked: 0
-      sprites:
-      - {fileID: 21300000, guid: 5fe4adfee47b8b9408a18c8bf048b277, type: 3}
-      - {fileID: 21300000, guid: 8c5a24b474ca6b848a078079deb8efc6, type: 3}
-      lockSprite: {fileID: 0}
-    - isUnlocked: 0
-      sprites:
-      - {fileID: 21300000, guid: 5fe4adfee47b8b9408a18c8bf048b277, type: 3}
-      - {fileID: 21300000, guid: 8c5a24b474ca6b848a078079deb8efc6, type: 3}
-      lockSprite: {fileID: 0}
-    spriteNumber: 0
-    isFloor: 1
-    isLeft: 0
-    SorterPositionOffset: {x: -0.64814854, y: 0.38580227}
-    SorterPositionOffset2: {x: 0.8179009, y: 0.44753075}
-    colliderOffset: {x: 0, y: 2.12}
-    colliderSize: {x: 2.4, y: 4.24}
-    isUnlocked: 0
-    price: 3
-  - floorNum: 1
-    furnitureName: crystal_ball
-    furnitureDescription: 
-    gridPosition: {x: 3, y: 3}
-    size:
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
     tartgetPosition:
     - {x: -1, y: 1}
     rotation: 0
     furnitureSprite:
     - isUnlocked: 1
       sprites:
-      - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
-      - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: b07e14253e0e0984391650941e9d383e, type: 3}
+      - {fileID: 21300000, guid: ddb5b4610eff148489a539fb73221006, type: 3}
+      lockSprite: {fileID: 21300000, guid: b07e14253e0e0984391650941e9d383e, type: 3}
     - isUnlocked: 0
       sprites:
-      - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
-      - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: b07e14253e0e0984391650941e9d383e, type: 3}
+      - {fileID: 21300000, guid: ddb5b4610eff148489a539fb73221006, type: 3}
+      lockSprite: {fileID: 21300000, guid: b07e14253e0e0984391650941e9d383e, type: 3}
     - isUnlocked: 0
       sprites:
-      - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
-      - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: b07e14253e0e0984391650941e9d383e, type: 3}
+      - {fileID: 21300000, guid: ddb5b4610eff148489a539fb73221006, type: 3}
+      lockSprite: {fileID: 21300000, guid: b07e14253e0e0984391650941e9d383e, type: 3}
+    heightLimit: 0
     spriteNumber: 0
     isFloor: 1
     isLeft: 0
-    SorterPositionOffset: {x: -0.5555563, y: 0.27777803}
-    SorterPositionOffset2: {x: 0.49382892, y: 0.26234567}
-    colliderOffset: {x: 0, y: 1.34}
-    colliderSize: {x: 1.08, y: 2.68}
+    SorterPositionOffset: {x: -1.1901188, y: 0.6136868}
+    SorterPositionOffset2: {x: 1.2745533, y: 0.65904975}
+    colliderOffset: {x: 0.05393982, y: 1.156757}
+    colliderSize: {x: 2.4915686, y: 2.3415182}
     isUnlocked: 0
     price: 3
-  - floorNum: 1
-    furnitureName: "\uC5BC\uC74C\uD638\uC218"
+  - furnitureName: "\uC2DD\uD0C1"
     furnitureDescription: 
-    gridPosition: {x: 3, y: 1}
+    floorNum: 3
+    gridPosition: {x: 4, y: 4}
     size:
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
+    - {x: 2, y: 4}
+    - {x: 4, y: 2}
+    - {x: 2, y: 4}
+    - {x: 4, y: 2}
     tartgetPosition:
-    - {x: 1, y: -1}
+    - {x: -1, y: 1}
     rotation: 0
     furnitureSprite:
     - isUnlocked: 1
       sprites:
-      - {fileID: 21300000, guid: ce88152a70957344a856e488d1aeca98, type: 3}
-      - {fileID: 21300000, guid: ce88152a70957344a856e488d1aeca98, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: ac148451de6b34d428ef15406e3ea34a, type: 3}
+      - {fileID: 21300000, guid: ac148451de6b34d428ef15406e3ea34a, type: 3}
+      lockSprite: {fileID: 21300000, guid: ac148451de6b34d428ef15406e3ea34a, type: 3}
     - isUnlocked: 0
       sprites:
-      - {fileID: 21300000, guid: ce88152a70957344a856e488d1aeca98, type: 3}
-      - {fileID: 21300000, guid: ce88152a70957344a856e488d1aeca98, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: ac148451de6b34d428ef15406e3ea34a, type: 3}
+      - {fileID: 21300000, guid: ac148451de6b34d428ef15406e3ea34a, type: 3}
+      lockSprite: {fileID: 21300000, guid: ac148451de6b34d428ef15406e3ea34a, type: 3}
     - isUnlocked: 0
       sprites:
-      - {fileID: 21300000, guid: ce88152a70957344a856e488d1aeca98, type: 3}
-      - {fileID: 21300000, guid: ce88152a70957344a856e488d1aeca98, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: ac148451de6b34d428ef15406e3ea34a, type: 3}
+      - {fileID: 21300000, guid: ac148451de6b34d428ef15406e3ea34a, type: 3}
+      lockSprite: {fileID: 21300000, guid: ac148451de6b34d428ef15406e3ea34a, type: 3}
+    heightLimit: 0
     spriteNumber: 0
     isFloor: 1
     isLeft: 0
-    SorterPositionOffset: {x: -0.5321764, y: -0.0027852058}
-    SorterPositionOffset2: {x: 0.5327959, y: 0.005162716}
-    colliderOffset: {x: 0, y: 0.015118301}
-    colliderSize: {x: 1.08, y: 0.4510814}
+    SorterPositionOffset: {x: -2.499999, y: 1.1942015}
+    SorterPositionOffset2: {x: 1.170358, y: 0.56973934}
+    colliderOffset: {x: -0.6605406, y: 1.4767846}
+    colliderSize: {x: 3.7121391, y: 2.9815733}
     isUnlocked: 0
     price: 3
-  - floorNum: 1
-    furnitureName: stonestatue_front
+  - furnitureName: "\uCCAD\uC18C\uB3C4\uAD6C"
     furnitureDescription: 
-    gridPosition: {x: 10, y: 2}
+    floorNum: 3
+    gridPosition: {x: 6, y: 4}
     size:
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
+    - {x: 2, y: 2}
+    - {x: 2, y: 2}
+    - {x: 2, y: 2}
+    - {x: 2, y: 2}
     tartgetPosition: []
     rotation: 0
     furnitureSprite:
     - isUnlocked: 1
       sprites:
-      - {fileID: 21300000, guid: 2ed7096154886224a8481237ce981e2b, type: 3}
-      - {fileID: 21300000, guid: af6b76e673fcefc44bdc994121002f86, type: 3}
+      - {fileID: 21300000, guid: 7d90d93a9a7a52b4d955dceda4383659, type: 3}
+      - {fileID: 21300000, guid: 7d90d93a9a7a52b4d955dceda4383659, type: 3}
       lockSprite: {fileID: 0}
     - isUnlocked: 0
       sprites:
-      - {fileID: 21300000, guid: 2ed7096154886224a8481237ce981e2b, type: 3}
-      - {fileID: 21300000, guid: af6b76e673fcefc44bdc994121002f86, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: 7d90d93a9a7a52b4d955dceda4383659, type: 3}
+      - {fileID: 21300000, guid: 7d90d93a9a7a52b4d955dceda4383659, type: 3}
+      lockSprite: {fileID: 21300000, guid: 7d90d93a9a7a52b4d955dceda4383659, type: 3}
     - isUnlocked: 0
       sprites:
-      - {fileID: 21300000, guid: 2ed7096154886224a8481237ce981e2b, type: 3}
-      - {fileID: 21300000, guid: af6b76e673fcefc44bdc994121002f86, type: 3}
-      lockSprite: {fileID: 0}
-    spriteNumber: 0
-    isFloor: 1
-    isLeft: 0
-    SorterPositionOffset: {x: -0.4629631, y: 0.26234555}
-    SorterPositionOffset2: {x: 0.6172843, y: 0.2623446}
-    colliderOffset: {x: 0, y: 1.78}
-    colliderSize: {x: 1.96, y: 3.56}
-    isUnlocked: 0
-    price: 3
-  - floorNum: 1
-    furnitureName: firelight_floor
-    furnitureDescription: 
-    gridPosition: {x: 10, y: 0}
-    size:
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
-    - {x: 1, y: 1}
-    tartgetPosition: []
-    rotation: 0
-    furnitureSprite:
-    - isUnlocked: 1
-      sprites:
-      - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
-      - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
-      lockSprite: {fileID: 0}
-    - isUnlocked: 0
-      sprites:
-      - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
-      - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
-      lockSprite: {fileID: 0}
-    - isUnlocked: 0
-      sprites:
-      - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
-      - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
-      lockSprite: {fileID: 0}
-    spriteNumber: 0
-    isFloor: 1
-    isLeft: 0
-    SorterPositionOffset: {x: 0.40123415, y: 0.23148179}
-    SorterPositionOffset2: {x: 0, y: 0}
-    colliderOffset: {x: 0, y: 1.46}
-    colliderSize: {x: 0.88, y: 2.92}
-    isUnlocked: 0
-    price: 3
-  - floorNum: 1
-    furnitureName: firelight_wall
-    furnitureDescription: 
-    gridPosition: {x: 5, y: 4}
-    size:
-    - {x: 1, y: 3}
-    - {x: 1, y: 3}
-    - {x: 1, y: 3}
-    - {x: 1, y: 3}
-    tartgetPosition: []
-    rotation: 0
-    furnitureSprite:
-    - isUnlocked: 1
-      sprites:
-      - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
-      - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
-      lockSprite: {fileID: 0}
-    - isUnlocked: 0
-      sprites:
-      - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
-      - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
-      lockSprite: {fileID: 0}
-    - isUnlocked: 0
-      sprites:
-      - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
-      - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: 7d90d93a9a7a52b4d955dceda4383659, type: 3}
+      - {fileID: 21300000, guid: 7d90d93a9a7a52b4d955dceda4383659, type: 3}
+      lockSprite: {fileID: 21300000, guid: 7d90d93a9a7a52b4d955dceda4383659, type: 3}
+    heightLimit: 4
     spriteNumber: 0
     isFloor: 0
     isLeft: 1
     SorterPositionOffset: {x: 0, y: 0}
-    SorterPositionOffset2: {x: 0.79284, y: 0}
-    colliderOffset: {x: 0.404989, y: 0.9}
-    colliderSize: {x: 0.7710724, y: 1.8}
+    SorterPositionOffset2: {x: 1.0231061, y: 0.506386}
+    colliderOffset: {x: 0.50570166, y: 0.7785345}
+    colliderSize: {x: 1.0617206, y: 1.5850731}
     isUnlocked: 0
     price: 3
-  - floorNum: 1
-    furnitureName: tapestry
+  - furnitureName: "\uD6C4\uB4DC"
     furnitureDescription: 
-    gridPosition: {x: 8, y: 2}
+    floorNum: 3
+    gridPosition: {x: 8, y: 4}
     size:
-    - {x: 3, y: 5}
-    - {x: 3, y: 5}
-    - {x: 3, y: 5}
-    - {x: 3, y: 5}
+    - {x: 4, y: 4}
+    - {x: 4, y: 4}
+    - {x: 4, y: 4}
+    - {x: 4, y: 4}
     tartgetPosition: []
     rotation: 0
     furnitureSprite:
     - isUnlocked: 1
       sprites:
-      - {fileID: 21300000, guid: 45d66da571853ac44aa31f01011ec211, type: 3}
-      - {fileID: 21300000, guid: 95b3ff6c6efaa1244b194412715dd0e7, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: 8d0246f315647344e95719fd85d29371, type: 3}
+      - {fileID: 21300000, guid: 8d0246f315647344e95719fd85d29371, type: 3}
+      lockSprite: {fileID: 21300000, guid: 8d0246f315647344e95719fd85d29371, type: 3}
     - isUnlocked: 0
       sprites:
-      - {fileID: 21300000, guid: 45d66da571853ac44aa31f01011ec211, type: 3}
-      - {fileID: 21300000, guid: 95b3ff6c6efaa1244b194412715dd0e7, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: 8d0246f315647344e95719fd85d29371, type: 3}
+      - {fileID: 21300000, guid: 8d0246f315647344e95719fd85d29371, type: 3}
+      lockSprite: {fileID: 21300000, guid: 8d0246f315647344e95719fd85d29371, type: 3}
     - isUnlocked: 0
       sprites:
-      - {fileID: 21300000, guid: 45d66da571853ac44aa31f01011ec211, type: 3}
-      - {fileID: 21300000, guid: 95b3ff6c6efaa1244b194412715dd0e7, type: 3}
-      lockSprite: {fileID: 0}
+      - {fileID: 21300000, guid: 8d0246f315647344e95719fd85d29371, type: 3}
+      - {fileID: 21300000, guid: 8d0246f315647344e95719fd85d29371, type: 3}
+      lockSprite: {fileID: 21300000, guid: 8d0246f315647344e95719fd85d29371, type: 3}
+    heightLimit: 4
     spriteNumber: 0
     isFloor: 0
     isLeft: 1
-    SorterPositionOffset: {x: 0, y: 0}
-    SorterPositionOffset2: {x: 2.0940208, y: 0.008652687}
-    colliderOffset: {x: 1.04, y: 2.14}
-    colliderSize: {x: 2.08, y: 4.28}
+    SorterPositionOffset: {x: -0.013430893, y: 0.013430953}
+    SorterPositionOffset2: {x: 3.319778, y: 0.58697104}
+    colliderOffset: {x: 1.6473223, y: 1.597815}
+    colliderSize: {x: 3.344962, y: 3.2236342}
     isUnlocked: 0
     price: 3
-  floorNmae: "4F : \uBAB0\uB77C"
-  floorDescription: "\uBAB0\uB77C\uC6A9\uAC00\uB9AC\uCE58\uD0A8"

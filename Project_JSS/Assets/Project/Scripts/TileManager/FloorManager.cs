@@ -85,6 +85,8 @@ public class FloorManager : MonoBehaviour
                 newObj.GetComponent<FurnitureInfo>().SettingData(data);
                 newObj.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset;
                 newObj.GetComponent<IsoSpriteSorting>().SorterPositionOffset2 = data.SorterPositionOffset2;
+                if (!data.isFloor && !data.isLeft)
+                    newObj.transform.localScale = new Vector3(-1, 1, 1);
 
             }
         }

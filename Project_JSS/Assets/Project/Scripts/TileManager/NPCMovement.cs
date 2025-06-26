@@ -17,7 +17,7 @@ public class NPCMovement : MonoBehaviour
     private float timer = 0f;
 
     private Vector2 lastDirection;
-    [SerializeField] FurnitureInfo[] specialObject;
+    [SerializeField] FurnitureInfo specialObject;
     [SerializeField] string specialObjectName;
     private bool isSpecial;
     private const string VERTICAL = "Vertical";
@@ -81,6 +81,7 @@ public class NPCMovement : MonoBehaviour
         foreach (GameObject obj in floorManager.availableFurniturePrefabs)
         {
             if (specialObjectName == obj.GetComponent<FurnitureInfo>().name) {
+
                 if (isometricGrid.CanPlaceTile(obj.GetComponent<FurnitureInfo>().GetTargetPosition(0)))
                 {
                     Vector3 targetPos = isometricGrid.GridPositionToWorld(obj.GetComponent<FurnitureInfo>().GetTargetPosition(0));
