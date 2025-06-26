@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: "\uC720\uCE58\uC6D0"
   m_EditorClassIdentifier: 
   CharaterName: "\uC720\uCE58\uC6D0"
+  CharacterDescription: 
+  isUnlock: 0
   assets:
   - {fileID: 7108339969198208228, guid: ecd1a31d715040042a2305842df3c58d, type: 3}
   - {fileID: 0}
