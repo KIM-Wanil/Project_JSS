@@ -13,83 +13,136 @@ MonoBehaviour:
   m_Name: "\uB300\uD654\uC774\uBCA4\uD2B8SO"
   m_EditorClassIdentifier: 
   dialogueEvents:
-  - eventId: CH1_EVENT0
+  - eventId: EVENT0
     dialogues:
     - dialogueId: 0
-      speakerName: "\uC5F0\uAE08\uC220\uC0AC \uD3AD\uADC4"
-      dialogueText: 00000000000
+      speakerName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      dialogueText: "\uC544, \uC624\uC168\uAD70\uC694."
       nextDialogueId: 1
     - dialogueId: 1
-      speakerName: ME
-      dialogueText: 1111111111
+      speakerName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      dialogueText: "\uC5EC\uAE34 \u2018\uC774\uC138\uACC4 \uD3AD\uADC4 \uD638\uD154\u2019\uC785\uB2C8\uB2E4."
       nextDialogueId: 2
     - dialogueId: 2
-      speakerName: "\uC5F0\uAE08\uC220\uC0AC \uD3AD\uADC4"
-      dialogueText: 22222
+      speakerName: ME
+      dialogueText: "\u2026\uC774\uC138\uACC4? \uD3AD\uADC4? \uD638\uD154\uC694?"
       nextDialogueId: 3
     - dialogueId: 3
-      speakerName: "\uC5F0\uAE08\uC220\uC0AC \uD3AD\uADC4"
-      dialogueText: 33333333
+      speakerName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      dialogueText: "\uB124, \uB2E4\uC18C \uC0DD\uC18C\uD560 \uC218\uB3C4 \uC788\uC8E0."
       nextDialogueId: 4
     - dialogueId: 4
-      speakerName: ME
-      dialogueText: 4444
+      speakerName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      dialogueText: "\uC774\uACF3\uC740 \uC5EC\uB7EC \uC138\uACC4\uC758 \uD3AD\uADC4\uB4E4\uC774
+        \uBA38\uBB34\uB294 \uC27C\uD130\uB78D\uB2C8\uB2E4."
       nextDialogueId: 5
     - dialogueId: 5
-      speakerName: ME
-      dialogueText: 555555
+      speakerName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      dialogueText: "\uBD81\uADF9\uC5D0\uC11C, \uBC14\uB2F7\uC18D\uC5D0\uC11C\u2026
+        \uB2E4\uC591\uD55C \uC190\uB2D8\uB4E4\uC774 \uC624\uC138\uC694."
       nextDialogueId: 6
     - dialogueId: 6
-      speakerName: "\uC5F0\uAE08\uC220\uC0AC \uD3AD\uADC4"
-      dialogueText: "\uAC00\u3153\uB098\uB2E4\uB77C\uB9C8\uBC14\uC0AC\u314F"
+      speakerName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      dialogueText: "\uC5B8\uC81C \uB204\uAC00 \uC62C\uC9C4 \uC544\uBB34\uB3C4 \uBAA8\uB985\uB2C8\uB2E4."
       nextDialogueId: 7
     - dialogueId: 7
-      speakerName: ME
-      dialogueText: "\uC790\uCC28\uCE74\uD0C0\u314F\uD30C\u314F\uC544\uD558"
+      speakerName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      dialogueText: "\uADF8\uB798\uC11C \uB298 \uC900\uBE44\uB418\uC5B4 \uC788\uC5B4\uC57C
+        \uD558\uC8E0."
       nextDialogueId: 8
     - dialogueId: 8
+      speakerName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      dialogueText: "\uC774 \uD638\uD154\uC758 \uC9C0\uBC30\uC778\uB2D8\uC73C\uB85C,
+        \uB2F9\uC2E0\uC744 \uBAA8\uC2DC\uACE0\uC790 \uD569\uB2C8\uB2E4."
+      nextDialogueId: 9
+    - dialogueId: 9
       speakerName: ME
-      dialogueText: "\uB300\uD654\uB057"
+      dialogueText: "\uC81C\uAC00 \uADF8\uAC78\u2026 \uC798 \uD560 \uC218 \uC788\uC744\uAE4C\uC694?"
+      nextDialogueId: 10
+    - dialogueId: 10
+      speakerName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      dialogueText: "\uBB3C\uB860\uC774\uC8E0. \uC81C\uAC00 \uB3C4\uC640\uB4DC\uB9B4
+        \uD14C\uB2C8\uAE4C\uC694."
+      nextDialogueId: 11
+    - dialogueId: 11
+      speakerName: "\uC9D1\uC0AC \uD3AD\uADC4"
+      dialogueText: "\uC790, \uCCAB \uC190\uB2D8\uC744 \uB9DE\uC774\uD574\uBCFC\uAE4C\uC694?"
       nextDialogueId: -1
-  - eventId: CH1_EVENT1
+  - eventId: EVENT1
     dialogues:
     - dialogueId: 0
-      speakerName: "\uC6A9\uC0AC \uD3AD\uADC4"
-      dialogueText: 00000000000
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\u2026\u2026\uB4DC\uB514\uC5B4,"
       nextDialogueId: 1
     - dialogueId: 1
-      speakerName: ME
-      dialogueText: 1111111111
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\uC774 \uBAB8\uC758 \uBC1C\uAC78\uC74C\uC744 \uB9C9\uC744 \uC790\uB294
+        \uC5C6\uAD70."
       nextDialogueId: 2
     - dialogueId: 2
-      speakerName: "\uC6A9\uC0AC \uD3AD\uADC4"
-      dialogueText: 22222
+      speakerName: ME
+      dialogueText: ...!!!
       nextDialogueId: 3
     - dialogueId: 3
-      speakerName: "\uC6A9\uC0AC \uD3AD\uADC4"
-      dialogueText: 33333333
+      speakerName: ME
+      dialogueText: "\uC5B4\uC11C \uC624\uC138\uC694!"
       nextDialogueId: 4
     - dialogueId: 4
-      speakerName: ME
-      dialogueText: 4444
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\uD6C4\uD6D7\u2026 \uB098\uB97C \uBAB0\uB77C\uBCF4\uB294\uAD70."
       nextDialogueId: 5
     - dialogueId: 5
-      speakerName: ME
-      dialogueText: 555555
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\uC774 \uBAB8\uC740\u2026 \uC554\uD751\uC758 \uC5BC\uC74C \uC704\uC5D0
+        \uAD70\uB9BC\uD558\uB294 \uC790."
       nextDialogueId: 6
     - dialogueId: 6
-      speakerName: "\uC6A9\uC0AC \uD3AD\uADC4"
-      dialogueText: "\uAC00\u3153\uB098\uB2E4\uB77C\uB9C8\uBC14\uC0AC\u314F"
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\uB9C8\uC655 \uD3AD\uADC4\uC774\uB2E4."
       nextDialogueId: 7
     - dialogueId: 7
-      speakerName: ME
-      dialogueText: "\uC790\uCC28\uCE74\uD0C0\u314F\uD30C\u314F\uC544\uD558"
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\uC218\uB9CE\uC740 \uCC28\uC6D0\uC744 \uB118\uB098\uB4E4\uB2E4\u2026
+        \uC774\uACF3\uC5D0 \uB3C4\uB2EC\uD588\uC9C0."
       nextDialogueId: 8
     - dialogueId: 8
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\uC774\uC81C \uC7A0\uC2DC \uC548\uC2DD\uC774 \uD544\uC694\uD558\uB2E4."
+      nextDialogueId: 9
+    - dialogueId: 9
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\uADF8\uB9AC\uACE0\u2026 \uD751\uB9C8\uBC95\uC744 \uC218\uB828\uD560
+        \uACF5\uAC04\uB3C4 \uB9D0\uC774\uC9C0."
+      nextDialogueId: 10
+    - dialogueId: 10
       speakerName: ME
-      dialogueText: "\uB300\uD654\uB057"
+      dialogueText: "\uB124! \uAE08\uBC29 \uC900\uBE44\uD574\uB4DC\uB9B4\uAC8C\uC694!"
+      nextDialogueId: 11
+    - dialogueId: 11
+      speakerName: ME
+      dialogueText: "(\uC774\uB7F0 \uC190\uB2D8\uB3C4 \uC624\uB294\uAD6C\uB098\u2026)"
+      nextDialogueId: -1
+  - eventId: EVENT2
+    dialogues:
+    - dialogueId: 0
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\uD6C4\uD6D7\u2026 \uC774 \uAE30\uC6B4, \uB9C8\uC74C\uC5D0 \uB4DC\uB294\uAD70."
+      nextDialogueId: 1
+    - dialogueId: 1
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\uC774 \uC815\uB3C4\uBA74\u2026 \uC774 \uBAB8\uC758 \uAC70\uCC98\uB85C
+        \uC190\uC0C9\uC5C6\uACA0\uC9C0."
+      nextDialogueId: 2
+    - dialogueId: 2
+      speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
+      dialogueText: "\uC88B\uC544. \uC774\uACF3\uC744 \u2018\uB9C8\uC655\uC758 \uC548\uC2DD\uCC98\u2019\uB85C
+        \uC0BC\uACA0\uB2E4."
       nextDialogueId: -1
   npcSprites:
+  - spriteName: "\uB9C8\uC655 \uD3AD\uADC4"
+    sprite: {fileID: 21300000, guid: e37667dd09191e04587708c19bc7dad5, type: 3}
+  - spriteName: "\uBA54\uC774\uB4DC \uD3AD\uADC4"
+    sprite: {fileID: 21300000, guid: 1ee4db25c5c17014a8aff4f520e87fb3, type: 3}
   - spriteName: "\uC5F0\uAE08\uC220\uC0AC \uD3AD\uADC4"
     sprite: {fileID: 21300000, guid: d422d2f2b2ee608499544009022bc09a, type: 3}
   - spriteName: "\uC6A9\uC0AC \uD3AD\uADC4"

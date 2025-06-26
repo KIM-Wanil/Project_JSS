@@ -104,6 +104,9 @@ public enum TutorialCondition
     망치합성,
     가구설치클릭,
     퀘스트완료클릭,
+    가구선택,
+    가구드래그,
+    가구방향전환
 
 }
 
