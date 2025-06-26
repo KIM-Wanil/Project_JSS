@@ -31,6 +31,10 @@ public class CustomizingButton : MonoBehaviour
         {
             lockObject.SetActive(true);
         }
+        else
+        {
+            lockObject.SetActive(false);
+        }
     }
     public void Unlock()
     {

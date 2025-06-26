@@ -11,6 +11,7 @@ using UnityEngine.TextCore.Text;
 public class FurniturePlacementManager : MonoBehaviour
 {
     public FloorData[] floorData;
+    public FloorData[] basefloorData;
     [SerializeField] FloorManager[] floorManagers;
     FloorManager floorManager;
     [SerializeField] Collection collection;
@@ -61,8 +62,6 @@ public class FurniturePlacementManager : MonoBehaviour
     [SerializeField] Sprite[] buttonSprite;
     [SerializeField] int[] buttonsIndex;
 
-    Coroutine settinCoroutine;
-
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -70,6 +69,13 @@ public class FurniturePlacementManager : MonoBehaviour
         for (int i = 0; i < 5; i++) // 최대 5층으로 가정
         {
             furnitureByFloor[i] = new List<GameObject>();
+
+            floorData[i].furnitureInfos = basefloorData[i].furnitureInfos;
+            foreach (FurnitureData data in floorData[i].furnitureInfos )
+            {
+                data.isUnlocked = false;
+            }
+          
         }
         rotateButton.onClick.AddListener(RotateFurniture);
         confirmButton.onClick.AddListener(ConfirmPlacement);
@@ -260,7 +266,7 @@ public class FurniturePlacementManager : MonoBehaviour
                 originalPosition = selectedFurniture.transform.position;
                 originalRotation = currentInfo.Rotation;
                 currentGrid.OccupiedCell(originalPosition.Value, currentInfo.Size, false);
-                gridPosition = currentGrid.WorldToGridPosition(originalPosition.Value);
+                gridPosition = currentGrid.WorldToGridPosition(originalPosition.Value, currentInfo.HeightLimit);
 
                 dragOffset = (Vector3)mousePosition - selectedFurniture.transform.position;
 
@@ -297,9 +303,9 @@ public class FurniturePlacementManager : MonoBehaviour
                 gridNumbers = 1;
                 dragOffset = new Vector3(-dragOffset.x, dragOffset.y,0);
                 pos = pos - dragOffset;
-                gridPosition = currentGrid.WorldToGridPosition(pos, currentInfo.Size);
+                gridPosition = currentGrid.WorldToGridPosition(pos, currentInfo.Size, currentInfo.HeightLimit);
                 selectedFurniture.transform.position = currentGrid.GridPositionToWorld(gridPosition);
-                currentGrid.TileSetting(selectedFurniture.transform, currentInfo.Size, currentGrid.WorldToGridPosition(selectedFurniture.transform.position));
+                currentGrid.TileSetting(selectedFurniture.transform, currentInfo.Size, currentGrid.WorldToGridPosition(selectedFurniture.transform.position,currentInfo.HeightLimit));
                 uiObject.transform.position = new Vector2(selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
                 return;
             }
@@ -311,9 +317,9 @@ public class FurniturePlacementManager : MonoBehaviour
                 gridNumbers = 2;
                 dragOffset = new Vector3(-dragOffset.x, dragOffset.y, 0);
                 pos = pos - dragOffset;
-                gridPosition = currentGrid.WorldToGridPosition(pos, currentInfo.Size);
+                gridPosition = currentGrid.WorldToGridPosition(pos, currentInfo.Size, currentInfo.HeightLimit);
                 selectedFurniture.transform.position = currentGrid.GridPositionToWorld(gridPosition);
-                currentGrid.TileSetting(selectedFurniture.transform, currentInfo.Size, currentGrid.WorldToGridPosition(selectedFurniture.transform.position));
+                currentGrid.TileSetting(selectedFurniture.transform, currentInfo.Size, currentGrid.WorldToGridPosition(selectedFurniture.transform.position, currentInfo.HeightLimit));
                 uiObject.transform.position = new Vector2(selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
                 return;
             }
@@ -329,9 +335,9 @@ public class FurniturePlacementManager : MonoBehaviour
        
 
 
-        if (gridPosition != currentGrid.WorldToGridPosition(pos,currentInfo.Size))
+        if (gridPosition != currentGrid.WorldToGridPosition(pos,currentInfo.Size, currentInfo.HeightLimit))
         {
-            gridPosition = currentGrid.WorldToGridPosition(pos, currentInfo.Size);
+            gridPosition = currentGrid.WorldToGridPosition(pos, currentInfo.Size, currentInfo.HeightLimit);
             selectedFurniture.transform.position = currentGrid.GridPositionToWorld(gridPosition);
             currentGrid.CanPlaceFurniture(gridPosition);
             uiObject.transform.position = new Vector2(selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
@@ -344,7 +350,10 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         if (selectedFurniture != null)
         {
+         
             currentInfo.RotateSprites();
+            currentGrid.Refresh(currentInfo.Size, gridPosition);
+            currentGrid.CanPlaceFurniture(gridPosition);
         }
     }
 
@@ -385,7 +394,7 @@ public class FurniturePlacementManager : MonoBehaviour
         {
             // 원래 위치로 되돌리기
             selectedFurniture.transform.position = originalPosition.Value;
-            gridPosition = currentGrid.WorldToGridPosition(selectedFurniture.transform.position);
+            gridPosition = currentGrid.WorldToGridPosition(selectedFurniture.transform.position, currentInfo.HeightLimit);
             selectedFurniture.GetComponent<SpriteRenderer>().sortingOrder =0;
             currentInfo.SettingRotate(originalRotation);
             currentGrid.OccupiedCell(originalPosition.Value, currentInfo.Size, true);
@@ -417,6 +426,12 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         if (floorNumber < 0 || floorNumber >= floorData.Length || floorManagers[floorNumber].floorData.isUnlock == false)
             return;
+
+        if (selectedFurniture != null)
+        {
+            currentInfo.SettingSprites(spriteIndex);
+            DeselectFurniture();
+        }
         floorManager = floorManagers[floorNumber];
         mainCamera.transform.DOMove(new Vector3(0, 7.5f + 5.15f * floorNumber, -10f),0.5f);
         for (int i = 0; i <= floorNumber; i++)
@@ -433,16 +448,7 @@ public class FurniturePlacementManager : MonoBehaviour
         isometricGrids = floorManager.grids;
         furniturePrefab = floorManager.furniturePrefab;
 
-        if (settinCoroutine != null)
-        {
-            StopCoroutine(settinCoroutine);
-        }
-        // 선택된 가구가 있으면 선택 해제
-        if (selectedFurniture != null)
-        {
-            currentInfo.SettingSprites(spriteIndex);
-            DeselectFurniture();
-        }
+
         currentFloor = floorNumber;
         skinObject.SetActive(false);
     }
@@ -493,7 +499,7 @@ public class FurniturePlacementManager : MonoBehaviour
             originalPosition = selectedFurniture.transform.position;
             originalRotation = currentInfo.Rotation;
 
-            gridPosition = currentGrid.WorldToGridPosition(originalPosition.Value);
+            gridPosition = currentGrid.WorldToGridPosition(originalPosition.Value, currentInfo.HeightLimit);
 
             dragOffset = Vector3.zero;
 

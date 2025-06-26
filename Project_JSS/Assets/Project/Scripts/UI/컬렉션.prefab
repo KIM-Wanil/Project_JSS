@@ -245,8 +245,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "1F : \uAE30\uBCF8 \uAC1D\uC2E4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 00e0e311f755f9d4189b2a0a57947d31, type: 2}
-  m_sharedMaterial: {fileID: -3183156396043747314, guid: 00e0e311f755f9d4189b2a0a57947d31, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d586317693cf0df45ba366ab7e2799da, type: 2}
+  m_sharedMaterial: {fileID: 5108940586022357202, guid: d586317693cf0df45ba366ab7e2799da, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -326,7 +326,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a840bd77d4954c24ab090f321c159b0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floorData: {fileID: 0}
+  floorNmae: {fileID: 0}
+  floorDescription: {fileID: 0}
   image: {fileID: 0}
+  furnitureNmae: {fileID: 0}
+  slider: {fileID: 0}
+  lockObject: {fileID: 0}
+  buybuttonObject: {fileID: 0}
+  requiredLV: {fileID: 0}
+  floorAchievement: {fileID: 0}
 --- !u!1 &3805474323427695360
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,8 +725,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uCE90\uC8FC\uC5BC\uD55C \uAC1D\uC2E4\uC774 \uC88B\uC544,"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 00e0e311f755f9d4189b2a0a57947d31, type: 2}
-  m_sharedMaterial: {fileID: -3183156396043747314, guid: 00e0e311f755f9d4189b2a0a57947d31, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d586317693cf0df45ba366ab7e2799da, type: 2}
+  m_sharedMaterial: {fileID: 5108940586022357202, guid: d586317693cf0df45ba366ab7e2799da, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -741,8 +750,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

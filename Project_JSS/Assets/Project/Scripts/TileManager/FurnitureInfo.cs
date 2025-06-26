@@ -24,6 +24,8 @@ public class FurnitureInfo : MonoBehaviour
     [SerializeField] Vector2Int[] tartgetPosition;
     [SerializeField] int rotation;
     [SerializeField] int spriteNumber;
+
+    [SerializeField] int heightLimit;
     bool flip;
     [SerializeField] Sprites[] sprites;
     bool isUnlocked;
@@ -44,6 +46,7 @@ public class FurnitureInfo : MonoBehaviour
     public Vector2Int GridPosition { get { return gridPosition; } set => gridPosition = value; }
     public Vector2Int TartgetPosition { get { return tartgetPosition[rotation]; ; } }
     public int Rotation { get { return rotation; } }
+    public int HeightLimit { get { return heightLimit; } }
     public Sprites[] MySprites { get { return sprites; } }
     public int SpriteNumber { get { return spriteNumber; }  }
     public void SettingData(FurnitureData data)
@@ -60,7 +63,7 @@ public class FurnitureInfo : MonoBehaviour
         rotation = data.rotation;
         spriteNumber = data.spriteNumber;
         isUnlocked = data.isUnlocked;
-
+        heightLimit  =data.heightLimit;
         isFloor  = data.isFloor;
 
         this.GetComponent<IsoSpriteSorting>().SorterPositionOffset = data.SorterPositionOffset;
@@ -140,10 +143,14 @@ public class FurnitureInfo : MonoBehaviour
         if (rotation == 1 || rotation == 3)
         {
             this.gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            this.GetComponent<IsoSpriteSorting>().SorterPositionOffset.x = -1 * data.SorterPositionOffset.x;
+            this.GetComponent<IsoSpriteSorting>().SorterPositionOffset2.x = -1 * data.SorterPositionOffset2.x;
         }
         else
         {
             this.gameObject.transform.localScale = new Vector3(1, 1, 1);
+            this.GetComponent<IsoSpriteSorting>().SorterPositionOffset.x = data.SorterPositionOffset.x;
+            this.GetComponent<IsoSpriteSorting>().SorterPositionOffset2.x = data.SorterPositionOffset2.x;
         }
         spriteRenderer.sprite = sprites[spriteNumber].sprites[rotation / 2];
     }

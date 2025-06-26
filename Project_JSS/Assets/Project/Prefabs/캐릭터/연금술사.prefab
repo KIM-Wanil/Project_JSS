@@ -152,9 +152,8 @@ MonoBehaviour:
   randomMoveProbability: 0.5
   isometricGrid: {fileID: 0}
   pathfinder: {fileID: 0}
-  specialObject:
-  - {fileID: 0}
-  specialObjectName: crystal_ball
+  specialObject: {fileID: 0}
+  specialObjectName: "\uC1A5"
   ChangeSpecial: 0
 --- !u!61 &8496445324447406741
 BoxCollider2D:
