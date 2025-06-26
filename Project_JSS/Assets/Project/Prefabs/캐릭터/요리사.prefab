@@ -154,7 +154,7 @@ MonoBehaviour:
   pathfinder: {fileID: 0}
   specialObject:
   - {fileID: 0}
-  specialObjectName: crystal_ball
+  specialObjectName: "\uC870\uB9AC\uB300"
   ChangeSpecial: 0
 --- !u!61 &4188277392002063769
 BoxCollider2D:

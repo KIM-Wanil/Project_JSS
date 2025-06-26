@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public abstract class IsoGird : MonoBehaviour
 {
@@ -37,6 +38,20 @@ public abstract class IsoGird : MonoBehaviour
     public bool GetTileData(int x, int y)
     {
         return occupiedCells[x, y];
+    }
+    public void Refresh(Vector2Int size, Vector2Int gridPosition)
+    {
+        furnitureSize = size;
+        int num = 0;
+        for (int x = 0; x < furnitureSize.x; x++)
+        {
+            for (int y = 0; y < furnitureSize.y; y++)
+            {
+                Vector3 vector = GridPositionToWorld(new Vector2Int(gridPosition.x + x, gridPosition.y + y));
+                tiles[num].transform.position = vector;
+                num++;
+            }
+        }
     }
     public void TileSetting(Transform furniture, Vector2Int size,Vector2Int gridPosition)
     {
@@ -129,8 +144,8 @@ public abstract class IsoGird : MonoBehaviour
     }
 
     public abstract Vector2 GridToScreenPosition(float x, float y);
-    public abstract Vector2Int WorldToGridPosition(Vector3 worldPosition);
-    public abstract Vector2Int WorldToGridPosition(Vector3 worldPosition, Vector2Int size);
+    public abstract Vector2Int WorldToGridPosition(Vector3 worldPosition, int heightLimit = 0);
+    public abstract Vector2Int WorldToGridPosition(Vector3 worldPosition, Vector2Int size, int heightLimit = 0);
     public abstract Vector3 GridPositionToWorld(Vector2Int gridPosition);
 
     public Vector3 SortGrid(Vector3 worldPosition)
