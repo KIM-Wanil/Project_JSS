@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class CustomizingButton : MonoBehaviour
 {
-    [SerializeField] CharacterData characterData;
+    public CharacterData characterData;
     [SerializeField] FloorData floorData;
     [SerializeField] Image characterImage;
     [SerializeField] TextMeshProUGUI characterName;
@@ -27,13 +27,14 @@ public class CustomizingButton : MonoBehaviour
         characterName.text = characterData.CharaterName;
         characterDescription.text = characterData.CharacterDescription;
 
-        if (!floorData.isUnlock)
+        if (floorData.isUnlock && characterData.isUnlock)
         {
-            lockObject.SetActive(true);
+            lockObject.SetActive(false);
+          
         }
         else
         {
-            lockObject.SetActive(false);
+            lockObject.SetActive(true);
         }
     }
     public void Unlock()

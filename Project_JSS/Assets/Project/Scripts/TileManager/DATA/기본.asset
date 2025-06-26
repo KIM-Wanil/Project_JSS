@@ -17,10 +17,11 @@ MonoBehaviour:
     \uCCAB\uAC78\uC74C"
   floorNum: 0
   isUnlock: 0
+  mainSprite: {fileID: 21300000, guid: e8c933c7165fd2e4391b4b2088b9a630, type: 3}
   furnitureInfos:
   - furnitureName: "\uCE68\uB300"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 4, y: 8}
     size:
     - {x: 4, y: 4}
@@ -53,11 +54,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 2.4382727, y: 1.2962978}
     colliderOffset: {x: -0.005213499, y: 2.1392348}
     colliderSize: {x: 4.509928, y: 2.5684319}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 3
   - furnitureName: "\uC758\uC790"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 10, y: 6}
     size:
     - {x: 2, y: 2}
@@ -94,7 +95,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uD06C\uB9AC\uC2A4\uD0C8\uBCFC"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 3, y: 3}
     size:
     - {x: 1, y: 1}
@@ -132,7 +133,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uC11D\uC0C1"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 10, y: 2}
     size:
     - {x: 1, y: 1}
@@ -169,7 +170,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uD683\uBD88"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 10, y: 0}
     size:
     - {x: 1, y: 1}
@@ -206,7 +207,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uBCBD\uB4F1"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 5, y: 4}
     size:
     - {x: 1, y: 3}
@@ -243,7 +244,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uD718\uC7A5"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 8, y: 2}
     size:
     - {x: 3, y: 5}

@@ -17,6 +17,7 @@ MonoBehaviour:
     \uD574\uC694."
   floorNum: 3
   isUnlock: 1
+  mainSprite: {fileID: 21300000, guid: 1c47180d07b955b4495db609ee40d196, type: 3}
   furnitureInfos:
   - furnitureName: "\uB0C9\uC7A5\uACE0"
     furnitureDescription: 

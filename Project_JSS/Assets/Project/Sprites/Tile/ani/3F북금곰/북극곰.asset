@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: "\uBD81\uADF9\uACF0"
   m_EditorClassIdentifier: 
   CharaterName: "\uBD81\uADF9\uACF0"
+  CharacterDescription: 
+  isUnlock: 1
   assets:
   - {fileID: 7108339969198208228, guid: 813e6e427b634ac4d97628aaa03de5e6, type: 3}
   - {fileID: 7108339969198208228, guid: acf588d958992a340aaa15799875a5d7, type: 3}
@@ -47,12 +49,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   deco1:
   - {fileID: 0}
-  - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
+  - {fileID: 21300000, guid: c01eb1d065249924dafc923b82ff3452, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   deco2:
   - {fileID: 0}
-  - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
+  - {fileID: 21300000, guid: 394477b14bc51ec4e9b5445233030998, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   skinIndex: 0

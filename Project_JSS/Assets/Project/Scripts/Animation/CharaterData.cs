@@ -5,8 +5,9 @@ public class CharacterData : ScriptableObject
 {
     public string CharaterName;
     public string CharacterDescription;
-    public SpriteLibraryAsset[] assets;
 
+    public bool isUnlock;
+    public SpriteLibraryAsset[] assets;
     public Sprite[] skins;
     public Sprite[] deco1;
     public Sprite[] deco2;

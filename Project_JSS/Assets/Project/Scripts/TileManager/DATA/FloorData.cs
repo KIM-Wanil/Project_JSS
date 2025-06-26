@@ -9,7 +9,7 @@ public class FloorData : ScriptableObject
     public string floorDescription;
     public int floorNum;
     public bool isUnlock;
-
+    public Sprite mainSprite;
     public FurnitureData[] furnitureInfos;
 
     public int UnlockCounting()
