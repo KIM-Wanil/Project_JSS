@@ -9,6 +9,7 @@ public class CollectionObject : MonoBehaviour
     FurniturePlacementManager furniturePlacementManager;
     int floorIndex;
     [SerializeField] Slider slider;
+    [SerializeField] Image image;
 
     [SerializeField] TextMeshProUGUI floorNmae;
     [SerializeField] TextMeshProUGUI floorDescription;
@@ -31,6 +32,7 @@ public class CollectionObject : MonoBehaviour
         floorIndex = index;
         slider.maxValue = furniturePlacementManager.floorData[index].furnitureInfos.Length;
         floorNmae.text = furniturePlacementManager.floorData[index].floorNmae;
+        image.sprite = furniturePlacementManager.floorData[index].mainSprite;
         floorDescription.text = furniturePlacementManager.floorData[index].floorDescription;
         return ref slider;
     }

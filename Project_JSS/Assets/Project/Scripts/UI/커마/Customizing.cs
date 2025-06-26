@@ -47,11 +47,8 @@ public class Customizing : MonoBehaviour
         assets = charaterData[floorIndex].assets;
         whatIndex = WhatIndex.skin;
         setButtonImage();
+        SetSkin();
         ui.SetActive(true);
-        foreach(CustomizingButton button in customizingButtons)
-        {
-            button.Unlock();
-        }
     }
     public void SetUI_false()
     {    
@@ -104,6 +101,7 @@ public class Customizing : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
+                
                 buttonsItemImage[i].sprite = sprites[tempIndex + i];
                 buttonsIndex[i] = tempIndex + i;
 
