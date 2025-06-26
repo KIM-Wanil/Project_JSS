@@ -138,13 +138,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1014370735352937228, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4095802384758249081, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: m_Name
       value: PopupCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 4095802384758249081, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880327300185358079, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163306280673640703, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 391.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635790583127226045, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635790583127226045, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635790583127226045, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 311.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635790583127226045, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 415.20044
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635790583127226045, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -195.905
       objectReference: {fileID: 0}
     - target: {fileID: 9145429337045569511, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: m_Pivot.x
@@ -231,6 +263,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+--- !u!224 &101190021 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6711898976236183397, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+  m_PrefabInstance: {fileID: 101190020}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &125002108 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1590211967159101527, guid: e218ce3942768174c876157a21310996, type: 3}
@@ -706,6 +743,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2710117067166553736, guid: 6a4fb5e378bd7d742aff8abf7768c715, type: 3}
+      propertyPath: starUiElement
+      value: 
+      objectReference: {fileID: 1387711538}
     - target: {fileID: 3132737603394296763, guid: 6a4fb5e378bd7d742aff8abf7768c715, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -1310,6 +1351,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1387711538 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3339455130212177893, guid: 0ca7b4fdcf4a3414e9919935e6b75c6c, type: 3}
+  m_PrefabInstance: {fileID: 1387711534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1550060240 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5033203263878332316, guid: 899f1fce55618144c9e7efd607ca0825, type: 3}
@@ -1516,6 +1562,10 @@ PrefabInstance:
       propertyPath: toMergeButton
       value: 
       objectReference: {fileID: 926002104}
+    - target: {fileID: 2622067380671758202, guid: 1899ae0eb74a34d4f83612906160addd, type: 3}
+      propertyPath: transitionScreen
+      value: 
+      objectReference: {fileID: 101190021}
     - target: {fileID: 2622067380671758202, guid: 1899ae0eb74a34d4f83612906160addd, type: 3}
       propertyPath: starTexts.Array.size
       value: 2

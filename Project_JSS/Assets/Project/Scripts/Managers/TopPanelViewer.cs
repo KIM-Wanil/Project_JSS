@@ -65,42 +65,48 @@ public class TopPanelViewer : MonoBehaviour
         {
             expText = GameObject.Find("ExpText").GetComponent<TextMeshProUGUI>();
         }
+        Managers.Game.onEnergyChanged.AddListener(UpdateEnergyUI);
+        Managers.Game.onEnergyRegenTimeChanged.AddListener(UpdateEnergyRegenTimeUI);
+        Managers.Game.onGemChanged.AddListener(UpdateGemUI);
+        Managers.Game.onGoldChanged.AddListener(UpdateGoldUI);
+        Managers.Game.onLevelChanged.AddListener(UpdateLevelUI);
 
+        Managers.Game.onExpChanged.AddListener(UpdateExpUI);
     }
 
     private void Start()
     {
-        // GameManager의 에너지 변경 이벤트 구독
-        Managers.Game.onEnergyChanged.AddListener(UpdateEnergyUI);
-        // 초기 에너지 UI 설정
-        UpdateEnergyUI(Managers.Game.CurrentEnergy);
+       // // GameManager의 에너지 변경 이벤트 구독
+       // Managers.Game.onEnergyChanged.AddListener(UpdateEnergyUI);
+       // // 초기 에너지 UI 설정
+       //// UpdateEnergyUI(Managers.Game.CurrentEnergy);
 
-        // GameManager의 에너지 리젠 타임 변경 이벤트 구독
-        Managers.Game.onEnergyRegenTimeChanged.AddListener(UpdateEnergyRegenTimeUI);
-        // 초기 에너지 리젠 타임 UI 설정
-        UpdateEnergyRegenTimeUI(Mathf.RoundToInt(Managers.Game.EnergyRegenRemainSec));
+       // // GameManager의 에너지 리젠 타임 변경 이벤트 구독
+       // Managers.Game.onEnergyRegenTimeChanged.AddListener(UpdateEnergyRegenTimeUI);
+       // // 초기 에너지 리젠 타임 UI 설정
+       // //UpdateEnergyRegenTimeUI(Mathf.RoundToInt(Managers.Game.EnergyRegenRemainSec));
 
         
 
-        // GameManager의 골드 변경 이벤트 구독
-        Managers.Game.onGemChanged.AddListener(UpdateGemUI);
-        // 초기 골드 UI 설정
-        UpdateGemUI(Managers.Game.CurrentGem);
+       // // GameManager의 골드 변경 이벤트 구독
+       // Managers.Game.onGemChanged.AddListener(UpdateGemUI);
+       // // 초기 골드 UI 설정
+       // //UpdateGemUI(Managers.Game.CurrentGem);
 
-        // GameManager의 골드 변경 이벤트 구독
-        Managers.Game.onGoldChanged.AddListener(UpdateGoldUI);
-        // 초기 골드 UI 설정
-        UpdateGoldUI(Managers.Game.CurrentGold);
+       // // GameManager의 골드 변경 이벤트 구독
+       // Managers.Game.onGoldChanged.AddListener(UpdateGoldUI);
+       // // 초기 골드 UI 설정
+       // //UpdateGoldUI(Managers.Game.CurrentGold);
 
-        // GameManager의 레벨 변경 이벤트 구독
-        Managers.Game.onLevelChanged.AddListener(UpdateLevelUI);
-        // 초기 레벨 UI 설정
-        UpdateLevelUI(Managers.Game.CurrentLevel);
+       // // GameManager의 레벨 변경 이벤트 구독
+       // Managers.Game.onLevelChanged.AddListener(UpdateLevelUI);
+       // // 초기 레벨 UI 설정
+       // //UpdateLevelUI(Managers.Game.CurrentLevel);
 
-        // GameManager의 레벨 변경 이벤트 구독
-        Managers.Game.onExpChanged.AddListener(UpdateExpUI);
-        // 초기 레벨 UI 설정
-        UpdateExpUI(Managers.Game.CurrentExp, Managers.Game.MaxExp[Managers.Game.CurrentLevel-1]);
+       // // GameManager의 레벨 변경 이벤트 구독
+       // Managers.Game.onExpChanged.AddListener(UpdateExpUI);
+       // // 초기 레벨 UI 설정
+       // //UpdateExpUI(Managers.Game.CurrentExp, Managers.Game.MaxExp[Managers.Game.CurrentLevel-1]);
 
     }
   
