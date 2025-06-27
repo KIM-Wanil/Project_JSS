@@ -7,6 +7,7 @@ using DG.Tweening;
 using System.Linq;
 using UnityEditor.U2D.Animation;
 using UnityEngine.TextCore.Text;
+using TMPro;
 
 public class FurniturePlacementManager : MonoBehaviour
 {
@@ -58,6 +59,7 @@ public class FurniturePlacementManager : MonoBehaviour
     int tempIndex;
     [SerializeField] Button[] buttons;
     [SerializeField] Image[] buttonsItemImage;
+    [SerializeField] TextMeshProUGUI[] buttonsTexs;
 
     [SerializeField] Sprite[] buttonSprite;
     [SerializeField] int[] buttonsIndex;
@@ -488,14 +490,16 @@ public class FurniturePlacementManager : MonoBehaviour
                 {
                     currentGrid = isometricGrids[1];
                     gridNumbers = 1;
+                    obj.transform.localScale = new Vector3(-1, 1, 1);
                 }
                 else
                 {
                     currentGrid = isometricGrids[2];
                     gridNumbers = 2;
+
                 }
             }
-
+              
             originalPosition = selectedFurniture.transform.position;
             originalRotation = currentInfo.Rotation;
 
@@ -545,7 +549,8 @@ public class FurniturePlacementManager : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                buttonsItemImage[i].sprite = sprites[tempIndex + i].sprites[0];
+                buttonsItemImage[i].sprite = sprites[tempIndex + i].lockSprite;
+                buttonsTexs[i].text = sprites[tempIndex + i].lockSprite.name;
                 if (sprites[tempIndex + i].isUnlocked)
                 {
                     buttonsItemImage[i].color = new Color(1, 1, 1, 1);
@@ -566,7 +571,8 @@ public class FurniturePlacementManager : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                buttonsItemImage[i].sprite = sprites[tempIndex + i - 2].sprites[0];
+                buttonsItemImage[i].sprite = sprites[tempIndex + i - 2].lockSprite;
+                buttonsTexs[i].text = sprites[tempIndex + i - 2].lockSprite.name;
                 if (sprites[tempIndex + i - 2].isUnlocked)
                     buttonsItemImage[i].color = new Color(1, 1, 1, 1);
                 else
@@ -582,7 +588,9 @@ public class FurniturePlacementManager : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                buttonsItemImage[i].sprite = sprites[tempIndex + i - 1].sprites[0];
+                buttonsItemImage[i].sprite = sprites[tempIndex + i - 1].lockSprite;
+                buttonsTexs[i].text = sprites[tempIndex + i - 1].lockSprite.name;
+
                 if (sprites[tempIndex + i - 1].isUnlocked)
                     buttonsItemImage[i].color = new Color(1, 1, 1, 1);
                 else

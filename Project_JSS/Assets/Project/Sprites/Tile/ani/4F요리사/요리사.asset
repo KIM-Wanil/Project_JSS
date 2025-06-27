@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: "\uC694\uB9AC\uC0AC"
   m_EditorClassIdentifier: 
   CharaterName: "\uC694\uB9AC\uC0AC"
+  CharacterDescription: 
+  isUnlock: 0
   assets:
   - {fileID: 7108339969198208228, guid: a34859eaa9375a3449f5bf1139ef4d20, type: 3}
   - {fileID: 0}
@@ -42,16 +44,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   skins:
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 0c02fc9c4de902d4b97bcb0ad8066ccb, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   deco1:
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 0c02fc9c4de902d4b97bcb0ad8066ccb, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   deco2:
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 0c02fc9c4de902d4b97bcb0ad8066ccb, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
   - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}

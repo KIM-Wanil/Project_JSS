@@ -21,7 +21,7 @@ MonoBehaviour:
   furnitureInfos:
   - furnitureName: "\uC0AC\uBB3C\uD568"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 4
     gridPosition: {x: 0, y: 10}
     size:
     - {x: 2, y: 4}
@@ -54,11 +54,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: -2.2877476, y: 1.4396993}
     colliderOffset: {x: -0.5208733, y: 2.225181}
     colliderSize: {x: 3.6307578, y: 3.119996}
-    isUnlocked: 1
+    isUnlocked: 0
     price: 3
   - furnitureName: "\uCC45\uC0C1"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 4
     gridPosition: {x: 4, y: 4}
     size:
     - {x: 4, y: 4}
@@ -95,11 +95,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: -1.5323781, y: 1.397734}
     colliderOffset: {x: -0.13619435, y: 1.7915432}
     colliderSize: {x: 3.11319, y: 2.2527199}
-    isUnlocked: 1
+    isUnlocked: 0
     price: 3
   - furnitureName: "\uC758\uC790"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 4
     gridPosition: {x: 6, y: 2}
     size:
     - {x: 1, y: 1}
@@ -132,11 +132,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: -0.54695743, y: 0.29365754}
     colliderOffset: {x: 0.0060024858, y: 0.9019495}
     colliderSize: {x: 1.0953232, y: 1.4234974}
-    isUnlocked: 1
+    isUnlocked: 0
     price: 3
   - furnitureName: "\uC0AC\uBB3C\uD5682"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 4
     gridPosition: {x: 10, y: 6}
     size:
     - {x: 2, y: 6}
@@ -170,11 +170,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: -3.2339542, y: 1.8526106}
     colliderOffset: {x: -0.93644047, y: 1.9010506}
     colliderSize: {x: 4.713682, y: 2.4717345}
-    isUnlocked: 1
+    isUnlocked: 0
     price: 3
   - furnitureName: "\uBBF8\uB04C\uC774"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 4
     gridPosition: {x: 0, y: 3}
     size:
     - {x: 2, y: 6}
@@ -208,11 +208,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: -3.5278814, y: 2.062558}
     colliderOffset: {x: -1.1568857, y: 1.9010506}
     colliderSize: {x: 4.272792, y: 2.4717345}
-    isUnlocked: 1
+    isUnlocked: 0
     price: 3
   - furnitureName: "\uB099\uC11C"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 4
     gridPosition: {x: 5, y: 0}
     size:
     - {x: 5, y: 4}
@@ -245,11 +245,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 0.25710344, y: 0.044121265}
     colliderOffset: {x: 1.9399133, y: 2.0317972}
     colliderSize: {x: 3.3827448, y: 2.7682242}
-    isUnlocked: 1
+    isUnlocked: 0
     price: 3
   - furnitureName: "\uCE60\uD310"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 4
     gridPosition: {x: 5, y: 4}
     size:
     - {x: 6, y: 4}
@@ -282,5 +282,5 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 0.25710344, y: 0.044121265}
     colliderOffset: {x: 1.8372195, y: 2.2314146}
     colliderSize: {x: 3.5881324, y: 2.202642}
-    isUnlocked: 1
+    isUnlocked: 0
     price: 3
