@@ -80,7 +80,7 @@ public class SaveManager : BaseManager
         SaveData initialData = new SaveData
         {
             energy = 100, // 초기 에너지 값 설정
-            star = 10,    // 초기 별 값 설정
+            star = 100,    // 초기 별 값 설정
             gem = 777,    // 초기 젬 값 설정
             gold = 1234, // 초기 골드 값 설정
             playerName = "Player", // 초기 플레이어 이름 설정
