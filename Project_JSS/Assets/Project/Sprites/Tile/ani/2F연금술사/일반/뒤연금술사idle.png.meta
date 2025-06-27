@@ -126,10 +126,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0ACidle_0"
       rect:
         serializedVersion: 2
-        x: 47
-        y: 266
-        width: 151
-        height: 215
+        x: 0
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,10 +148,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0ACidle_1"
       rect:
         serializedVersion: 2
-        x: 302
-        y: 266
-        width: 153
-        height: 215
+        x: 256
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +170,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0ACidle_2"
       rect:
         serializedVersion: 2
-        x: 558
-        y: 266
-        width: 154
-        height: 216
+        x: 512
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0ACidle_3"
       rect:
         serializedVersion: 2
-        x: 46
-        y: 10
-        width: 153
-        height: 215
+        x: 0
+        y: 0
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +214,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0ACidle_4"
       rect:
         serializedVersion: 2
-        x: 303
-        y: 10
-        width: 151
-        height: 215
+        x: 256
+        y: 0
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,6 +228,28 @@ TextureImporter:
       bones: []
       spriteID: df4386f86051c4744b2cb034857c6d2b
       internalID: 1545772899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uB4A4\uC5F0\uAE08\uC220\uC0ACidle_5"
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb39d3478a2a52d42b7b3217dce83d58
+      internalID: -650869816
       vertices: []
       indices: 
       edges: []
@@ -251,6 +273,7 @@ TextureImporter:
       "\uB4A4\uC5F0\uAE08\uC220\uC0ACidle_2": 1193832522
       "\uB4A4\uC5F0\uAE08\uC220\uC0ACidle_3": 31973393
       "\uB4A4\uC5F0\uAE08\uC220\uC0ACidle_4": 1545772899
+      "\uB4A4\uC5F0\uAE08\uC220\uC0ACidle_5": -650869816
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

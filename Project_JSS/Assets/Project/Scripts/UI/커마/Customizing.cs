@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -24,6 +25,7 @@ public class Customizing : MonoBehaviour
 
     [SerializeField] Button[] buttons;
     [SerializeField] Image[] buttonsItemImage;
+    [SerializeField] TextMeshProUGUI[] buttonsText;
 
     [SerializeField] Sprite[] buttonSprite;
     [SerializeField] int[] buttonsIndex;
@@ -103,6 +105,7 @@ public class Customizing : MonoBehaviour
             {
                 
                 buttonsItemImage[i].sprite = sprites[tempIndex + i];
+                buttonsText[i].text = sprites[tempIndex + i].name;
                 buttonsIndex[i] = tempIndex + i;
 
                 if (tempIndex + i == index)
@@ -116,6 +119,7 @@ public class Customizing : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 buttonsItemImage[i].sprite = sprites[tempIndex + i -2];
+                buttonsText[i].text = sprites[tempIndex + i - 2].name;
                 buttonsIndex[i] = tempIndex + i;
                 if (tempIndex + i - 2 == index)
                     buttons[i].GetComponent<Image>().sprite = buttonSprite[0];
@@ -128,6 +132,7 @@ public class Customizing : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 buttonsItemImage[i].sprite = sprites[tempIndex + i - 1];
+                buttonsText[i].text = sprites[tempIndex + i - 1].name;
                 buttonsIndex[i] = tempIndex + i - 1;
                 if (tempIndex + i - 1 == index)
                     buttons[i].GetComponent<Image>().sprite = buttonSprite[0];
