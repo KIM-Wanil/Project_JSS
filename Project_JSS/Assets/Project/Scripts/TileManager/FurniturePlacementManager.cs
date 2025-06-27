@@ -248,6 +248,7 @@ public class FurniturePlacementManager : MonoBehaviour
                 {
                     currentGrid = isometricGrids[0];
                     gridNumbers = 0;
+                    RotateButtonUIOn(true);
                 }
                 else
                 {
@@ -262,7 +263,7 @@ public class FurniturePlacementManager : MonoBehaviour
                         currentGrid = isometricGrids[2];
                         gridNumbers = 2;
                     }
-                      
+                    RotateButtonUIOn(false);
                 }
 
                 originalPosition = selectedFurniture.transform.position;
@@ -483,6 +484,7 @@ public class FurniturePlacementManager : MonoBehaviour
             {
                 currentGrid = isometricGrids[0];
                 gridNumbers = 0;
+                RotateButtonUIOn(true);
             }
             else
             {
@@ -498,6 +500,7 @@ public class FurniturePlacementManager : MonoBehaviour
                     gridNumbers = 2;
 
                 }
+                RotateButtonUIOn(false);
             }
               
             originalPosition = selectedFurniture.transform.position;
@@ -524,7 +527,10 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         cancelButton.gameObject.SetActive(b);
     }
-
+    private void RotateButtonUIOn(bool b)
+    {
+        rotateButton.gameObject.SetActive(b);
+    }
     public void SwitchFloor(bool Up)
     {
         if (StateManager.instance.ButItem)
