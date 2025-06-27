@@ -182,6 +182,10 @@ public class Customizing : MonoBehaviour
     }
     public void SetIndex(int num)
     {
+        if (buttonsItemImage[num].sprite.name == "LOCK ICON")
+        {
+            return;
+        }
         switch (whatIndex)
         {
             case WhatIndex.skin:
@@ -196,6 +200,7 @@ public class Customizing : MonoBehaviour
             default:
                 break;
         }
+        setButtonImage();
         SetSkin();
     }
     public void SetSkin() {
