@@ -1051,6 +1051,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &686751234751013551
 GameObject:
   m_ObjectHideFlags: 0
@@ -1924,9 +1926,9 @@ RectTransform:
   - {fileID: 3670324291968855259}
   m_Father: {fileID: 2198810542222035061}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 270, y: -61.5}
   m_SizeDelta: {x: 523, y: 113}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7646791446248918494
@@ -2278,7 +2280,7 @@ MonoBehaviour:
   m_text: 6
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5318d1786fce05c43a6eeac67ced4eff, type: 2}
-  m_sharedMaterial: {fileID: -7159097896683511941, guid: 5318d1786fce05c43a6eeac67ced4eff, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: d99c682267eacdc4cb98d6e7f14abbb6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2503,8 +2505,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278536564
+  m_fontColor: {r: 0.45490196, g: 0.28627452, b: 0.019607844, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2562,7 +2564,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1937563808579432320
@@ -2940,8 +2942,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278536564
+  m_fontColor: {r: 0.45490196, g: 0.28627452, b: 0.019607844, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2999,7 +3001,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2458266477074911630
@@ -3037,7 +3039,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -22, y: 0}
+  m_SizeDelta: {x: -22, y: 5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2306965998903450037
 MonoBehaviour:
@@ -3537,9 +3539,9 @@ RectTransform:
   - {fileID: 2159172428932098465}
   m_Father: {fileID: 2198810542222035061}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 270, y: -430.5}
   m_SizeDelta: {x: 523, y: 113}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1951934417204968030
@@ -4497,6 +4499,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &3807777176461927905
 GameObject:
   m_ObjectHideFlags: 0
@@ -4616,9 +4620,9 @@ RectTransform:
   - {fileID: 1051556397849806074}
   m_Father: {fileID: 2198810542222035061}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 270, y: -307.5}
   m_SizeDelta: {x: 523, y: 113}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3453621776613588019
@@ -5092,8 +5096,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278536564
+  m_fontColor: {r: 0.45490196, g: 0.28627452, b: 0.019607844, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5151,7 +5155,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &4521071127212831407
@@ -5663,9 +5667,9 @@ RectTransform:
   - {fileID: 261180966924395130}
   m_Father: {fileID: 2198810542222035061}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 270, y: -553.5}
   m_SizeDelta: {x: 523, y: 113}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7731552778779194731
@@ -6683,6 +6687,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &5592609703574312316
 GameObject:
   m_ObjectHideFlags: 0
@@ -7569,7 +7575,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -22, y: 0}
+  m_SizeDelta: {x: -22, y: 610}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4712476359713627508
 MonoBehaviour:
@@ -7723,7 +7729,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 47, y: -183}
+  m_AnchoredPosition: {x: 12.100006, y: -120}
   m_SizeDelta: {x: 86, y: 91}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &8033925883484473896
@@ -8099,6 +8105,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &6908760056003174631
 GameObject:
   m_ObjectHideFlags: 0
@@ -9519,8 +9527,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4279440168
+  m_fontColor: {r: 0.15686275, g: 0.07450981, b: 0.07450981, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9578,7 +9586,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &7714969079068029583
@@ -10208,9 +10216,9 @@ RectTransform:
   - {fileID: 1643262999027677078}
   m_Father: {fileID: 2198810542222035061}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 270, y: -184.5}
   m_SizeDelta: {x: 523, y: 113}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5229731456469087098
@@ -10428,6 +10436,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &8364070191097201098
 GameObject:
   m_ObjectHideFlags: 0
@@ -10712,7 +10722,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.33962262, g: 0.21748805, b: 0.07208972, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -10847,8 +10857,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4279383895
+  m_fontColor: {r: 0.33962262, g: 0.21748805, b: 0.07208972, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -11059,7 +11069,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.33962262, g: 0.21748805, b: 0.07208972, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
