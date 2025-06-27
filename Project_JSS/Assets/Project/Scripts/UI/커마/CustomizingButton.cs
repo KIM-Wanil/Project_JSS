@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,9 @@ public class CustomizingButton : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        characterData.skinIndex = 0;
+        characterData.decorationIndex1 = 0;
+        characterData.decorationIndex2 = 0;
         Setting();
     }
 
