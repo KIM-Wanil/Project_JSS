@@ -218,11 +218,11 @@ public class DialogueManager : BaseManager
     {
         if (Input.GetKeyDown(KeyCode.F1) && !isDialogueActive)
         {
-            StartDialogue("CH1_EVENT0");
+            StartDialogue("EVENT0");
         }
         if (Input.GetKeyDown(KeyCode.F2) && !isDialogueActive)
         {
-            StartDialogue("CH1_EVENT1");
+            StartDialogue("EVENT1");
         }
         // 스페이스바로도 대화 진행 가능
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && isDialogueActive && messageItems.Count > 0)
