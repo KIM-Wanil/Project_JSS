@@ -20,6 +20,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private RectTransform highlightRect; // 강조영역
     //public RectTransform characterDialogPrefab; // 캐릭터+대화상자 프리팹
     [SerializeField] private RectTransform fingerImage; // 손가락 이미지
+    [SerializeField] private TutorialRaycastBlocker blocker; // 손가락 이미지
     private Tween fingerTween;
 
 
@@ -84,6 +85,7 @@ public class TutorialManager : MonoBehaviour
 
         currentStepIndex = 0;
         tutorialPanel.gameObject.SetActive(true);
+        blocker.ActivateBlockers();
         ShowTutorialStep(currentTutorial[currentStepIndex]);
         tutorialPanel.DOFade(1f, 0.5f).SetEase(Ease.InOutQuad).OnComplete(() => 
         {
@@ -147,6 +149,7 @@ public class TutorialManager : MonoBehaviour
     {
         highlightRect.anchoredPosition = highlightPos;
         highlightRect.sizeDelta = highlightSize;
+        blocker.UpdateBlockers(highlightPos, highlightSize);
     }
 
     private void SetupFinger(Vector2 position, float rotation)
@@ -250,6 +253,7 @@ public class TutorialManager : MonoBehaviour
         tutorialPanel.DOFade(0f, 0.5f).SetEase(Ease.OutQuad).OnComplete(() =>
         {
             isTutorialActive = false;
+            blocker.DeactivateBlockers();
             tutorialPanel.gameObject.SetActive(false);
         });
         Debug.Log("튜토리얼 완료!");

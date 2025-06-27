@@ -7327,6 +7327,7 @@ GameObject:
   - component: {fileID: 2466388046600457825}
   - component: {fileID: 5311073339758507740}
   - component: {fileID: 4640399445644233758}
+  - component: {fileID: 679050957334426674}
   m_Layer: 0
   m_Name: TutorialCanvas
   m_TagString: Untagged
@@ -7433,11 +7434,25 @@ MonoBehaviour:
   overlayImage: {fileID: 5342882107642304148}
   highlightRect: {fileID: 8763789204129498486}
   fingerImage: {fileID: 7755492162770862274}
+  blocker: {fileID: 679050957334426674}
   tutorialDatabase: {fileID: 11400000, guid: a0305832d2a976648b9fef0e8ba009d3, type: 2}
   characterDialog: {fileID: 966775190534828070}
   dialogueText: {fileID: 251747276090674140}
   deaconPeng: {fileID: 3410686027661234490}
   maidPeng: {fileID: 3404833518133495892}
+--- !u!114 &679050957334426674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4662091657141051856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9108de3cac233f749a9e5d41036764ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootCanvas: {fileID: 7208537367330560315}
 --- !u!1 &4662355396571637355
 GameObject:
   m_ObjectHideFlags: 0
@@ -7764,8 +7779,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 20, y: 175}
-  m_SizeDelta: {x: 680, y: 865}
+  m_AnchoredPosition: {x: 123.42059, y: 543.0557}
+  m_SizeDelta: {x: 360.6128, y: 284.44}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &3408393297830394040
 CanvasRenderer:
@@ -8058,7 +8073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

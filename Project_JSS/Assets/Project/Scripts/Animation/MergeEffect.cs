@@ -76,7 +76,10 @@ public class MergeEffect : MonoBehaviour
         isEffectPlaying = false;
         //PlayTryMerge();
     }
-
+    private void OnDisable()
+    {
+        isEffectPlaying = false;
+    }
     public void Init()
     {
         //this.gameObject.SetActive(false);
