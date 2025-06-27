@@ -514,6 +514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 9221469171924296752}
+  dialogueBox: {fileID: 7755033442007663609}
   dialogueText: {fileID: 3602385164542239594}
   nextArrow: {fileID: 7657689652478453931}
 --- !u!1 &7657689652478453931

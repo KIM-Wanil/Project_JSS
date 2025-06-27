@@ -26,6 +26,7 @@ public class UiController : MonoBehaviour
         Managers.Game.onStarChanged.AddListener(UpdateStarUIs);
         // 초기 골드 UI 설정
         UpdateStarUIs(Managers.Game.CurrentStar);
+        Managers.Game.sceneState = SceneState.Hotel;
     }
     public void SetupButtonListeners()
     {
@@ -54,7 +55,29 @@ public class UiController : MonoBehaviour
             mergeCanvas.gameObject.SetActive(false);
         });
         sequence.Append(transitionScreen.DOAnchorPos(new Vector2(0, 0f), transitionDuration).SetEase(Ease.Linear));
+        sequence.OnComplete(() =>
+        {
+            Managers.Game.sceneState = SceneState.Hotel;
+        });
     }
+    public Sequence MoveToHotelSequence()
+    {
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(transitionScreen.DOAnchorPos(new Vector2(0, -1280f), transitionDuration).SetEase(Ease.OutCubic));
+        sequence.AppendCallback(() =>
+        {
+            hotelCanvas.SetActive(true);
+            hotelUiCanvas.SetActive(true);
+            mergeCanvas.gameObject.SetActive(false);
+        });
+        sequence.Append(transitionScreen.DOAnchorPos(new Vector2(0, 0f), transitionDuration).SetEase(Ease.Linear));
+        sequence.OnComplete(() =>
+        {
+            Managers.Game.sceneState = SceneState.Hotel;
+        });    
+        return sequence;
+    }
+
     public void onClickToMergeButton()
     {
         Sequence sequence = DOTween.Sequence();
@@ -78,6 +101,7 @@ public class UiController : MonoBehaviour
             hotelUiCanvas.SetActive(false);
         });
         sequence.Append(transitionScreen.DOAnchorPos(new Vector2(0, 0f), transitionDuration).SetEase(Ease.Linear));
+        Managers.Game.sceneState = SceneState.Merge;
     }
     private IEnumerator WaitForDataLoadedAndContinue(Sequence sequence)
     {

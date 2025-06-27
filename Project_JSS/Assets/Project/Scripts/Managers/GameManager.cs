@@ -93,6 +93,8 @@ public class GameManager : BaseManager
 
     public Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
     public Dictionary<string, GeneratorSO> genDataDic = new Dictionary<string, GeneratorSO>();
+
+    public SceneState sceneState;
     //[SerializeField] private ObjectPool<GameObject> itemPool;
     //[SerializeField] private ObjectPool<GameObject> generatorPool;
 

@@ -158,6 +158,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -181.5
       objectReference: {fileID: 0}
+    - target: {fileID: 621519661136189543, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: uiController
+      value: 
+      objectReference: {fileID: 1417394871}
     - target: {fileID: 950882908070931742, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -214,6 +218,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1759667477473147859, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: dialogueDatabase
+      value: 
+      objectReference: {fileID: 11400000, guid: c86ecdb0fe86863438c5289d233fe7d3, type: 2}
     - target: {fileID: 1829084493005132285, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -258,6 +266,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3533068228938537056, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: uiController
+      value: 
+      objectReference: {fileID: 1417394871}
+    - target: {fileID: 3575583345238301656, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: uiController
+      value: 
+      objectReference: {fileID: 1417394871}
+    - target: {fileID: 3902142965826125218, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: uiController
+      value: 
+      objectReference: {fileID: 1417394871}
     - target: {fileID: 3951649013604791239, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -282,6 +302,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4205196617290046630, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: uiController
+      value: 
+      objectReference: {fileID: 1417394871}
     - target: {fileID: 4325956640724813839, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: furniturePlacementManager
       value: 
@@ -1536,6 +1560,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3339455130212177893, guid: 0ca7b4fdcf4a3414e9919935e6b75c6c, type: 3}
   m_PrefabInstance: {fileID: 1387711534}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1417394871 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2622067380671758202, guid: 1899ae0eb74a34d4f83612906160addd, type: 3}
+  m_PrefabInstance: {fileID: 4085478254117824521}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7830f61d2693101478c9e11bc652e963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1641320730 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9081792560601361831, guid: 0ca7b4fdcf4a3414e9919935e6b75c6c, type: 3}

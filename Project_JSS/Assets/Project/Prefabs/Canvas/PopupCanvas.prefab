@@ -1143,6 +1143,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &822876858302300302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,7 +1233,7 @@ GameObject:
   - component: {fileID: 1944759273899717260}
   - component: {fileID: 6827959263950749569}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ButtonText_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2775,7 +2777,7 @@ GameObject:
   - component: {fileID: 2582982485110391712}
   - component: {fileID: 1098925433888859991}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ButtonText_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3481,6 +3483,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &2195560535030599374
 GameObject:
   m_ObjectHideFlags: 0
@@ -3969,6 +3973,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &2381015334918996415
 GameObject:
   m_ObjectHideFlags: 0
@@ -5067,7 +5073,7 @@ GameObject:
   - component: {fileID: 789028061912821313}
   - component: {fileID: 8416950724404488356}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ButtonText_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5500,6 +5506,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &3515132000658517379
 GameObject:
   m_ObjectHideFlags: 0
@@ -6422,6 +6430,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 2670464797080282193}
   requiredLV: {fileID: 8228925951831315008}
   floorAchievement: {fileID: 3157911220435564142}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 6981503486444168651}
 --- !u!1 &4066077425624075293
 GameObject:
   m_ObjectHideFlags: 0
@@ -7094,6 +7104,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 8967626474576448924}
   requiredLV: {fileID: 1681100560725533605}
   floorAchievement: {fileID: 7767150466217497883}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 8416950724404488356}
 --- !u!1 &4276307780888510700
 GameObject:
   m_ObjectHideFlags: 0
@@ -8149,7 +8161,7 @@ GameObject:
   - component: {fileID: 7112963594370007098}
   - component: {fileID: 6981503486444168651}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ButtonText_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8911,6 +8923,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 5393510398165100712}
   requiredLV: {fileID: 3499762388955027222}
   floorAchievement: {fileID: 5148887989254364609}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 1098925433888859991}
 --- !u!1 &5746221772907773398
 GameObject:
   m_ObjectHideFlags: 0
@@ -9116,6 +9130,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &5781118299277633968
 GameObject:
   m_ObjectHideFlags: 0
@@ -9652,6 +9668,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &6166653897896733530
 GameObject:
   m_ObjectHideFlags: 0
@@ -9977,6 +9995,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &6334856901835935517
 GameObject:
   m_ObjectHideFlags: 0
@@ -10597,6 +10617,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &6729273208001424256
 GameObject:
   m_ObjectHideFlags: 0
@@ -11333,7 +11355,7 @@ GameObject:
   - component: {fileID: 5678380952137526386}
   - component: {fileID: 215777408264122506}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ButtonText_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12172,6 +12194,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &8120052089340972258
 GameObject:
   m_ObjectHideFlags: 0
@@ -12919,6 +12943,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 5960119375097252750}
   requiredLV: {fileID: 3696327784721588543}
   floorAchievement: {fileID: 6713869970248236885}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 6827959263950749569}
 --- !u!1 &8760470553403243792
 GameObject:
   m_ObjectHideFlags: 0
@@ -13376,6 +13402,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 0}
   requiredLV: {fileID: 0}
   floorAchievement: {fileID: 0}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 0}
 --- !u!1 &8967626474576448924
 GameObject:
   m_ObjectHideFlags: 0
@@ -13673,6 +13701,8 @@ MonoBehaviour:
   buybuttonObject: {fileID: 5694725785100218332}
   requiredLV: {fileID: 6555853005008620589}
   floorAchievement: {fileID: 1628920107200129728}
+  uiController: {fileID: 0}
+  buttonText: {fileID: 215777408264122506}
 --- !u!1 &9141891621939376298
 GameObject:
   m_ObjectHideFlags: 0
