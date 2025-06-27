@@ -6,6 +6,7 @@ using static GeneratorSO;
 using Unity.VisualScripting;
 using DG.Tweening;
 using System.Linq;
+using static UnityEngine.Tilemaps.Tilemap;
 
 public class Generator : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class Generator : MonoBehaviour
 
     public MergeEffect genEffect;
     private bool canGenerate = true;
+    private bool isInit = false;
     private void Awake()
     {
         mergeableItem = GetComponent<MergeableItem>();
@@ -47,6 +49,13 @@ public class Generator : MonoBehaviour
         //    durabilitySlider.rectTransform.sizeDelta = new Vector2(100, 10); // 크기 조정
         //    durabilitySlider.rectTransform.anchoredPosition = new Vector2(0, -50); // 위치 조정
         //}
+    }
+    private void OnEnable()
+    {
+        if (isInit)
+        {
+            genEffect.PlayEffectAtTime(Managers.Grid.GeneratorSyncTime);
+        }
     }
 
     public void Initialize(float syncTime, ItemState state = ItemState.Normal)
@@ -93,6 +102,8 @@ public class Generator : MonoBehaviour
             Debug.Log(item.key.id + item.key.lv);
             generatableSprites.Add(Managers.Game.GetItemSprite(item.key));
         }
+
+        isInit = true;
         //mergeableItem.button.onClick.AddListener(() =>
         //        Managers.Game.infoPanelController.PrintGeneratorDesc(mergeableItem.itemKey, generatableSprites));
 

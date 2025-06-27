@@ -85,7 +85,7 @@ public class TutorialManager : MonoBehaviour
 
         currentStepIndex = 0;
         tutorialPanel.gameObject.SetActive(true);
-        //blocker.
+        blocker.ActivateBlockers();
         ShowTutorialStep(currentTutorial[currentStepIndex]);
         tutorialPanel.DOFade(1f, 0.5f).SetEase(Ease.InOutQuad).OnComplete(() => 
         {
@@ -253,6 +253,7 @@ public class TutorialManager : MonoBehaviour
         tutorialPanel.DOFade(0f, 0.5f).SetEase(Ease.OutQuad).OnComplete(() =>
         {
             isTutorialActive = false;
+            blocker.DeactivateBlockers();
             tutorialPanel.gameObject.SetActive(false);
         });
         Debug.Log("튜토리얼 완료!");

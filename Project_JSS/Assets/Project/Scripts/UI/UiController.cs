@@ -18,6 +18,10 @@ public class UiController : MonoBehaviour
     [SerializeField] private CanvasGroup mergeCanvas;
     [SerializeField] private RectTransform transitionScreen;
     [SerializeField] private float transitionDuration = 0.5f;
+    private void Awake()
+    {
+        Managers.Game.sceneState = SceneState.Hotel;
+    }
     void Start()
     {
 
@@ -26,7 +30,7 @@ public class UiController : MonoBehaviour
         Managers.Game.onStarChanged.AddListener(UpdateStarUIs);
         // 초기 골드 UI 설정
         UpdateStarUIs(Managers.Game.CurrentStar);
-        Managers.Game.sceneState = SceneState.Hotel;
+        
     }
     public void SetupButtonListeners()
     {

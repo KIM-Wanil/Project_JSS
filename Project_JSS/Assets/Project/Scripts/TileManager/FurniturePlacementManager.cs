@@ -365,6 +365,7 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         if (selectedFurniture != null && currentGrid.CanPlaceFurniture(gridPosition))
         {
+            TutorialManager.TriggerCondition(TutorialCondition.가구설치);
             // 그리드에 맞추기
             Vector3 snappedPosition = currentGrid.SortGrid(selectedFurniture.transform.position);
             selectedFurniture.GetComponent<FurnitureInfo>().GridPosition = gridPosition;

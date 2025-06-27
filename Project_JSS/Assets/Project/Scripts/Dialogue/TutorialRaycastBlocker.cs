@@ -12,6 +12,7 @@ public class TutorialRaycastBlocker : MonoBehaviour
         if (rootCanvas == null)
             rootCanvas = GetComponent<Canvas>();
         CreateBlockers();
+        DeactivateBlockers();
     }
 
     void Update()
@@ -34,6 +35,29 @@ public class TutorialRaycastBlocker : MonoBehaviour
             blockers[i].pivot = Vector2.zero;
         }
     }
+    public void ActivateBlockers()
+    {
+        // 积己等 喉肺目 力芭
+        foreach (var blocker in blockers)
+        {
+            if (blocker != null)
+            {
+                blocker.gameObject.SetActive(true);
+            }
+        }
+    }
+    public void DeactivateBlockers()
+    {
+        // 积己等 喉肺目 力芭
+        foreach (var blocker in blockers)
+        {
+            if (blocker != null)
+            {
+                blocker.gameObject.SetActive(false);
+            }
+        }
+    }
+    
 
     public void UpdateBlockers(Vector2 highlightPos, Vector2 hilightSize)
     {
