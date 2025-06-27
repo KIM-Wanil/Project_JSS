@@ -174,7 +174,7 @@ MonoBehaviour:
   - furnitureName: "\uC637\uC7A5"
     furnitureDescription: 
     floorNum: 2
-    gridPosition: {x: 4, y: 9}
+    gridPosition: {x: 4, y: 10}
     size:
     - {x: 3, y: 2}
     - {x: 2, y: 3}

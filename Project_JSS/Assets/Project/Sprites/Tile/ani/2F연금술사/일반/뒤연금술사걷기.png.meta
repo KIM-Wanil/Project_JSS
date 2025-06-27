@@ -126,10 +126,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_0"
       rect:
         serializedVersion: 2
-        x: 57
-        y: 523
-        width: 154
-        height: 214
+        x: 0
+        y: 512
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,10 +148,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_1"
       rect:
         serializedVersion: 2
-        x: 314
-        y: 525
-        width: 159
-        height: 212
+        x: 256
+        y: 512
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +170,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_2"
       rect:
         serializedVersion: 2
-        x: 569
-        y: 523
-        width: 154
-        height: 214
+        x: 512
+        y: 512
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_3"
       rect:
         serializedVersion: 2
-        x: 55
-        y: 266
-        width: 151
-        height: 215
+        x: 0
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +214,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_4"
       rect:
         serializedVersion: 2
-        x: 314
-        y: 269
-        width: 144
-        height: 216
+        x: 256
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +236,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_5"
       rect:
         serializedVersion: 2
-        x: 559
-        y: 269
-        width: 151
-        height: 221
+        x: 512
+        y: 256
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,10 +258,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_6"
       rect:
         serializedVersion: 2
-        x: 58
-        y: 13
-        width: 144
-        height: 216
+        x: 0
+        y: 0
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,10 +280,10 @@ TextureImporter:
       name: "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_7"
       rect:
         serializedVersion: 2
-        x: 311
-        y: 10
-        width: 151
-        height: 215
+        x: 256
+        y: 0
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -294,6 +294,28 @@ TextureImporter:
       bones: []
       spriteID: b40241568116e764db05a4691e8a097e
       internalID: 1262364863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_8"
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a70b11ac7e8f23248bfcbb224fdf3079
+      internalID: -1068511071
       vertices: []
       indices: 
       edges: []
@@ -320,6 +342,7 @@ TextureImporter:
       "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_5": -259130274
       "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_6": 1544646357
       "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_7": 1262364863
+      "\uB4A4\uC5F0\uAE08\uC220\uC0AC\uAC77\uAE30_8": -1068511071
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
