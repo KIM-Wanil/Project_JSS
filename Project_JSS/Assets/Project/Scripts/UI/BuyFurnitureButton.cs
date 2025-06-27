@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using TMPro;
 using UnityEngine;
@@ -21,6 +22,8 @@ public class BuyFurnitureButton : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI requiredLV;
     [SerializeField] TextMeshProUGUI floorAchievement;
+    [SerializeField] private UiController uiController; 
+    [SerializeField] private TextMeshProUGUI buttonText; 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,11 +44,36 @@ public class BuyFurnitureButton : MonoBehaviour
     }
     public void Buy()
     {
+        //3 -> 나중에 가구 설치 필요 별 개수로 수정
+        if (!Managers.Game.TrySpendStar(3)) return;
 
-        furniturePlacementManager.AddFurnitureToFloor(data,data.floorNum);
-        buyFurniture.SetUI(false);
-        StateManager.instance.ButItem = true;
-        Setting();
+        if (Managers.Game.sceneState == SceneState.Hotel)
+        {
+            furniturePlacementManager.AddFurnitureToFloor(data, data.floorNum);
+            buyFurniture.SetUI(false);
+            StateManager.instance.ButItem = true;
+            Setting();
+        }
+        else if (Managers.Game.sceneState == SceneState.Merge)
+        {
+            Sequence sequence = uiController.MoveToHotelSequence();
+            sequence.PrependCallback(() =>
+            {
+                buyFurniture.SetUI(false);
+            });
+            sequence.OnComplete(() =>
+            {
+                furniturePlacementManager.AddFurnitureToFloor(data, data.floorNum);
+                buyFurniture.SetUI(false);
+                StateManager.instance.ButItem = true;
+                Setting();
+            });
+        }
+        else
+        {
+            Debug.LogError("잘못된 씬입니다.");
+        }
+        
     }
     public void Setting(FloorData floorData, BuyFurniture buyFurniture, FurniturePlacementManager furniturePlacementManager)
     {
@@ -74,10 +102,22 @@ public class BuyFurnitureButton : MonoBehaviour
     }
     public void UnLock()
     {
-            slider.gameObject.SetActive(true);
-            buybuttonObject.SetActive(true);
-            lockObject.SetActive(false);
+        slider.gameObject.SetActive(true);
+        buybuttonObject.SetActive(true);
+        lockObject.SetActive(false);
         Setting();
+        if (Managers.Game.sceneState == SceneState.Hotel)
+        {
+            buttonText.text = "제작";
+        }
+        else if (Managers.Game.sceneState == SceneState.Merge)
+        {
+            buttonText.text = "이동";
+        }
+        else
+        {
+            Debug.LogError("잘못된 씬입니다.");
+        }
     }
     public void Setting()
     {

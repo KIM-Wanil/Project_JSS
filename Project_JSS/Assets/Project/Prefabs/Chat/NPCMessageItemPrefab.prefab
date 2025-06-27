@@ -131,9 +131,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 270, y: -80.885}
+  m_AnchoredPosition: {x: 270, y: -101.770004}
   m_SizeDelta: {x: 450, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6423243212652789897
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -531,9 +531,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -92.095604}
+  m_AnchoredPosition: {x: 300, y: -154.19121}
   m_SizeDelta: {x: 540, y: 0}
-  m_Pivot: {x: 1, y: 0.5}
+  m_Pivot: {x: 1, y: 0}
 --- !u!222 &5837267046376257696
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -603,7 +603,7 @@ MonoBehaviour:
     m_Right: 20
     m_Top: 60
     m_Bottom: 120
-  m_ChildAlignment: 4
+  m_ChildAlignment: 7
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -671,7 +671,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 30
     m_Bottom: 0
-  m_ChildAlignment: 5
+  m_ChildAlignment: 8
   m_Spacing: -25
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -707,6 +707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 7720578659835476103}
+  dialogueBox: {fileID: 2254239135671783176}
   dialogueText: {fileID: 2550559713793002122}
   nextArrow: {fileID: 3367216663570733671}
 --- !u!1 &7367832388923130362

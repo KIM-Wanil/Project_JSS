@@ -7,6 +7,7 @@ public class DialogueMessageItem : MonoBehaviour
 {
     [Header("UI 컴포넌트")]
     public TextMeshProUGUI nameText;
+    public RectTransform dialogueBox;
     public TextMeshProUGUI dialogueText;
     public GameObject nextArrow;
 
@@ -47,7 +48,8 @@ public class DialogueMessageItem : MonoBehaviour
         // 버튼 설정 (최신 메시지에만 표시)
         if (nextArrow != null)
         {
-            nextArrow.SetActive(isLatest && dialogue.nextDialogueId != -1);
+            //nextArrow.SetActive(isLatest && dialogue.nextDialogueId != -1);
+            nextArrow.SetActive(false);
         }
 
         // 텍스트 애니메이션
@@ -87,6 +89,8 @@ public class DialogueMessageItem : MonoBehaviour
         .OnComplete(() => {
             isTyping = false;
             dialogueText.text = text;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueBox);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponent<RectTransform>());
             if (nextArrow != null)
                 nextArrow.SetActive(true);
         });
@@ -98,6 +102,8 @@ public class DialogueMessageItem : MonoBehaviour
         {
             typingTween.Kill();
             dialogueText.text = dialogueData.dialogueText;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueBox);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponent<RectTransform>());
             isTyping = false;
             if (nextArrow != null)
                 nextArrow.SetActive(true);

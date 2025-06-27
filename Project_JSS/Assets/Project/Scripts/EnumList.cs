@@ -109,7 +109,12 @@ public enum TutorialCondition
     가구방향전환
 
 }
-
+public enum SceneState
+{
+    None = 0,
+    Hotel,
+    Merge
+}
 
 public class EnumList : MonoBehaviour
 {
