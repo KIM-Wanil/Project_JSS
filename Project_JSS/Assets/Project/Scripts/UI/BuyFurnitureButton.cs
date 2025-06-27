@@ -46,7 +46,7 @@ public class BuyFurnitureButton : MonoBehaviour
     {
         //3 -> 나중에 가구 설치 필요 별 개수로 수정
         if (!Managers.Game.TrySpendStar(3)) return;
-
+        TutorialManager.TriggerCondition(TutorialCondition.가구제작클릭);
         if (Managers.Game.sceneState == SceneState.Hotel)
         {
             furniturePlacementManager.AddFurnitureToFloor(data, data.floorNum);
@@ -106,18 +106,8 @@ public class BuyFurnitureButton : MonoBehaviour
         buybuttonObject.SetActive(true);
         lockObject.SetActive(false);
         Setting();
-        if (Managers.Game.sceneState == SceneState.Hotel)
-        {
-            buttonText.text = "제작";
-        }
-        else if (Managers.Game.sceneState == SceneState.Merge)
-        {
-            buttonText.text = "이동";
-        }
-        else
-        {
-            Debug.LogError("잘못된 씬입니다.");
-        }
+        Debug.Log($"{Managers.Game.sceneState} {Managers.Game.sceneState == SceneState.Hotel}");
+        
     }
     public void Setting()
     {
@@ -140,5 +130,20 @@ public class BuyFurnitureButton : MonoBehaviour
         Destroy(this.gameObject);
         return;
 
+    }
+    public void SetButtonText()
+    {
+        if (Managers.Game.sceneState == SceneState.Hotel)
+        {
+            buttonText.text = "제작";
+        }
+        else if (Managers.Game.sceneState == SceneState.Merge)
+        {
+            buttonText.text = "이동";
+        }
+        else
+        {
+            Debug.LogError("잘못된 씬입니다.");
+        }
     }
 }

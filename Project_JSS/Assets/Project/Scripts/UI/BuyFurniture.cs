@@ -35,6 +35,10 @@ public class BuyFurniture : MonoBehaviour
         {
             GetInfo();
         }
+        else
+        {
+            TutorialManager.TriggerCondition(TutorialCondition.제작목록닫기버튼클릭);
+        }
     }
     void GetInfo()
     {
@@ -45,6 +49,14 @@ public class BuyFurniture : MonoBehaviour
                 floorDatas[i].isUnlock = true;
                 objects[i].UnLock();
             }
+        }
+        SetObjectButton();
+    }
+    void SetObjectButton()
+    {
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].SetButtonText();
         }
     }
 

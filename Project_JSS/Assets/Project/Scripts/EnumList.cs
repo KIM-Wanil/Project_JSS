@@ -102,11 +102,9 @@ public enum TutorialCondition
     스패너합성,
     제너레이터클릭,
     망치합성,
-    가구설치클릭,
+    가구제작클릭,
     퀘스트완료클릭,
-    가구선택,
-    가구드래그,
-    가구방향전환
+    가구설치,
 
 }
 public enum SceneState
