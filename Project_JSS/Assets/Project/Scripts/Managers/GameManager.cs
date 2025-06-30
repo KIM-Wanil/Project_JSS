@@ -152,6 +152,7 @@ public class GameManager : BaseManager
     }
     private void Awake()
     {
+        Screen.SetResolution(720, 1280, false);
     }
     public override void Init()
     {
