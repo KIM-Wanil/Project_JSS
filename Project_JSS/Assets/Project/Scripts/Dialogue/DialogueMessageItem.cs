@@ -9,6 +9,7 @@ public class DialogueMessageItem : MonoBehaviour
     public TextMeshProUGUI nameText;
     public RectTransform dialogueBox;
     public TextMeshProUGUI dialogueText;
+    public TextMeshProUGUI tempDialogueText;
     public GameObject nextArrow;
 
     //[Header("색상 설정")]
@@ -37,7 +38,10 @@ public class DialogueMessageItem : MonoBehaviour
             if (nameText != null)
                 nameText.text = dialogue.speakerName;
         }
-
+        tempDialogueText.text = dialogue.dialogueText;
+        float height = LayoutUtility.GetPreferredHeight(tempDialogueText.rectTransform);
+        dialogueText.rectTransform.sizeDelta = new Vector2(450f, height);
+        Debug.Log(height);
         //// NPC 이미지 설정
         //if (npcImage != null)
         //{

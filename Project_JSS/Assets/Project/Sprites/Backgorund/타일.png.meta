@@ -43,13 +43,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 0, y: 50, z: 0, w: 32}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -126,10 +126,10 @@ TextureImporter:
       name: "\uC81C\uB85C\uB178\uC2A4_0"
       rect:
         serializedVersion: 2
-        x: 29
-        y: 57
-        width: 609
-        height: 1158
+        x: 69
+        y: 403
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,7 +149,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 052862fee045af040991d1283a628ed6
-    internalID: 0
+    internalID: 7461309
     vertices: []
     indices: 
     edges: []

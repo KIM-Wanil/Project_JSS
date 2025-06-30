@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using System.Linq;
-using UnityEditor.U2D.Animation;
 using UnityEngine.TextCore.Text;
 using TMPro;
 
