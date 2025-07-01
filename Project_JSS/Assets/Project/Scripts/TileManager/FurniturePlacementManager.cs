@@ -74,7 +74,7 @@ public class FurniturePlacementManager : MonoBehaviour
             floorData[i].furnitureInfos = basefloorData[i].furnitureInfos;
             foreach (FurnitureData data in floorData[i].furnitureInfos )
             {
-                data.isUnlocked = false;
+                data.isUnlocked = true;
             }
           
         }
@@ -98,64 +98,64 @@ public class FurniturePlacementManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0); // 첫 번째 터치만 처리
+        //if (Input.touchCount > 0)
+        //{
+        //    Touch touch = Input.GetTouch(0); // 첫 번째 터치만 처리
 
-            switch (touch.phase)
-            {
-                case TouchPhase.Began:
-                    {
-                        // UI 요소를 터치했는지 확인
-                        if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-                            return;
+        //    switch (touch.phase)
+        //    {
+        //        case TouchPhase.Began:
+        //            {
+        //                // UI 요소를 터치했는지 확인
+        //                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+        //                    return;
 
-                        if (selectedFurniture == null)
-                        {
-                            // 가구가 선택되지 않은 상태에서는 길게 누르기 시작
-                            pressTime = Time.time;
-                            isLongPress = false;
-                        }
-                        else
-                        {
-                            Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-                            RaycastHit2D hit2D = Physics2D.Raycast(touchPosition, Vector2.zero);
+        //                if (selectedFurniture == null)
+        //                {
+        //                    // 가구가 선택되지 않은 상태에서는 길게 누르기 시작
+        //                    pressTime = Time.time;
+        //                    isLongPress = false;
+        //                }
+        //                else
+        //                {
+        //                    Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+        //                    RaycastHit2D hit2D = Physics2D.Raycast(touchPosition, Vector2.zero);
 
-                            if (hit2D.collider != null && hit2D.collider.gameObject == selectedFurniture)
-                            {
-                                isDragging = true;
-                            }
-                        }
-                        break;
-                    }
+        //                    if (hit2D.collider != null && hit2D.collider.gameObject == selectedFurniture)
+        //                    {
+        //                        isDragging = true;
+        //                    }
+        //                }
+        //                break;
+        //            }
 
-                case TouchPhase.Stationary:
-                case TouchPhase.Moved:
-                    {
-                        if (selectedFurniture == null && !isLongPress && Time.time - pressTime > longPressDuration)
-                        {
-                            isLongPress = true;
-                            // 길게 눌러서 가구 선택
-                            SelectFurnitureAtPosition(touch.position);
-                        }
-                        else if (selectedFurniture != null && isDragging)
-                        {
-                            // 선택된 가구 이동
-                            MoveFurniture(touch.position);
-                        }
-                        break;
-                    }
+        //        case TouchPhase.Stationary:
+        //        case TouchPhase.Moved:
+        //            {
+        //                if (selectedFurniture == null && !isLongPress && Time.time - pressTime > longPressDuration)
+        //                {
+        //                    isLongPress = true;
+        //                    // 길게 눌러서 가구 선택
+        //                    SelectFurnitureAtPosition(touch.position);
+        //                }
+        //                else if (selectedFurniture != null && isDragging)
+        //                {
+        //                    // 선택된 가구 이동
+        //                    MoveFurniture(touch.position);
+        //                }
+        //                break;
+        //            }
 
-                case TouchPhase.Ended:
-                    {
-                        isDragging = false;
-                        break;
-                    }
-            }
-        }
+        //        case TouchPhase.Ended:
+        //            {
+        //                isDragging = false;
+        //                break;
+        //            }
+        //    }
+        //}
 
         // 에디터 및 테스트용 마우스 입력 처리
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
             // UI 요소를 클릭했는지 확인
@@ -207,7 +207,7 @@ public class FurniturePlacementManager : MonoBehaviour
         {
             isDragging = false;
         }
-#endif
+//#endif
     }
 
     // 터치 위치에서 가구 선택

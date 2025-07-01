@@ -153,7 +153,7 @@ MonoBehaviour:
   isometricGrid: {fileID: 0}
   pathfinder: {fileID: 0}
   specialObject: {fileID: 0}
-  specialObjectName: "\uD06C\uB9AC\uC2A4\uD0C8\uBCFC"
+  specialObjectName: "\uC218\uC815\uAD6C"
   ChangeSpecial: 0
 --- !u!61 &3627767655511438500
 BoxCollider2D:

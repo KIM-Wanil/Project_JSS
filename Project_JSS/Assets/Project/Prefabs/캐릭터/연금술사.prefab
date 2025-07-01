@@ -153,7 +153,7 @@ MonoBehaviour:
   isometricGrid: {fileID: 0}
   pathfinder: {fileID: 0}
   specialObject: {fileID: 0}
-  specialObjectName: "\uC1A5"
+  specialObjectName: "\uB9C8\uBC95 \uC1A5"
   ChangeSpecial: 0
 --- !u!61 &8496445324447406741
 BoxCollider2D:
@@ -193,7 +193,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.61, y: 2.24}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 1.17, y: 1.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
