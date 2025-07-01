@@ -45,18 +45,18 @@ MonoBehaviour:
   - {fileID: 0}
   skins:
   - {fileID: 21300000, guid: 0c02fc9c4de902d4b97bcb0ad8066ccb, type: 3}
-  - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
-  - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
   deco1:
   - {fileID: 21300000, guid: 0c02fc9c4de902d4b97bcb0ad8066ccb, type: 3}
   - {fileID: 21300000, guid: 3235b19e168f26a40b634a28597c8644, type: 3}
-  - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
-  - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
   deco2:
   - {fileID: 21300000, guid: 0c02fc9c4de902d4b97bcb0ad8066ccb, type: 3}
   - {fileID: 21300000, guid: fc8ca2ae3988c1345aff41e73d5c414c, type: 3}
-  - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
-  - {fileID: 21300000, guid: 21f1f7ce65d22e041849b027b02baa5c, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
   skinIndex: 0
-  decorationIndex1: 0
-  decorationIndex2: 0
+  decorationIndex1: 1
+  decorationIndex2: 1

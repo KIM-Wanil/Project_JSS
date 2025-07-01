@@ -29,6 +29,8 @@ public class Customizing : MonoBehaviour
     [SerializeField] Sprite[] buttonSprite;
     [SerializeField] int[] buttonsIndex;
 
+    [SerializeField] Image[] buttonsItemImage2;
+    [SerializeField] Sprite[] buttonSprite2;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,6 +49,9 @@ public class Customizing : MonoBehaviour
         floorIndex = index;
         assets = charaterData[floorIndex].assets;
         whatIndex = WhatIndex.skin;
+        buttonsItemImage2[0].sprite = buttonSprite2[0];
+        buttonsItemImage2[1].sprite = buttonSprite2[1];
+        buttonsItemImage2[2].sprite = buttonSprite2[1];
         setButtonImage();
         SetSkin();
         ui.SetActive(true);
@@ -61,12 +66,21 @@ public class Customizing : MonoBehaviour
         switch (whatIndex)
         {
             case WhatIndex.skin:
+                buttonsItemImage2[0].sprite = buttonSprite2[0];
+                buttonsItemImage2[1].sprite = buttonSprite2[1];
+                buttonsItemImage2[2].sprite = buttonSprite2[1];
                 tempIndex = charaterData[floorIndex].skinIndex;
                 break;
             case WhatIndex.deco1:
+                buttonsItemImage2[0].sprite = buttonSprite2[1];
+                buttonsItemImage2[1].sprite = buttonSprite2[0];
+                buttonsItemImage2[2].sprite = buttonSprite2[1];
                 tempIndex = charaterData[floorIndex].decorationIndex1;
                 break;
             case WhatIndex.deco2:
+                buttonsItemImage2[0].sprite = buttonSprite2[1];
+                buttonsItemImage2[1].sprite = buttonSprite2[1];
+                buttonsItemImage2[2].sprite = buttonSprite2[0];
                 tempIndex = charaterData[floorIndex].decorationIndex2;
                 break;
             default:
