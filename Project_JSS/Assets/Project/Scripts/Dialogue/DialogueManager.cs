@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DialogueManager : BaseManager
 {
-    [Header("UI ÄÄÆ÷³ÍÆ®")]
+    [Header("UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®")]
     public GameObject dialoguePanel;
     public Image npcImage;
     public ScrollRect scrollRect;
@@ -14,14 +14,14 @@ public class DialogueManager : BaseManager
     public GameObject npcMessageItemPrefab;
     public Image backgroundDimmer;
 
-    [Header("¾Ö´Ï¸ÞÀÌ¼Ç ¼³Á¤")]
+    [Header("ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public float panelAnimationDuration = 0.5f;
     public float dimmerAlpha = 0.8f;
 
-    [Header("½ºÅ©·Ñ ¼³Á¤")]
+    [Header("ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public float scrollToBottomDuration = 0.3f;
 
-    [Header("µ¥ÀÌÅÍº£ÀÌ½º")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½")]
     public DialogueDatabase dialogueDatabase;
 
     private List<DialogueMessageItem> messageItems = new List<DialogueMessageItem>();
@@ -32,7 +32,6 @@ public class DialogueManager : BaseManager
     {
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
-        // ¹è°æ µõ¸Ó ÃÊ±âÈ­
         if (backgroundDimmer != null)
         {
             backgroundDimmer.color = new Color(0, 0, 0, 0);
@@ -40,9 +39,10 @@ public class DialogueManager : BaseManager
         }
     }
 
-    public void StartDialogue(string eventId)
+    public void StartDialogue(int num)
     {
         Debug.Log("StartDialogue");
+        string eventId = $"EVENT{num}";
         DialogueEvent dialogueEvent = dialogueDatabase.GetDialogueEvent(eventId);
         currentDialogueEvent = dialogueEvent;
         if (currentDialogueEvent != null)
@@ -89,7 +89,7 @@ public class DialogueManager : BaseManager
         {
             dialoguePanel.SetActive(true);
 
-            // ÆÐ³Î ½½¶óÀÌµå ÀÎ ¾Ö´Ï¸ÞÀÌ¼Ç
+            // ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             RectTransform panelRect = dialoguePanel.GetComponent<RectTransform>();
             Vector2 originalPos = panelRect.anchoredPosition;
             panelRect.anchoredPosition = new Vector2(originalPos.x, -Screen.height);
@@ -103,7 +103,7 @@ public class DialogueManager : BaseManager
             backgroundDimmer.DOFade(dimmerAlpha, panelAnimationDuration);
 
         }
-        // ¹è°æ µõ¸Ó ÆäÀÌµå ÀÎ
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½
 
 
 
@@ -113,14 +113,14 @@ public class DialogueManager : BaseManager
     {
         if (playerMessageItemPrefab == null || messageContent == null) return;
 
-        // ÀÌÀü ¸Þ½ÃÁöµéÀÇ ¹öÆ° ºñÈ°¼ºÈ­
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½È°ï¿½ï¿½È­
         foreach (var item in messageItems)
         {
             if (item.nextArrow != null)
                 item.nextArrow.gameObject.SetActive(false);
         }
 
-        // »õ ¸Þ½ÃÁö »ý¼º
+        // ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         GameObject newMessageObj;
         if( dialogue.speakerName == "ME")
             newMessageObj = Instantiate(playerMessageItemPrefab, messageContent);
@@ -136,7 +136,7 @@ public class DialogueManager : BaseManager
             messageItems.Add(messageItem);
         }
 
-        // ½ºÅ©·ÑÀ» ¸Ç ¾Æ·¡·Î
+        // ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½
         DOVirtual.DelayedCall(0.1f, () => ScrollToBottom());
     }
 
@@ -193,7 +193,7 @@ public class DialogueManager : BaseManager
 
         isDialogueActive = false;
 
-        // ÆÐ³Î ½½¶óÀÌµå ¾Æ¿ô ¾Ö´Ï¸ÞÀÌ¼Ç
+        // ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
         if (dialoguePanel != null)
         {
             RectTransform panelRect = dialoguePanel.GetComponent<RectTransform>();
@@ -201,12 +201,12 @@ public class DialogueManager : BaseManager
                 .SetEase(Ease.InQuart)
                 .OnComplete(() => {
                     dialoguePanel.SetActive(false);
-                    panelRect.anchoredPosition = new Vector2(panelRect.anchoredPosition.x, 0); // ÃÊ±â À§Ä¡·Î µÇµ¹¸®±â
+                    panelRect.anchoredPosition = new Vector2(panelRect.anchoredPosition.x, 0); // ï¿½Ê±ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½
                     ClearMessages();
                 });
         }
 
-        // ¹è°æ µõ¸Ó ÆäÀÌµå ¾Æ¿ô
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½
         if (backgroundDimmer != null)
         {
             backgroundDimmer.DOFade(0f, panelAnimationDuration)
@@ -218,13 +218,25 @@ public class DialogueManager : BaseManager
     {
         if (Input.GetKeyDown(KeyCode.F1) && !isDialogueActive)
         {
-            StartDialogue("EVENT0");
+            StartDialogue(0);
         }
         if (Input.GetKeyDown(KeyCode.F2) && !isDialogueActive)
         {
-            StartDialogue("EVENT1");
+            StartDialogue(1);
         }
-        // ½ºÆäÀÌ½º¹Ù·Îµµ ´ëÈ­ ÁøÇà °¡´É
+        if (Input.GetKeyDown(KeyCode.F3) && !isDialogueActive)
+        {
+            StartDialogue(2);
+        }
+        if (Input.GetKeyDown(KeyCode.F4) && !isDialogueActive)
+        {
+            StartDialogue(3);
+        }
+        if (Input.GetKeyDown(KeyCode.F5) && !isDialogueActive)
+        {
+            StartDialogue(4);
+        }
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½Ù·Îµï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && isDialogueActive && messageItems.Count > 0)
         {
             var lastMessage = messageItems[messageItems.Count - 1];
@@ -234,7 +246,7 @@ public class DialogueManager : BaseManager
             }
         }
 
-        //// ESC·Î ´ëÈ­ Á¾·á
+        //// ESCï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½
         //if (Input.GetKeyDown(KeyCode.Escape) && isDialogueActive)
         //{
         //    EndDialogue();
