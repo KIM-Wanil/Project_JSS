@@ -71,6 +71,105 @@ MonoBehaviour:
   - eventId: EVENT1
     dialogues:
     - dialogueId: 0
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uC544\u2026 \uC548\uB155\uD558\uC138\uC694!"
+      nextDialogueId: 1
+    - dialogueId: 1
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uC81C\uAC00\u2026 \uCCAB \uC190\uB2D8\uC778\uAC00\uC694?"
+      nextDialogueId: 2
+    - dialogueId: 2
+      speakerName: ME
+      dialogueText: "\uB124! \uB9DE\uC544\uC694. \uC5B4\uC11C \uC624\uC138\uC694."
+      nextDialogueId: 3
+    - dialogueId: 3
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uC73C\uC74C\u2026 \uC870\uAE08 \uAE34\uC7A5\uB418\uB124\uC694."
+      nextDialogueId: 4
+    - dialogueId: 4
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uD3B8\uD788 \uC274 \uACF5\uAC04\uC774 \uC788\uC5C8\uC73C\uBA74
+        \uC88B\uACA0\uC5B4\uC694."
+      nextDialogueId: 5
+    - dialogueId: 5
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uD639\uC2DC\u2026 \uC81C \uBC29\uC744 \uD558\uB098 \uAFB8\uBA70\uC8FC\uC2E4
+        \uC218 \uC788\uC744\uAE4C\uC694?"
+      nextDialogueId: 6
+    - dialogueId: 6
+      speakerName: ME
+      dialogueText: "\uBB3C\uB860\uC774\uC8E0! \uC5B4\uB5A4 \uBD84\uC704\uAE30\uB85C
+        \uD574\uB4DC\uB9B4\uAE4C\uC694?"
+      nextDialogueId: 7
+    - dialogueId: 7
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uC74C\u2026 \uB108\uBB34 \uD654\uB824\uD558\uC9C4 \uC54A\uC558\uC73C\uBA74
+        \uC88B\uACA0\uC5B4\uC694."
+      nextDialogueId: 8
+    - dialogueId: 8
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uCE68\uB300\uB791 \uC791\uC740 \uCC45\uC0C1 \uC815\uB3C4\uB9CC
+        \uC788\uC73C\uBA74 \uCDA9\uBD84\uD574\uC694."
+      nextDialogueId: 9
+    - dialogueId: 9
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uCC45\uC744 \uC77D\uAC70\uB098\u2026 \uB0AE\uC7A0\uC744 \uC798
+        \uC218 \uC788\uB294 \uC815\uB3C4\uBA74 \uC88B\uACA0\uC5B4\uC694."
+      nextDialogueId: 10
+    - dialogueId: 10
+      speakerName: ME
+      dialogueText: "\uB9E1\uACA8\uB9CC \uC8FC\uC138\uC694. \uBC14\uB85C \uC900\uBE44\uD574\uB4DC\uB9B4\uAC8C\uC694."
+      nextDialogueId: 11
+    - dialogueId: 11
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uAC10\uC0AC\uD569\uB2C8\uB2E4. \uAE30\uB300\uD558\uACE0 \uC788\uC744\uAC8C\uC694."
+      nextDialogueId: -1
+  - eventId: EVENT2
+    dialogues:
+    - dialogueId: 0
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uC640...! \uBC29\uC774 \uC815\uB9D0 \uC608\uC058\uB124\uC694."
+      nextDialogueId: 1
+    - dialogueId: 1
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uCD08\uB85D\uC0C9\uC774 \uB9CE\uC544\uC11C \uADF8\uB7F0\uC9C0
+        \uB9C8\uC74C\uC774 \uD3B8\uD574\uC838\uC694."
+      nextDialogueId: 2
+    - dialogueId: 2
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uCE68\uB300\uB3C4 \uD3EC\uADFC\uD574 \uBCF4\uC5EC\uC11C \uBC14\uB85C
+        \uB215\uACE0 \uC2F6\uC5B4\uC694."
+      nextDialogueId: 3
+    - dialogueId: 3
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uC774\uB7F0 \uB530\uB73B\uD55C \uBC29\uC744 \uC900\uBE44\uD574\uC8FC\uC154\uC11C
+        \uC815\uB9D0 \uAC10\uC0AC\uD569\uB2C8\uB2E4."
+      nextDialogueId: 4
+    - dialogueId: 4
+      speakerName: ME
+      dialogueText: "(\uD3AD\uADC4\uC774 \uB530\uB73B\uD55C \uAC78 \uC88B\uC544\uD558\uB098?)"
+      nextDialogueId: 5
+    - dialogueId: 5
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uC5EC\uAE30\uC11C\uB77C\uBA74 \uD479 \uC26C\uACE0 \uB2E4\uC2DC
+        \uD798\uB0BC \uC218 \uC788\uC744 \uAC83 \uAC19\uC544\uC694."
+      nextDialogueId: 6
+    - dialogueId: 6
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uC7A0\uC2DC \uBA38\uBB34\uB294 \uB3D9\uC548 \uC798 \uBD80\uD0C1\uB4DC\uB9B4\uAC8C\uC694."
+      nextDialogueId: 7
+    - dialogueId: 7
+      speakerName: "\uD3AD\uADC4"
+      dialogueText: "\uB2E4\uC74C\uC5D0 \uB610 \uC778\uC0AC\uB4DC\uB9B4\uAC8C\uC694!"
+      nextDialogueId: 8
+    - dialogueId: 8
+      speakerName: ME
+      dialogueText: "\uC5B8\uC81C\uB4E0 \uD658\uC601\uC774\uC5D0\uC694. \uD3B8\uD788
+        \uC26C\uC138\uC694."
+      nextDialogueId: -1
+  - eventId: EVENT3
+    dialogues:
+    - dialogueId: 0
       speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
       dialogueText: "\u2026\u2026\uB4DC\uB514\uC5B4,"
       nextDialogueId: 1
@@ -122,7 +221,7 @@ MonoBehaviour:
       speakerName: ME
       dialogueText: "(\uC774\uB7F0 \uC190\uB2D8\uB3C4 \uC624\uB294\uAD6C\uB098\u2026)"
       nextDialogueId: -1
-  - eventId: EVENT2
+  - eventId: EVENT4
     dialogues:
     - dialogueId: 0
       speakerName: "\uB9C8\uC655 \uD3AD\uADC4"
@@ -149,3 +248,5 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 41f91799f16ec674ea6762fab92e5477, type: 3}
   - spriteName: "\uC9D1\uC0AC \uD3AD\uADC4"
     sprite: {fileID: 21300000, guid: 534bc58fc7ae92445922484fb2de6945, type: 3}
+  - spriteName: "\uD3AD\uADC4"
+    sprite: {fileID: 21300000, guid: ba72f7038b9bf90458e3442a23f1499e, type: 3}

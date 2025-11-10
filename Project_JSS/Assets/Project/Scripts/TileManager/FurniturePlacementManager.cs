@@ -19,9 +19,9 @@ public class FurniturePlacementManager : MonoBehaviour
     public float longPressDuration = 0.5f;
     public float gridSize = 1.0f;
     public LayerMask floorLayerMask;
-    public float tileOffsetX = 32f; // íƒ€ì¼ X ì˜¤í”„ì…‹ (í”½ì…€)
-    public float tileOffsetY = 16f; // íƒ€ì¼ Y ì˜¤í”„ì…‹ (í”½ì…€)
-    // ë‚´ë¶€ ìƒíƒœ ë³€ìˆ˜
+    public float tileOffsetX = 32f; // ????¼ X ?˜¤?”„?…‹ (?”½???)
+    public float tileOffsetY = 16f; // ????¼ Y ?˜¤?”„?…‹ (?”½???)
+    // ?‚´ë¶? ?ƒ?ƒœ ë³??ˆ˜
     [SerializeField] IsoGird[] isometricGrids;
     IsoGird currentGrid;
     int gridNumbers;
@@ -48,8 +48,8 @@ public class FurniturePlacementManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] GameObject uiObject;
-    [SerializeField] Button rotateButton;            // íšŒì „ ë²„íŠ¼
-    [SerializeField] Button confirmButton;           // í™•ì • ë²„íŠ¼
+    [SerializeField] Button rotateButton;            // ?šŒ? „ ë²„íŠ¼
+    [SerializeField] Button confirmButton;           // ?™•? • ë²„íŠ¼
     [SerializeField] Button cancelButton;            // ì·¨ì†Œ ë²„íŠ¼
 
 
@@ -66,8 +66,8 @@ public class FurniturePlacementManager : MonoBehaviour
     private void Awake()
     {
         mainCamera = Camera.main;
-        // ì¸µë³„ ê°€êµ¬ ëª©ë¡ ì´ˆê¸°í™”
-        for (int i = 0; i < 5; i++) // ìµœëŒ€ 5ì¸µìœ¼ë¡œ ê°€ì •
+        // ì¸µë³„ ê°?êµ? ëª©ë¡ ì´ˆê¸°?™”
+        for (int i = 0; i < 5; i++) // ìµœë?? 5ì¸µìœ¼ë¡? ê°?? •
         {
             furnitureByFloor[i] = new List<GameObject>();
 
@@ -100,19 +100,19 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         //if (Input.touchCount > 0)
         //{
-        //    Touch touch = Input.GetTouch(0); // ì²« ë²ˆì§¸ í„°ì¹˜ë§Œ ì²˜ë¦¬
+        //    Touch touch = Input.GetTouch(0); // ì²? ë²ˆì§¸ ?„°ì¹˜ë§Œ ì²˜ë¦¬
 
         //    switch (touch.phase)
         //    {
         //        case TouchPhase.Began:
         //            {
-        //                // UI ìš”ì†Œë¥¼ í„°ì¹˜í–ˆëŠ”ì§€ í™•ì¸
+        //                // UI ?š”?†Œë¥? ?„°ì¹˜í–ˆ?Š”ì§? ?™•?¸
         //                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
         //                    return;
 
         //                if (selectedFurniture == null)
         //                {
-        //                    // ê°€êµ¬ê°€ ì„ íƒë˜ì§€ ì•Šì€ ìƒíƒœì—ì„œëŠ” ê¸¸ê²Œ ëˆ„ë¥´ê¸° ì‹œì‘
+        //                    // ê°?êµ¬ê?? ?„ ?ƒ?˜ì§? ?•Š??? ?ƒ?ƒœ?—?„œ?Š” ê¸¸ê²Œ ?ˆ„ë¥´ê¸° ?‹œ?‘
         //                    pressTime = Time.time;
         //                    isLongPress = false;
         //                }
@@ -135,12 +135,12 @@ public class FurniturePlacementManager : MonoBehaviour
         //                if (selectedFurniture == null && !isLongPress && Time.time - pressTime > longPressDuration)
         //                {
         //                    isLongPress = true;
-        //                    // ê¸¸ê²Œ ëˆŒëŸ¬ì„œ ê°€êµ¬ ì„ íƒ
+        //                    // ê¸¸ê²Œ ?ˆŒ?Ÿ¬?„œ ê°?êµ? ?„ ?ƒ
         //                    SelectFurnitureAtPosition(touch.position);
         //                }
         //                else if (selectedFurniture != null && isDragging)
         //                {
-        //                    // ì„ íƒëœ ê°€êµ¬ ì´ë™
+        //                    // ?„ ?ƒ?œ ê°?êµ? ?´?™
         //                    MoveFurniture(touch.position);
         //                }
         //                break;
@@ -154,17 +154,17 @@ public class FurniturePlacementManager : MonoBehaviour
         //    }
         //}
 
-        // ì—ë””í„° ë° í…ŒìŠ¤íŠ¸ìš© ë§ˆìš°ìŠ¤ ì…ë ¥ ì²˜ë¦¬
+        // ?—?””?„° ë°? ?…Œ?Š¤?Š¸?š© ë§ˆìš°?Š¤ ?…? ¥ ì²˜ë¦¬
 //#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
-            // UI ìš”ì†Œë¥¼ í´ë¦­í–ˆëŠ”ì§€ í™•ì¸
+            // UI ?š”?†Œë¥? ?´ë¦??–ˆ?Š”ì§? ?™•?¸
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
             if (selectedFurniture == null)
             {
-                // ê°€êµ¬ê°€ ì„ íƒë˜ì§€ ì•Šì€ ìƒíƒœì—ì„œëŠ” ê¸¸ê²Œ ëˆ„ë¥´ê¸° ì‹œì‘
+                // ê°?êµ¬ê?? ?„ ?ƒ?˜ì§? ?•Š??? ?ƒ?ƒœ?—?„œ?Š” ê¸¸ê²Œ ?ˆ„ë¥´ê¸° ?‹œ?‘
                 pressTime = Time.time;
                 isLongPress = false;
             }
@@ -181,7 +181,7 @@ public class FurniturePlacementManager : MonoBehaviour
                     }
                      
                 }
-                    // ì´ë¯¸ ê°€êµ¬ê°€ ì„ íƒëœ ìƒíƒœì—ì„œëŠ” ë“œë˜ê·¸ ì‹œì‘
+                    // ?´ë¯? ê°?êµ¬ê?? ?„ ?ƒ?œ ?ƒ?ƒœ?—?„œ?Š” ?“œ?˜ê·? ?‹œ?‘
 
             }
         }
@@ -190,7 +190,7 @@ public class FurniturePlacementManager : MonoBehaviour
             if (selectedFurniture == null && !isLongPress && Time.time - pressTime > longPressDuration)
             {
                 isLongPress = true;
-                // ê¸¸ê²Œ ëˆŒëŸ¬ì„œ ê°€êµ¬ ì„ íƒ
+                // ê¸¸ê²Œ ?ˆŒ?Ÿ¬?„œ ê°?êµ? ?„ ?ƒ
                 if (StateManager.instance.ButItem)
                 {
                     return;
@@ -199,7 +199,7 @@ public class FurniturePlacementManager : MonoBehaviour
             }
             else if (selectedFurniture != null && isDragging)
             {
-                    // ì„ íƒëœ ê°€êµ¬ ì´ë™
+                    // ?„ ?ƒ?œ ê°?êµ? ?´?™
                     MoveFurniture(Input.mousePosition);
             }
         }
@@ -210,7 +210,7 @@ public class FurniturePlacementManager : MonoBehaviour
 //#endif
     }
 
-    // í„°ì¹˜ ìœ„ì¹˜ì—ì„œ ê°€êµ¬ ì„ íƒ
+    // ?„°ì¹? ?œ„ì¹˜ì—?„œ ê°?êµ? ?„ ?ƒ
     private void SelectFurnitureAtPosition(Vector2 screenPosition)
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -221,21 +221,21 @@ public class FurniturePlacementManager : MonoBehaviour
         {
             GameObject hitObject = hit2D.collider.gameObject;
 
-            // ê°€êµ¬ì¸ì§€ í™•ì¸ (íƒœê·¸ë¡œ êµ¬ë¶„í•˜ê±°ë‚˜ ì»´í¬ë„ŒíŠ¸ë¡œ í™•ì¸)
+            // ê°?êµ¬ì¸ì§? ?™•?¸ (?ƒœê·¸ë¡œ êµ¬ë¶„?•˜ê±°ë‚˜ ì»´í¬?„Œ?Š¸ë¡? ?™•?¸)
             if (hitObject.CompareTag("Furniture"))
             {
                 if (hitObject.GetComponent<FurnitureInfo>().FloorIndex != currentFloor)
                 {
                     return;
                 }
-                // ì´ë¯¸ ì„ íƒëœ ê°€êµ¬ê°€ ìˆìœ¼ë©´ í•´ì œ
+                // ?´ë¯? ?„ ?ƒ?œ ê°?êµ¬ê?? ?ˆ?œ¼ë©? ?•´? œ
                 if (selectedFurniture != null)
                 {
                     currentInfo.SettingSprites(spriteIndex);
                     DeselectFurniture();
                 }
 
-                // ìƒˆ ê°€êµ¬ ì„ íƒ
+                // ?ƒˆ ê°?êµ? ?„ ?ƒ
                 selectedFurniture = hitObject;
                 //selectedFurniture.GetComponent<SpriteRenderer>().sortingOrder =23;
                 currentInfo = hitObject.GetComponent<FurnitureInfo>();
@@ -274,10 +274,10 @@ public class FurniturePlacementManager : MonoBehaviour
 
                 Debug.Log(hitObject.name);
 
-                // ì»¨íŠ¸ë¡¤ íŒ¨ë„ í‘œì‹œ
+                // ì»¨íŠ¸ë¡? ?Œ¨?„ ?‘œ?‹œ
                 //controlPanel.SetActive(true);
 
-                // ë§ˆì§€ë§‰ ìœ íš¨ ìœ„ì¹˜ ì €ì¥
+                // ë§ˆì??ë§? ?œ ?š¨ ?œ„ì¹? ????¥
                 lastValidPosition = selectedFurniture.transform.position;
                 currentGrid.TileSetting(hitObject.transform, currentInfo.Size, currentInfo.GridPosition);
                 currentGrid.CanPlaceFurniture(currentInfo.GridPosition);
@@ -290,7 +290,7 @@ public class FurniturePlacementManager : MonoBehaviour
         }
     }
     
-    // ê°€êµ¬ ì´ë™
+    // ê°?êµ? ?´?™
     private void MoveFurniture(Vector2 screenPosition)
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(screenPosition);
@@ -347,7 +347,7 @@ public class FurniturePlacementManager : MonoBehaviour
 
     }
 
-    // ê°€êµ¬ íšŒì „
+    // ê°?êµ? ?šŒ? „
     public void RotateFurniture()
     {
         if (selectedFurniture != null)
@@ -359,18 +359,18 @@ public class FurniturePlacementManager : MonoBehaviour
         }
     }
 
-    // ê°€êµ¬ ë°°ì¹˜ í™•ì •
+    // ê°?êµ? ë°°ì¹˜ ?™•? •
     public void ConfirmPlacement()
     {
         if (selectedFurniture != null && currentGrid.CanPlaceFurniture(gridPosition))
         {
-            TutorialManager.TriggerCondition(TutorialCondition.ê°€êµ¬ì„¤ì¹˜);
-            // ê·¸ë¦¬ë“œì— ë§ì¶”ê¸°
+            TutorialManager.TriggerCondition(TutorialCondition.°¡±¸¼³Ä¡);
+            // ê·¸ë¦¬?“œ?— ë§ì¶”ê¸?
             Vector3 snappedPosition = currentGrid.SortGrid(selectedFurniture.transform.position);
             selectedFurniture.GetComponent<FurnitureInfo>().GridPosition = gridPosition;
             selectedFurniture.transform.position = snappedPosition;
             currentGrid.OccupiedCell(selectedFurniture.transform.position, currentInfo.Size, true);
-            // ì„ íƒ ìƒíƒœ í•´ì œ
+            // ?„ ?ƒ ?ƒ?ƒœ ?•´? œ
             DeselectFurniture();
 
             skinObject.SetActive(false);
@@ -384,31 +384,31 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         if (gameObject != null)
         {
-            // ê·¸ë¦¬ë“œì— ë§ì¶”ê¸°
+            // ê·¸ë¦¬?“œ?— ë§ì¶”ê¸?
             Vector3 snappedPosition = currentGrid.GridPositionToWorld(gameObject.GetComponent<FurnitureInfo>().GridPosition);
             gameObject.transform.position = snappedPosition;
             currentGrid.OccupiedCell(selectedFurniture.transform.position, gameObject.GetComponent<FurnitureInfo>().Size, true);
         }
     }
-    // ê°€êµ¬ ë°°ì¹˜ ì·¨ì†Œ
+    // ê°?êµ? ë°°ì¹˜ ì·¨ì†Œ
     public void CancelPlacement()
     {
         if (selectedFurniture != null && originalPosition.HasValue)
         {
-            // ì›ë˜ ìœ„ì¹˜ë¡œ ë˜ëŒë¦¬ê¸°
+            // ?›?˜ ?œ„ì¹˜ë¡œ ?˜?Œë¦¬ê¸°
             selectedFurniture.transform.position = originalPosition.Value;
             gridPosition = currentGrid.WorldToGridPosition(selectedFurniture.transform.position, currentInfo.HeightLimit);
             selectedFurniture.GetComponent<SpriteRenderer>().sortingOrder =0;
             currentInfo.SettingRotate(originalRotation);
             currentGrid.OccupiedCell(originalPosition.Value, currentInfo.Size, true);
             currentInfo.SettingSprites(spriteIndex);
-            // ì„ íƒ ìƒíƒœ í•´ì œ
+            // ?„ ?ƒ ?ƒ?ƒœ ?•´? œ
             DeselectFurniture();
             skinObject.SetActive(false);
         }
     }
 
-    // ê°€êµ¬ ì„ íƒ í•´ì œ
+    // ê°?êµ? ?„ ?ƒ ?•´? œ
     private void DeselectFurniture()
     {
         if (selectedFurniture != null)
@@ -424,7 +424,7 @@ public class FurniturePlacementManager : MonoBehaviour
            
         }
     }
-    // ì¸µ ë³€ê²½
+    // ì¸? ë³?ê²?
     public void SwitchFloor(int floorNumber)
     {
         if (floorNumber < 0 || floorNumber >= floorData.Length || floorManagers[floorNumber].floorData.isUnlock == false)
@@ -457,7 +457,7 @@ public class FurniturePlacementManager : MonoBehaviour
     }
    
 
-    // ê°€êµ¬ ì¶”ê°€
+    // ê°?êµ? ì¶”ê??
     public void AddFurnitureToFloor(FurnitureData data, int floor)
     {
         SwitchFloor(floor);
@@ -465,14 +465,14 @@ public class FurniturePlacementManager : MonoBehaviour
         GameObject obj = floorManagers[floor].AddFurniture(data);
         if (obj != null)
         {
-            // ì´ë¯¸ ì„ íƒëœ ê°€êµ¬ê°€ ìˆìœ¼ë©´ í•´ì œ
+            // ?´ë¯? ?„ ?ƒ?œ ê°?êµ¬ê?? ?ˆ?œ¼ë©? ?•´? œ
             if (selectedFurniture != null)
             {
                 currentInfo.SettingSprites(spriteIndex);
                 DeselectFurniture();
             }
 
-            // ìƒˆ ê°€êµ¬ ì„ íƒ
+            // ?ƒˆ ê°?êµ? ?„ ?ƒ
             selectedFurniture = obj;
             //selectedFurniture.GetComponent<SpriteRenderer>().sortingOrder =23;
             currentInfo = obj.GetComponent<FurnitureInfo>();
@@ -522,7 +522,7 @@ public class FurniturePlacementManager : MonoBehaviour
         }
     }
 
-    // UI ì—…ë°ì´íŠ¸ (ì¸µ í‘œì‹œ)
+    // UI ?—…?°?´?Š¸ (ì¸? ?‘œ?‹œ)
     private void CancelButtonUIOn(bool b)
     {
         cancelButton.gameObject.SetActive(b);

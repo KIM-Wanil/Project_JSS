@@ -13,18 +13,18 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class TutorialManager : MonoBehaviour
 {
-    [Header("UI ¿ä¼Òµé")]
+    [Header("UI ï¿½ï¿½Òµï¿½")]
     //[SerializeField] private GameObject tutorialCanvas;
     [SerializeField] private CanvasGroup tutorialPanel;
-    [SerializeField] private Image overlayImage; // °ËÀº»ö ¿À¹ö·¹ÀÌ
-    [SerializeField] private RectTransform highlightRect; // °­Á¶¿µ¿ª
-    //public RectTransform characterDialogPrefab; // Ä³¸¯ÅÍ+´ëÈ­»óÀÚ ÇÁ¸®ÆÕ
-    [SerializeField] private RectTransform fingerImage; // ¼Õ°¡¶ô ÀÌ¹ÌÁö
-    [SerializeField] private TutorialRaycastBlocker blocker; // ¼Õ°¡¶ô ÀÌ¹ÌÁö
+    [SerializeField] private Image overlayImage; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private RectTransform highlightRect; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    //public RectTransform characterDialogPrefab; // Ä³ï¿½ï¿½ï¿½ï¿½+ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private RectTransform fingerImage; // ï¿½Õ°ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+    [SerializeField] private TutorialRaycastBlocker blocker; // ï¿½Õ°ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
     private Tween fingerTween;
 
 
-    [Header("Æ©Åä¸®¾ó ´Ü°èµé")]
+    [Header("Æ©ï¿½ä¸®ï¿½ï¿½ ï¿½Ü°ï¿½ï¿½")]
     [SerializeField] private TutorialDatabase tutorialDatabase;
     private TutorialStep[] currentTutorial;
 
@@ -37,28 +37,32 @@ public class TutorialManager : MonoBehaviour
 
     private bool isTutorialActive = false;
 
-    // ¿Ï·á Á¶°Ç Ã¼Å©¸¦ À§ÇÑ ÀÌº¥Æ®
+    // ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®
     public static event Action<TutorialCondition> OnConditionMet;
 
     private void Start()
     {
-        // ¿Ï·á Á¶°Ç ÀÌº¥Æ® ±¸µ¶
+        // ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         OnConditionMet += CheckCondition;
 
-        // Ã³À½¿¡´Â Æ©Åä¸®¾ó ºñÈ°¼ºÈ­
+        // Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ©ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
         tutorialPanel.gameObject.SetActive(false);
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F3) && !isTutorialActive)
+        if (Input.GetKeyDown(KeyCode.F6) && !isTutorialActive)
         {
-            StartTutorial("TUTORIAL1");
+            StartTutorial(0);
+        }
+        if (Input.GetKeyDown(KeyCode.F7) && !isTutorialActive)
+        {
+            StartTutorial(1);
         }
         //if (Input.GetKeyDown(KeyCode.F2) && !isTutorialActive)
         //{
         //    StartTutorial("EVENT1");
         //}
-        // ½ºÆäÀÌ½º¹Ù·Îµµ ´ëÈ­ ÁøÇà °¡´É
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½Ù·Îµï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (!isTutorialActive) return;
         if (Input.GetMouseButtonDown(0))
         {
@@ -76,13 +80,12 @@ public class TutorialManager : MonoBehaviour
         OnConditionMet -= CheckCondition;
     }
 
-    public void StartTutorial(string tutorialId)
+    public void StartTutorial(int num)
     {
         Debug.Log("StartTutorial");
+        string tutorialId = $"TUTORIAL{num}";
         currentTutorial = tutorialDatabase.GetTutorialEvent(tutorialId)?.dialogues.ToArray();
         if (currentTutorial.Length == 0) return;
-        Debug.Log(tutorialId + " Æ©Åä¸®¾ó ½ÃÀÛ");
-
         currentStepIndex = 0;
         tutorialPanel.gameObject.SetActive(true);
         blocker.ActivateBlockers();
@@ -100,16 +103,16 @@ public class TutorialManager : MonoBehaviour
 
    
 
-        // ´ëÈ­»óÀÚ À§Ä¡ Á¶Á¤
+        // ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
         characterDialog.anchoredPosition = step.characterPosition;
 
-        // Ä³¸¯ÅÍ ÀÌ¹ÌÁö ¼±ÅÃ
-        if (step.characterName == "Áı»ç Æë±Ï")
+        // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        if (step.characterName == "ì§‘ì‚¬ í­ê·„")
         {
             deaconPeng.SetActive(true);
             maidPeng.SetActive(false);
         }
-        else if (step.characterName == "¸ŞÀÌµå Æë±Ï")
+        else if (step.characterName == "ë©”ì´ë“œ í­ê·„")
         {
             deaconPeng.SetActive(false);
             maidPeng.SetActive(true);
@@ -121,17 +124,17 @@ public class TutorialManager : MonoBehaviour
         }
 
 
-        // ´ëÈ­ ÅØ½ºÆ® ÄÄÆ÷³ÍÆ® Ã£±â
+        // ï¿½ï¿½È­ ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã£ï¿½ï¿½
         dialogueText = characterDialog.GetComponentInChildren<TextMeshProUGUI>();
 
-        // ¿À¹ö·¹ÀÌ ¼³Á¤ (°­Á¶ ºÎºĞ Á¦¿ÜÇÑ °ËÀº»ö ¸¶½ºÅ©)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å©)
         SetupHilightArea(step.highlightPosition, step.highlightSize);
 
        
 
-        //´ë»ç Ç¥½Ã
+        //ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
         ShowCurrentDialogue();
-        // ¼Õ°¡¶ô À§Ä¡ ¹× °¢µµ ¼³Á¤
+        // ï¿½Õ°ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if(step.fingerAnimType == FingerAnimationType.None)
         {
             fingerImage.gameObject.SetActive(false);
@@ -172,10 +175,10 @@ public class TutorialManager : MonoBehaviour
 
     private void AnimateFinger(FingerAnimationType inputFingerAnimType, float inputFingerAnimAmount)
     {
-        // ±âÁ¸ Æ®À© ÁßÁö
+        // ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (fingerTween != null && fingerTween.IsActive())
         {
-            fingerImage.localScale = Vector3.one; // ÃÊ±âÈ­
+            fingerImage.localScale = Vector3.one; // ï¿½Ê±ï¿½È­
             fingerTween.Kill();
             fingerTween = null;
         }
@@ -205,7 +208,7 @@ public class TutorialManager : MonoBehaviour
                         .OnStepComplete(() => fingerImage.anchoredPosition = originalPos);
                 }
                 break;
-            // ¾Æ¹« ¾Ö´Ï¸ŞÀÌ¼Ç ¾øÀ½
+            // ï¿½Æ¹ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
             case FingerAnimationType.None:               
             default:           
                 break;
@@ -216,7 +219,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (!isTutorialActive) return;
 
-        // Á¶°Ç ¿Ï·á ÀÌº¥Æ® ¹ß»ı
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ ï¿½Ìºï¿½Æ® ï¿½ß»ï¿½
         OnConditionMet?.Invoke(currentStep.completionCondition);
     }
 
@@ -228,7 +231,7 @@ public class TutorialManager : MonoBehaviour
 
             
 
-        // Á¶°Ç ¿Ï·á, ´ÙÀ½ ´Ü°è·Î ÁøÇà
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ü°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         NextTutorialStep();
     }
 
@@ -238,12 +241,12 @@ public class TutorialManager : MonoBehaviour
 
         if (currentStepIndex >= currentTutorial.Length)
         {
-            // Æ©Åä¸®¾ó ¿Ï·á
+            // Æ©ï¿½ä¸®ï¿½ï¿½ ï¿½Ï·ï¿½
             EndTutorial();
         }
         else
         {
-            // ´ÙÀ½ ´Ü°è Ç¥½Ã
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ü°ï¿½ Ç¥ï¿½ï¿½
             ShowTutorialStep(currentTutorial[currentStepIndex]);
         }
     }
@@ -256,10 +259,10 @@ public class TutorialManager : MonoBehaviour
             blocker.DeactivateBlockers();
             tutorialPanel.gameObject.SetActive(false);
         });
-        Debug.Log("Æ©Åä¸®¾ó ¿Ï·á!");
+        Debug.Log("Æ©ï¿½ä¸®ï¿½ï¿½ ï¿½Ï·ï¿½!");
     }
 
-    // ´Ù¸¥ ½ºÅ©¸³Æ®¿¡¼­ Á¶°Ç ¿Ï·á¸¦ ¾Ë¸± ¶§ »ç¿ë
+    // ï¿½Ù¸ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·á¸¦ ï¿½Ë¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
     public static void TriggerCondition(TutorialCondition condition)
     {
         OnConditionMet?.Invoke(condition);

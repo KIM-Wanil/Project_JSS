@@ -44,7 +44,7 @@ public class BuyFurnitureButton : MonoBehaviour
     }
     public void Buy()
     {
-        //3 -> ³ªÁß¿¡ °¡±¸ ¼³Ä¡ ÇÊ¿ä º° °³¼ö·Î ¼öÁ¤
+        //3 -> ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½Ê¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (!Managers.Game.TrySpendStar(3)) return;
         TutorialManager.TriggerCondition(TutorialCondition.°¡±¸Á¦ÀÛÅ¬¸¯);
         if (Managers.Game.sceneState == SceneState.Hotel)
@@ -71,7 +71,7 @@ public class BuyFurnitureButton : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Àß¸øµÈ ¾ÀÀÔ´Ï´Ù.");
+            Debug.LogError("ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
         }
         
     }
@@ -96,7 +96,7 @@ public class BuyFurnitureButton : MonoBehaviour
         }
         else
         {
-            requiredLV.text = "LV" + floorData.floorNum * 5 + " ´Þ¼º";
+            requiredLV.text = "LV" + floorData.floorNum * 5 + " ï¿½Þ¼ï¿½";
         }
         Setting();
     }
@@ -135,15 +135,15 @@ public class BuyFurnitureButton : MonoBehaviour
     {
         if (Managers.Game.sceneState == SceneState.Hotel)
         {
-            buttonText.text = "Á¦ÀÛ";
+            buttonText.text = "ï¿½ï¿½ï¿½ï¿½";
         }
         else if (Managers.Game.sceneState == SceneState.Merge)
         {
-            buttonText.text = "ÀÌµ¿";
+            buttonText.text = "ï¿½Ìµï¿½";
         }
         else
         {
-            Debug.LogError("Àß¸øµÈ ¾ÀÀÔ´Ï´Ù.");
+            Debug.LogError("ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
         }
     }
 }

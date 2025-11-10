@@ -185,7 +185,6 @@ GameObject:
   - component: {fileID: 6907320849086670742}
   - component: {fileID: 6105819199691896374}
   - component: {fileID: 5683888037968231699}
-  - component: {fileID: 7163204356837838516}
   - component: {fileID: 2027494752600582431}
   m_Layer: 5
   m_Name: MergeCanvas
@@ -278,28 +277,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7163204356837838516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474973428417087819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7830f61d2693101478c9e11bc652e963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toHotelButton: {fileID: 0}
-  toMergeButton: {fileID: 0}
-  shopButton: {fileID: 2984478721656013038}
-  listButton: {fileID: 1651668985830685473}
-  starTexts: []
-  hotelCanvas: {fileID: 0}
-  hotelUiCanvas: {fileID: 0}
-  mergeCanvas: {fileID: 0}
-  transitionScreen: {fileID: 0}
-  transitionDuration: 0.5
 --- !u!225 &2027494752600582431
 CanvasGroup:
   m_ObjectHideFlags: 0
