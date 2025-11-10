@@ -13,28 +13,22 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class TutorialManager : MonoBehaviour
 {
-    [Header("UI ��ҵ�")]
-    //[SerializeField] private GameObject tutorialCanvas;
+    [Header("UI")]
     [SerializeField] private CanvasGroup tutorialPanel;
     [SerializeField] private Image overlayImage; // ������ ��������
     [SerializeField] private RectTransform highlightRect; // ��������
-    //public RectTransform characterDialogPrefab; // ĳ����+��ȭ���� ������
     [SerializeField] private RectTransform fingerImage; // �հ��� �̹���
     [SerializeField] private TutorialRaycastBlocker blocker; // �հ��� �̹���
-    private Tween fingerTween;
-
-
-    [Header("Ʃ�丮�� �ܰ��")]
     [SerializeField] private TutorialDatabase tutorialDatabase;
-    private TutorialStep[] currentTutorial;
-
-    private int currentStepIndex = 0;
-    private TutorialStep currentStep;
     [SerializeField] private RectTransform characterDialog;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject deaconPeng;
     [SerializeField] private GameObject maidPeng;
 
+    private TutorialStep[] currentTutorial;
+    private Tween fingerTween;
+    private int currentStepIndex = 0;
+    private TutorialStep currentStep;
     private bool isTutorialActive = false;
 
     // �Ϸ� ���� üũ�� ���� �̺�Ʈ

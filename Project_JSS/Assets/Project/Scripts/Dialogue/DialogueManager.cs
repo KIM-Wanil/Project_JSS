@@ -1,10 +1,14 @@
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 
 public class DialogueManager : BaseManager
 {
+    [SerializeField] private TutorialManager tutorialManager;
+    public int currentEventNum = 0;
+    public int currentTutorialNum = 0;
     [Header("UI ������Ʈ")]
     public GameObject dialoguePanel;
     public Image npcImage;
@@ -27,6 +31,14 @@ public class DialogueManager : BaseManager
     private List<DialogueMessageItem> messageItems = new List<DialogueMessageItem>();
     private DialogueEvent currentDialogueEvent;
     private bool isDialogueActive = false;
+
+    public void Start()
+    {
+        if (currentEventNum == 0)
+        {
+            StartDialogue(currentEventNum);
+        }
+    }
 
     public override void Init()
     {
@@ -187,31 +199,34 @@ public class DialogueManager : BaseManager
         messageItems.Clear();
     }
 
-    public void EndDialogue()
+    public IEnumerator EndDialogue()
     {
-        if (!isDialogueActive) return;
+        if (!isDialogueActive) yield break;
+        if (dialoguePanel == null || backgroundDimmer == null) yield break;
 
         isDialogueActive = false;
 
-        // �г� �����̵� �ƿ� �ִϸ��̼�
-        if (dialoguePanel != null)
-        {
-            RectTransform panelRect = dialoguePanel.GetComponent<RectTransform>();
-            panelRect.DOAnchorPosY(-Screen.height, panelAnimationDuration)
-                .SetEase(Ease.InQuart)
-                .OnComplete(() => {
-                    dialoguePanel.SetActive(false);
-                    panelRect.anchoredPosition = new Vector2(panelRect.anchoredPosition.x, 0); // �ʱ� ��ġ�� �ǵ�����
-                    ClearMessages();
-                });
-        }
+        RectTransform panelRect = dialoguePanel.GetComponent<RectTransform>();
+        Tween panelTween = panelRect.DOAnchorPosY(-Screen.height, panelAnimationDuration)
+            .SetEase(Ease.InQuart)
+            .OnComplete(() => {
+                dialoguePanel.SetActive(false);
+                panelRect.anchoredPosition = new Vector2(panelRect.anchoredPosition.x, 0); // �ʱ� ��ġ�� �ǵ�����
+                ClearMessages();
+            });
+        Tween dimmerTween = backgroundDimmer.DOFade(0f, panelAnimationDuration)
+            .OnComplete(() => backgroundDimmer.gameObject.SetActive(false));
 
-        // ��� ���� ���̵� �ƿ�
-        if (backgroundDimmer != null)
+        Sequence seq = DOTween.Sequence();
+        seq.Append(panelTween);
+        seq.Join(dimmerTween);
+        yield return seq.WaitForCompletion();
+
+        if (currentEventNum == 0)
         {
-            backgroundDimmer.DOFade(0f, panelAnimationDuration)
-                .OnComplete(() => backgroundDimmer.gameObject.SetActive(false));
+            StartDialogue(currentTutorialNum);
         }
+        currentEventNum += 1;
     }
 
     private void Update()

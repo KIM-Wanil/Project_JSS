@@ -46,7 +46,7 @@ public class BuyFurnitureButton : MonoBehaviour
     {
         //3 -> О©╫О©╫О©╫ъ©О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫д║ О©╫й©О©╫ О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫
         if (!Managers.Game.TrySpendStar(3)) return;
-        TutorialManager.TriggerCondition(TutorialCondition.╟║╠╦а╕юше╛╦╞);
+        TutorialManager.TriggerCondition(TutorialCondition.Й╟─Й╣╛Л═°Л·▒М│╢К╕╜);
         if (Managers.Game.sceneState == SceneState.Hotel)
         {
             furniturePlacementManager.AddFurnitureToFloor(data, data.floorNum);
