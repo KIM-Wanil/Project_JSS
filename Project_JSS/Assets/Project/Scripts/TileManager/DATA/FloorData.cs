@@ -11,7 +11,7 @@ public class FloorData : ScriptableObject
     public bool isUnlock;
     public Sprite mainSprite;
     public FurnitureData[] furnitureInfos;
-
+    public GameObject furniture;
     public int UnlockCounting()
     { 
         int count = 0;

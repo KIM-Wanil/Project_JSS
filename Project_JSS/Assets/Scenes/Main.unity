@@ -840,7 +840,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000f7efcfc17b0dadc425e0ebaaff198037079e4060bf01511c156c1009
+  m_ApplyToSortingLayers: 00000000f7efcfc17b0dadc425e0ebaaff198037079e4060bf01511c156c1009e79b2e8c
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2319,6 +2319,10 @@ PrefabInstance:
       propertyPath: collection
       value: 
       objectReference: {fileID: 5118991682339690955}
+    - target: {fileID: 741010621786685902, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: isTestMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 741010621786685902, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
       propertyPath: skinObject
       value: 

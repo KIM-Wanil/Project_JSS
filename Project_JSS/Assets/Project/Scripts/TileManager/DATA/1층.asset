@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorNmae: "1F : \uB9C8\uC655\uC758 \uC548\uC2DD\uCC98"
   floorDescription: "\uBD88\uAE38\uD55C \uC5B4\uB460\uC758 \uD798\uC774 \uC19F\uAD6C\uCE69\uB2C8\uB2E4..."
-  floorNum: 0
+  floorNum: 1
   isUnlock: 1
   mainSprite: {fileID: 21300000, guid: e8c933c7165fd2e4391b4b2088b9a630, type: 3}
   furnitureInfos:
-  - furnitureName: "\uCE68\uB300"
+  - furnitureName: "\uC5B4\uB460\uC758 \uCE68\uB300"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 4, y: 8}
     size:
     - {x: 4, y: 4}
@@ -34,17 +34,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 9b2cc95ec6808ab49b9fa8c673b18542, type: 3}
       - {fileID: 21300000, guid: 84579da02842f5f4baef55828b953a54, type: 3}
-      lockSprite: {fileID: 0}
-    - isUnlocked: 1
-      sprites:
-      - {fileID: 21300000, guid: 5fe4adfee47b8b9408a18c8bf048b277, type: 3}
-      - {fileID: 21300000, guid: 8c5a24b474ca6b848a078079deb8efc6, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 8d31ff1d61e617e459821caa2b98df34, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 9b2cc95ec6808ab49b9fa8c673b18542, type: 3}
       - {fileID: 21300000, guid: 84579da02842f5f4baef55828b953a54, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 8d31ff1d61e617e459821caa2b98df34, type: 3}
+    - isUnlocked: 0
+      sprites:
+      - {fileID: 21300000, guid: 9b2cc95ec6808ab49b9fa8c673b18542, type: 3}
+      - {fileID: 21300000, guid: 84579da02842f5f4baef55828b953a54, type: 3}
+      lockSprite: {fileID: 21300000, guid: 8d31ff1d61e617e459821caa2b98df34, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 1
@@ -55,9 +55,9 @@ MonoBehaviour:
     colliderSize: {x: 4.509928, y: 2.5684319}
     isUnlocked: 0
     price: 3
-  - furnitureName: "\uC758\uC790"
+  - furnitureName: "\uC5B4\uB460\uC758 \uC625\uC88C"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 10, y: 6}
     size:
     - {x: 2, y: 2}
@@ -71,17 +71,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 5fe4adfee47b8b9408a18c8bf048b277, type: 3}
       - {fileID: 21300000, guid: 8c5a24b474ca6b848a078079deb8efc6, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 76d8b0dc1da3cee44a445ae46dcc2517, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 5fe4adfee47b8b9408a18c8bf048b277, type: 3}
       - {fileID: 21300000, guid: 8c5a24b474ca6b848a078079deb8efc6, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 76d8b0dc1da3cee44a445ae46dcc2517, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 5fe4adfee47b8b9408a18c8bf048b277, type: 3}
       - {fileID: 21300000, guid: 8c5a24b474ca6b848a078079deb8efc6, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 76d8b0dc1da3cee44a445ae46dcc2517, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 1
@@ -92,9 +92,9 @@ MonoBehaviour:
     colliderSize: {x: 2.4, y: 4.24}
     isUnlocked: 0
     price: 3
-  - furnitureName: "\uD06C\uB9AC\uC2A4\uD0C8\uBCFC"
+  - furnitureName: "\uC218\uC815\uAD6C"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 3, y: 3}
     size:
     - {x: 1, y: 1}
@@ -109,17 +109,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
       - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 3cecd0f64ac344042bcc310b3e99850f, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
       - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 3cecd0f64ac344042bcc310b3e99850f, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
       - {fileID: 21300000, guid: 0087d0f4f93949943be1aae1641f014c, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 3cecd0f64ac344042bcc310b3e99850f, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 1
@@ -130,9 +130,9 @@ MonoBehaviour:
     colliderSize: {x: 1.08, y: 2.68}
     isUnlocked: 0
     price: 3
-  - furnitureName: "\uC11D\uC0C1"
+  - furnitureName: "\uC11D\uC7AC \uC11D\uC0C1"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 10, y: 2}
     size:
     - {x: 1, y: 1}
@@ -146,17 +146,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 2ed7096154886224a8481237ce981e2b, type: 3}
       - {fileID: 21300000, guid: af6b76e673fcefc44bdc994121002f86, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 42719828ec865474ebcd0e82fdd042cc, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 2ed7096154886224a8481237ce981e2b, type: 3}
       - {fileID: 21300000, guid: af6b76e673fcefc44bdc994121002f86, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 42719828ec865474ebcd0e82fdd042cc, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 2ed7096154886224a8481237ce981e2b, type: 3}
       - {fileID: 21300000, guid: af6b76e673fcefc44bdc994121002f86, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 42719828ec865474ebcd0e82fdd042cc, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 1
@@ -167,9 +167,9 @@ MonoBehaviour:
     colliderSize: {x: 1.96, y: 3.56}
     isUnlocked: 0
     price: 3
-  - furnitureName: "\uD683\uBD88"
+  - furnitureName: "\uC11D\uC7AC \uB4F1\uBD88"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 10, y: 0}
     size:
     - {x: 1, y: 1}
@@ -183,17 +183,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
       - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 47053f2e25f62034d8d4ff63ed1d9430, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
       - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 47053f2e25f62034d8d4ff63ed1d9430, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
       - {fileID: 21300000, guid: 441b1399da1b99c419a6099b5e466583, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: 47053f2e25f62034d8d4ff63ed1d9430, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 1
@@ -204,9 +204,9 @@ MonoBehaviour:
     colliderSize: {x: 0.88, y: 2.92}
     isUnlocked: 0
     price: 3
-  - furnitureName: "\uBCBD\uB4F1"
+  - furnitureName: "\uC11D\uC7AC \uD683\uBD88"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 5, y: 4}
     size:
     - {x: 1, y: 3}
@@ -220,17 +220,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
       - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: d02b9118b41ca04489408eaadcb1ee11, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
       - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: d02b9118b41ca04489408eaadcb1ee11, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
       - {fileID: 21300000, guid: 135837b242085ac42aabe52a9f3fca6d, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: d02b9118b41ca04489408eaadcb1ee11, type: 3}
     heightLimit: 4
     spriteNumber: 0
     isFloor: 0
@@ -241,9 +241,9 @@ MonoBehaviour:
     colliderSize: {x: 0.7710724, y: 1.8}
     isUnlocked: 0
     price: 3
-  - furnitureName: "\uD718\uC7A5"
+  - furnitureName: "\uC5B4\uB460\uC758 \uD718\uC7A5"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 0
     gridPosition: {x: 8, y: 2}
     size:
     - {x: 3, y: 5}
@@ -257,17 +257,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 45d66da571853ac44aa31f01011ec211, type: 3}
       - {fileID: 21300000, guid: 95b3ff6c6efaa1244b194412715dd0e7, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: a0aeb5beac4b4f8498104dcbf9de1e14, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 45d66da571853ac44aa31f01011ec211, type: 3}
       - {fileID: 21300000, guid: 95b3ff6c6efaa1244b194412715dd0e7, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: a0aeb5beac4b4f8498104dcbf9de1e14, type: 3}
     - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 45d66da571853ac44aa31f01011ec211, type: 3}
       - {fileID: 21300000, guid: 95b3ff6c6efaa1244b194412715dd0e7, type: 3}
-      lockSprite: {fileID: 0}
+      lockSprite: {fileID: 21300000, guid: a0aeb5beac4b4f8498104dcbf9de1e14, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 0

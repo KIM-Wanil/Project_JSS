@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorNmae: "2F : \uC5F0\uAE08\uC220 \uC0C1\uC810"
   floorDescription: "\uC5C6\uB294 \uAC83 \uBE7C\uACE0 \uB2E4 \uC788\uB2F5\uB2C8\uB2E4."
-  floorNum: 1
-  isUnlock: 0
+  floorNum: 2
+  isUnlock: 1
   mainSprite: {fileID: 21300000, guid: 828edf80989b4494f8344ee9d3820280, type: 3}
   furnitureInfos:
   - furnitureName: "\uC5F0\uAE08\uC220 \uCC45\uC0C1"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 2
     gridPosition: {x: 4, y: 6}
     size:
     - {x: 4, y: 2}
@@ -57,7 +57,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uB3C4\uAD6C \uC0C1\uC790"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 2
     gridPosition: {x: 0, y: 10}
     size:
     - {x: 2, y: 2}
@@ -94,7 +94,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uACE0\uC11C \uB354\uBBF8"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 2
     gridPosition: {x: 10, y: 10}
     size:
     - {x: 2, y: 2}
@@ -131,7 +131,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uB9C8\uBC95 \uC1A5"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 2
     gridPosition: {x: 7, y: 3}
     size:
     - {x: 2, y: 2}
@@ -172,7 +172,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uC8FC\uBB38\uC81C\uB2E8"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 2
     gridPosition: {x: 3, y: 1}
     size:
     - {x: 1, y: 1}
@@ -209,7 +209,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uCCA0\uCC3D \uCC3D\uBB38"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 2
     gridPosition: {x: 2, y: 4}
     size:
     - {x: 2, y: 2}
@@ -246,7 +246,7 @@ MonoBehaviour:
     price: 3
   - furnitureName: "\uB9C8\uBC95 \uD718\uC7A5"
     furnitureDescription: 
-    floorNum: 1
+    floorNum: 2
     gridPosition: {x: 6, y: 4}
     size:
     - {x: 2, y: 2}
@@ -279,5 +279,5 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 0.9586811, y: 0.42604828}
     colliderOffset: {x: 0.48096323, y: 0.72620654}
     colliderSize: {x: 0.9483633, y: 1.4216266}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 3

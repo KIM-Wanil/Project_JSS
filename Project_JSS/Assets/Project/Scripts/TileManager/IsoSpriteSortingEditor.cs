@@ -10,6 +10,8 @@ public class IsoSpriteSortingEditor : Editor {
     SerializedProperty sorterPositionOffset2;
 
     private void OnEnable() {
+        if (target == null)
+            return;
         sorterPositionOffset = serializedObject.FindProperty("SorterPositionOffset");
         sorterPositionOffset2 = serializedObject.FindProperty("SorterPositionOffset2");
     }

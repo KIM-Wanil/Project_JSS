@@ -63,6 +63,8 @@ public class FurniturePlacementManager : MonoBehaviour
     [SerializeField] Sprite[] buttonSprite;
     [SerializeField] int[] buttonsIndex;
 
+
+    [SerializeField] bool isTestMode = false;
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -72,9 +74,10 @@ public class FurniturePlacementManager : MonoBehaviour
             furnitureByFloor[i] = new List<GameObject>();
 
             floorData[i].furnitureInfos = basefloorData[i].furnitureInfos;
+            //강제 해금
             foreach (FurnitureData data in floorData[i].furnitureInfos )
             {
-                data.isUnlocked = true;
+                data.isUnlocked = isTestMode;
             }
           
         }

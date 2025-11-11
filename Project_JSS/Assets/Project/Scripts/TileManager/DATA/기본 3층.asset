@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorNmae: "3F : \uADF9\uC9C0\uBC29"
   floorDescription: "\uCDA5\uACE0 \uBBF8\uB044\uB7FD\uC9C0\uB9CC \uCD5C\uACE0\uC608\uC694."
-  floorNum: 2
-  isUnlock: 0
+  floorNum: 3
+  isUnlock: 1
   mainSprite: {fileID: 21300000, guid: 4ed6f4389e66f034b80c4822382b89e6, type: 3}
   furnitureInfos:
   - furnitureName: "\uC774\uAE00\uB8E8"
     furnitureDescription: 
-    floorNum: 2
+    floorNum: 3
     gridPosition: {x: 8, y: 8}
     size:
     - {x: 4, y: 4}
@@ -53,11 +53,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: -1.7088215, y: 1.2418022}
     colliderOffset: {x: -0.0242728, y: 2.0318012}
     colliderSize: {x: 3.5067189, y: 2.6018689}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 0
   - furnitureName: "\uC5BC\uC74C\uB09A\uC2DC\uB300"
     furnitureDescription: 
-    floorNum: 2
+    floorNum: 3
     gridPosition: {x: 5, y: 5}
     size:
     - {x: 2, y: 2}
@@ -94,11 +94,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 1.199098, y: 0.64372635}
     colliderOffset: {x: -0.027365208, y: 1.2223032}
     colliderSize: {x: 2.26229, y: 2.202642}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 0
   - furnitureName: "\uB208\uC0AC\uB78C"
     furnitureDescription: 
-    floorNum: 2
+    floorNum: 3
     gridPosition: {x: 5, y: 0}
     size:
     - {x: 2, y: 2}
@@ -131,11 +131,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 0.7068367, y: 0.60586023}
     colliderOffset: {x: 0.023123145, y: 1.6956313}
     colliderSize: {x: 1.65643, y: 2.4424615}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 0
   - furnitureName: "\uB0A8\uADF9\uCE68\uB300"
     furnitureDescription: 
-    floorNum: 2
+    floorNum: 3
     gridPosition: {x: 9, y: 4}
     size:
     - {x: 3, y: 2}
@@ -169,11 +169,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 1.8925877, y: 0.9461193}
     colliderOffset: {x: 0.3595097, y: 1.1877005}
     colliderSize: {x: 3.1024146, y: 1.9180398}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 0
   - furnitureName: "\uB300\uD615\uC7A5\uB871"
     furnitureDescription: 
-    floorNum: 2
+    floorNum: 3
     gridPosition: {x: 4, y: 10}
     size:
     - {x: 3, y: 2}
@@ -207,11 +207,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 1.8925877, y: 0.9461193}
     colliderOffset: {x: 0.4138584, y: 1.8718454}
     colliderSize: {x: 2.9895267, y: 2.7948892}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 0
   - furnitureName: "\uAF41\uAF41\uBAA8\uB2E5\uBD88"
     furnitureDescription: 
-    floorNum: 2
+    floorNum: 3
     gridPosition: {x: 6, y: 8}
     size:
     - {x: 2, y: 2}
@@ -245,11 +245,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 0.8353048, y: 0.74692094}
     colliderOffset: {x: -0.007522583, y: 1.3968339}
     colliderSize: {x: 1.5644927, y: 1.8448663}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 0
   - furnitureName: "\uB0C9\uB3D9\uCC38\uCE58"
     furnitureDescription: 
-    floorNum: 2
+    floorNum: 3
     gridPosition: {x: 4, y: 4}
     size:
     - {x: 3, y: 2}
@@ -282,11 +282,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 1.6994202, y: 1.1338377}
     colliderOffset: {x: 0.8660672, y: 1.1150913}
     colliderSize: {x: 1.7619681, y: 0.9875741}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 0
   - furnitureName: "\uC2A4\uD0A4"
     furnitureDescription: 
-    floorNum: 2
+    floorNum: 3
     gridPosition: {x: 8, y: 4}
     size:
     - {x: 4, y: 1}
@@ -319,11 +319,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 2.0261612, y: 1.154259}
     colliderOffset: {x: 1.0294377, y: 0.8087718}
     colliderSize: {x: 2.088709, y: 1.0284165}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 0
   - furnitureName: "\uC2A4\uB178\uC6B0\uBCF4\uB4DC"
     furnitureDescription: 
-    floorNum: 2
+    floorNum: 3
     gridPosition: {x: 8, y: 6}
     size:
     - {x: 3, y: 2}
@@ -356,5 +356,5 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 1.6994202, y: 1.1338377}
     colliderOffset: {x: 0.8660672, y: 1.1150913}
     colliderSize: {x: 1.7619681, y: 0.9875741}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 0
