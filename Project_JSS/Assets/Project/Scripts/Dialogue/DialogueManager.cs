@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
-public class DialogueManager : BaseManager
+public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private TutorialManager tutorialManager;
     public int currentEventNum = 0;
@@ -32,15 +33,21 @@ public class DialogueManager : BaseManager
     private DialogueEvent currentDialogueEvent;
     private bool isDialogueActive = false;
 
+    private static Action<int> OnStartDialogue;
+
     public void Start()
     {
+        OnStartDialogue += StartDialogue;
         if (currentEventNum == 0)
         {
             StartDialogue(currentEventNum);
         }
     }
-
-    public override void Init()
+    public void OnDestroy()
+    {
+        OnStartDialogue -= StartDialogue;
+    }
+    public void Init()
     {
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
@@ -164,7 +171,7 @@ public class DialogueManager : BaseManager
 
         if (dialogueData.nextDialogueId == -1)
         {
-            EndDialogue();
+            StartCoroutine(EndDialogue());
         }
         else
         {
@@ -175,7 +182,7 @@ public class DialogueManager : BaseManager
             }
             else
             {
-                EndDialogue();
+                StartCoroutine(EndDialogue());
             }
         }
     }
@@ -222,11 +229,15 @@ public class DialogueManager : BaseManager
         seq.Join(dimmerTween);
         yield return seq.WaitForCompletion();
 
-        if (currentEventNum == 0)
-        {
-            StartDialogue(currentTutorialNum);
-        }
         currentEventNum += 1;
+        if (currentEventNum == 1)
+        {
+            StartDialogue(currentEventNum);
+        }
+        if(currentEventNum == 2)
+        {
+            tutorialManager.StartTutorial(currentTutorialNum);
+        }
     }
 
     private void Update()
@@ -260,11 +271,10 @@ public class DialogueManager : BaseManager
                 OnContinueButtonClick(lastMessage);
             }
         }
+    }
 
-        //// ESC�� ��ȭ ����
-        //if (Input.GetKeyDown(KeyCode.Escape) && isDialogueActive)
-        //{
-        //    EndDialogue();
-        //}
+    public static void OnStartDialogueEvent(int num)
+    {
+        OnStartDialogue?.Invoke(num);
     }
 }

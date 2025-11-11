@@ -88,7 +88,7 @@ public class UiController : MonoBehaviour
         sequence.Append(transitionScreen.DOAnchorPos(new Vector2(0, -1280f), transitionDuration).SetEase(Ease.OutCubic));
         sequence.JoinCallback(() =>
         {
-            TutorialManager.TriggerCondition(TutorialCondition.머지이동클릭);
+            TutorialManager.OnTriggerConditionEvent(TutorialCondition.머지이동클릭);
             mergeCanvas.gameObject.SetActive(true);
             mergeCanvas.alpha = 0f;
             mergeCanvas.interactable = false;
@@ -120,7 +120,7 @@ public class UiController : MonoBehaviour
     }
     public void onClickListButton()
     {
-        TutorialManager.TriggerCondition(TutorialCondition.제작목록클릭);
+        TutorialManager.OnTriggerConditionEvent(TutorialCondition.제작목록클릭);
     }
     private void UpdateStarUIs(int currentStar)
     {

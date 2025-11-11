@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using DG.Tweening;
-using UnityEditor;
-using static UnityEngine.Rendering.DebugUI;
+//using UnityEditor;
+
 
 
 
@@ -32,13 +32,14 @@ public class TutorialManager : MonoBehaviour
     private bool isTutorialActive = false;
 
     // �Ϸ� ���� üũ�� ���� �̺�Ʈ
-    public static event Action<TutorialCondition> OnConditionMet;
+    public static event Action<TutorialCondition> OnTriggerCondition;
+    public static event Action<int> OnStartTutorial;
 
     private void Start()
     {
         // �Ϸ� ���� �̺�Ʈ ����
-        OnConditionMet += CheckCondition;
-
+        OnTriggerCondition += CheckCondition;
+        OnStartTutorial += StartTutorial;
         // ó������ Ʃ�丮�� ��Ȱ��ȭ
         tutorialPanel.gameObject.SetActive(false);
     }
@@ -71,9 +72,9 @@ public class TutorialManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        OnConditionMet -= CheckCondition;
+        OnTriggerCondition -= CheckCondition;
+        OnStartTutorial -= StartTutorial;
     }
-
     public void StartTutorial(int num)
     {
         Debug.Log("StartTutorial");
@@ -214,7 +215,7 @@ public class TutorialManager : MonoBehaviour
         if (!isTutorialActive) return;
 
         // ���� �Ϸ� �̺�Ʈ �߻�
-        OnConditionMet?.Invoke(currentStep.completionCondition);
+        OnTriggerCondition?.Invoke(currentStep.completionCondition);
     }
 
     private void CheckCondition(TutorialCondition condition)
@@ -257,8 +258,12 @@ public class TutorialManager : MonoBehaviour
     }
 
     // �ٸ� ��ũ��Ʈ���� ���� �ϷḦ �˸� �� ���
-    public static void TriggerCondition(TutorialCondition condition)
+    public static void OnTriggerConditionEvent(TutorialCondition condition)
     {
-        OnConditionMet?.Invoke(condition);
+        OnTriggerCondition?.Invoke(condition);
+    }
+    public static void OnStartTutorialEvent(int num)
+    {
+        OnStartTutorial?.Invoke(num);
     }
 }
