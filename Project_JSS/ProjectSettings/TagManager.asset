@@ -60,6 +60,12 @@ TagManager:
   - name: "5\uCE35"
     uniqueID: 152071189
     locked: 0
+  - name: "6\uCE35"
+    uniqueID: 2708102543
+    locked: 0
+  - name: 6-1
+    uniqueID: 46024421
+    locked: 0
   - name: preview
     uniqueID: 3251630071
     locked: 0

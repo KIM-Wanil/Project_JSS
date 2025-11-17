@@ -69,7 +69,7 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         mainCamera = Camera.main;
         // Ï∏µÎ≥Ñ Í∞?Íµ? Î™©Î°ù Ï¥àÍ∏∞?ôî
-        for (int i = 0; i < 5; i++) // ÏµúÎ?? 5Ï∏µÏúºÎ°? Í∞??†ï
+        for (int i = 0; i < basefloorData.Length; i++) // ÏµúÎ?? 5Ï∏µÏúºÎ°? Í∞??†ï
         {
             furnitureByFloor[i] = new List<GameObject>();
 
@@ -432,7 +432,6 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         if (floorNumber < 0 || floorNumber >= floorData.Length || floorManagers[floorNumber].floorData.isUnlock == false)
             return;
-
         if (selectedFurniture != null)
         {
             currentInfo.SettingSprites(spriteIndex);

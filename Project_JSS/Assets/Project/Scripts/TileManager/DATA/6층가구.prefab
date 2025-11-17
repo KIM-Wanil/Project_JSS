@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2831535997797581275}
   - component: {fileID: 398632631906514136}
   m_Layer: 0
-  m_Name: "0\uCE35\uAC00\uAD6C"
+  m_Name: "6\uCE35\uAC00\uAD6C"
   m_TagString: Furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,10 +76,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1943102489
-  m_SortingLayer: 1
+  m_SortingLayerID: 46024421
+  m_SortingLayer: 8
   m_SortingOrder: 8
-  m_Sprite: {fileID: 21300000, guid: 646c1d66ee3c46040b60592273045081, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 91defe717cb77b347aec2f500b0f8037, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -105,8 +105,8 @@ MonoBehaviour:
   isMovable: 1
   renderBelowAll: 0
   sortType: 1
-  SorterPositionOffset: {x: 0.03129673, y: 0.82492316}
-  SorterPositionOffset2: {x: 2.2239385, y: 0.03961885}
+  SorterPositionOffset: {x: -1.026243, y: 0.5434263}
+  SorterPositionOffset2: {x: 1.9766482, y: 0.94792914}
   renderersToSort:
   - {fileID: 2468365431143606980}
 --- !u!114 &2831535997797581275
@@ -125,12 +125,12 @@ MonoBehaviour:
     furnitureName: 
     furnitureDescription: 
     floorNum: 0
-    gridPosition: {x: 0, y: 11}
+    gridPosition: {x: 4, y: 6}
     size:
-    - {x: 2, y: 1}
-    - {x: 1, y: 2}
-    - {x: 2, y: 1}
-    - {x: 1, y: 2}
+    - {x: 2, y: 2}
+    - {x: 2, y: 2}
+    - {x: 2, y: 2}
+    - {x: 2, y: 2}
     tartgetPosition: []
     rotation: 0
     furnitureSprite: []
@@ -146,13 +146,13 @@ MonoBehaviour:
     price: 0
   furnitureName: 
   isFloor: 1
-  floorIndex: 0
-  gridPosition: {x: 4, y: 4}
+  floorIndex: 6
+  gridPosition: {x: 2, y: 2}
   size:
-  - {x: 3, y: 3}
-  - {x: 3, y: 3}
-  - {x: 3, y: 3}
-  - {x: 3, y: 3}
+  - {x: 8, y: 4}
+  - {x: 8, y: 4}
+  - {x: 8, y: 4}
+  - {x: 8, y: 4}
   tartgetPosition: []
   rotation: 0
   spriteNumber: 0
@@ -201,15 +201,15 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.1892954, y: 1.4084235}
+  m_Offset: {x: 2.404788, y: 0.46025085}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 2.32, y: 3.12}
+    pivot: {x: 0.0024838708, y: 0.50761855}
+    oldSize: {x: 4.88, y: 4.72}
     newSize: {x: 5, y: 4.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.163183, y: 1.8440406}
+  m_Size: {x: 4.926059, y: 2.5959473}
   m_EdgeRadius: 0
