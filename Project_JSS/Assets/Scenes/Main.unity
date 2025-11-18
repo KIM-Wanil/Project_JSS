@@ -840,7 +840,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000f7efcfc17b0dadc425e0ebaaff198037079e4060bf01511c156c1009e79b2e8c
+  m_ApplyToSortingLayers: 00000000f7efcfc17b0dadc425e0ebaaff198037079e4060bf01511c156c1009e79b2e8cab5ac37ce7c86a596748e4a5
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2311,6 +2311,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 589486065272665800, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6d4a21e780669bf428a9c89f64db46e1, type: 3}
     - target: {fileID: 741010621786685902, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
       propertyPath: uiObject
       value: 
@@ -2379,6 +2383,30 @@ PrefabInstance:
       propertyPath: 'buttonsItemImage.Array.data[2]'
       value: 
       objectReference: {fileID: 5971653777089787142}
+    - target: {fileID: 1490698345424592512, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f536f7e8f23e09a4392a7ef7967cf869, type: 3}
+    - target: {fileID: 3530944726213833502, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_labelHash
+      value: 0.0000019159827
+      objectReference: {fileID: 0}
+    - target: {fileID: 3530944726213833502, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_CategoryHash
+      value: 5.962721e-16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945025443429807654, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5fa6db95aea2efa44afe4d21946151a3, type: 3}
+    - target: {fileID: 4767052402404471963, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_labelHash
+      value: 6.345811e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4767052402404471963, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_CategoryHash
+      value: 0.007206483
+      objectReference: {fileID: 0}
     - target: {fileID: 4841244689167517333, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
       propertyPath: m_Name
       value: GameObject
@@ -2423,6 +2451,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5533528252552135691, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 93d83652f99eade428ffe4799152c68d, type: 3}
+    - target: {fileID: 6475114899584951958, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_labelHash
+      value: 2.732469e-35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6475114899584951958, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_CategoryHash
+      value: 1.3395638
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915870166408139068, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bc08f4d4d31c30f4ea5d2a195b45d370, type: 3}
+    - target: {fileID: 7345293367006899265, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_labelHash
+      value: 5.0145227e-17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7345293367006899265, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_CategoryHash
+      value: 2.9085758e-28
+      objectReference: {fileID: 0}
+    - target: {fileID: 9209165939219619413, guid: ff36963573466b646ab1ba8ae7943d51, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 516f048f79f81a34699ecc90ab055f29, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2433,7 +2489,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 619394802}
   - {fileID: 8909352435023101408}
   - {fileID: 4085478254117824521}
   - {fileID: 5331410101352452534}
@@ -2442,3 +2497,4 @@ SceneRoots:
   - {fileID: 101190020}
   - {fileID: 1387711534}
   - {fileID: 136230930}
+  - {fileID: 619394802}
