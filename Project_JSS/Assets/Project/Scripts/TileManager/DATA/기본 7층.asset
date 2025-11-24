@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af5cc798930607499415a7fc21313db, type: 3}
   m_Name: "\uAE30\uBCF8 7\uCE35"
   m_EditorClassIdentifier: 
-  floorNmae: "6F : \uD559\uAD50"
+  floorName: "7F : \uD3AD\uADC4 \uC911\uD559\uAD50"
   floorDescription: "\uD6CC\uB96D\uD55C \uD3AD\uADC4\uC774 \uB418\uAE30 \uC704\uD55C
     \uCCAB\uAC78\uC74C"
+  floorBGM: "7\uCE35"
   floorNum: 6
   isUnlock: 1
-  mainSprite: {fileID: 21300000, guid: a8382498a3b8d2e439b5038d2a89cb0a, type: 3}
+  mainSprite: {fileID: 21300000, guid: f41de07c239526d4a8433fc861a68215, type: 3}
   furnitureInfos:
   - furnitureName: "\uAD50\uD0C1"
     furnitureDescription: 

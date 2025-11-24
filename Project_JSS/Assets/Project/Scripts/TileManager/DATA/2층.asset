@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af5cc798930607499415a7fc21313db, type: 3}
   m_Name: "2\uCE35"
   m_EditorClassIdentifier: 
-  floorNmae: "1F : \uB9C8\uC655\uC758 \uC548\uC2DD\uCC98"
-  floorDescription: "\uBD88\uAE38\uD55C \uC5B4\uB460\uC758 \uD798\uC774 \uC19F\uAD6C\uCE69\uB2C8\uB2E4..."
+  floorName: "2F : \uB9C8\uC655\uC758 \uC548\uC2DD\uCC98"
+  floorDescription: "\uC5B4\uB460\uC758 \uD798\uC774 \uC19F\uAD6C\uCE69\uB2C8\uB2E4."
+  floorBGM: "2\uCE35"
   floorNum: 1
   isUnlock: 1
-  mainSprite: {fileID: 21300000, guid: e8c933c7165fd2e4391b4b2088b9a630, type: 3}
+  mainSprite: {fileID: 21300000, guid: 041ee9089d17ee54c9cbbed19f8f5a6d, type: 3}
   furnitureInfos:
   - furnitureName: "\uC5B4\uB460\uC758 \uCE68\uB300"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 1
     gridPosition: {x: 4, y: 8}
     size:
     - {x: 4, y: 4}
@@ -53,11 +54,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 2.4382727, y: 1.2962978}
     colliderOffset: {x: -0.005213499, y: 2.1392348}
     colliderSize: {x: 4.509928, y: 2.5684319}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 3
   - furnitureName: "\uC5B4\uB460\uC758 \uC625\uC88C"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 1
     gridPosition: {x: 10, y: 6}
     size:
     - {x: 2, y: 2}
@@ -90,11 +91,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 0.8179009, y: 0.44753075}
     colliderOffset: {x: 0, y: 2.12}
     colliderSize: {x: 2.4, y: 4.24}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 3
   - furnitureName: "\uC218\uC815\uAD6C"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 1
     gridPosition: {x: 3, y: 3}
     size:
     - {x: 1, y: 1}
@@ -128,11 +129,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 0.49382892, y: 0.26234567}
     colliderOffset: {x: 0, y: 1.34}
     colliderSize: {x: 1.08, y: 2.68}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 3
   - furnitureName: "\uC11D\uC7AC \uC11D\uC0C1"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 1
     gridPosition: {x: 10, y: 2}
     size:
     - {x: 1, y: 1}
@@ -165,11 +166,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 0.6172843, y: 0.2623446}
     colliderOffset: {x: 0, y: 1.78}
     colliderSize: {x: 1.96, y: 3.56}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 3
   - furnitureName: "\uC11D\uC7AC \uB4F1\uBD88"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 1
     gridPosition: {x: 10, y: 0}
     size:
     - {x: 1, y: 1}
@@ -202,11 +203,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 0, y: 0}
     colliderOffset: {x: 0, y: 1.46}
     colliderSize: {x: 0.88, y: 2.92}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 3
   - furnitureName: "\uC11D\uC7AC \uD683\uBD88"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 1
     gridPosition: {x: 5, y: 4}
     size:
     - {x: 1, y: 3}
@@ -239,11 +240,11 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 0.79284, y: 0}
     colliderOffset: {x: 0.404989, y: 0.9}
     colliderSize: {x: 0.7710724, y: 1.8}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 3
   - furnitureName: "\uC5B4\uB460\uC758 \uD718\uC7A5"
     furnitureDescription: 
-    floorNum: 0
+    floorNum: 1
     gridPosition: {x: 8, y: 2}
     size:
     - {x: 3, y: 5}
@@ -276,5 +277,6 @@ MonoBehaviour:
     SorterPositionOffset2: {x: 2.0940208, y: 0.008652687}
     colliderOffset: {x: 1.04, y: 2.14}
     colliderSize: {x: 2.08, y: 4.28}
-    isUnlocked: 0
+    isUnlocked: 1
     price: 3
+  furniture: {fileID: 0}

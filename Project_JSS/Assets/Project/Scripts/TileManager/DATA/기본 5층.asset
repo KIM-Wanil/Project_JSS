@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af5cc798930607499415a7fc21313db, type: 3}
   m_Name: "\uAE30\uBCF8 5\uCE35"
   m_EditorClassIdentifier: 
-  floorNmae: "4F : \uC170\uD504\uC758 \uC8FC\uBC29"
+  floorName: "5F : \uC250\uD504\uC758 \uCFE0\uD0B9\uB8F8"
   floorDescription: "\uC5B4\uC11C \uC0DD\uC120\uC744 \uAD7D\uACE0 \uCC0C\uACE0 \uD280\uACA8\uC57C
     \uD574\uC694."
+  floorBGM: "5\uCE35"
   floorNum: 4
   isUnlock: 1
-  mainSprite: {fileID: 21300000, guid: 1c47180d07b955b4495db609ee40d196, type: 3}
+  mainSprite: {fileID: 21300000, guid: 195a869f768c1dc40997a15d962da5f1, type: 3}
   furnitureInfos:
   - furnitureName: "\uB0C9\uC7A5\uACE0"
     furnitureDescription: 
@@ -284,3 +285,4 @@ MonoBehaviour:
     colliderSize: {x: 3.344962, y: 3.2236342}
     isUnlocked: 1
     price: 3
+  furniture: {fileID: 0}

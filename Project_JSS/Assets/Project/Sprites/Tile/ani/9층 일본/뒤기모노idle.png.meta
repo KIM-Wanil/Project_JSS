@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aedac81850cef9c43af3a008b78fe20a
+guid: 1efe819a1da003b4d82d50f34d0f4b35
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,177 +110,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_0"
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 512
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: de41a2b68cd567a45af6afe8a2255a32
-      internalID: -1811767198
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_1"
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 512
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 56e246c8cbbf3774f89dc7b90bba27e5
-      internalID: -929962674
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_2"
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 512
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3418064dd10894740a9163f5b14f8144
-      internalID: -699861519
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_3"
+      name: "\uB4A4\uAE30\uBAA8\uB178idle_0"
       rect:
         serializedVersion: 2
         x: 0
         y: 256
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a9d4d04494b92a342b642e50820bdf6f
-      internalID: -794607199
+      spriteID: f83180a2941287b4e914e7bb4f9b2f21
+      internalID: -1133083112
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_4"
+      name: "\uB4A4\uAE30\uBAA8\uB178idle_1"
       rect:
         serializedVersion: 2
         x: 256
         y: 256
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1a52ee3e39680d429c2ff9c493ade19
-      internalID: -1508898975
+      spriteID: 5f687de2d286b62459f3156697133ed4
+      internalID: 2097088156
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_5"
+      name: "\uB4A4\uAE30\uBAA8\uB178idle_2"
       rect:
         serializedVersion: 2
         x: 512
         y: 256
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93ddf801a18af9f49b1d024d3a5d3f5a
-      internalID: 118054753
+      spriteID: 9b0c1c62fc63f1048be1bfb338889a64
+      internalID: -237366959
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_6"
+      name: "\uB4A4\uAE30\uBAA8\uB178idle_3"
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1eca1a2bcecfe6f43a7306329f3647c3
-      internalID: -1916542289
+      spriteID: 4320e9b5a4b76d749b5ff8c8fb6b01de
+      internalID: 1876506844
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_7"
+      name: "\uB4A4\uAE30\uBAA8\uB178idle_4"
       rect:
         serializedVersion: 2
         x: 256
         y: 0
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7616dce6498fab4b898db9b2ba866c1
-      internalID: -826211008
+      spriteID: 5b4f7fddf135f1c429ebea8ceab275c2
+      internalID: -61967142
       vertices: []
       indices: 
       edges: []
@@ -299,14 +233,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_0": -1811767198
-      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_1": -929962674
-      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_2": -699861519
-      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_3": -794607199
-      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_4": -1508898975
-      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_5": 118054753
-      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_6": -1916542289
-      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_7": -826211008
+      "\uB4A4\uAE30\uBAA8\uB178idle_0": -1133083112
+      "\uB4A4\uAE30\uBAA8\uB178idle_1": 2097088156
+      "\uB4A4\uAE30\uBAA8\uB178idle_2": -237366959
+      "\uB4A4\uAE30\uBAA8\uB178idle_3": 1876506844
+      "\uB4A4\uAE30\uBAA8\uB178idle_4": -61967142
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

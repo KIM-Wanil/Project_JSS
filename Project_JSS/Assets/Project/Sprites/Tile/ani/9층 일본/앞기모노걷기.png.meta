@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 53da91a3e2a2f4f468ac5e3199f59818
+guid: aedac81850cef9c43af3a008b78fe20a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,177 +110,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BS_walk_back_0
+      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_0"
       rect:
         serializedVersion: 2
         x: 0
         y: 512
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a4f62a75566d264985d7eaa9615cb07
-      internalID: -234497478
+      spriteID: de41a2b68cd567a45af6afe8a2255a32
+      internalID: -1811767198
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_walk_back_1
+      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_1"
       rect:
         serializedVersion: 2
         x: 256
         y: 512
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b7865b0fcea1d4143a55333753340259
-      internalID: 2123974449
+      spriteID: 56e246c8cbbf3774f89dc7b90bba27e5
+      internalID: -929962674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_walk_back_2
+      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_2"
       rect:
         serializedVersion: 2
         x: 512
         y: 512
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 835aa769a786fac448a5627bce151bba
-      internalID: 847149898
+      spriteID: 3418064dd10894740a9163f5b14f8144
+      internalID: -699861519
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_walk_back_3
+      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_3"
       rect:
         serializedVersion: 2
         x: 0
         y: 256
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eef49686f54aaf74597d6204d57536df
-      internalID: -163774083
+      spriteID: a9d4d04494b92a342b642e50820bdf6f
+      internalID: -794607199
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_walk_back_4
+      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_4"
       rect:
         serializedVersion: 2
         x: 256
         y: 256
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2d4acb283b91934cb5661fda8795347
-      internalID: -157090041
+      spriteID: d1a52ee3e39680d429c2ff9c493ade19
+      internalID: -1508898975
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_walk_back_5
+      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_5"
       rect:
         serializedVersion: 2
         x: 512
         y: 256
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24f8a9dc0d0a9b249a5722ea3dc45886
-      internalID: 917267452
+      spriteID: 93ddf801a18af9f49b1d024d3a5d3f5a
+      internalID: 118054753
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_walk_back_6
+      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_6"
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f49ad8d489d13824db126313cc043935
-      internalID: 714072374
+      spriteID: 1eca1a2bcecfe6f43a7306329f3647c3
+      internalID: -1916542289
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_walk_back_7
+      name: "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_7"
       rect:
         serializedVersion: 2
         x: 256
         y: 0
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73a55e942a590384ab2b658395dc2d42
-      internalID: -1943817478
+      spriteID: f7616dce6498fab4b898db9b2ba866c1
+      internalID: -826211008
       vertices: []
       indices: 
       edges: []
@@ -299,14 +299,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BS_walk_back_0: -234497478
-      BS_walk_back_1: 2123974449
-      BS_walk_back_2: 847149898
-      BS_walk_back_3: -163774083
-      BS_walk_back_4: -157090041
-      BS_walk_back_5: 917267452
-      BS_walk_back_6: 714072374
-      BS_walk_back_7: -1943817478
+      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_0": -1811767198
+      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_1": -929962674
+      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_2": -699861519
+      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_3": -794607199
+      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_4": -1508898975
+      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_5": 118054753
+      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_6": -1916542289
+      "\uC55E\uAE30\uBAA8\uB178\uAC77\uAE30_7": -826211008
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

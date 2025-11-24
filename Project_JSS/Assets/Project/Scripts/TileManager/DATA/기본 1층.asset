@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af5cc798930607499415a7fc21313db, type: 3}
   m_Name: "\uAE30\uBCF8 1\uCE35"
   m_EditorClassIdentifier: 
-  floorNmae: "0F : \uBD88\uAE38\uD55C \uC5B4\uB460\uC758 \uD798\uC774 \uC19F\uAD6C\uCE69\uB2C8\uB2E4..."
-  floorDescription: "\uD6CC\uB96D\uD55C \uD3AD\uADC4\uC774 \uB418\uAE30 \uC704\uD55C
-    \uCCAB\uAC78\uC74C"
+  floorName: "1F : \uD3C9\uBC94\uD55C \uD558\uB8E8"
+  floorDescription: "\uBD80\uB4DC\uB7FD\uACE0 \uC544\uB2F4\uD55C \uBC29\uC785\uB2C8\uB2E4."
+  floorBGM: MainBGM
   floorNum: 0
   isUnlock: 1
-  mainSprite: {fileID: 21300000, guid: e8c933c7165fd2e4391b4b2088b9a630, type: 3}
+  mainSprite: {fileID: 21300000, guid: a891ea533ca71924f9434b5e3c5c641b, type: 3}
   furnitureInfos:
   - furnitureName: "\uAE30\uBCF8 \uCE68\uB300"
     furnitureDescription: 
@@ -236,8 +236,8 @@ MonoBehaviour:
     spriteNumber: 0
     isFloor: 1
     isLeft: 0
-    SorterPositionOffset: {x: -1.8603882, y: 1.3186164}
-    SorterPositionOffset2: {x: 1.8411834, y: 1.2700574}
+    SorterPositionOffset: {x: -0.17862985, y: 2.311129}
+    SorterPositionOffset2: {x: 0.14104533, y: 2.2993302}
     colliderOffset: {x: -0.024212599, y: 1.3829046}
     colliderSize: {x: 3.6507087, y: 1.7568815}
     isUnlocked: 1

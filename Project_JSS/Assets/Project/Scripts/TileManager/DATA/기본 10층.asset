@@ -12,22 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af5cc798930607499415a7fc21313db, type: 3}
   m_Name: "\uAE30\uBCF8 10\uCE35"
   m_EditorClassIdentifier: 
-  floorNmae: "8F : \uC77C\uBCF8"
+  floorName: "10F : \uC6A9\uC0AC\uC758 \uC27C\uD130"
   floorDescription: "\uD6CC\uB96D\uD55C \uD3AD\uADC4\uC774 \uB418\uAE30 \uC704\uD55C
     \uCCAB\uAC78\uC74C"
+  floorBGM: "10\uCE35"
   floorNum: 9
   isUnlock: 1
-  mainSprite: {fileID: 21300000, guid: a8382498a3b8d2e439b5038d2a89cb0a, type: 3}
+  mainSprite: {fileID: 21300000, guid: 7ad76218ce65522428bb19b0763bdc00, type: 3}
   furnitureInfos:
   - furnitureName: "\uC6A9\uC0AC \uCE68\uB300"
     furnitureDescription: 
     floorNum: 9
     gridPosition: {x: 4, y: 8}
     size:
-    - {x: 2, y: 2}
-    - {x: 2, y: 2}
-    - {x: 2, y: 2}
-    - {x: 2, y: 2}
+    - {x: 4, y: 4}
+    - {x: 4, y: 4}
+    - {x: 4, y: 4}
+    - {x: 4, y: 4}
     tartgetPosition: []
     rotation: 0
     furnitureSprite:
@@ -250,7 +251,8 @@ MonoBehaviour:
     - {x: 1, y: 1}
     - {x: 1, y: 1}
     - {x: 1, y: 1}
-    tartgetPosition: []
+    tartgetPosition:
+    - {x: -1, y: 1}
     rotation: 0
     furnitureSprite:
     - isUnlocked: 1

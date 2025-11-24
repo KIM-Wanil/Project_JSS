@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5186058e4d2a0b243b2dae8a9a5f6475
+guid: 51c7458f7830c2647adc1cfebe21bc48
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -110,111 +110,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BS_idle_front_0
+      name: "\uC81C\uB85C\uB178\uC2A4_0"
       rect:
         serializedVersion: 2
-        x: 0
-        y: 256
+        x: 69
+        y: 403
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 367d4529a9a703a47a95b9bd783c5d2a
-      internalID: -893607103
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BS_idle_front_1
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 256
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a965270b92c88e14885d81054c35874e
-      internalID: -1555613681
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BS_idle_front_2
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 256
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6c1627c58b1407247b5f45a7f67a4028
-      internalID: 975157530
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BS_idle_front_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d5c7a4e77525ad941b45a90965baae05
-      internalID: 627559213
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BS_idle_front_4
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4f0cde2bc23a9d04899dc1df4af50bfb
-      internalID: 641404116
+      spriteID: 48ccc8616a363ce50800000000000000
+      internalID: 6828411025017851012
       vertices: []
       indices: 
       edges: []
@@ -233,11 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BS_idle_front_0: -893607103
-      BS_idle_front_1: -1555613681
-      BS_idle_front_2: 975157530
-      BS_idle_front_3: 627559213
-      BS_idle_front_4: 641404116
+      "\uC81C\uB85C\uB178\uC2A4_0": 6828411025017851012
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

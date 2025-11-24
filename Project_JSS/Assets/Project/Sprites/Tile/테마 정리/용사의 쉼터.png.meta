@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 634a7d7be61c4ae439276d9b6f0ee69a
+guid: 7ad76218ce65522428bb19b0763bdc00
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -110,111 +110,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178idle_0"
+      name: "\uC81C\uB85C\uB178\uC2A4_0"
       rect:
         serializedVersion: 2
-        x: 0
-        y: 256
+        x: 69
+        y: 403
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 8160e5c0af2cb624eacdc85124e4e5d1
-      internalID: -1518638426
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178idle_1"
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 256
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e434ff9daf221647bb3532d72b1c30b
-      internalID: 287376651
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178idle_2"
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 256
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4d3ebc38764327e4987c0ed0c1feed9d
-      internalID: -1036309526
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178idle_3"
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0486d3763f1597e428651abc4c2c6b15
-      internalID: 966016853
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC55E\uAE30\uBAA8\uB178idle_4"
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 64639e8a493cd3948ac98bcfd4a8c623
-      internalID: 1833171711
+      spriteID: 48ccc8616a363ce50800000000000000
+      internalID: 6828411025017851012
       vertices: []
       indices: 
       edges: []
@@ -233,11 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uC55E\uAE30\uBAA8\uB178idle_0": -1518638426
-      "\uC55E\uAE30\uBAA8\uB178idle_1": 287376651
-      "\uC55E\uAE30\uBAA8\uB178idle_2": -1036309526
-      "\uC55E\uAE30\uBAA8\uB178idle_3": 966016853
-      "\uC55E\uAE30\uBAA8\uB178idle_4": 1833171711
+      "\uC81C\uB85C\uB178\uC2A4_0": 6828411025017851012
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

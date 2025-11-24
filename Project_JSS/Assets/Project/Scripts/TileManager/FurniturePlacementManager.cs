@@ -7,6 +7,7 @@ using DG.Tweening;
 using System.Linq;
 using UnityEngine.TextCore.Text;
 using TMPro;
+using Unity.VisualScripting;
 
 public class FurniturePlacementManager : MonoBehaviour
 {
@@ -63,8 +64,10 @@ public class FurniturePlacementManager : MonoBehaviour
     [SerializeField] Sprite[] buttonSprite;
     [SerializeField] int[] buttonsIndex;
 
-
+    [SerializeField] GameObject[] upDownButtons;
     [SerializeField] bool isTestMode = false;
+
+    bool isSettingTime = false;
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -73,20 +76,22 @@ public class FurniturePlacementManager : MonoBehaviour
         {
             furnitureByFloor[i] = new List<GameObject>();
 
-            floorData[i].furnitureInfos = basefloorData[i].furnitureInfos;
+            //floorData[i].furnitureInfos = basefloorData[i].furnitureInfos;
+            floorData[i].Copy(basefloorData[i]);
             //°­Á¦ ÇØ±Ý
-            foreach (FurnitureData data in floorData[i].furnitureInfos )
+            if (i > 1)
             {
-                data.isUnlocked = isTestMode;
+                foreach (FurnitureData data in floorData[i].furnitureInfos)
+                {
+                    data.isUnlocked = isTestMode;
+                }
             }
+
           
         }
         rotateButton.onClick.AddListener(RotateFurniture);
         confirmButton.onClick.AddListener(ConfirmPlacement);
         cancelButton.onClick.AddListener(CancelPlacement);
-   
-
-
     }
     private void Start()
     {
@@ -430,8 +435,10 @@ public class FurniturePlacementManager : MonoBehaviour
     // ì¸? ë³?ê²?
     public void SwitchFloor(int floorNumber)
     {
-        if (floorNumber < 0 || floorNumber >= floorData.Length || floorManagers[floorNumber].floorData.isUnlock == false)
+        if (floorNumber < 0 || floorNumber >= floorData.Length || floorManagers[floorNumber].floorData.isUnlock == false || isSettingTime)
             return;
+        isSettingTime = true;
+        Managers.Asset.PlayBGMFadeInSound(floorData[floorNumber].floorBGM,0.5f);
         if (selectedFurniture != null)
         {
             currentInfo.SettingSprites(spriteIndex);
@@ -447,18 +454,35 @@ public class FurniturePlacementManager : MonoBehaviour
         {
             floorManagers[i].gameObject.SetActive(false);
         }
-      //  floorManager.gameObject.SetActive(true);
+        floorManager.gameObject.SetActive(true);
         floor = floorNumber;
 
         isometricGrids = floorManager.grids;
         furniturePrefab = floorManager.furniturePrefab;
-
-
         currentFloor = floorNumber;
         skinObject.SetActive(false);
-    }
-   
 
+        StartCoroutine(SettingDelay());
+        if (floorNumber == 0)
+        {
+            upDownButtons[0].SetActive(false);
+        }
+        else if (floorNumber == floorData.Length-1)
+        {
+            upDownButtons[1].SetActive(false);
+        }
+        else
+        {
+            upDownButtons[0].SetActive(true);
+            upDownButtons[1].SetActive(true);
+        }
+    }
+    IEnumerator SettingDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isSettingTime = false;
+        yield return null;
+    }
     // ê°?êµ? ì¶”ê??
     public void AddFurnitureToFloor(FurnitureData data, int floor)
     {

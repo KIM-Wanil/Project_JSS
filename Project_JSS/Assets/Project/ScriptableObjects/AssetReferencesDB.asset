@@ -22,6 +22,62 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  - key: "2\uCE35"
+    assetReference:
+      m_AssetGUID: 9c8af68907417c240bd1e2abb8615049
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: "4\uCE35"
+    assetReference:
+      m_AssetGUID: d11b5e2a98b48b740bf4f5792b17a116
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: "5\uCE35"
+    assetReference:
+      m_AssetGUID: 35ab0c2cb2f890f4a83f72e2105891d8
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: "6\uCE35"
+    assetReference:
+      m_AssetGUID: 1cf5814a51de7fe4da37c3e025c37859
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: "7\uCE35"
+    assetReference:
+      m_AssetGUID: 775d49a7c715cda41a37f395903261a6
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: "8\uCE35"
+    assetReference:
+      m_AssetGUID: 6823db1281d51b547aeeb4307f882e47
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: "9\uCE35"
+    assetReference:
+      m_AssetGUID: a2ede8f999393454a8717211acd83a38
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: "10\uCE35"
+    assetReference:
+      m_AssetGUID: 0aac3f1fc6dd3a743b385add0d507712
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   UISounds:
   - key: Click_Close
     assetReference:

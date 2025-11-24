@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 57213541fe8390e458d483b7082fd5f6
+guid: e028dc2efa23cf945bab64940873b13c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,111 +110,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BS_idle_back_0
+      name: "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_0"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9970c367024ba57479acc30e72ac8799
+      internalID: -843135079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_1"
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5329e048e2e58c48bb59b5049af2a28
+      internalID: 429567861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_2"
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae4375dbd18b25c4d8b3ea6ee1019d00
+      internalID: 1662108664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_3"
       rect:
         serializedVersion: 2
         x: 0
         y: 256
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4e51c042917fd74bb96a6c58557882d
-      internalID: -1010357694
+      spriteID: ae3f61b8026200647b88b2107bb078d7
+      internalID: 763676606
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_idle_back_1
+      name: "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_4"
       rect:
         serializedVersion: 2
         x: 256
         y: 256
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f88b81bf62b123545b15a909cb401ebe
-      internalID: -2003326664
+      spriteID: e54eca0b2d69fd1418c0cd924b54ac11
+      internalID: -1307769355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_idle_back_2
+      name: "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_5"
       rect:
         serializedVersion: 2
         x: 512
         y: 256
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34ff1fd2ed9462a43a291cf5d637b3b4
-      internalID: -1502765213
+      spriteID: cb615c42f3c0db9419f759aa973f888e
+      internalID: -251566793
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_idle_back_3
+      name: "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_6"
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f286232952e1564fa22da3fd58fde4f
-      internalID: -876625437
+      spriteID: b7f1c581aa027ec4fb600e0cee1790ae
+      internalID: -866216008
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BS_idle_back_4
+      name: "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_7"
       rect:
         serializedVersion: 2
         x: 256
         y: 0
         width: 256
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 198e6546120ce864b97a5b6badbe9e68
-      internalID: 687845425
+      spriteID: e853fbf9cf87dfa46a09ce5237a46816
+      internalID: -1826219545
       vertices: []
       indices: 
       edges: []
@@ -233,11 +299,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BS_idle_back_0: -1010357694
-      BS_idle_back_1: -2003326664
-      BS_idle_back_2: -1502765213
-      BS_idle_back_3: -876625437
-      BS_idle_back_4: 687845425
+      "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_0": -843135079
+      "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_1": 429567861
+      "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_2": 1662108664
+      "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_3": 763676606
+      "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_4": -1307769355
+      "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_5": -251566793
+      "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_6": -866216008
+      "\uB4A4\uAE30\uBAA8\uB178\uAC77\uAE30_7": -1826219545
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

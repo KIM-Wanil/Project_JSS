@@ -80,7 +80,7 @@ public class BuyFurnitureButton : MonoBehaviour
         this.floorData = floorData;
         slider.maxValue = floorData.furnitureInfos.Length;
         slider.value = floorData.UnlockCounting();
-        floorNmae.text = floorData.floorNmae;
+        floorNmae.text = floorData.floorName;
         floorDescription.text = floorData.floorDescription;
 
         UpdateCounting();

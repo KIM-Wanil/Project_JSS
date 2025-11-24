@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Library:
-  - m_Name: Student_idle
-    m_Hash: 993400117
+  - m_Name: idle
+    m_Hash: 472167701
     m_CategoryList: []
     m_OverrideEntries:
-    - m_Name: Student_idle_0
-      m_Hash: 365936291
+    - m_Name: idle_0
+      m_Hash: 379395835
       m_Sprite: {fileID: -485826139, guid: a5ad142bb0cb12b4694b4b59ad5f5c34, type: 3}
       m_FromMain: 1
       m_SpriteOverride: {fileID: -893607103, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
@@ -167,6 +167,37 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: -1943817478, guid: 53da91a3e2a2f4f468ac5e3199f59818, type: 3}
     m_FromMain: 1
     m_EntryOverrideCount: 8
+  - m_Name: Student_idle
+    m_Hash: 993400117
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Student_idle_0
+      m_Hash: 365936291
+      m_Sprite: {fileID: -893607103, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -893607103, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
+    - m_Name: Student_idle_1
+      m_Hash: 583568949
+      m_Sprite: {fileID: -1555613681, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1555613681, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
+    - m_Name: Student_idle_2
+      m_Hash: 1002561423
+      m_Sprite: {fileID: 975157530, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 975157530, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
+    - m_Name: Student_idle_3
+      m_Hash: 214363929
+      m_Sprite: {fileID: 627559213, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 627559213, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
+    - m_Name: Student_idle_4
+      m_Hash: 312638138
+      m_Sprite: {fileID: 641404116, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 641404116, guid: 5186058e4d2a0b243b2dae8a9a5f6475, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 0
   m_PrimaryLibraryGUID: 86760d02b52618b43beb032b8474f4d8
-  m_ModificationHash: 638990733009913708
+  m_ModificationHash: 638995872968471543
   m_Version: 1

@@ -31,7 +31,7 @@ public class CollectionObject : MonoBehaviour
         this.collection = collection;
         floorIndex = index;
         slider.maxValue = furniturePlacementManager.floorData[index].furnitureInfos.Length;
-        floorNmae.text = furniturePlacementManager.floorData[index].floorNmae;
+        floorNmae.text = furniturePlacementManager.floorData[index].floorName;
         image.sprite = furniturePlacementManager.floorData[index].mainSprite;
         floorDescription.text = furniturePlacementManager.floorData[index].floorDescription;
         return ref slider;

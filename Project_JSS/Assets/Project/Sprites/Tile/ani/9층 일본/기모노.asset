@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e021923489a1ea1429ec321c3272379c, type: 3}
+  m_Name: "\uAE30\uBAA8\uB178"
+  m_EditorClassIdentifier: 
+  CharaterName: "\uAE30\uBAA8\uB178"
+  CharacterDescription: "\uC608\uC05C \uAE30\uBAA8\uB178\uB97C \uC218\uC9D1\uD574\uC694."
+  isUnlock: 0
+  assets:
+  - {fileID: 7108339969198208228, guid: a18d163d7918a7749bef1b507473c6c1, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  skins:
+  - {fileID: 21300000, guid: 0c02fc9c4de902d4b97bcb0ad8066ccb, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  deco1:
+  - {fileID: 21300000, guid: 0c02fc9c4de902d4b97bcb0ad8066ccb, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  deco2:
+  - {fileID: 21300000, guid: 0c02fc9c4de902d4b97bcb0ad8066ccb, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
+  skinIndex: 0
+  decorationIndex1: 0
+  decorationIndex2: 0
