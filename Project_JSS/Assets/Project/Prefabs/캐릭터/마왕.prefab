@@ -80,7 +80,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1427382235
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: -1043958037, guid: 0b6c06132a9fc2b43b2259936484ce64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -108,7 +108,7 @@ MonoBehaviour:
   isMovable: 1
   renderBelowAll: 0
   sortType: 0
-  SorterPositionOffset: {x: 0, y: 0}
+  SorterPositionOffset: {x: 0.009405682, y: 0.16460037}
   SorterPositionOffset2: {x: 0, y: 0}
   renderersToSort:
   - {fileID: 6862007080424151137}

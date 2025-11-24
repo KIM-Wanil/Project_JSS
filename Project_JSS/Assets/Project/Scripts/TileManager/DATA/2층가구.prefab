@@ -76,8 +76,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 931142143
-  m_SortingLayer: 2
+  m_SortingLayerID: -1427382235
+  m_SortingLayer: 1
   m_SortingOrder: 8
   m_Sprite: {fileID: 21300000, guid: 9b2cc95ec6808ab49b9fa8c673b18542, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -123,6 +123,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     furnitureName: 
+    furnitureDescription: 
+    floorNum: 0
     gridPosition: {x: 4, y: 8}
     size:
     - {x: 4, y: 4}
@@ -132,6 +134,7 @@ MonoBehaviour:
     tartgetPosition: []
     rotation: 0
     furnitureSprite: []
+    heightLimit: 0
     spriteNumber: 0
     isFloor: 1
     isLeft: 0
@@ -140,6 +143,7 @@ MonoBehaviour:
     colliderOffset: {x: 0, y: 0}
     colliderSize: {x: 0, y: 0}
     isUnlocked: 0
+    price: 0
   furnitureName: 
   isFloor: 1
   floorIndex: 1
@@ -152,10 +156,13 @@ MonoBehaviour:
   tartgetPosition: []
   rotation: 0
   spriteNumber: 0
+  heightLimit: 0
   sprites:
-  - sprites:
+  - isUnlocked: 0
+    sprites:
     - {fileID: 21300000, guid: 9b2cc95ec6808ab49b9fa8c673b18542, type: 3}
     - {fileID: 21300000, guid: 84579da02842f5f4baef55828b953a54, type: 3}
+    lockSprite: {fileID: 0}
   fallDistance: 3
   fallDuration: 0.5
   fallEase: 30

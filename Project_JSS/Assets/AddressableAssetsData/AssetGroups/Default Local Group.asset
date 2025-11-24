@@ -15,13 +15,28 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: e45b939344d9101448a7a54d2cd14b8a
   m_SerializeEntries:
+  - m_GUID: 0aac3f1fc6dd3a743b385add0d507712
+    m_Address: "Assets/Project/Sound/BGM/Penguin(Hero\u2019s).mp3"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0e40a5f1c30290643a24d8710ff8ca86
     m_Address: Assets/Project/Sound/SFX/Scale/6.ogg
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1cf5814a51de7fe4da37c3e025c37859
+    m_Address: Assets/Project/Sound/BGM/Penguin(little Penguin Kindergarten).mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 258cbb57206e3d84f8179ac80f8aa9ee
     m_Address: Assets/Project/Sound/SFX/Scale/1.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35ab0c2cb2f890f4a83f72e2105891d8
+    m_Address: "Assets/Project/Sound/BGM/Penguin(Chef\u2019s Melody).mp3"
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -45,6 +60,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6823db1281d51b547aeeb4307f882e47
+    m_Address: Assets/Project/Sound/BGM/Penguin(Snow Blossom Inn).mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6a658a17db52968469c7251a030f2da7
     m_Address: Assets/Project/Sound/SFX/Scale/4.ogg
     m_ReadOnly: 0
@@ -57,6 +77,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6e847f7514c206c4ba86361bd0924e44
     m_Address: Assets/Project/Sound/BGM/Penguin, Penguin, Penguins forever!.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 775d49a7c715cda41a37f395903261a6
+    m_Address: Assets/Project/Sound/BGM/Penguin(Academy).mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -85,8 +110,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c8af68907417c240bd1e2abb8615049
+    m_Address: "Assets/Project/Sound/BGM/Penguin(Demon Lord\u2019s).mp3"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a078321fa7cf2e942a571299337ac8c9
     m_Address: Assets/Project/Sound/SFX/Box_Crash.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2ede8f999393454a8717211acd83a38
+    m_Address: Assets/Project/Sound/BGM/Penguin(Forge of Feathers).mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -100,6 +135,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d11b5e2a98b48b740bf4f5792b17a116
+    m_Address: Assets/Project/Sound/BGM/Penguin(Arctic Haven).mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d1d1ef92a8edf0c47a419d87b51ae305
     m_Address: Assets/Project/Sound/SFX/Scale/5.ogg
     m_ReadOnly: 0
@@ -107,6 +147,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d8d7337def640944fbcef5525d18f362
     m_Address: Assets/Project/Sound/SFX/Coin_Donation.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5b360591f3c147409e856ab5bef42aa
+    m_Address: Assets/Project/Sound/BGM/Penguin(Campfire Nights).mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

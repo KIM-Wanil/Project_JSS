@@ -33,6 +33,10 @@ public class NPCMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         lastDirection = Vector2.down;
     }
+    private void OnEnable()
+    {
+        this.GetComponent<IsoSpriteSorting>().Setup();
+    }
     void Update()
     {
         if (isMoving)

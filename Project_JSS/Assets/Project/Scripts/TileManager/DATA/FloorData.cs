@@ -5,13 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewFloorData", menuName = "Scriptable Objects/FloorData")]
 public class FloorData : ScriptableObject
 {
-    public string floorNmae;
+    public string floorName;
     public string floorDescription;
+    public string floorBGM;
     public int floorNum;
     public bool isUnlock;
     public Sprite mainSprite;
     public FurnitureData[] furnitureInfos;
-
+    public GameObject furniture;
     public int UnlockCounting()
     { 
         int count = 0;
@@ -23,6 +24,17 @@ public class FloorData : ScriptableObject
             }
         }
         return count;
+    }
+    public void Copy(FloorData floorData)
+    {
+        floorName = floorData.floorName;
+        floorDescription = floorData.floorDescription;
+        floorBGM = floorData.floorBGM;
+        floorNum = floorData.floorNum;
+        isUnlock = floorData.isUnlock;
+        mainSprite = floorData.mainSprite;
+        furnitureInfos = floorData.furnitureInfos;
+        furniture = floorData.furniture;
     }
 }
 [Serializable]

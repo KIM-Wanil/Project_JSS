@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\uB9C8\uC655"
   m_EditorClassIdentifier: 
   CharaterName: "\uB9C8\uC655"
-  CharacterDescription: 
+  CharacterDescription: "\uC138\uACC4\uC815\uBCF5\uC744 \uB2E4\uC9D0\uD574\uC694."
   isUnlock: 1
   assets:
   - {fileID: 7108339969198208228, guid: 3d2adc2cc8cc2a843a83d457c82c26f3, type: 3}
@@ -58,5 +58,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
   - {fileID: 21300000, guid: b295439ca681cd64bb4f3eced9d2d564, type: 3}
   skinIndex: 0
-  decorationIndex1: 1
-  decorationIndex2: 1
+  decorationIndex1: 0
+  decorationIndex2: 0

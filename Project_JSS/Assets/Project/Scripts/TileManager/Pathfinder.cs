@@ -165,7 +165,6 @@ public class Pathfinder : MonoBehaviour
 
 
         List<TileData> tilePath = FindPath(startTile, targetTile);
-        Debug.Log(tilePath);
         if (tilePath == null)
             return null;
 
