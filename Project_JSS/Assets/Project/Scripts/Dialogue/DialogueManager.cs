@@ -8,7 +8,7 @@ using System;
 public class DialogueManager : MonoBehaviour
 {
     public bool isTutorial = true;
-    public int currentEventNum = 0;
+    public static int currentEventNum = 0;
     
     [Header("UI ������Ʈ")]
     public GameObject dialoguePanel;
@@ -135,6 +135,7 @@ public class DialogueManager : MonoBehaviour
     private void AddMessage(DialogueData dialogue, bool isLatest)
     {
         if (playerMessageItemPrefab == null || messageContent == null) return;
+        Managers.Asset.PlaySound("Click_Tab", SoundType.UI);
 
         // ���� �޽������� ��ư ��Ȱ��ȭ
         foreach (var item in messageItems)
@@ -241,7 +242,11 @@ public class DialogueManager : MonoBehaviour
             {
                 StartDialogue(currentEventNum);
             }
-            if (currentEventNum == 2)
+            else if (currentEventNum == 2)
+            {
+                TutorialManager.OnStartTutorialEvent();
+            }
+            else if (currentEventNum == 3)
             {
                 TutorialManager.OnStartTutorialEvent();
             }

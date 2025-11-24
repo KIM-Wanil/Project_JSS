@@ -266,8 +266,12 @@ public class TutorialManager : MonoBehaviour
         //        Managers.Game.CreateRandomGuest();
         //    }
         //}
-
         currentTutorialNum += 1;
+
+        if (currentTutorialNum == 2)
+        {
+            DialogueManager.OnStartDialogueEvent(3);
+        }
     }
 
     // �ٸ� ��ũ��Ʈ���� ���� �ϷḦ �˸� �� ���

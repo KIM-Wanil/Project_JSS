@@ -102,7 +102,8 @@ public class SaveManager : BaseManager
         initialData.items.Add(SetItemData(new Vector2Int(A, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(B, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(C, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
-        initialData.items.Add(SetItemData(new Vector2Int(D, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 1), "G002", 1, ItemType.Generatable, ItemState.InBox));
+        //initialData.items.Add(SetItemData(new Vector2Int(D, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(E, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(F, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(G, 1), "N001", 1, ItemType.Normal, ItemState.InBox));
@@ -126,6 +127,7 @@ public class SaveManager : BaseManager
         initialData.items.Add(SetItemData(new Vector2Int(G, 3), "N001", 1, ItemType.Normal, ItemState.InBox));
 
         ////4¿­
+        //initialData.items.Add(SetItemData(new Vector2Int(A, 4), "G002", 1, ItemType.Generatable, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(A, 4), "N001", 1, ItemType.Normal, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(B, 4), "N002", 3, ItemType.Normal, ItemState.Locked));
         initialData.items.Add(SetItemData(new Vector2Int(C, 4), "N001", 1, ItemType.Normal, ItemState.Normal));
@@ -137,8 +139,8 @@ public class SaveManager : BaseManager
         ////5¿­
         initialData.items.Add(SetItemData(new Vector2Int(A, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(B, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
-        initialData.items.Add(SetItemData(new Vector2Int(C, 5), "N002", 4, ItemType.Normal, ItemState.Locked));
-        initialData.items.Add(SetItemData(new Vector2Int(D, 5), "N001", 4, ItemType.Normal, ItemState.InBox));
+        initialData.items.Add(SetItemData(new Vector2Int(C, 5), "N002", 3, ItemType.Normal, ItemState.Locked));
+        initialData.items.Add(SetItemData(new Vector2Int(D, 5), "N001", 3, ItemType.Normal, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(E, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(F, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
         initialData.items.Add(SetItemData(new Vector2Int(G, 5), "N001", 1, ItemType.Normal, ItemState.InBox));
