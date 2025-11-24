@@ -18,7 +18,7 @@ public class GameManager : BaseManager
     [Header("Script References")]
     //public InfoPanelController infoPanelController;
     [Header("Energy Settings")]
-    [SerializeField] private int maxEnergy = 100;
+    [SerializeField] private int maxEnergy = 1000;
     public int MaxEnergy => maxEnergy;
     [SerializeField] private float energyRegenRate = 600f;
     private float energyRegenRemainSec = 0f;

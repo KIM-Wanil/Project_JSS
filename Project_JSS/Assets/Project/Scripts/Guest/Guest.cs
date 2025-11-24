@@ -125,6 +125,8 @@ public class Guest : MonoBehaviour
             Managers.Grid.CheckGuestsOrder();
             DestroyGuest();
         });
+
+        Managers.Game.CreateRandomGuest();
         
     }
 
