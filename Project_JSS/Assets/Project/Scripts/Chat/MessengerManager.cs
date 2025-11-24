@@ -77,16 +77,23 @@ public class MessengerManager : MonoBehaviour
     void InitializeContacts()
     {
         // Ä³¸¯ÅÍµé Ãß°¡
-        ChatContact Linaw = CreateChatContact(
-            "Linaw",
-            "¸®³ª",
-            Resources.Load<Sprite>("Linaw"),
-            dialogueManager.characters["¸®³ª"]
-        );
-        contacts.Add(Linaw);
-
-        currentSelectedContact = Linaw;
+        //ChatContact Linaw = CreateChatContact(
+        //    "Linaw",
+        //    "¸®³ª",
+        //    Resources.Load<Sprite>("Linaw"),
+        //    dialogueManager.characters["¸®³ª"]
+        //);
+        //contacts.Add(Linaw);
+        //currentSelectedContact = Linaw;
         // ´Ù¸¥ Ä³¸¯ÅÍµéµµ Ãß°¡ °¡´É
+        ChatContact DemonKingPeng = CreateChatContact(
+            "DemonkingPeng",
+            "¸¶¿Õ Æë±Ï",
+            Resources.Load<Sprite>("¸¶¿Õ Æë±Ï"),
+            dialogueManager.characters["¸¶¿Õ Æë±Ï"]
+        );
+        contacts.Add(DemonKingPeng);
+        currentSelectedContact = DemonKingPeng;
     }
 
     ChatContact CreateChatContact(string id, string name, Sprite profileImage, CharacterProfile characterProfile)
