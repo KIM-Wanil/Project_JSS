@@ -96,7 +96,7 @@ public class BuyFurnitureButton : MonoBehaviour
         }
         else
         {
-            requiredLV.text = "LV" + floorData.floorNum * 5 + " �޼�";
+            requiredLV.text = "LV" + floorData.floorNum * 5 + " 달성";
         }
         Setting();
     }
@@ -135,11 +135,11 @@ public class BuyFurnitureButton : MonoBehaviour
     {
         if (Managers.Game.sceneState == SceneState.Hotel)
         {
-            buttonText.text = "����";
+            buttonText.text = "구매";
         }
         else if (Managers.Game.sceneState == SceneState.Merge)
         {
-            buttonText.text = "�̵�";
+            buttonText.text = "구매";
         }
         else
         {

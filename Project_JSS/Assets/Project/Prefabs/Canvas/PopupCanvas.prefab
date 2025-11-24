@@ -4803,6 +4803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a69c855f316934daf79c5368f91377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTutorial: 1
+  currentEventNum: 0
   dialoguePanel: {fileID: 2029978036701417069}
   npcImage: {fileID: 6503890811174865818}
   scrollRect: {fileID: 3995940071884666073}
@@ -12039,11 +12041,16 @@ MonoBehaviour:
   furniturePlacementManager: {fileID: 0}
   ui: {fileID: 5746221772907773398}
   floorDatas:
-  - {fileID: 11400000, guid: f2e5b299a54dcef4c8d7031f5c366199, type: 2}
-  - {fileID: 11400000, guid: 84356cd525ddc54438c9ee00f3e72353, type: 2}
-  - {fileID: 11400000, guid: ebcc636d244ef694ab926442c414ac07, type: 2}
-  - {fileID: 11400000, guid: 5431b339785906b43ae27f780352d4f9, type: 2}
-  - {fileID: 11400000, guid: 2b5cfe4ea8f94034ca060b02279b9bd1, type: 2}
+  - {fileID: 11400000, guid: 3c45fec6c7eb6354e8ac949e70831523, type: 2}
+  - {fileID: 11400000, guid: ea6f9a9a4113bb84a8adcb834d60e5e5, type: 2}
+  - {fileID: 11400000, guid: a84f3ae6636bcf445badcb62491efea8, type: 2}
+  - {fileID: 11400000, guid: 69df2ed6e636f174092ed7f5f21210f5, type: 2}
+  - {fileID: 11400000, guid: 22c63585867cf4042a464c476c4d7231, type: 2}
+  - {fileID: 11400000, guid: b3361425c19a191478b88c89428500fb, type: 2}
+  - {fileID: 11400000, guid: d4ea449b3ff3d0740862edc7fca1aa5e, type: 2}
+  - {fileID: 11400000, guid: c67ff1b8d9959804e8337e9559023096, type: 2}
+  - {fileID: 11400000, guid: 08b3cd1170e38ff44ba8c93ef9dc9cf9, type: 2}
+  - {fileID: 11400000, guid: 7a7d80f7a6dfde74e980181cdb822b9e, type: 2}
   objects:
   - {fileID: 3575583345238301656}
   - {fileID: 3902142965826125218}

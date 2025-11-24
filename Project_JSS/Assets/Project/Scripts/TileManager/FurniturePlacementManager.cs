@@ -83,7 +83,14 @@ public class FurniturePlacementManager : MonoBehaviour
             {
                 foreach (FurnitureData data in floorData[i].furnitureInfos)
                 {
-                    data.isUnlocked = isTestMode;
+                    data.isUnlocked = true;
+                }
+            }
+            else
+            {
+                foreach (FurnitureData data in floorData[i].furnitureInfos)
+                {
+                    data.isUnlocked = false;
                 }
             }
 
@@ -100,7 +107,7 @@ public class FurniturePlacementManager : MonoBehaviour
             if (floorData[i].isUnlock)
                 floor = i;
         }
-        SwitchFloor(floor);
+        SwitchFloor(0);
         //SwitchFloor(0);
     }
 

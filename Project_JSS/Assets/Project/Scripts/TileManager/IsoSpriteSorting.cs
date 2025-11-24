@@ -148,7 +148,7 @@ public class IsoSpriteSorting : MonoBehaviour {
         }
     }
 
-    private void Setup() {
+    public void Setup() {
         t = transform;  //This needs to be here AND in the Awake function
         SetRenderersToSort();
         RefreshCache();
