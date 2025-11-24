@@ -106,7 +106,7 @@ public class Guest : MonoBehaviour
         {
             if(itemOrdered.key.id == "N001")
             {
-                TutorialManager.TriggerCondition(TutorialCondition.퀘스트완료클릭);
+                TutorialManager.OnTriggerConditionEvent(TutorialCondition.퀘스트완료클릭);
             }
             List<Vector2Int> targetPositions = Managers.Grid.FindNormalItemsFromGrid(itemOrdered.key, itemOrdered.goalCount);
             foreach (Vector2Int targetPos in targetPositions)

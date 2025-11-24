@@ -372,7 +372,7 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         if (selectedFurniture != null && currentGrid.CanPlaceFurniture(gridPosition))
         {
-            TutorialManager.TriggerCondition(TutorialCondition.∞°±∏º≥ƒ°);
+            TutorialManager.OnTriggerConditionEvent(TutorialCondition.∞°±∏º≥ƒ°);
             // Í∑∏Î¶¨?ìú?óê ÎßûÏ∂îÍ∏?
             Vector3 snappedPosition = currentGrid.SortGrid(selectedFurniture.transform.position);
             selectedFurniture.GetComponent<FurnitureInfo>().GridPosition = gridPosition;

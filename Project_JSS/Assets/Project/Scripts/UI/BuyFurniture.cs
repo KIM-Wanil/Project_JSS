@@ -37,7 +37,7 @@ public class BuyFurniture : MonoBehaviour
         }
         else
         {
-            TutorialManager.TriggerCondition(TutorialCondition.제작목록클릭);
+            TutorialManager.OnTriggerConditionEvent(TutorialCondition.제작목록닫기버튼클릭);
         }
     }
     void GetInfo()

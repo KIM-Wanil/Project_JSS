@@ -1,10 +1,15 @@
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
-public class DialogueManager : BaseManager
+public class DialogueManager : MonoBehaviour
 {
+    public bool isTutorial = true;
+    public int currentEventNum = 0;
+    
     [Header("UI ������Ʈ")]
     public GameObject dialoguePanel;
     public Image npcImage;
@@ -28,7 +33,25 @@ public class DialogueManager : BaseManager
     private DialogueEvent currentDialogueEvent;
     private bool isDialogueActive = false;
 
-    public override void Init()
+    private static Action<int> OnStartDialogue;
+
+    public void Start()
+    {
+        OnStartDialogue += StartDialogue;
+
+        if (isTutorial)
+        {
+            if (currentEventNum == 0)
+            {
+                StartDialogue(currentEventNum);
+            }
+        }
+    }
+    public void OnDestroy()
+    {
+        OnStartDialogue -= StartDialogue;
+    }
+    public void Init()
     {
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
@@ -152,7 +175,7 @@ public class DialogueManager : BaseManager
 
         if (dialogueData.nextDialogueId == -1)
         {
-            EndDialogue();
+            StartCoroutine(EndDialogue());
         }
         else
         {
@@ -163,7 +186,7 @@ public class DialogueManager : BaseManager
             }
             else
             {
-                EndDialogue();
+                StartCoroutine(EndDialogue());
             }
         }
     }
@@ -187,30 +210,41 @@ public class DialogueManager : BaseManager
         messageItems.Clear();
     }
 
-    public void EndDialogue()
+    public IEnumerator EndDialogue()
     {
-        if (!isDialogueActive) return;
+        if (!isDialogueActive) yield break;
+        if (dialoguePanel == null || backgroundDimmer == null) yield break;
 
         isDialogueActive = false;
 
-        // �г� �����̵� �ƿ� �ִϸ��̼�
-        if (dialoguePanel != null)
-        {
-            RectTransform panelRect = dialoguePanel.GetComponent<RectTransform>();
-            panelRect.DOAnchorPosY(-Screen.height, panelAnimationDuration)
-                .SetEase(Ease.InQuart)
-                .OnComplete(() => {
-                    dialoguePanel.SetActive(false);
-                    panelRect.anchoredPosition = new Vector2(panelRect.anchoredPosition.x, 0); // �ʱ� ��ġ�� �ǵ�����
-                    ClearMessages();
-                });
-        }
+        RectTransform panelRect = dialoguePanel.GetComponent<RectTransform>();
+        Tween panelTween = panelRect.DOAnchorPosY(-Screen.height, panelAnimationDuration)
+            .SetEase(Ease.InQuart)
+            .OnComplete(() => {
+                dialoguePanel.SetActive(false);
+                panelRect.anchoredPosition = new Vector2(panelRect.anchoredPosition.x, 0); // �ʱ� ��ġ�� �ǵ�����
+                ClearMessages();
+            });
+        Tween dimmerTween = backgroundDimmer.DOFade(0f, panelAnimationDuration)
+            .OnComplete(() => backgroundDimmer.gameObject.SetActive(false));
 
-        // ��� ���� ���̵� �ƿ�
-        if (backgroundDimmer != null)
+        Sequence seq = DOTween.Sequence();
+        seq.Append(panelTween);
+        seq.Join(dimmerTween);
+        yield return seq.WaitForCompletion();
+
+        currentEventNum += 1;
+
+        if (isTutorial)
         {
-            backgroundDimmer.DOFade(0f, panelAnimationDuration)
-                .OnComplete(() => backgroundDimmer.gameObject.SetActive(false));
+            if (currentEventNum == 1)
+            {
+                StartDialogue(currentEventNum);
+            }
+            if (currentEventNum == 2)
+            {
+                TutorialManager.OnStartTutorialEvent();
+            }
         }
     }
 
@@ -245,11 +279,10 @@ public class DialogueManager : BaseManager
                 OnContinueButtonClick(lastMessage);
             }
         }
+    }
 
-        //// ESC�� ��ȭ ����
-        //if (Input.GetKeyDown(KeyCode.Escape) && isDialogueActive)
-        //{
-        //    EndDialogue();
-        //}
+    public static void OnStartDialogueEvent(int num)
+    {
+        OnStartDialogue?.Invoke(num);
     }
 }

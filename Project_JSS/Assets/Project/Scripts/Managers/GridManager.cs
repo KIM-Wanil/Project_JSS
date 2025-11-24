@@ -299,15 +299,15 @@ public class GridManager : BaseManager
         {
             if (targetItem.itemKey.lv == 2)
             {
-                TutorialManager.TriggerCondition(TutorialCondition.펜치합성);
+                TutorialManager.OnTriggerConditionEvent(TutorialCondition.펜치합성);
             }
             else if (targetItem.itemKey.lv == 3)
             {
-                TutorialManager.TriggerCondition(TutorialCondition.스패너합성);
+                TutorialManager.OnTriggerConditionEvent(TutorialCondition.스패너합성);
             }
             else if (targetItem.itemKey.lv == 4)
             {
-                TutorialManager.TriggerCondition(TutorialCondition.망치합성);
+                TutorialManager.OnTriggerConditionEvent(TutorialCondition.망치합성);
             }
         }
 
