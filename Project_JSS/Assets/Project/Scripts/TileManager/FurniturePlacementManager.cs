@@ -68,6 +68,9 @@ public class FurniturePlacementManager : MonoBehaviour
     [SerializeField] bool isTestMode = false;
 
     bool isSettingTime = false;
+
+    [SerializeField] SpriteRenderer bg_Sprite;
+    [SerializeField] SpriteRenderer bg_tile_Sprite;
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -445,6 +448,10 @@ public class FurniturePlacementManager : MonoBehaviour
         if (floorNumber < 0 || floorNumber >= floorData.Length || floorManagers[floorNumber].floorData.isUnlock == false || isSettingTime)
             return;
         isSettingTime = true;
+
+        bg_Sprite.DOColor(floorData[floorNumber].bg_color, 0.25f);
+        bg_tile_Sprite.DOColor(floorData[floorNumber].bg_tile_color, 0.25f);
+
         Managers.Asset.PlayBGMFadeInSound(floorData[floorNumber].floorBGM,0.5f);
         if (selectedFurniture != null)
         {

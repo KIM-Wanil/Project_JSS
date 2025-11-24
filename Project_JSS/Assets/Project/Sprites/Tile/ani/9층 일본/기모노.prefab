@@ -153,7 +153,7 @@ MonoBehaviour:
   isometricGrid: {fileID: 0}
   pathfinder: {fileID: 0}
   specialObject: {fileID: 0}
-  specialObjectName: "\uC218\uC815\uAD6C"
+  specialObjectName: "\uCF54\uD0C0\uCE20"
   ChangeSpecial: 0
 --- !u!61 &4841872991691159618
 BoxCollider2D:
@@ -192,7 +192,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.925}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 1.17, y: 1.75}
     adaptiveTilingThreshold: 0.5
@@ -213,8 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CategoryHash: 2.9085758e-28
-  m_labelHash: 5.0145227e-17
+  m_CategoryHash: 5.962721e-16
+  m_labelHash: 0.0000019159827
   m_SpriteKey: 0
   m_SpriteHash: 36583814
 --- !u!114 &504290398654947701

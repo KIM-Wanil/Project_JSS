@@ -29,7 +29,8 @@ MonoBehaviour:
     - {x: 4, y: 4}
     - {x: 4, y: 4}
     - {x: 4, y: 4}
-    tartgetPosition: []
+    tartgetPosition:
+    - {x: 1, y: -1}
     rotation: 0
     furnitureSprite:
     - isUnlocked: 1
@@ -317,3 +318,5 @@ MonoBehaviour:
     isUnlocked: 1
     price: 0
   furniture: {fileID: 515939077876742364, guid: b05e2fce53581ca45b5b57e319db7d17, type: 3}
+  bg_color: {r: 0.9490196, g: 0.9607843, b: 0.84705883, a: 1}
+  bg_tile_color: {r: 0.78039217, g: 0.7764706, b: 0.79607844, a: 1}

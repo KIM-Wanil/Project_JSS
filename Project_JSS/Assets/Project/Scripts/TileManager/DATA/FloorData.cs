@@ -13,6 +13,9 @@ public class FloorData : ScriptableObject
     public Sprite mainSprite;
     public FurnitureData[] furnitureInfos;
     public GameObject furniture;
+
+    public Color bg_color;
+    public Color bg_tile_color;
     public int UnlockCounting()
     { 
         int count = 0;
@@ -35,6 +38,8 @@ public class FloorData : ScriptableObject
         mainSprite = floorData.mainSprite;
         furnitureInfos = floorData.furnitureInfos;
         furniture = floorData.furniture;
+        bg_color = floorData.bg_color;  
+        bg_tile_color = floorData.bg_tile_color;
     }
 }
 [Serializable]
