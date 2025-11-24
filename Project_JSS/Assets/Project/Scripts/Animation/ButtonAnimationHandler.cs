@@ -11,7 +11,6 @@ public class ButtonAnimationHandler : MonoBehaviour, IPointerDownHandler, IPoint
     private RectTransform imageRectT;
 
     [Header("Animation Settings")]
-    public bool useNormalAnimation = true;
     public bool useHighlightedAnimation = true;
     public bool usePressedAnimation = true;
     public bool useDisabledAnimation = true;

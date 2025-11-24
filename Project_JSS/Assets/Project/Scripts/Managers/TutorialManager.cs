@@ -13,6 +13,7 @@ using DG.Tweening;
 
 public class TutorialManager : MonoBehaviour
 {
+    public static int currentTutorialNum = 0;
     [Header("UI")]
     [SerializeField] private CanvasGroup tutorialPanel;
     [SerializeField] private Image overlayImage; // ������ ��������
@@ -254,7 +255,19 @@ public class TutorialManager : MonoBehaviour
             blocker.DeactivateBlockers();
             tutorialPanel.gameObject.SetActive(false);
         });
-        Debug.Log("Ʃ�丮�� �Ϸ�!");
+        for (int i = 0; i < 5; i++)
+        {
+            Managers.Game.CreateRandomGuest();
+        }
+        //if (currentTutorialNum == 1)
+        //{
+        //    for (int i = 0; i < 5; i++)
+        //    {
+        //        Managers.Game.CreateRandomGuest();
+        //    }
+        //}
+
+        currentTutorialNum += 1;
     }
 
     // �ٸ� ��ũ��Ʈ���� ���� �ϷḦ �˸� �� ���
@@ -262,8 +275,8 @@ public class TutorialManager : MonoBehaviour
     {
         OnTriggerCondition?.Invoke(condition);
     }
-    public static void OnStartTutorialEvent(int num)
+    public static void OnStartTutorialEvent()
     {
-        OnStartTutorial?.Invoke(num);
+        OnStartTutorial?.Invoke(currentTutorialNum);
     }
 }

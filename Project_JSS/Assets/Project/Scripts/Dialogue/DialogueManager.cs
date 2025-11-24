@@ -7,9 +7,9 @@ using System;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private TutorialManager tutorialManager;
+    public bool isTutorial = true;
     public int currentEventNum = 0;
-    public int currentTutorialNum = 0;
+    
     [Header("UI ������Ʈ")]
     public GameObject dialoguePanel;
     public Image npcImage;
@@ -38,9 +38,13 @@ public class DialogueManager : MonoBehaviour
     public void Start()
     {
         OnStartDialogue += StartDialogue;
-        if (currentEventNum == 0)
+
+        if (isTutorial)
         {
-            StartDialogue(currentEventNum);
+            if (currentEventNum == 0)
+            {
+                StartDialogue(currentEventNum);
+            }
         }
     }
     public void OnDestroy()
@@ -230,13 +234,17 @@ public class DialogueManager : MonoBehaviour
         yield return seq.WaitForCompletion();
 
         currentEventNum += 1;
-        if (currentEventNum == 1)
+
+        if (isTutorial)
         {
-            StartDialogue(currentEventNum);
-        }
-        if(currentEventNum == 2)
-        {
-            tutorialManager.StartTutorial(currentTutorialNum);
+            if (currentEventNum == 1)
+            {
+                StartDialogue(currentEventNum);
+            }
+            if (currentEventNum == 2)
+            {
+                TutorialManager.OnStartTutorialEvent();
+            }
         }
     }
 
