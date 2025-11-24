@@ -105,8 +105,8 @@ MonoBehaviour:
   isMovable: 1
   renderBelowAll: 0
   sortType: 1
-  SorterPositionOffset: {x: -1.0142237, y: 0.6740243}
-  SorterPositionOffset2: {x: 0.7158147, y: 0.8083871}
+  SorterPositionOffset: {x: -1.0142238, y: 0.67402434}
+  SorterPositionOffset2: {x: 0.7158147, y: 0.80838704}
   renderersToSort:
   - {fileID: 2468365431143606980}
 --- !u!114 &2831535997797581275

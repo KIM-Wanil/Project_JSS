@@ -36,17 +36,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 9dfbed730cce37b4d8161cb83b66215c, type: 3}
       - {fileID: 21300000, guid: 45fba20e77d276f49b0c839cac3a8406, type: 3}
-      lockSprite: {fileID: 21300000, guid: 9dfbed730cce37b4d8161cb83b66215c, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: e2cbb8d25c668ab4b8ccd636a438dbca, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 9dfbed730cce37b4d8161cb83b66215c, type: 3}
       - {fileID: 21300000, guid: 45fba20e77d276f49b0c839cac3a8406, type: 3}
-      lockSprite: {fileID: 21300000, guid: 9dfbed730cce37b4d8161cb83b66215c, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: e2cbb8d25c668ab4b8ccd636a438dbca, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 9dfbed730cce37b4d8161cb83b66215c, type: 3}
       - {fileID: 21300000, guid: 45fba20e77d276f49b0c839cac3a8406, type: 3}
-      lockSprite: {fileID: 21300000, guid: 9dfbed730cce37b4d8161cb83b66215c, type: 3}
+      lockSprite: {fileID: 21300000, guid: e2cbb8d25c668ab4b8ccd636a438dbca, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 1
@@ -73,17 +73,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 49d302564b9e2ca49a7558c28e686e45, type: 3}
       - {fileID: 21300000, guid: 49d302564b9e2ca49a7558c28e686e45, type: 3}
-      lockSprite: {fileID: 21300000, guid: 49d302564b9e2ca49a7558c28e686e45, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: fe0e60a516c514f45a2da6167f58d7ac, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 49d302564b9e2ca49a7558c28e686e45, type: 3}
       - {fileID: 21300000, guid: 49d302564b9e2ca49a7558c28e686e45, type: 3}
-      lockSprite: {fileID: 21300000, guid: 49d302564b9e2ca49a7558c28e686e45, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: fe0e60a516c514f45a2da6167f58d7ac, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 49d302564b9e2ca49a7558c28e686e45, type: 3}
       - {fileID: 21300000, guid: 49d302564b9e2ca49a7558c28e686e45, type: 3}
-      lockSprite: {fileID: 21300000, guid: 49d302564b9e2ca49a7558c28e686e45, type: 3}
+      lockSprite: {fileID: 21300000, guid: fe0e60a516c514f45a2da6167f58d7ac, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 1
@@ -110,17 +110,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 9ca86debf48bb2c4f867bab90fe70f66, type: 3}
       - {fileID: 21300000, guid: 9ca86debf48bb2c4f867bab90fe70f66, type: 3}
-      lockSprite: {fileID: 21300000, guid: 9ca86debf48bb2c4f867bab90fe70f66, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 3b643d0464849c2418542ce5b641650a, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 9ca86debf48bb2c4f867bab90fe70f66, type: 3}
       - {fileID: 21300000, guid: 9ca86debf48bb2c4f867bab90fe70f66, type: 3}
-      lockSprite: {fileID: 21300000, guid: 9ca86debf48bb2c4f867bab90fe70f66, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 3b643d0464849c2418542ce5b641650a, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 9ca86debf48bb2c4f867bab90fe70f66, type: 3}
       - {fileID: 21300000, guid: 9ca86debf48bb2c4f867bab90fe70f66, type: 3}
-      lockSprite: {fileID: 21300000, guid: 9ca86debf48bb2c4f867bab90fe70f66, type: 3}
+      lockSprite: {fileID: 21300000, guid: 3b643d0464849c2418542ce5b641650a, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 1
@@ -147,17 +147,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: adfec35f0d723cb49b2553aa3e6f518c, type: 3}
       - {fileID: 21300000, guid: adfec35f0d723cb49b2553aa3e6f518c, type: 3}
-      lockSprite: {fileID: 21300000, guid: adfec35f0d723cb49b2553aa3e6f518c, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 0aa25730a2799854f9f3908faaa8130a, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: adfec35f0d723cb49b2553aa3e6f518c, type: 3}
       - {fileID: 21300000, guid: adfec35f0d723cb49b2553aa3e6f518c, type: 3}
-      lockSprite: {fileID: 21300000, guid: adfec35f0d723cb49b2553aa3e6f518c, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 0aa25730a2799854f9f3908faaa8130a, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: adfec35f0d723cb49b2553aa3e6f518c, type: 3}
       - {fileID: 21300000, guid: adfec35f0d723cb49b2553aa3e6f518c, type: 3}
-      lockSprite: {fileID: 21300000, guid: adfec35f0d723cb49b2553aa3e6f518c, type: 3}
+      lockSprite: {fileID: 21300000, guid: 0aa25730a2799854f9f3908faaa8130a, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 1
@@ -184,17 +184,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 70ebca312fba0d946bb0c077e32d192f, type: 3}
       - {fileID: 21300000, guid: 70ebca312fba0d946bb0c077e32d192f, type: 3}
-      lockSprite: {fileID: 21300000, guid: 70ebca312fba0d946bb0c077e32d192f, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 21c32293840e16c479a9d5ee1a5fe9fb, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 70ebca312fba0d946bb0c077e32d192f, type: 3}
       - {fileID: 21300000, guid: 70ebca312fba0d946bb0c077e32d192f, type: 3}
-      lockSprite: {fileID: 21300000, guid: 70ebca312fba0d946bb0c077e32d192f, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 21c32293840e16c479a9d5ee1a5fe9fb, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 70ebca312fba0d946bb0c077e32d192f, type: 3}
       - {fileID: 21300000, guid: 70ebca312fba0d946bb0c077e32d192f, type: 3}
-      lockSprite: {fileID: 21300000, guid: 70ebca312fba0d946bb0c077e32d192f, type: 3}
+      lockSprite: {fileID: 21300000, guid: 21c32293840e16c479a9d5ee1a5fe9fb, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 1
@@ -221,17 +221,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: fbab13ea27b71484fa294bc576d30551, type: 3}
       - {fileID: 21300000, guid: fbab13ea27b71484fa294bc576d30551, type: 3}
-      lockSprite: {fileID: 21300000, guid: fbab13ea27b71484fa294bc576d30551, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 307ee793aaf6ee947bebf0a24f9a1c6e, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: fbab13ea27b71484fa294bc576d30551, type: 3}
       - {fileID: 21300000, guid: fbab13ea27b71484fa294bc576d30551, type: 3}
-      lockSprite: {fileID: 21300000, guid: fbab13ea27b71484fa294bc576d30551, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 307ee793aaf6ee947bebf0a24f9a1c6e, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: fbab13ea27b71484fa294bc576d30551, type: 3}
       - {fileID: 21300000, guid: fbab13ea27b71484fa294bc576d30551, type: 3}
-      lockSprite: {fileID: 21300000, guid: fbab13ea27b71484fa294bc576d30551, type: 3}
+      lockSprite: {fileID: 21300000, guid: 307ee793aaf6ee947bebf0a24f9a1c6e, type: 3}
     heightLimit: 0
     spriteNumber: 0
     isFloor: 0
@@ -258,17 +258,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: d794e44a331f4d44cbbca39743ae8d50, type: 3}
       - {fileID: 21300000, guid: d794e44a331f4d44cbbca39743ae8d50, type: 3}
-      lockSprite: {fileID: 21300000, guid: d794e44a331f4d44cbbca39743ae8d50, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 04ccc60a1c081d6478a7562bc0832e31, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: d794e44a331f4d44cbbca39743ae8d50, type: 3}
       - {fileID: 21300000, guid: d794e44a331f4d44cbbca39743ae8d50, type: 3}
-      lockSprite: {fileID: 21300000, guid: d794e44a331f4d44cbbca39743ae8d50, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 04ccc60a1c081d6478a7562bc0832e31, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: d794e44a331f4d44cbbca39743ae8d50, type: 3}
       - {fileID: 21300000, guid: d794e44a331f4d44cbbca39743ae8d50, type: 3}
-      lockSprite: {fileID: 21300000, guid: d794e44a331f4d44cbbca39743ae8d50, type: 3}
+      lockSprite: {fileID: 21300000, guid: 04ccc60a1c081d6478a7562bc0832e31, type: 3}
     heightLimit: 3
     spriteNumber: 0
     isFloor: 0
@@ -296,16 +296,16 @@ MonoBehaviour:
       - {fileID: 21300000, guid: 868f1cc848998534e83aee1d43468ddd, type: 3}
       - {fileID: 21300000, guid: 868f1cc848998534e83aee1d43468ddd, type: 3}
       lockSprite: {fileID: 21300000, guid: 868f1cc848998534e83aee1d43468ddd, type: 3}
-    - isUnlocked: 1
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 868f1cc848998534e83aee1d43468ddd, type: 3}
       - {fileID: 21300000, guid: 868f1cc848998534e83aee1d43468ddd, type: 3}
-      lockSprite: {fileID: 21300000, guid: 868f1cc848998534e83aee1d43468ddd, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: f9330f89b850a8a47b5ed82f0d671129, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 868f1cc848998534e83aee1d43468ddd, type: 3}
       - {fileID: 21300000, guid: 868f1cc848998534e83aee1d43468ddd, type: 3}
-      lockSprite: {fileID: 21300000, guid: 868f1cc848998534e83aee1d43468ddd, type: 3}
+      lockSprite: {fileID: 21300000, guid: f9330f89b850a8a47b5ed82f0d671129, type: 3}
     heightLimit: 3
     spriteNumber: 0
     isFloor: 0
@@ -332,17 +332,17 @@ MonoBehaviour:
       sprites:
       - {fileID: 21300000, guid: 1de759928ca1f60498e915b022763f0f, type: 3}
       - {fileID: 21300000, guid: 1de759928ca1f60498e915b022763f0f, type: 3}
-      lockSprite: {fileID: 21300000, guid: 1de759928ca1f60498e915b022763f0f, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 80000ff9c89fbeb4b861b75d45ea3807, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 1de759928ca1f60498e915b022763f0f, type: 3}
       - {fileID: 21300000, guid: 1de759928ca1f60498e915b022763f0f, type: 3}
-      lockSprite: {fileID: 21300000, guid: 1de759928ca1f60498e915b022763f0f, type: 3}
-    - isUnlocked: 1
+      lockSprite: {fileID: 21300000, guid: 80000ff9c89fbeb4b861b75d45ea3807, type: 3}
+    - isUnlocked: 0
       sprites:
       - {fileID: 21300000, guid: 1de759928ca1f60498e915b022763f0f, type: 3}
       - {fileID: 21300000, guid: 1de759928ca1f60498e915b022763f0f, type: 3}
-      lockSprite: {fileID: 21300000, guid: 1de759928ca1f60498e915b022763f0f, type: 3}
+      lockSprite: {fileID: 21300000, guid: 80000ff9c89fbeb4b861b75d45ea3807, type: 3}
     heightLimit: 3
     spriteNumber: 0
     isFloor: 0
@@ -354,5 +354,5 @@ MonoBehaviour:
     isUnlocked: 1
     price: 0
   furniture: {fileID: 515939077876742364, guid: ac0a8298ec9f8c64399b01c7f5055278, type: 3}
-  bg_color: {r: 0.96862745, g: 0.8117647, b: 0.6, a: 1}
-  bg_tile_color: {r: 0.8901961, g: 0.7019608, b: 0.36862746, a: 1}
+  bg_color: {r: 0.62352943, g: 0.62352943, b: 0.62352943, a: 1}
+  bg_tile_color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}

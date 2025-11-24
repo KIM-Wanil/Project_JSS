@@ -329,19 +329,19 @@ PrefabInstance:
     - target: {fileID: 4325956640724813839, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: 'floorDatas.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: a84f3ae6636bcf445badcb62491efea8, type: 2}
+      objectReference: {fileID: 11400000, guid: ea6f9a9a4113bb84a8adcb834d60e5e5, type: 2}
     - target: {fileID: 4325956640724813839, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: 'floorDatas.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 69df2ed6e636f174092ed7f5f21210f5, type: 2}
+      objectReference: {fileID: 11400000, guid: a84f3ae6636bcf445badcb62491efea8, type: 2}
     - target: {fileID: 4325956640724813839, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: 'floorDatas.Array.data[3]'
       value: 
-      objectReference: {fileID: 11400000, guid: 22c63585867cf4042a464c476c4d7231, type: 2}
+      objectReference: {fileID: 11400000, guid: 69df2ed6e636f174092ed7f5f21210f5, type: 2}
     - target: {fileID: 4325956640724813839, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: 'floorDatas.Array.data[4]'
       value: 
-      objectReference: {fileID: 11400000, guid: b3361425c19a191478b88c89428500fb, type: 2}
+      objectReference: {fileID: 11400000, guid: 22c63585867cf4042a464c476c4d7231, type: 2}
     - target: {fileID: 4325956640724813839, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: 'floorDatas.Array.data[5]'
       value: 
@@ -2259,7 +2259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70eab56f71a204840a17a45af7784196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorData: {fileID: 11400000, guid: b3361425c19a191478b88c89428500fb, type: 2}
+  floorData: {fileID: 11400000, guid: f70b8e26030a0bc48acda544cde40579, type: 2}
   floorIndex: 5
   furnitureNum: 0
   availableFurniturePrefabs: []
@@ -2267,7 +2267,7 @@ MonoBehaviour:
   - {fileID: 8269070854535983079}
   - {fileID: 7376871400614673335}
   - {fileID: 1344278739867404895}
-  furniturePrefab: {fileID: 515939077876742364, guid: 4f655bf074437524e9068bef6c4201f6, type: 3}
+  furniturePrefab: {fileID: 515939077876742364, guid: c2b2260f9e2513d4496530d26b24891e, type: 3}
   fallDistance: 2
   fallDuration: 0.5
   isDrop: 0
@@ -2502,7 +2502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70eab56f71a204840a17a45af7784196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorData: {fileID: 11400000, guid: a84f3ae6636bcf445badcb62491efea8, type: 2}
+  floorData: {fileID: 11400000, guid: ea6f9a9a4113bb84a8adcb834d60e5e5, type: 2}
   floorIndex: 1
   furnitureNum: 0
   availableFurniturePrefabs: []
@@ -2510,7 +2510,7 @@ MonoBehaviour:
   - {fileID: 1956536037561832545}
   - {fileID: 8879435868266134836}
   - {fileID: 8986948605062194344}
-  furniturePrefab: {fileID: 515939077876742364, guid: 056cd602630357044be62e7fd4182507, type: 3}
+  furniturePrefab: {fileID: 515939077876742364, guid: eeaaec6725301974da536c8b64dd505e, type: 3}
   fallDistance: 2
   fallDuration: 0.5
   isDrop: 0
@@ -8468,10 +8468,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorData:
   - {fileID: 11400000, guid: 3c45fec6c7eb6354e8ac949e70831523, type: 2}
+  - {fileID: 11400000, guid: ea6f9a9a4113bb84a8adcb834d60e5e5, type: 2}
   - {fileID: 11400000, guid: a84f3ae6636bcf445badcb62491efea8, type: 2}
   - {fileID: 11400000, guid: 69df2ed6e636f174092ed7f5f21210f5, type: 2}
   - {fileID: 11400000, guid: 22c63585867cf4042a464c476c4d7231, type: 2}
-  - {fileID: 11400000, guid: b3361425c19a191478b88c89428500fb, type: 2}
   - {fileID: 11400000, guid: f70b8e26030a0bc48acda544cde40579, type: 2}
   - {fileID: 11400000, guid: d4ea449b3ff3d0740862edc7fca1aa5e, type: 2}
   - {fileID: 11400000, guid: c67ff1b8d9959804e8337e9559023096, type: 2}
@@ -8480,9 +8480,9 @@ MonoBehaviour:
   basefloorData:
   - {fileID: 11400000, guid: 8fb2ae9b11f87444091d877c561ff948, type: 2}
   - {fileID: 11400000, guid: f2e5b299a54dcef4c8d7031f5c366199, type: 2}
+  - {fileID: 11400000, guid: 84356cd525ddc54438c9ee00f3e72353, type: 2}
   - {fileID: 11400000, guid: ebcc636d244ef694ab926442c414ac07, type: 2}
   - {fileID: 11400000, guid: 5431b339785906b43ae27f780352d4f9, type: 2}
-  - {fileID: 11400000, guid: 2b5cfe4ea8f94034ca060b02279b9bd1, type: 2}
   - {fileID: 11400000, guid: ad6c9d45570f2a94d95d0054db523439, type: 2}
   - {fileID: 11400000, guid: bddb07331796a4a4d8d95d1bd15b22aa, type: 2}
   - {fileID: 11400000, guid: 42935033fb2dac34f8f4633fc7e4ceb9, type: 2}

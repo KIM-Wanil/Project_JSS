@@ -116,116 +116,116 @@ public class FurniturePlacementManager : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.touchCount > 0)
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0); // Ï≤? Î≤àÏß∏ ?Ñ∞ÏπòÎßå Ï≤òÎ¶¨
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    {
+                        // UI ?öî?ÜåÎ•? ?Ñ∞ÏπòÌñà?äîÏß? ?ôï?ù∏
+                        if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                            return;
+
+                        if (selectedFurniture == null)
+                        {
+                            // Í∞?Íµ¨Í?? ?Ñ†?Éù?êòÏß? ?ïä??? ?ÉÅ?Éú?óê?Ñú?äî Í∏∏Í≤å ?àÑÎ•¥Í∏∞ ?ãú?ûë
+                            pressTime = Time.time;
+                            isLongPress = false;
+                        }
+                        else
+                        {
+                            Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                            RaycastHit2D hit2D = Physics2D.Raycast(touchPosition, Vector2.zero);
+
+                            if (hit2D.collider != null && hit2D.collider.gameObject == selectedFurniture)
+                            {
+                                isDragging = true;
+                            }
+                        }
+                        break;
+                    }
+
+                case TouchPhase.Stationary:
+                case TouchPhase.Moved:
+                    {
+                        if (selectedFurniture == null && !isLongPress && Time.time - pressTime > longPressDuration)
+                        {
+                            isLongPress = true;
+                            // Í∏∏Í≤å ?àå?ü¨?Ñú Í∞?Íµ? ?Ñ†?Éù
+                            SelectFurnitureAtPosition(touch.position);
+                        }
+                        else if (selectedFurniture != null && isDragging)
+                        {
+                            // ?Ñ†?Éù?êú Í∞?Íµ? ?ù¥?èô
+                            MoveFurniture(touch.position);
+                        }
+                        break;
+                    }
+
+                case TouchPhase.Ended:
+                    {
+                        isDragging = false;
+                        break;
+                    }
+            }
+        }
+
+        //// ?óê?îî?Ñ∞ Î∞? ?Öå?ä§?ä∏?ö© ÎßàÏö∞?ä§ ?ûÖ?†• Ï≤òÎ¶¨
+        //#if UNITY_EDITOR
+        //if (Input.GetMouseButtonDown(0))
         //{
-        //    Touch touch = Input.GetTouch(0); // Ï≤? Î≤àÏß∏ ?Ñ∞ÏπòÎßå Ï≤òÎ¶¨
+        //    // UI ?öî?ÜåÎ•? ?Å¥Î¶??ñà?äîÏß? ?ôï?ù∏
+        //    if (EventSystem.current.IsPointerOverGameObject())
+        //        return;
 
-        //    switch (touch.phase)
+        //    if (selectedFurniture == null)
         //    {
-        //        case TouchPhase.Began:
+        //        // Í∞?Íµ¨Í?? ?Ñ†?Éù?êòÏß? ?ïä??? ?ÉÅ?Éú?óê?Ñú?äî Í∏∏Í≤å ?àÑÎ•¥Í∏∞ ?ãú?ûë
+        //        pressTime = Time.time;
+        //        isLongPress = false;
+        //    }
+        //    else
+        //    {
+        //        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //        RaycastHit2D hit2D = Physics2D.Raycast(mousePosition, Vector2.zero);
+        //        if (hit2D.collider != null)
+        //        {
+        //            if (hit2D.collider.gameObject == selectedFurniture)
         //            {
-        //                // UI ?öî?ÜåÎ•? ?Ñ∞ÏπòÌñà?äîÏß? ?ôï?ù∏
-        //                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-        //                    return;
-
-        //                if (selectedFurniture == null)
-        //                {
-        //                    // Í∞?Íµ¨Í?? ?Ñ†?Éù?êòÏß? ?ïä??? ?ÉÅ?Éú?óê?Ñú?äî Í∏∏Í≤å ?àÑÎ•¥Í∏∞ ?ãú?ûë
-        //                    pressTime = Time.time;
-        //                    isLongPress = false;
-        //                }
-        //                else
-        //                {
-        //                    Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-        //                    RaycastHit2D hit2D = Physics2D.Raycast(touchPosition, Vector2.zero);
-
-        //                    if (hit2D.collider != null && hit2D.collider.gameObject == selectedFurniture)
-        //                    {
-        //                        isDragging = true;
-        //                    }
-        //                }
-        //                break;
+        //                dragOffset = (Vector3)mousePosition - selectedFurniture.transform.position;
+        //                isDragging = true;
         //            }
 
-        //        case TouchPhase.Stationary:
-        //        case TouchPhase.Moved:
-        //            {
-        //                if (selectedFurniture == null && !isLongPress && Time.time - pressTime > longPressDuration)
-        //                {
-        //                    isLongPress = true;
-        //                    // Í∏∏Í≤å ?àå?ü¨?Ñú Í∞?Íµ? ?Ñ†?Éù
-        //                    SelectFurnitureAtPosition(touch.position);
-        //                }
-        //                else if (selectedFurniture != null && isDragging)
-        //                {
-        //                    // ?Ñ†?Éù?êú Í∞?Íµ? ?ù¥?èô
-        //                    MoveFurniture(touch.position);
-        //                }
-        //                break;
-        //            }
+        //        }
+        //        // ?ù¥ÎØ? Í∞?Íµ¨Í?? ?Ñ†?Éù?êú ?ÉÅ?Éú?óê?Ñú?äî ?ìú?ûòÍ∑? ?ãú?ûë
 
-        //        case TouchPhase.Ended:
-        //            {
-        //                isDragging = false;
-        //                break;
-        //            }
         //    }
         //}
-
-        // ?óê?îî?Ñ∞ Î∞? ?Öå?ä§?ä∏?ö© ÎßàÏö∞?ä§ ?ûÖ?†• Ï≤òÎ¶¨
-//#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-        {
-            // UI ?öî?ÜåÎ•? ?Å¥Î¶??ñà?äîÏß? ?ôï?ù∏
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
-
-            if (selectedFurniture == null)
-            {
-                // Í∞?Íµ¨Í?? ?Ñ†?Éù?êòÏß? ?ïä??? ?ÉÅ?Éú?óê?Ñú?äî Í∏∏Í≤å ?àÑÎ•¥Í∏∞ ?ãú?ûë
-                pressTime = Time.time;
-                isLongPress = false;
-            }
-            else
-            {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D hit2D = Physics2D.Raycast(mousePosition, Vector2.zero);
-                if (hit2D.collider != null)
-                {
-                    if (hit2D.collider.gameObject == selectedFurniture)
-                    {
-                        dragOffset = (Vector3)mousePosition - selectedFurniture.transform.position;
-                        isDragging = true;
-                    }
-                     
-                }
-                    // ?ù¥ÎØ? Í∞?Íµ¨Í?? ?Ñ†?Éù?êú ?ÉÅ?Éú?óê?Ñú?äî ?ìú?ûòÍ∑? ?ãú?ûë
-
-            }
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            if (selectedFurniture == null && !isLongPress && Time.time - pressTime > longPressDuration)
-            {
-                isLongPress = true;
-                // Í∏∏Í≤å ?àå?ü¨?Ñú Í∞?Íµ? ?Ñ†?Éù
-                if (StateManager.instance.ButItem)
-                {
-                    return;
-                }
-                SelectFurnitureAtPosition(Input.mousePosition);
-            }
-            else if (selectedFurniture != null && isDragging)
-            {
-                    // ?Ñ†?Éù?êú Í∞?Íµ? ?ù¥?èô
-                    MoveFurniture(Input.mousePosition);
-            }
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            isDragging = false;
-        }
-//#endif
+        //else if (Input.GetMouseButton(0))
+        //{
+        //    if (selectedFurniture == null && !isLongPress && Time.time - pressTime > longPressDuration)
+        //    {
+        //        isLongPress = true;
+        //        // Í∏∏Í≤å ?àå?ü¨?Ñú Í∞?Íµ? ?Ñ†?Éù
+        //        if (StateManager.instance.ButItem)
+        //        {
+        //            return;
+        //        }
+        //        SelectFurnitureAtPosition(Input.mousePosition);
+        //    }
+        //    else if (selectedFurniture != null && isDragging)
+        //    {
+        //        // ?Ñ†?Éù?êú Í∞?Íµ? ?ù¥?èô
+        //        MoveFurniture(Input.mousePosition);
+        //    }
+        //}
+        //else if (Input.GetMouseButtonUp(0))
+        //{
+        //    isDragging = false;
+        //}
+        //#endif
     }
 
     // ?Ñ∞Ïπ? ?úÑÏπòÏóê?Ñú Í∞?Íµ? ?Ñ†?Éù
@@ -304,6 +304,8 @@ public class FurniturePlacementManager : MonoBehaviour
                 //uiObject.transform.SetParent(selectedFurniture.transform);
                 uiObject.transform.position = new Vector2( selectedFurniture.GetComponent<SpriteRenderer>().bounds.center.x, selectedFurniture.transform.position.y);
                 isDragging = true;
+                upDownButtons[0].SetActive(false);
+                upDownButtons[1].SetActive(false);
             }
         }
     }
@@ -406,6 +408,19 @@ public class FurniturePlacementManager : MonoBehaviour
             {
                 DialogueManager.OnStartDialogueEvent(4);
             }
+            if (floor == 0)
+            {
+                upDownButtons[0].SetActive(false);
+            }
+            else if (floor == floorData.Length - 1)
+            {
+                upDownButtons[1].SetActive(false);
+            }
+            else
+            {
+                upDownButtons[0].SetActive(true);
+                upDownButtons[1].SetActive(true);
+            }
         }
     }
     public void Placement(GameObject gameObject)
@@ -433,6 +448,19 @@ public class FurniturePlacementManager : MonoBehaviour
             // ?Ñ†?Éù ?ÉÅ?Éú ?ï¥?†ú
             DeselectFurniture();
             skinObject.SetActive(false);
+            if (floor == 0)
+            {
+                upDownButtons[0].SetActive(false);
+            }
+            else if (floor == floorData.Length - 1)
+            {
+                upDownButtons[1].SetActive(false);
+            }
+            else
+            {
+                upDownButtons[0].SetActive(true);
+                upDownButtons[1].SetActive(true);
+            }
         }
     }
 
@@ -457,12 +485,16 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         if (floorNumber < 0 || floorNumber >= floorData.Length || floorManagers[floorNumber].floorData.isUnlock == false || isSettingTime)
             return;
+        isDragging = false;
         isSettingTime = true;
 
         bg_Sprite.DOColor(floorData[floorNumber].bg_color, 0.25f);
         bg_tile_Sprite.DOColor(floorData[floorNumber].bg_tile_color, 0.25f);
-
-        Managers.Asset.PlayBGMFadeInSound(floorData[floorNumber].floorBGM,0.5f);
+        if (floor != floorNumber)
+        {
+            Managers.Asset.PlayBGMFadeInSound(floorData[floorNumber].floorBGM, 0.5f);
+        }
+      
         if (selectedFurniture != null)
         {
             currentInfo.SettingSprites(spriteIndex);
@@ -606,7 +638,8 @@ public class FurniturePlacementManager : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 buttonsItemImage[i].sprite = sprites[tempIndex + i].lockSprite;
-                buttonsTexs[i].text = sprites[tempIndex + i].lockSprite.name;
+               
+              
                 if (sprites[tempIndex + i].isUnlocked)
                 {
                     buttonsItemImage[i].color = new Color(1, 1, 1, 1);
@@ -622,13 +655,15 @@ public class FurniturePlacementManager : MonoBehaviour
                 else
                     buttons[i].GetComponent<Image>().sprite = buttonSprite[1];
             }
+            buttonsTexs[0].text = selectedFurniture.name + "_A";
+            buttonsTexs[1].text = selectedFurniture.name + "_B";
+            buttonsTexs[2].text = selectedFurniture.name + "_C";
         }
         else if (tempIndex == sprites.Length - 1)
         {
             for (int i = 0; i < 3; i++)
             {
                 buttonsItemImage[i].sprite = sprites[tempIndex + i - 2].lockSprite;
-                buttonsTexs[i].text = sprites[tempIndex + i - 2].lockSprite.name;
                 if (sprites[tempIndex + i - 2].isUnlocked)
                     buttonsItemImage[i].color = new Color(1, 1, 1, 1);
                 else
@@ -639,13 +674,15 @@ public class FurniturePlacementManager : MonoBehaviour
                 else
                     buttons[i].GetComponent<Image>().sprite = buttonSprite[1];
             }
+            buttonsTexs[0].text = selectedFurniture.name + "_A";
+            buttonsTexs[1].text = selectedFurniture.name + "_B";
+            buttonsTexs[2].text = selectedFurniture.name + "_C";
         }
         else
         {
             for (int i = 0; i < 3; i++)
             {
                 buttonsItemImage[i].sprite = sprites[tempIndex + i - 1].lockSprite;
-                buttonsTexs[i].text = sprites[tempIndex + i - 1].lockSprite.name;
 
                 if (sprites[tempIndex + i - 1].isUnlocked)
                     buttonsItemImage[i].color = new Color(1, 1, 1, 1);
@@ -657,6 +694,9 @@ public class FurniturePlacementManager : MonoBehaviour
                 else
                     buttons[i].GetComponent<Image>().sprite = buttonSprite[1];
             }
+            buttonsTexs[0].text = selectedFurniture.name + "_A";
+            buttonsTexs[1].text = selectedFurniture.name + "_B";
+            buttonsTexs[2].text = selectedFurniture.name + "_C";
         }
     }
 

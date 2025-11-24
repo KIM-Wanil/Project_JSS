@@ -36,10 +36,10 @@ public class AddPanelController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CreateRandomGuest();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    CreateRandomGuest();
+        //}
     }
 
     #region Guest Management
