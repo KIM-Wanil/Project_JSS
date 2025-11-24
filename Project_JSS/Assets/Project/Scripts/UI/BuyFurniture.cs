@@ -12,7 +12,7 @@ public class BuyFurniture : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        for (int i = 0; i < floorDatas.Length; i++)
+        for (int i = 0; i < objects.Length ; i++)
         {
             objects[i].Setting(floorDatas[i], this, furniturePlacementManager);
         }

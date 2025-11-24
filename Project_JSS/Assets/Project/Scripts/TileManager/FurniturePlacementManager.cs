@@ -379,7 +379,6 @@ public class FurniturePlacementManager : MonoBehaviour
     {
         if (selectedFurniture != null && currentGrid.CanPlaceFurniture(gridPosition))
         {
-            TutorialManager.OnTriggerConditionEvent(TutorialCondition.∞°±∏º≥ƒ°);
             // Í∑∏Î¶¨?ìú?óê ÎßûÏ∂îÍ∏?
             Vector3 snappedPosition = currentGrid.SortGrid(selectedFurniture.transform.position);
             selectedFurniture.GetComponent<FurnitureInfo>().GridPosition = gridPosition;
@@ -392,6 +391,17 @@ public class FurniturePlacementManager : MonoBehaviour
             if (StateManager.instance.ButItem)
             {
                 StateManager.instance.ButItem = false;
+            }
+
+            //∆©≈‰∏ÆæÛOR¥Î»≠ ¡∂∞« »Æ¿Œ
+            TutorialManager.OnTriggerConditionEvent(TutorialCondition.∞°±∏º≥ƒ°);
+            if (floorData[0].UnlockCounting() == floorData[0].furnitureInfos.Length && DialogueManager.currentEventNum == 2)
+            {
+                DialogueManager.OnStartDialogueEvent(2);
+            }
+            else if (floorData[1].UnlockCounting() == floorData[1].furnitureInfos.Length && DialogueManager.currentEventNum == 4)
+            {
+                DialogueManager.OnStartDialogueEvent(4);
             }
         }
     }
