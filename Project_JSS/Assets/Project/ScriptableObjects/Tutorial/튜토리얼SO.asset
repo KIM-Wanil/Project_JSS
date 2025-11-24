@@ -274,7 +274,7 @@ MonoBehaviour:
       fingerAnimType: 0
       fingerAnimationAmount: 0
       completionCondition: 0
-    - dialogue: "\uC790, \uADF8\uB7FC \uACC4\uC18D\uD574\uC11C \uB9C8\uC655 \uD3AD\uADC4\uB2D8\uC758
+    - dialogue: "\uC790, \uADF8\uB7FC \uACC4\uC18D\uD574\uC11C \uD3AD\uADC4\uB2D8\uC758
         \uBC29\uC744 \uD55C\uBC88 \uAFB8\uBA70\uBCFC\uAE4C\uC694?"
       characterPosition: {x: 290, y: 0}
       characterName: "\uBA54\uC774\uB4DC \uD3AD\uADC4"
@@ -287,20 +287,10 @@ MonoBehaviour:
       completionCondition: 1
   - eventId: TUTORIAL1
     dialogues:
-    - dialogue: "(\uB4DC\uB514\uC5B4 \uCCAB \uC784\uBB34 \uC131\uACF5\uC774\uB2E4\u2026!)"
+    - dialogue: "\uC624, \uC544\uC8FC \uD6CC\uB96D\uD588\uC5B4\uC694."
       characterPosition: {x: 290, y: 400}
-      characterName: ME
-      highlightPosition: {x: 0, y: 0}
-      highlightSize: {x: 0, y: 0}
-      fingerPosition: {x: 0, y: 0}
-      fingerRotation: 0
-      fingerAnimType: 0
-      fingerAnimationAmount: 0
-      completionCondition: 0
-    - dialogue: "\"\uC624"
-      characterPosition: {x: 0, y: 0}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 290, y: 400}
+      highlightPosition: {x: 0, y: 0}
       highlightSize: {x: 0, y: 0}
       fingerPosition: {x: 0, y: 0}
       fingerRotation: 0
@@ -311,26 +301,6 @@ MonoBehaviour:
         \uAC83 \uAC19\uB124\uC694."
       characterPosition: {x: 290, y: 400}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 0, y: 0}
-      highlightSize: {x: 0, y: 0}
-      fingerPosition: {x: 0, y: 0}
-      fingerRotation: 0
-      fingerAnimType: 0
-      fingerAnimationAmount: 0
-      completionCondition: 0
-    - dialogue: "\"\uC544"
-      characterPosition: {x: 0, y: 0}
-      characterName: ME
-      highlightPosition: {x: 290, y: 400}
-      highlightSize: {x: 0, y: 0}
-      fingerPosition: {x: 0, y: 0}
-      fingerRotation: 0
-      fingerAnimType: 0
-      fingerAnimationAmount: 0
-      completionCondition: 0
-    - dialogue: "\uD638\uD154\uC774 \uC608\uBED0\uC11C \uADF8\uB7F0 \uAC78\uC694."
-      characterPosition: {x: 290, y: 400}
-      characterName: ME
       highlightPosition: {x: 0, y: 0}
       highlightSize: {x: 0, y: 0}
       fingerPosition: {x: 0, y: 0}
@@ -351,7 +321,7 @@ MonoBehaviour:
       fingerAnimationAmount: 0
       completionCondition: 0
     - dialogue: "\uD558\uC9C0\uB9CC\u2026 \uC55E\uC73C\uB85C\uB294 \uC870\uAE08 \uB354
-        \uC870\uC2EC\uD574\uC57C \uD560\uC9C0\uB3C4 \uBAB0\uB77C\uC694."
+        \uC2E0\uACBD\uC368\uC57C \uD560\uC9C0\uB3C4 \uBAB0\uB77C\uC694."
       characterPosition: {x: 290, y: 400}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
       highlightPosition: {x: 0, y: 0}
@@ -372,22 +342,12 @@ MonoBehaviour:
       fingerAnimType: 0
       fingerAnimationAmount: 0
       completionCondition: 0
-    - dialogue: "\uADF8\uB7FC\u2026 \uADF8\uB7F0 \uC190\uB2D8\uB4E4\uC740 \uC5B4\uB5BB\uAC8C
-        \uD574\uC57C \uD560\uAE4C\uC694?"
+    - dialogue: "\uC131\uACA9\uB3C4, \uCDE8\uD5A5\uB3C4, \uC6D0\uD558\uB294 \uAC83\uB3C4
+        \uBAA8\uB450 \uC81C\uAC01\uAC01\uC774\uC8E0."
       characterPosition: {x: 290, y: 400}
-      characterName: ME
-      highlightPosition: {x: 0, y: 0}
-      highlightSize: {x: 0, y: 0}
-      fingerPosition: {x: 0, y: 0}
-      fingerRotation: 0
-      fingerAnimType: 0
-      fingerAnimationAmount: 0
-      completionCondition: 0
-    - dialogue: "\"\uC131\uACA9\uB3C4"
-      characterPosition: {x: 0, y: 0}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
       highlightPosition: {x: 0, y: 0}
-      highlightSize: {x: 290, y: 400}
+      highlightSize: {x: 0, y: 0}
       fingerPosition: {x: 0, y: 0}
       fingerRotation: 0
       fingerAnimType: 0
@@ -403,29 +363,8 @@ MonoBehaviour:
       fingerAnimType: 0
       fingerAnimationAmount: 0
       completionCondition: 0
-    - dialogue: "\"\uC790"
-      characterPosition: {x: 0, y: 0}
-      characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
-      highlightPosition: {x: 290, y: 400}
-      highlightSize: {x: 0, y: 0}
-      fingerPosition: {x: 0, y: 0}
-      fingerRotation: 0
-      fingerAnimType: 0
-      fingerAnimationAmount: 0
-      completionCondition: 0
-    - dialogue: "\uBB3C\uB860\uC774\uC8E0. \uC5B4\uB5A4 \uC190\uB2D8\uC774 \uC640\uB3C4
-        \uC798 \uD574\uBCFC\uAC8C\uC694."
-      characterPosition: {x: 290, y: 400}
-      characterName: ME
-      highlightPosition: {x: 0, y: 0}
-      highlightSize: {x: 0, y: 0}
-      fingerPosition: {x: 0, y: 0}
-      fingerRotation: 0
-      fingerAnimType: 0
-      fingerAnimationAmount: 0
-      completionCondition: 0
-    - dialogue: "\uC88B\uC544\uC694. \uADF8 \uB9C8\uC74C\uC774\uB77C\uBA74 \uBD84\uBA85
-        \uBA4B\uC9C4 \uC9C0\uBC30\uC778\uC774 \uB418\uC2E4 \uAC70\uC608\uC694."
+    - dialogue: "\uC790, \uC774\uC81C \uB2E4\uC74C \uC190\uB2D8\uC744 \uB9DE\uC774\uD558\uB7EC
+        \uAC00\uBCFC\uAE4C\uC694?"
       characterPosition: {x: 290, y: 400}
       characterName: "\uC9D1\uC0AC \uD3AD\uADC4"
       highlightPosition: {x: 0, y: 0}

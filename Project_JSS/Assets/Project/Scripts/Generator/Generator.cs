@@ -182,7 +182,7 @@ public class Generator : MonoBehaviour
                     {
                         if(item.key.id == "N001")
                         {
-                            TutorialManager.TriggerCondition(TutorialCondition.제너레이터클릭);
+                            TutorialManager.OnTriggerConditionEvent(TutorialCondition.제너레이터클릭);
                         }
                     }
                     //if (Managers.Game.SpawnMoveItem(item.key.id, item.key.Lv, Managers.Grid.GetTilePosition(mergeableItem.GridPosition), (Vector2Int)pos)) { }

@@ -150,6 +150,10 @@ public class GameManager : BaseManager
     {
         onGemBubbleRemainSecUpdated.Invoke(sec);
     }
+    public void CreateRandomGuest()
+    {
+        onRandomGuestCreated.Invoke();
+    }
     private void Awake()
     {
         Screen.SetResolution(720, 1280, false);

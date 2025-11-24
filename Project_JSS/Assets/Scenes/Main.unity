@@ -130,6 +130,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da7f566e1283e74990d5e176e061ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &69814638 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4640399445644233758, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+  m_PrefabInstance: {fileID: 101190020}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d949326d83085b54fb6ddcdd08d253ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &101190020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -218,6 +229,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1759667477473147859, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: isTutorial
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759667477473147859, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: tutorialManager
+      value: 
+      objectReference: {fileID: 69814638}
     - target: {fileID: 1759667477473147859, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: dialogueDatabase
       value: 
@@ -334,6 +353,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4640399445644233758, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
+      propertyPath: tutorialDatabase
+      value: 
+      objectReference: {fileID: 11400000, guid: a0305832d2a976648b9fef0e8ba009d3, type: 2}
     - target: {fileID: 5267435965837671105, guid: d3d52f60f428c534d89ca4cfe39a72f2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

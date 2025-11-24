@@ -5,46 +5,42 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using DG.Tweening;
-using UnityEditor;
-using static UnityEngine.Rendering.DebugUI;
+//using UnityEditor;
+
 
 
 
 
 public class TutorialManager : MonoBehaviour
 {
-    [Header("UI ��ҵ�")]
-    //[SerializeField] private GameObject tutorialCanvas;
+    public static int currentTutorialNum = 0;
+    [Header("UI")]
     [SerializeField] private CanvasGroup tutorialPanel;
     [SerializeField] private Image overlayImage; // ������ ��������
     [SerializeField] private RectTransform highlightRect; // ��������
-    //public RectTransform characterDialogPrefab; // ĳ����+��ȭ���� ������
     [SerializeField] private RectTransform fingerImage; // �հ��� �̹���
     [SerializeField] private TutorialRaycastBlocker blocker; // �հ��� �̹���
-    private Tween fingerTween;
-
-
-    [Header("Ʃ�丮�� �ܰ��")]
     [SerializeField] private TutorialDatabase tutorialDatabase;
-    private TutorialStep[] currentTutorial;
-
-    private int currentStepIndex = 0;
-    private TutorialStep currentStep;
     [SerializeField] private RectTransform characterDialog;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject deaconPeng;
     [SerializeField] private GameObject maidPeng;
 
+    private TutorialStep[] currentTutorial;
+    private Tween fingerTween;
+    private int currentStepIndex = 0;
+    private TutorialStep currentStep;
     private bool isTutorialActive = false;
 
     // �Ϸ� ���� üũ�� ���� �̺�Ʈ
-    public static event Action<TutorialCondition> OnConditionMet;
+    public static event Action<TutorialCondition> OnTriggerCondition;
+    public static event Action<int> OnStartTutorial;
 
     private void Start()
     {
         // �Ϸ� ���� �̺�Ʈ ����
-        OnConditionMet += CheckCondition;
-
+        OnTriggerCondition += CheckCondition;
+        OnStartTutorial += StartTutorial;
         // ó������ Ʃ�丮�� ��Ȱ��ȭ
         tutorialPanel.gameObject.SetActive(false);
     }
@@ -77,9 +73,9 @@ public class TutorialManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        OnConditionMet -= CheckCondition;
+        OnTriggerCondition -= CheckCondition;
+        OnStartTutorial -= StartTutorial;
     }
-
     public void StartTutorial(int num)
     {
         Debug.Log("StartTutorial");
@@ -220,7 +216,7 @@ public class TutorialManager : MonoBehaviour
         if (!isTutorialActive) return;
 
         // ���� �Ϸ� �̺�Ʈ �߻�
-        OnConditionMet?.Invoke(currentStep.completionCondition);
+        OnTriggerCondition?.Invoke(currentStep.completionCondition);
     }
 
     private void CheckCondition(TutorialCondition condition)
@@ -259,12 +255,28 @@ public class TutorialManager : MonoBehaviour
             blocker.DeactivateBlockers();
             tutorialPanel.gameObject.SetActive(false);
         });
-        Debug.Log("Ʃ�丮�� �Ϸ�!");
+        for (int i = 0; i < 5; i++)
+        {
+            Managers.Game.CreateRandomGuest();
+        }
+        //if (currentTutorialNum == 1)
+        //{
+        //    for (int i = 0; i < 5; i++)
+        //    {
+        //        Managers.Game.CreateRandomGuest();
+        //    }
+        //}
+
+        currentTutorialNum += 1;
     }
 
     // �ٸ� ��ũ��Ʈ���� ���� �ϷḦ �˸� �� ���
-    public static void TriggerCondition(TutorialCondition condition)
+    public static void OnTriggerConditionEvent(TutorialCondition condition)
     {
-        OnConditionMet?.Invoke(condition);
+        OnTriggerCondition?.Invoke(condition);
+    }
+    public static void OnStartTutorialEvent()
+    {
+        OnStartTutorial?.Invoke(currentTutorialNum);
     }
 }
