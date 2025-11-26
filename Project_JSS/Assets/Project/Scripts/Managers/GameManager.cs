@@ -12,7 +12,7 @@ public class GameManager : BaseManager
 {
     //public static GameManager Instance { get; private set; }
     [SerializeField] private GameObject rippleEffectPrefab;
-    [SerializeField] private Canvas cursorCanvas;
+    [SerializeField] private RectTransform cursorCanvas;
     public const int GRID_WIDTH = 7;
     public const int GRID_HEIGHT = 9;
     [Header("Script References")]
@@ -156,7 +156,7 @@ public class GameManager : BaseManager
     }
     private void Awake()
     {
-        Screen.SetResolution(720, 1280, false);
+        Screen.SetResolution(720, 1280, true);
     }
     public override void Init()
     {

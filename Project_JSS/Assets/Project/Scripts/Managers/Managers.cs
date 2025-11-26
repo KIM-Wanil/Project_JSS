@@ -65,13 +65,13 @@ public class Managers : MonoBehaviour
     {
         _db.Init();
         _asset.Init();
-        //_settings.Init();
+
         _save.Init();
         _backend.Init();
-        //_grid.Init();
+
         _game.Init();
-        //_game.Init();
-        //_grid.Init();
+
+
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

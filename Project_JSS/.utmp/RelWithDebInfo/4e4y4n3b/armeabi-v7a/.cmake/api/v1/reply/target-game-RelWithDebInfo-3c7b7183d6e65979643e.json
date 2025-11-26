@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4e4y4n3b/obj/armeabi-v7a/libgame.so"
+			"path" : "C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4e4y4n3b/obj/armeabi-v7a/libgame.so"
 		}
 	],
 	"backtrace" : 1,
@@ -73,7 +73,7 @@
 			[
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/src/main/cpp/GameActivity"
+					"path" : "C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity"
 				},
 				{
 					"backtrace" : 2,

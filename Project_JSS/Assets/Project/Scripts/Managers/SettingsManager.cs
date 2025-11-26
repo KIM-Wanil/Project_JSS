@@ -55,7 +55,7 @@ public class SettingsManager : BaseManager
     private const float VolumeStep = 0.05f;
 
     // Screen Settings
-    private bool isFullScreen = true;
+    private bool isFullScreen = false;
     private Resolution[] customResolutions;  // 변경된 부분
     //private Resolution[] resolutions;
     private int currentResolutionIndex = 0;

@@ -1,4 +1,4 @@
-                        -HC:\Users\j\Documents\GitHub\Project_JSS\Project_JSS\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\src\main\cpp
+                        -HC:\Users\j\Documents\GitHub\Project_JSS\Project_JSS\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp
 -DCMAKE_SYSTEM_NAME=Android
 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 -DCMAKE_SYSTEM_VERSION=31
@@ -9,8 +9,8 @@
 -DCMAKE_ANDROID_NDK=C:\Program Files\Unity\Hub\Editor\6000.0.36f1\Editor\Data\PlaybackEngines\AndroidPlayer\NDK
 -DCMAKE_TOOLCHAIN_FILE=C:\Program Files\Unity\Hub\Editor\6000.0.36f1\Editor\Data\PlaybackEngines\AndroidPlayer\NDK\build\cmake\android.toolchain.cmake
 -DCMAKE_MAKE_PROGRAM=C:\Program Files\Unity\Hub\Editor\6000.0.36f1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK\cmake\3.22.1\bin\ninja.exe
--DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\Users\j\Documents\GitHub\Project_JSS\Project_JSS\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\4e4y4n3b\obj\armeabi-v7a
--DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\Users\j\Documents\GitHub\Project_JSS\Project_JSS\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\4e4y4n3b\obj\armeabi-v7a
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\Users\j\Documents\GitHub\Project_JSS\Project_JSS\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\4e4y4n3b\obj\armeabi-v7a
+-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\Users\j\Documents\GitHub\Project_JSS\Project_JSS\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\4e4y4n3b\obj\armeabi-v7a
 -DCMAKE_BUILD_TYPE=RelWithDebInfo
 -DCMAKE_FIND_ROOT_PATH=C:\Users\j\Documents\GitHub\Project_JSS\Project_JSS\.utmp\RelWithDebInfo\4e4y4n3b\prefab\armeabi-v7a\prefab
 -BC:\Users\j\Documents\GitHub\Project_JSS\Project_JSS\.utmp\RelWithDebInfo\4e4y4n3b\armeabi-v7a

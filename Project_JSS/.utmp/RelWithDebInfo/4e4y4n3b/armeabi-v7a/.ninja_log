@@ -1,12 +1,12 @@
 # ninja log v5
-58	2251	7856778332827091	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	ec2a21b714021122
-24	2268	7856778332207724	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	c236fae2c8124ebe
-10	2269	7856778332667507	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	64e2cbd413adf619
-41	2270	7856778333026552	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	9004aee8d6efd9b8
-72	2271	7856778333889324	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	79a00108af968ed
-17	2318	7856778334537586	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	ca9477843ab532ff
-34	2537	7856778336663613	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	c0b253c3e2c94baf
-2256	2590	7856778337366454	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	dc645846f0d90657
-1	2661	7856778338006466	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	90ce0047e6945d1e
-2591	2752	7856778339005282	C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4e4y4n3b/obj/armeabi-v7a/libswappywrapper.so	4babddd93b7e95a1
-2661	2785	7856778339295494	C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4e4y4n3b/obj/armeabi-v7a/libgame.so	61a2787c25f8d5f4
+1	1020	7858295042559284	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	667f7d967f2d923f
+20	1093	7858295043067928	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	69a8b45cd2cf6e39
+41	1116	7858295043476835	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	fa54c65dc6c46fd
+26	1166	7858295044404353	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	c1d8cddae1dbaf3e
+8	1172	7858295044394378	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	f17546be0d772ea7
+1023	1186	7858295044733475	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	e2d8c70771705da7
+67	1258	7858295045408652	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	dfc60f830db7d893
+1187	1340	7858295046269800	C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4e4y4n3b/obj/armeabi-v7a/libswappywrapper.so	9fcef7ce7263923a
+33	1353	7858295046269800	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	634a4858a6e3488
+14	1417	7858295047004741	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	12557f55d12f7dd6
+1417	1551	7858295048381431	C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4e4y4n3b/obj/armeabi-v7a/libgame.so	4734a9f633f2c8db

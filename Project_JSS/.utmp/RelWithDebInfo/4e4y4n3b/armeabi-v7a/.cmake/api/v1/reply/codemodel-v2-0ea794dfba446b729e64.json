@@ -95,14 +95,14 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "game::@d02bb112ea9f9c2ed29f",
-					"jsonFile" : "target-game-RelWithDebInfo-0f4dfede5c86f2567493.json",
+					"jsonFile" : "target-game-RelWithDebInfo-3c7b7183d6e65979643e.json",
 					"name" : "game",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 2,
 					"id" : "swappywrapper::@7e25bd1f32ce224db4e9",
-					"jsonFile" : "target-swappywrapper-RelWithDebInfo-5120dd80ea9d8b380d32.json",
+					"jsonFile" : "target-swappywrapper-RelWithDebInfo-57e16c9ef64307d9e430.json",
 					"name" : "swappywrapper",
 					"projectIndex" : 2
 				}
@@ -113,7 +113,7 @@
 	"paths" : 
 	{
 		"build" : "C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/.utmp/RelWithDebInfo/4e4y4n3b/armeabi-v7a",
-		"source" : "C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/src/main/cpp"
+		"source" : "C:/Users/j/Documents/GitHub/Project_JSS/Project_JSS/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
 	},
 	"version" : 
 	{
